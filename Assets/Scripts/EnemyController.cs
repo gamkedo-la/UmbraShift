@@ -59,12 +59,21 @@ public class EnemyController : MonoBehaviour
                 }
             }
         }
-
+        Vector3 rayFromMeToPlayer = PlayerMove.instance.transform.position - transform.position;
         float degreesNeededToFacePlayer = Quaternion.Angle(transform.rotation,
-        Quaternion.LookRotation(PlayerMove.instance.transform.position - transform.position));
-        if (degreesNeededToFacePlayer < FOV)
+        Quaternion.LookRotation(rayFromMeToPlayer));
+        Debug.DrawRay(transform.position, Quaternion.AngleAxis(FOV / 2, Vector3.up) * transform.forward * 5.0f, Color.red, 0, true);
+        Debug.DrawRay(transform.position, Quaternion.AngleAxis(FOV / -2, Vector3.up) * transform.forward * 5.0f, Color.red, 0, true);
+        if (degreesNeededToFacePlayer < FOV / 2)
         {
-            noticeIndicator.text = "!";
+
+            // add distance check before raycast
+            RaycastHit rhinfo;
+            if (Physics.Raycast(transform.position, rayFromMeToPlayer, out rhinfo))
+            {
+                Debug.Log(rhinfo.collider.name);
+                noticeIndicator.text = rhinfo.collider.name;
+            }
         }
         else
         {
