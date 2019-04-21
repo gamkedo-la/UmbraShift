@@ -11,6 +11,7 @@ public class EnemyController : MonoBehaviour
     public Transform patrolPointTwo;
     public int pauseTime = 3;
     public Text noticeIndicator;
+    public float visualRange = 20.0f;
 
     public float FOV = 90.0f;
     public bool moving = false;
@@ -59,7 +60,7 @@ public class EnemyController : MonoBehaviour
                 }
             }
         }
-        Vector3 rayFromMeToPlayer = PlayerMove.instance.transform.position - transform.position;
+        Vector3 rayFromMeToPlayer = PlayerController.instance.transform.position - transform.position;
         float degreesNeededToFacePlayer = Quaternion.Angle(transform.rotation,
         Quaternion.LookRotation(rayFromMeToPlayer));
         Debug.DrawRay(transform.position, Quaternion.AngleAxis(FOV / 2, Vector3.up) * transform.forward * 5.0f, Color.red, 0, true);
@@ -69,9 +70,9 @@ public class EnemyController : MonoBehaviour
 
             // add distance check before raycast
             RaycastHit rhinfo;
-            if (Physics.Raycast(transform.position, rayFromMeToPlayer, out rhinfo))
+            if (Physics.Raycast(transform.position, rayFromMeToPlayer, out rhinfo, visualRange, 1 << LayerMask.NameToLayer("Player")))
             {
-                Debug.Log(rhinfo.collider.name);
+                //Debug.Log(rhinfo.collider.name);
                 noticeIndicator.text = rhinfo.collider.name;
             }
         }
@@ -79,7 +80,6 @@ public class EnemyController : MonoBehaviour
         {
             noticeIndicator.text = "?";
         }
-
     }
 
     IEnumerator PauseForTime()
