@@ -16,7 +16,10 @@ public class EnemyController : MonoBehaviour
     public float FOV = 90.0f;
     public bool moving = false;
 
+    public int currentHealth;
+
     private NavMeshAgent agent;
+    private BaseCharacterClass baseClass;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +28,8 @@ public class EnemyController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         moving = true;
+        baseClass = GetComponent<BaseCharacterClass>();
+        currentHealth = baseClass.maxHealth;
     }
 
     // Update is called once per frame
@@ -70,7 +75,7 @@ public class EnemyController : MonoBehaviour
 
             // add distance check before raycast
             RaycastHit rhinfo;
-            if (Physics.Raycast(transform.position, rayFromMeToPlayer, out rhinfo, visualRange, 1 << LayerMask.NameToLayer("Player")))
+            if (Physics.Raycast(transform.position, rayFromMeToPlayer, out rhinfo, visualRange, LayerMask.NameToLayer("Player")))
             {
                 //Debug.Log(rhinfo.collider.name);
                 noticeIndicator.text = rhinfo.collider.name;

@@ -8,12 +8,14 @@ public class PlayerController : MonoBehaviour
     public static PlayerController instance;
     public Transform target;
     public float visualRange = 30.0f;
+
+    public int currentHealth;
+    private BaseCharacterClass baseClass;
+
     NavMeshAgent agent;
-    // Start is called before the first frame update
-    void Start()
+
+    void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
-        agent.updateRotation = false;
         if (instance != null)
         {
             Debug.Log("singleton already existed but attempted re-assignment");
@@ -22,6 +24,15 @@ public class PlayerController : MonoBehaviour
         {
             instance = this;
         }
+    }
+    // Start is called before the first frame update
+    void Start()
+    {
+        agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = false;
+
+        baseClass = GetComponent<BaseCharacterClass>();
+        currentHealth = baseClass.maxHealth;
     }
 
     // Update is called once per frame
@@ -49,7 +60,7 @@ public class PlayerController : MonoBehaviour
         {
             if (hitColliders[i].tag == "NPC")
             {
-                Debug.Log("NPC is in the overlapsphere");
+                //Debug.Log("NPC is in the overlapsphere");
                 Vector3 rayFromMeToNPC = hitColliders[i].gameObject.transform.position - transform.position;
                 RaycastHit rhinfo;
                 if (Physics.Raycast(transform.position, rayFromMeToNPC, out rhinfo, visualRange))
