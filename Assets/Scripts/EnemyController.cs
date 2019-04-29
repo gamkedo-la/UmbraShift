@@ -87,6 +87,27 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    public void PlayerCanSee(bool isVisible)
+    {
+        if (isVisible)
+        {
+            RecursiveLayerMaskSet("VisibleNPC", transform);
+        }
+        else
+        {
+            RecursiveLayerMaskSet("HiddenNPC", transform);
+        }
+    }
+
+    void RecursiveLayerMaskSet(string layerName, Transform whichTransform)
+    {
+        whichTransform.gameObject.layer = LayerMask.NameToLayer(layerName);
+        foreach (Transform child in whichTransform)
+        {
+            RecursiveLayerMaskSet(layerName, child);
+        }
+    }
+
     IEnumerator PauseForTime()
     {
         yield return new WaitForSeconds(pauseTime);

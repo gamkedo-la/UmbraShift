@@ -68,11 +68,19 @@ public class PlayerController : MonoBehaviour
                     //Debug.Log(rhinfo.collider.name);
                     if (rhinfo.collider.tag == "NPC")
                     {
-                        hitColliders[i].gameObject.layer = LayerMask.NameToLayer("VisibleNPC");
+                        EnemyController enemyCtrl = hitColliders[i].GetComponent<EnemyController>();
+                        if (enemyCtrl != null)
+                        {
+                            enemyCtrl.PlayerCanSee(true);
+                        }
                     }
                     else
                     {
-                        hitColliders[i].gameObject.layer = LayerMask.NameToLayer("HiddenNPC");
+                        EnemyController enemyCtrl = hitColliders[i].GetComponent<EnemyController>();
+                        if (enemyCtrl != null)
+                        {
+                            enemyCtrl.PlayerCanSee(false);
+                        }
                     }
                 }
             }

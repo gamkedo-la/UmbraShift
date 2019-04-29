@@ -132,9 +132,9 @@ GameObject:
   - component: {fileID: 9587993}
   - component: {fileID: 9587992}
   - component: {fileID: 9587991}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Nose
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -318,9 +318,10 @@ GameObject:
   - component: {fileID: 125694715}
   - component: {fileID: 125694714}
   - component: {fileID: 125694713}
-  m_Layer: 0
+  - component: {fileID: 125694721}
+  m_Layer: 11
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -432,7 +433,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: a8f22d307057b413885025f5b200aa3e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -476,6 +477,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &125694721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125694712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8c429bf753b9422484232bd0c68b870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &125909041
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,6 +521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f68e7f60c23e493cb21f0174be11f8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionManager: {fileID: 0}
 --- !u!65 &125909043
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -681,6 +695,7 @@ GameObject:
   m_Component:
   - component: {fileID: 273953991}
   - component: {fileID: 273953990}
+  - component: {fileID: 273953992}
   m_Layer: 0
   m_Name: WorldManagerObjects
   m_TagString: Untagged
@@ -715,6 +730,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &273953992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 273953989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8c8a2482ba6542f291bfc6a90236915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightedMat: {fileID: 2100000, guid: 4a7ff5abd1546454c8ed5ddb6aec4afd, type: 2}
+  playerMoveTarget: {fileID: 125909046}
+  lastUnderMouse: {fileID: 0}
 --- !u!1 &283744549
 GameObject:
   m_ObjectHideFlags: 0
@@ -1024,9 +1054,9 @@ GameObject:
   - component: {fileID: 945704464}
   - component: {fileID: 945704463}
   - component: {fileID: 945704466}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: AI Text Output Canvas
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1440,9 +1470,9 @@ GameObject:
   - component: {fileID: 1480260133}
   - component: {fileID: 1480260132}
   - component: {fileID: 1480260131}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Text
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1807,7 +1837,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1847
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
