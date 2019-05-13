@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour
 {
     public static InputManager instance;
-    private ActionManager actionManager;
+    public ActionManager actionManager;
     public Material highlightedMat;
     public Transform playerMoveTarget;
     public Interactable lastUnderMouse;
@@ -22,15 +23,26 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    public void SetCurrentActionManager(ActionManager manager)
+    {
+        actionManager = manager;
+        Debug.Log($"Set new manager from {manager.name}");
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        actionManager = PlayerController.instance.GetComponent<ActionManager>();
+        actionManager = null;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (actionManager == null)
+        {
+            //Debug.Log("Action manager is null");
+            return;
+        }
         RaycastHit rhinfo;
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out rhinfo, 100))
         {

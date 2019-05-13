@@ -60,4 +60,17 @@ public class TurnManager : MonoBehaviour
     {
         actionManagers.Add(manager);
     }
+
+    public List<ActionManager> GetCharacterManagers()
+    {
+        List<ActionManager> characters = new List<ActionManager>();
+        foreach (ActionManager eachAM in actionManagers)
+        {
+            if (eachAM.tag == "Player" && playersTurn == true)
+            {
+                characters.Add(eachAM);
+            }
+        }
+        return characters;
+    }
 }

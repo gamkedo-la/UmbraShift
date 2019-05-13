@@ -5,26 +5,15 @@ using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
-    public static PlayerController instance;
     public Transform target;
     public float visualRange = 30.0f;
 
     public int currentHealth;
     private BaseCharacterClass baseClass;
+    private ActionManager myManager;
 
     NavMeshAgent agent;
 
-    void Awake()
-    {
-        if (instance != null)
-        {
-            Debug.Log("singleton already existed but attempted re-assignment");
-        }
-        else
-        {
-            instance = this;
-        }
-    }
     // Start is called before the first frame update
     void Start()
     {
@@ -33,22 +22,26 @@ public class PlayerController : MonoBehaviour
 
         baseClass = GetComponent<BaseCharacterClass>();
         currentHealth = baseClass.maxHealth;
+        myManager = GetComponent<ActionManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 travelDiff = target.position - transform.position;
-        travelDiff.y = 0.0f;
-
-        Vector3 moveDiff = agent.velocity;
-        moveDiff.y = 0.0f;
-
-        if (travelDiff.magnitude > 0.5 && moveDiff.magnitude > 0.1)
+        if (myManager == InputManager.instance.actionManager)
         {
-            transform.rotation = Quaternion.LookRotation(moveDiff);
+            Vector3 travelDiff = target.position - transform.position;
+            travelDiff.y = 0.0f;
+
+            Vector3 moveDiff = agent.velocity;
+            moveDiff.y = 0.0f;
+
+            if (travelDiff.magnitude > 0.5 && moveDiff.magnitude > 0.1)
+            {
+                transform.rotation = Quaternion.LookRotation(moveDiff);
+            }
+            agent.SetDestination(target.position);
         }
-        agent.SetDestination(target.position);
 
         CheckLineOfSite();
     }

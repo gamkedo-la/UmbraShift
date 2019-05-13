@@ -20,6 +20,7 @@ public class EnemyController : MonoBehaviour
 
     private NavMeshAgent agent;
     private BaseCharacterClass baseClass;
+    private List<ActionManager> playerManagers;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +31,7 @@ public class EnemyController : MonoBehaviour
         moving = true;
         baseClass = GetComponent<BaseCharacterClass>();
         currentHealth = baseClass.maxHealth;
+        playerManagers = TurnManager.instance.GetCharacterManagers();
     }
 
     // Update is called once per frame
@@ -65,25 +67,28 @@ public class EnemyController : MonoBehaviour
                 }
             }
         }
-        Vector3 rayFromMeToPlayer = PlayerController.instance.transform.position - transform.position;
-        float degreesNeededToFacePlayer = Quaternion.Angle(transform.rotation,
-        Quaternion.LookRotation(rayFromMeToPlayer));
-        Debug.DrawRay(transform.position, Quaternion.AngleAxis(FOV / 2, Vector3.up) * transform.forward * 5.0f, Color.red, 0, true);
-        Debug.DrawRay(transform.position, Quaternion.AngleAxis(FOV / -2, Vector3.up) * transform.forward * 5.0f, Color.red, 0, true);
-        if (degreesNeededToFacePlayer < FOV / 2)
+        foreach (ActionManager eachAM in playerManagers)
         {
-
-            // add distance check before raycast
-            RaycastHit rhinfo;
-            if (Physics.Raycast(transform.position, rayFromMeToPlayer, out rhinfo, visualRange, LayerMask.NameToLayer("Player")))
+            Vector3 rayFromMeToPlayer = eachAM.transform.position - transform.position;
+            float degreesNeededToFacePlayer = Quaternion.Angle(transform.rotation,
+            Quaternion.LookRotation(rayFromMeToPlayer));
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(FOV / 2, Vector3.up) * transform.forward * 5.0f, Color.red, 0, true);
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(FOV / -2, Vector3.up) * transform.forward * 5.0f, Color.red, 0, true);
+            if (degreesNeededToFacePlayer < FOV / 2)
             {
-                //Debug.Log(rhinfo.collider.name);
-                noticeIndicator.text = rhinfo.collider.name;
+
+                // add distance check before raycast
+                RaycastHit rhinfo;
+                if (Physics.Raycast(transform.position, rayFromMeToPlayer, out rhinfo, visualRange, LayerMask.NameToLayer("Player")))
+                {
+                    //Debug.Log(rhinfo.collider.name);
+                    noticeIndicator.text = rhinfo.collider.name;
+                }
             }
-        }
-        else
-        {
-            noticeIndicator.text = "?";
+            else
+            {
+                noticeIndicator.text = "?";
+            }
         }
     }
 
