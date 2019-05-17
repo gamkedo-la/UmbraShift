@@ -21,12 +21,6 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -43,13 +37,13 @@ public class TurnManager : MonoBehaviour
 
         foreach (ActionManager eachAM in actionManagers)
         {
-            if (eachAM.tag == "NPC" && playersTurn == false)
+            if (eachAM.CompareTag("NPC") && playersTurn == false)
             {
 
                 eachAM.ResetActionPoints();
             }
 
-            if (eachAM.tag == "Player" && playersTurn == true)
+            if (eachAM.CompareTag("Player") && playersTurn == true)
             {
                 eachAM.ResetActionPoints();
             }
@@ -66,7 +60,7 @@ public class TurnManager : MonoBehaviour
         List<ActionManager> characters = new List<ActionManager>();
         foreach (ActionManager eachAM in actionManagers)
         {
-            if (eachAM.tag == "Player" && playersTurn == true)
+            if (eachAM.CompareTag("Player") && playersTurn == true)
             {
                 characters.Add(eachAM);
             }

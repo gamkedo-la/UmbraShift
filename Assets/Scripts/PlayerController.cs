@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, visualRange);
         for (int i = 0; i < hitColliders.Length; i++)
         {
-            if (hitColliders[i].tag == "NPC")
+            if (hitColliders[i].CompareTag("NPC"))
             {
                 //Debug.Log("NPC is in the overlapsphere");
                 Vector3 rayFromMeToNPC = hitColliders[i].gameObject.transform.position - transform.position;
@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
                 if (Physics.Raycast(transform.position, rayFromMeToNPC, out rhinfo, visualRange))
                 {
                     //Debug.Log(rhinfo.collider.name);
-                    if (rhinfo.collider.tag == "NPC")
+                    if (rhinfo.collider.CompareTag("NPC"))
                     {
                         EnemyController enemyCtrl = hitColliders[i].GetComponent<EnemyController>();
                         if (enemyCtrl != null)
