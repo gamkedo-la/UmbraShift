@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour
 {
@@ -11,6 +10,8 @@ public class InputManager : MonoBehaviour
     public Transform playerMoveTarget;
     public Interactable lastUnderMouse;
 
+    public UIController uiController;
+    
     void Awake()
     {
         if (instance != null)
@@ -27,6 +28,13 @@ public class InputManager : MonoBehaviour
     {
         actionManager = manager;
         Debug.Log($"Set new manager from {manager.name}");
+        BaseCharacterClass BCC = manager.gameObject.GetComponent<BaseCharacterClass>();
+        if (BCC != null)
+        {
+            Debug.Log(BCC.avatar);
+            uiController.SetCurrentCharacterName(BCC.characterName);
+            uiController.SetCurrentCharacterAvatar(BCC.avatar);
+        }
     }
 
     // Start is called before the first frame update

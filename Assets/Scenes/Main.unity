@@ -223,6 +223,7 @@ GameObject:
   - component: {fileID: 9821379}
   - component: {fileID: 9821378}
   - component: {fileID: 9821377}
+  - component: {fileID: 9821381}
   m_Layer: 5
   m_Name: MainUI
   m_TagString: Untagged
@@ -313,6 +314,23 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &9821381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9821376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c85f3648570ec42539f0610873674420, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player1: {fileID: 1331510702}
+  player2: {fileID: 686917380}
+  endTurn: {fileID: 1656865556}
+  currentSelectedCharacterName: {fileID: 560027851}
+  currentSelectedCharacterAvatar: {fileID: 710497886}
 --- !u!224 &51319567 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3977872530584128925, guid: b0cc6230b338d47d1abe9999995f5090,
@@ -481,6 +499,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab2472cf794484568bd77a91a8428b4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterName: Unknown
+  avatar: {fileID: 0}
   strength: 5
   dexterity: 5
   intelligence: 5
@@ -870,6 +890,7 @@ MonoBehaviour:
   highlightedMat: {fileID: 2100000, guid: 4a7ff5abd1546454c8ed5ddb6aec4afd, type: 2}
   playerMoveTarget: {fileID: 125909046}
   lastUnderMouse: {fileID: 0}
+  uiController: {fileID: 9821381}
 --- !u!1 &283744549
 GameObject:
   m_ObjectHideFlags: 0
@@ -1026,6 +1047,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab2472cf794484568bd77a91a8428b4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterName: Pam
+  avatar: {fileID: 21300000, guid: 154ebf36e20654120a4c52750f4dd6d8, type: 3}
   strength: 5
   dexterity: 5
   intelligence: 5
@@ -1290,6 +1313,85 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &560027849
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 560027850}
+  - component: {fileID: 560027852}
+  - component: {fileID: 560027851}
+  m_Layer: 5
+  m_Name: CharacterName
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &560027850
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560027849}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 969696523}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &560027851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560027849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: New Text
+--- !u!222 &560027852
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560027849}
+  m_CullTransparentMesh: 0
 --- !u!1 &653260035
 GameObject:
   m_ObjectHideFlags: 0
@@ -1338,6 +1440,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &686917380 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 799998328532922441, guid: b0cc6230b338d47d1abe9999995f5090,
+    type: 3}
+  m_PrefabInstance: {fileID: 718917913}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &688774537
 GameObject:
   m_ObjectHideFlags: 0
@@ -2128,6 +2242,7 @@ RectTransform:
   - {fileID: 1530643787}
   - {fileID: 1277527934}
   - {fileID: 710497885}
+  - {fileID: 560027850}
   m_Father: {fileID: 9821380}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2733,6 +2848,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1277527933}
   m_CullTransparentMesh: 0
+--- !u!114 &1331510702 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 799998328532922441, guid: b0cc6230b338d47d1abe9999995f5090,
+    type: 3}
+  m_PrefabInstance: {fileID: 4081682672519327131}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1430919268
 GameObject:
   m_ObjectHideFlags: 0
@@ -3060,6 +3187,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab2472cf794484568bd77a91a8428b4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterName: Bob
+  avatar: {fileID: 21300000, guid: 984d49c0a8c2b49e192e0fbb42059e6c, type: 3}
   strength: 5
   dexterity: 5
   intelligence: 5

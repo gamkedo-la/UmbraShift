@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class BaseCharacterClass : MonoBehaviour
 {
+    public string characterName = "Unknown";
+
+    public Sprite avatar;
     // base character stats
     public int strength = 5;
     public int dexterity = 5;
