@@ -34,11 +34,11 @@ public class UIController : MonoBehaviour
     
     
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         foreach (var character in characters)
         {
-            GameObject tempCharacterUIButton = (GameObject) GameObject.Instantiate(buttonPrefab);
+            GameObject tempCharacterUIButton = (GameObject) GameObject.Instantiate(buttonPrefab, characterPanelTransform);
             
             Image tempImage = tempCharacterUIButton.GetComponentInChildren<Image>();
             
@@ -49,19 +49,26 @@ public class UIController : MonoBehaviour
             }
 
             Button tempButton = tempCharacterUIButton.GetComponent<Button>();
+            PlayerController tempPC = character.GetComponent<PlayerController>();
+            
+            Debug.Log($"tempPC is {tempPC} and tempButton is {tempButton}");
 
-            if (tempButton != null)
+            if (tempButton != null && tempPC != null)
             {
-                tempButton.transform.SetParent(characterPanelTransform);
+                tempButton.onClick.AddListener(() =>
+                {
+                    InputManager.instance.SetCurrentPlayerController(tempPC);
+                });
                 characterButtons.Add(tempButton);
             }
 
         }
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Button endTurnButton = Instantiate(endTurn, characterPanelTransform);
+
+        endTurnButton.onClick.AddListener(() =>
+        {
+            TurnManager.instance.SwitchTurn();
+        });
     }
 }

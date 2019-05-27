@@ -5,7 +5,7 @@ using UnityEngine;
 public class TurnManager : MonoBehaviour
 {
     public static TurnManager instance;
-    List<ActionManager> actionManagers = new List<ActionManager>();
+    List<PlayerController> playerControllers = new List<PlayerController>();
 
     public bool playersTurn = true;
 
@@ -35,34 +35,34 @@ public class TurnManager : MonoBehaviour
     {
         playersTurn = !playersTurn;
 
-        foreach (ActionManager eachAM in actionManagers)
+        foreach (PlayerController eachPC in playerControllers)
         {
-            if (eachAM.CompareTag("NPC") && playersTurn == false)
+            if (eachPC.CompareTag("NPC") && playersTurn == false)
             {
 
-                eachAM.ResetActionPoints();
+                eachPC.ResetActionPoints();
             }
 
-            if (eachAM.CompareTag("Player") && playersTurn == true)
+            if (eachPC.CompareTag("Player") && playersTurn == true)
             {
-                eachAM.ResetActionPoints();
+                eachPC.ResetActionPoints();
             }
         }
     }
 
-    public void ActionManagerReportingForDuty(ActionManager manager)
+    public void PlayerControllerReportingForDuty(PlayerController playerController)
     {
-        actionManagers.Add(manager);
+        playerControllers.Add(playerController);
     }
 
-    public List<ActionManager> GetCharacterManagers()
+    public List<PlayerController> GetCharacterManagers()
     {
-        List<ActionManager> characters = new List<ActionManager>();
-        foreach (ActionManager eachAM in actionManagers)
+        List<PlayerController> characters = new List<PlayerController>();
+        foreach (PlayerController eachPC in playerControllers)
         {
-            if (eachAM.CompareTag("Player") && playersTurn == true)
+            if (eachPC.CompareTag("Player") && playersTurn == true)
             {
-                characters.Add(eachAM);
+                characters.Add(eachPC);
             }
         }
         return characters;

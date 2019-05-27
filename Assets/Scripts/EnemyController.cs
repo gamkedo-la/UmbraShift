@@ -20,7 +20,7 @@ public class EnemyController : MonoBehaviour
 
     private NavMeshAgent agent;
     private BaseCharacterClass baseClass;
-    private List<ActionManager> playerManagers;
+    private List<PlayerController> playerManagers;
 
     // Start is called before the first frame update
     void Start()
@@ -67,9 +67,9 @@ public class EnemyController : MonoBehaviour
                 }
             }
         }
-        foreach (ActionManager eachAM in playerManagers)
+        foreach (PlayerController eachPC in playerManagers)
         {
-            Vector3 rayFromMeToPlayer = eachAM.transform.position - transform.position;
+            Vector3 rayFromMeToPlayer = eachPC.transform.position - transform.position;
             float degreesNeededToFacePlayer = Quaternion.Angle(transform.rotation,
             Quaternion.LookRotation(rayFromMeToPlayer));
             Debug.DrawRay(transform.position, Quaternion.AngleAxis(FOV / 2, Vector3.up) * transform.forward * 5.0f, Color.red, 0, true);

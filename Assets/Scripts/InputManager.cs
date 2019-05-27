@@ -5,7 +5,7 @@ using UnityEngine;
 public class InputManager : MonoBehaviour
 {
     public static InputManager instance;
-    public ActionManager actionManager;
+    public PlayerController currentPlayerController;
     public Material highlightedMat;
     public Transform playerMoveTarget;
     public Interactable lastUnderMouse;
@@ -24,11 +24,12 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    public void SetCurrentActionManager(ActionManager manager)
+    public void SetCurrentPlayerController(PlayerController playerController)
     {
-        actionManager = manager;
-        Debug.Log($"Set new manager from {manager.name}");
-        BaseCharacterClass BCC = manager.gameObject.GetComponent<BaseCharacterClass>();
+        currentPlayerController = playerController;
+        playerController.SetAsActivePlayerController();
+        Debug.Log($"Set new manager from {currentPlayerController.name}");
+        BaseCharacterClass BCC = currentPlayerController.gameObject.GetComponent<BaseCharacterClass>();
         if (BCC != null)
         {
             Debug.Log(BCC.avatar);
@@ -40,13 +41,13 @@ public class InputManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        actionManager = null;
+        currentPlayerController = null;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (actionManager == null)
+        if (currentPlayerController == null)
         {
             //Debug.Log("Action manager is null");
             return;
@@ -60,7 +61,7 @@ public class InputManager : MonoBehaviour
                 if (rhinfo.transform.gameObject.layer == LayerMask.NameToLayer("VisibleNPC"))
                 {
                     Debug.Log($"Clicked on {rhinfo.transform.name}");
-                    if (actionManager.AttemptToSpend(3, true))
+                    if (currentPlayerController.AttemptToSpend(3, true))
                     {
                         Debug.Log("Bang bang");
                     }

@@ -7,30 +7,34 @@ public class PlayerController : MonoBehaviour
 {
     public Transform target;
     public float visualRange = 30.0f;
-
+    public int currentAP;
+    
     public int currentHealth;
     private BaseCharacterClass baseClass;
-    private ActionManager myManager;
+    private Vector3 targetMoveLocation;
 
     NavMeshAgent agent;
 
     // Start is called before the first frame update
     void Start()
     {
+        baseClass = GetComponent<BaseCharacterClass>();
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
-
-        baseClass = GetComponent<BaseCharacterClass>();
         currentHealth = baseClass.maxHealth;
-        myManager = GetComponent<ActionManager>();
+        targetMoveLocation = transform.position;
+        
+        ResetActionPoints();
+        TurnManager.instance.PlayerControllerReportingForDuty(this);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (myManager == InputManager.instance.actionManager)
+        if (this == InputManager.instance.currentPlayerController)
         {
-            Vector3 travelDiff = target.position - transform.position;
+            targetMoveLocation = target.position;
+            Vector3 travelDiff = targetMoveLocation - transform.position;
             travelDiff.y = 0.0f;
 
             Vector3 moveDiff = agent.velocity;
@@ -40,10 +44,38 @@ public class PlayerController : MonoBehaviour
             {
                 transform.rotation = Quaternion.LookRotation(moveDiff);
             }
-            agent.SetDestination(target.position);
+
+            
+            agent.SetDestination(targetMoveLocation);
         }
 
         CheckLineOfSite();
+    }
+
+    public void SetAsActivePlayerController()
+    {
+        target.position = targetMoveLocation;
+    }
+    
+    public void ResetActionPoints()
+    {
+        Debug.Log("Resetting action points");
+        currentAP = baseClass.ActionPointRefill();
+    }
+
+    public bool AttemptToSpend(int cost, bool spendIfWeCan)
+    {
+        if (cost <= currentAP)
+        {
+            if (spendIfWeCan)
+            {
+                currentAP -= cost;
+                Debug.Log($"Spent {cost} and have {currentAP} remaining.");
+            }
+            return true;
+        }
+        Debug.Log("Couldn't afford so didn't remove cost");
+        return false;
     }
 
     void CheckLineOfSite()
