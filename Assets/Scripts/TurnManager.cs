@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class TurnManager : MonoBehaviour
@@ -8,6 +9,7 @@ public class TurnManager : MonoBehaviour
     List<PlayerController> playerControllers = new List<PlayerController>();
 
     public bool playersTurn = true;
+    public bool isCombatModeActive = false;
 
     private void Awake()
     {
@@ -48,6 +50,12 @@ public class TurnManager : MonoBehaviour
                 eachPC.ResetActionPoints();
             }
         }
+    }
+
+    public void CombatMode()
+    {
+        isCombatModeActive = !isCombatModeActive;
+        Debug.Log($"CombatModeActive = {isCombatModeActive}");
     }
 
     public void PlayerControllerReportingForDuty(PlayerController playerController)

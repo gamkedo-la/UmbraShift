@@ -72,7 +72,21 @@ public class InputManager : MonoBehaviour
                 }
                 else
                 {
-                    playerMoveTarget.transform.position = rhinfo.point;
+                    float moveDist = Vector3.Distance(rhinfo.point,currentPlayerController.transform.position);
+                    int cost = Mathf.FloorToInt(moveDist / 10);
+                    if (cost == 0)
+                    {
+                        cost = 1;
+                    }
+                    if (currentPlayerController.AttemptToSpend(cost, true))
+                    {
+                        playerMoveTarget.transform.position = rhinfo.point;
+                    }
+                    else
+                    {
+                        Debug.Log("Not enough action points to move!");
+                    }
+                    Debug.Log(moveDist);
                 }
             }
             else
