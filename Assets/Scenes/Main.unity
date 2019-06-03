@@ -442,7 +442,6 @@ GameObject:
   - component: {fileID: 125694717}
   - component: {fileID: 125694716}
   - component: {fileID: 125694715}
-  - component: {fileID: 125694714}
   - component: {fileID: 125694713}
   - component: {fileID: 125694721}
   - component: {fileID: 125694722}
@@ -474,20 +473,7 @@ MonoBehaviour:
   FOV: 90
   moving: 0
   currentHealth: 0
---- !u!114 &125694714
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 125694712}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95a28ede88d5c4700871aabbc9354e9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentAP: 0
-  baseClass: {fileID: 0}
+  playerManagers: []
 --- !u!114 &125694715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -828,6 +814,7 @@ GameObject:
   - component: {fileID: 273953991}
   - component: {fileID: 273953990}
   - component: {fileID: 273953992}
+  - component: {fileID: 273953993}
   m_Layer: 0
   m_Name: WorldManagerObjects
   m_TagString: Untagged
@@ -880,6 +867,19 @@ MonoBehaviour:
   playerMoveTarget: {fileID: 125909046}
   lastUnderMouse: {fileID: 0}
   uiController: {fileID: 9821381}
+--- !u!114 &273953993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 273953989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db5c82e9c32bf4be08ab52d240839728, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyControllers: []
 --- !u!1 &283744549
 GameObject:
   m_ObjectHideFlags: 0
@@ -988,7 +988,7 @@ GameObject:
   - component: {fileID: 437053383}
   - component: {fileID: 437053382}
   - component: {fileID: 437053381}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player2
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1023,8 +1023,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95a28ede88d5c4700871aabbc9354e9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAP: 0
-  baseClass: {fileID: 0}
 --- !u!114 &437053383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1594,7 +1592,7 @@ GameObject:
   - component: {fileID: 728965719}
   - component: {fileID: 728965718}
   - component: {fileID: 728965717}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Nose
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2231,7 +2229,7 @@ GameObject:
   - component: {fileID: 1154770402}
   - component: {fileID: 1154770401}
   - component: {fileID: 1154770400}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Nose
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2880,7 +2878,7 @@ GameObject:
   - component: {fileID: 1512326329}
   - component: {fileID: 1512326328}
   - component: {fileID: 1512326336}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player1
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2899,8 +2897,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95a28ede88d5c4700871aabbc9354e9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAP: 0
-  baseClass: {fileID: 0}
 --- !u!114 &1512326329
 MonoBehaviour:
   m_ObjectHideFlags: 0

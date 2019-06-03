@@ -95,7 +95,7 @@ public class InputManager : MonoBehaviour
                 Interactable currentUnderMouse = rhinfo.transform.gameObject.GetComponent<Interactable>();
                 if (currentUnderMouse != null)
                 {
-                    Debug.Log($"current under mouse is {currentUnderMouse}");
+//                    Debug.Log($"current under mouse is {currentUnderMouse}");
                     if (currentUnderMouse != lastUnderMouse)
                     {
                         Debug.Log("Current and last were not the same.");
@@ -107,7 +107,7 @@ public class InputManager : MonoBehaviour
                     }
                     else
                     {
-                        Debug.Log("Highlight yo self!");
+//                        Debug.Log("Highlight yo self!");
                         currentUnderMouse.ObjectSelected();
                     }
                 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -15,6 +16,11 @@ public class PlayerController : MonoBehaviour
 
     NavMeshAgent agent;
 
+    private void Awake()
+    {
+        TurnManager.instance.PlayerControllerReportingForDuty(this);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +31,6 @@ public class PlayerController : MonoBehaviour
         targetMoveLocation = transform.position;
         
         ResetActionPoints();
-        TurnManager.instance.PlayerControllerReportingForDuty(this);
     }
 
     // Update is called once per frame
@@ -48,8 +53,6 @@ public class PlayerController : MonoBehaviour
             
             agent.SetDestination(targetMoveLocation);
         }
-
-        CheckLineOfSite();
     }
 
     public void SetAsActivePlayerController()
@@ -76,39 +79,5 @@ public class PlayerController : MonoBehaviour
         }
         Debug.Log("Couldn't afford so didn't remove cost");
         return false;
-    }
-
-    void CheckLineOfSite()
-    {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, visualRange);
-        for (int i = 0; i < hitColliders.Length; i++)
-        {
-            if (hitColliders[i].CompareTag("NPC"))
-            {
-                //Debug.Log("NPC is in the overlapsphere");
-                Vector3 rayFromMeToNPC = hitColliders[i].gameObject.transform.position - transform.position;
-                RaycastHit rhinfo;
-                if (Physics.Raycast(transform.position, rayFromMeToNPC, out rhinfo, visualRange))
-                {
-                    //Debug.Log(rhinfo.collider.name);
-                    if (rhinfo.collider.CompareTag("NPC"))
-                    {
-                        EnemyController enemyCtrl = hitColliders[i].GetComponent<EnemyController>();
-                        if (enemyCtrl != null)
-                        {
-                            enemyCtrl.PlayerCanSee(true);
-                        }
-                    }
-                    else
-                    {
-                        EnemyController enemyCtrl = hitColliders[i].GetComponent<EnemyController>();
-                        if (enemyCtrl != null)
-                        {
-                            enemyCtrl.PlayerCanSee(false);
-                        }
-                    }
-                }
-            }
-        }
     }
 }

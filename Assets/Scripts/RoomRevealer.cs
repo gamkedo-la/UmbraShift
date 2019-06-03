@@ -10,7 +10,7 @@ public class RoomRevealer : MonoBehaviour
         Debug.Log(other.name);
         if (other.CompareTag("Player"))
         {
-            Debug.Log($"{other.name} is tagged as player");
+//            Debug.Log($"{other.name} is tagged as player");
             gameObject.SetActive(false);
         }
     }

@@ -22,13 +22,13 @@ public class Interactable : MonoBehaviour
 
     public void ObjectDeselected()
     {
-        Debug.Log("Object has become deselected!");
+//        Debug.Log("Object has become deselected!");
         currentRenderer.material = defaultMat;
     }
 
     public void ObjectSelected()
     {
-        Debug.Log("Setting highlight material");
+//        Debug.Log("Setting highlight material");
         currentRenderer.material = InputManager.instance.highlightedMat;
     }
 }

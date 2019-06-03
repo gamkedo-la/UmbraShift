@@ -20,7 +20,7 @@ public class EnemyController : MonoBehaviour
 
     private NavMeshAgent agent;
     private BaseCharacterClass baseClass;
-    private List<PlayerController> playerManagers;
+    public List<PlayerController> playerManagers;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +32,7 @@ public class EnemyController : MonoBehaviour
         baseClass = GetComponent<BaseCharacterClass>();
         currentHealth = baseClass.maxHealth;
         playerManagers = TurnManager.instance.GetCharacterManagers();
+        EnemyManager.instance.EnemyControllerReportingForDuty(this);
     }
 
     // Update is called once per frame
@@ -67,6 +68,7 @@ public class EnemyController : MonoBehaviour
                 }
             }
         }
+        noticeIndicator.text = "?";
         foreach (PlayerController eachPC in playerManagers)
         {
             Vector3 rayFromMeToPlayer = eachPC.transform.position - transform.position;
@@ -79,15 +81,12 @@ public class EnemyController : MonoBehaviour
 
                 // add distance check before raycast
                 RaycastHit rhinfo;
-                if (Physics.Raycast(transform.position, rayFromMeToPlayer, out rhinfo, visualRange, LayerMask.NameToLayer("Player")))
+                if (Physics.Raycast(transform.position, rayFromMeToPlayer, out rhinfo, visualRange, LayerMask.GetMask("Player")))
                 {
-                    //Debug.Log(rhinfo.collider.name);
+//                    Debug.Log($"collider name is {rhinfo.collider.name}");
+//                    Debug.Log($"rhinfo layer is {rhinfo.transform.gameObject.layer}");
                     noticeIndicator.text = rhinfo.collider.name;
                 }
-            }
-            else
-            {
-                noticeIndicator.text = "?";
             }
         }
     }
