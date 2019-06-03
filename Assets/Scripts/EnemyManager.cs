@@ -25,33 +25,41 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        List<PlayerController> playerControllers = TurnManager.instance.GetCharacterManagers();
-//        Debug.Log($"player controllers {playerControllers.Count}");
-        
-        foreach (EnemyController enemy in enemyControllers)
-        { 
-            bool playerCanSee = false;
-            foreach (PlayerController player in playerControllers)
-            {
-                Vector3 fromPlayerToNPC = enemy.gameObject.transform.position - player.transform.position;
-                RaycastHit rhinfo;
-                if (Physics.Raycast(player.transform.position, fromPlayerToNPC, out rhinfo, player.visualRange))
+        StartCoroutine(CheckIfPlayerCanSeeNPCs());
+    }
+
+    // Update is called once per frame
+    IEnumerator CheckIfPlayerCanSeeNPCs()
+    {
+        while (true)
+        {
+            List<PlayerController> playerControllers = TurnManager.instance.GetCharacterManagers();
+
+            foreach (EnemyController enemy in enemyControllers)
+            { 
+                bool playerCanSee = false;
+                foreach (PlayerController player in playerControllers)
                 {
-                    Debug.Log(rhinfo.collider.name);
-                    if (rhinfo.collider.CompareTag("NPC"))
+                    Vector3 fromPlayerToNPC = enemy.gameObject.transform.position - player.transform.position;
+                    RaycastHit rhinfo;
+                    if (Physics.Raycast(player.transform.position, fromPlayerToNPC, out rhinfo, player.visualRange))
                     {
-                        playerCanSee = true;
-                    }
-                    else
-                    {
-                        Debug.Log($"collider tag is {rhinfo.collider.tag}");
+                        Debug.Log(rhinfo.collider.name);
+                        if (rhinfo.collider.CompareTag("NPC"))
+                        {
+                            playerCanSee = true;
+                        }
+                        else
+                        {
+                            Debug.Log($"collider tag is {rhinfo.collider.tag}");
+                        }
                     }
                 }
+                enemy.PlayerCanSee(playerCanSee);
             }
-            enemy.PlayerCanSee(playerCanSee);
+            yield return new WaitForSeconds(0.2f);
         }
     }
 }
