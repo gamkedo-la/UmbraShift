@@ -84,7 +84,8 @@ public class InputManager : MonoBehaviour
                     {
                         cost = 1;
                     }
-                    if (currentPlayerController.AttemptToSpend(cost, true))
+                    if (TurnManager.instance.isCombatModeActive == false || currentPlayerController.AttemptToSpend(cost, true))
+                        // this is order dependent and we need to check for is combat mode active first 
                     {
                         playerMoveTarget.transform.position = rhinfo.point;
                     }

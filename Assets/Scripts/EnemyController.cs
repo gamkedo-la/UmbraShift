@@ -31,7 +31,6 @@ public class EnemyController : MonoBehaviour
         moving = true;
         baseClass = GetComponent<BaseCharacterClass>();
         currentHealth = baseClass.maxHealth;
-        playerManagers = TurnManager.instance.GetCharacterManagers();
         EnemyManager.instance.EnemyControllerReportingForDuty(this);
         baseClass.ActionPointRefill();
     }
@@ -87,9 +86,18 @@ public class EnemyController : MonoBehaviour
 //                    Debug.Log($"collider name is {rhinfo.collider.name}");
 //                    Debug.Log($"rhinfo layer is {rhinfo.transform.gameObject.layer}");
                     noticeIndicator.text = rhinfo.collider.name;
+                    if (TurnManager.instance.isCombatModeActive == false)
+                    {
+                        TurnManager.instance.CombatMode();
+                    }
                 }
             }
         }
+    }
+
+    public void CheckForNewPlayerManagers()
+    {
+        playerManagers = TurnManager.instance.GetCharacterManagers();
     }
     
     public bool AttemptToSpend(int cost, bool spendIfWeCan)

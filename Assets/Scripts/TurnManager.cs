@@ -77,11 +77,16 @@ public class TurnManager : MonoBehaviour
     public void PlayerControllerReportingForDuty(PlayerController playerController)
     {
         playerControllers.Add(playerController);
+        foreach (var enemyController in enemyControllers)
+        {
+            enemyController.CheckForNewPlayerManagers();
+        }
     }
     
     public void EnemyControllerReportingForDuty(EnemyController enemyController)
     {
         enemyControllers.Add(enemyController);
+        enemyController.CheckForNewPlayerManagers();
     }
 
     public List<PlayerController> GetCharacterManagers()
