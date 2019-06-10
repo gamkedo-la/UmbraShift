@@ -16,21 +16,17 @@ public class PlayerController : MonoBehaviour
 
     NavMeshAgent agent;
 
-    private void Awake()
-    {
-        TurnManager.instance.PlayerControllerReportingForDuty(this);
-    }
-
     // Start is called before the first frame update
     void Start()
     {
+        TurnManager.instance.PlayerControllerReportingForDuty(this);
         baseClass = GetComponent<BaseCharacterClass>();
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         currentHealth = baseClass.maxHealth;
         targetMoveLocation = transform.position;
         
-        ResetActionPoints();
+        baseClass.ActionPointRefill();
     }
 
     // Update is called once per frame
@@ -59,25 +55,9 @@ public class PlayerController : MonoBehaviour
     {
         target.position = targetMoveLocation;
     }
-    
-    public void ResetActionPoints()
-    {
-        Debug.Log("Resetting action points");
-        currentAP = baseClass.ActionPointRefill();
-    }
 
     public bool AttemptToSpend(int cost, bool spendIfWeCan)
     {
-        if (cost <= currentAP)
-        {
-            if (spendIfWeCan)
-            {
-                currentAP -= cost;
-                Debug.Log($"Spent {cost} and have {currentAP} remaining.");
-            }
-            return true;
-        }
-        Debug.Log("Couldn't afford so didn't remove cost");
-        return false;
+        return baseClass.AttemptToSpend(cost, spendIfWeCan);
     }
 }

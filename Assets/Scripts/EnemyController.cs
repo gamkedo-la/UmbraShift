@@ -17,7 +17,6 @@ public class EnemyController : MonoBehaviour
     public bool moving = false;
 
     public int currentHealth;
-
     private NavMeshAgent agent;
     private BaseCharacterClass baseClass;
     public List<PlayerController> playerManagers;
@@ -25,6 +24,7 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        TurnManager.instance.EnemyControllerReportingForDuty(this);
         target = patrolPointOne;
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
@@ -33,6 +33,7 @@ public class EnemyController : MonoBehaviour
         currentHealth = baseClass.maxHealth;
         playerManagers = TurnManager.instance.GetCharacterManagers();
         EnemyManager.instance.EnemyControllerReportingForDuty(this);
+        baseClass.ActionPointRefill();
     }
 
     // Update is called once per frame
@@ -89,6 +90,11 @@ public class EnemyController : MonoBehaviour
                 }
             }
         }
+    }
+    
+    public bool AttemptToSpend(int cost, bool spendIfWeCan)
+    {
+        return baseClass.AttemptToSpend(cost, spendIfWeCan);
     }
 
     public void PlayerCanSee(bool isVisible)

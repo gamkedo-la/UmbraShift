@@ -20,8 +20,9 @@ public class BaseCharacterClass : MonoBehaviour
     public int hacking = 0;
 
     private int maxAPRefill = 5;
+    private int currentAP;
 
-    public int ActionPointRefill()
+    public void ActionPointRefill()
     {
         int apRefreshed = 2;
         apRefreshed += Mathf.FloorToInt(dexterity / 2);
@@ -29,7 +30,22 @@ public class BaseCharacterClass : MonoBehaviour
         {
             apRefreshed = maxAPRefill;
         }
-        return apRefreshed;
+        currentAP = apRefreshed;
+    }
+    
+    public bool AttemptToSpend(int cost, bool spendIfWeCan)
+    {
+        if (cost <= currentAP)
+        {
+            if (spendIfWeCan)
+            {
+                currentAP -= cost;
+                Debug.Log($"Spent {cost} and have {currentAP} remaining.");
+            }
+            return true;
+        }
+        Debug.Log("Couldn't afford so didn't remove cost");
+        return false;
     }
 
 }

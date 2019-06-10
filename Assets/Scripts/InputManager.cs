@@ -47,11 +47,17 @@ public class InputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Debug.Log("I pressed C");
+            TurnManager.instance.CombatMode();
+        }
         if (currentPlayerController == null)
         {
             //Debug.Log("Action manager is null");
             return;
         }
+
         RaycastHit rhinfo;
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out rhinfo, 100))
         {

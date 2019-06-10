@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TurnManager : MonoBehaviour
 {
     public static TurnManager instance;
     List<PlayerController> playerControllers = new List<PlayerController>();
+    List<EnemyController> enemyControllers = new List<EnemyController>();
 
+    public Text debugCombatText;
     public bool playersTurn = true;
     public bool isCombatModeActive = false;
 
@@ -21,6 +24,7 @@ public class TurnManager : MonoBehaviour
         {
             instance = this;
         }
+        debugCombatText.text = $"Combat mode is {isCombatModeActive}";
     }
 
     // Update is called once per frame
@@ -35,19 +39,30 @@ public class TurnManager : MonoBehaviour
 
     public void SwitchTurn()
     {
+        
         playersTurn = !playersTurn;
-
+        
         foreach (PlayerController eachPC in playerControllers)
         {
-            if (eachPC.CompareTag("NPC") && playersTurn == false)
+            if (playersTurn)
             {
-
-                eachPC.ResetActionPoints();
+                BaseCharacterClass tempBase = eachPC.GetComponent<BaseCharacterClass>();
+                if (tempBase != null)
+                {
+                    tempBase.ActionPointRefill();
+                }
             }
+        }
 
-            if (eachPC.CompareTag("Player") && playersTurn == true)
+        foreach (EnemyController eachEnemy in enemyControllers)
+        {
+            if (!playersTurn)
             {
-                eachPC.ResetActionPoints();
+                BaseCharacterClass tempBase = eachEnemy.GetComponent<BaseCharacterClass>();
+                if (tempBase != null)
+                {
+                    tempBase.ActionPointRefill();
+                }
             }
         }
     }
@@ -55,6 +70,7 @@ public class TurnManager : MonoBehaviour
     public void CombatMode()
     {
         isCombatModeActive = !isCombatModeActive;
+        debugCombatText.text = $"Combat mode is {isCombatModeActive}";
         Debug.Log($"CombatModeActive = {isCombatModeActive}");
     }
 
@@ -62,13 +78,18 @@ public class TurnManager : MonoBehaviour
     {
         playerControllers.Add(playerController);
     }
+    
+    public void EnemyControllerReportingForDuty(EnemyController enemyController)
+    {
+        enemyControllers.Add(enemyController);
+    }
 
     public List<PlayerController> GetCharacterManagers()
     {
         List<PlayerController> characters = new List<PlayerController>();
         foreach (PlayerController eachPC in playerControllers)
         {
-            if (eachPC.CompareTag("Player") && playersTurn == true)
+            if (eachPC.CompareTag("Player"))
             {
                 characters.Add(eachPC);
             }

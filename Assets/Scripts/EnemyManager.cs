@@ -46,14 +46,14 @@ public class EnemyManager : MonoBehaviour
                     RaycastHit rhinfo;
                     if (Physics.Raycast(player.transform.position, fromPlayerToNPC, out rhinfo, player.visualRange))
                     {
-                        Debug.Log(rhinfo.collider.name);
+//                        Debug.Log(rhinfo.collider.name);
                         if (rhinfo.collider.CompareTag("NPC"))
                         {
                             playerCanSee = true;
                         }
                         else
                         {
-                            Debug.Log($"collider tag is {rhinfo.collider.tag}");
+//                            Debug.Log($"collider tag is {rhinfo.collider.tag}");
                         }
                     }
                 }
