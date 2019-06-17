@@ -38,6 +38,12 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    public void SingleShotFromActivePlayer()
+    {
+        Debug.Log("Calling single shot on active player");
+        currentPlayerController.SingleShot();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -59,22 +65,15 @@ public class InputManager : MonoBehaviour
         }
 
         RaycastHit rhinfo;
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out rhinfo, 100))
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out rhinfo, 100, ~LayerMask.GetMask("HideRoomBlackOutBoxFromEditor")))
         {
             if (Input.GetMouseButtonDown(0))
             {
-                Debug.Log($"Layer is {rhinfo.transform.gameObject.layer} and mask {LayerMask.NameToLayer("VisibleNPC")}");
+//                Debug.Log($"Layer is {rhinfo.transform.gameObject.layer} and mask {LayerMask.NameToLayer("VisibleNPC")}");
                 if (rhinfo.transform.gameObject.layer == LayerMask.NameToLayer("VisibleNPC"))
                 {
                     Debug.Log($"Clicked on {rhinfo.transform.name}");
-                    if (currentPlayerController.AttemptToSpend(3, true))
-                    {
-                        Debug.Log("Bang bang");
-                    }
-                    else
-                    {
-                        Debug.Log("Not enough AP");
-                    }
+                    currentPlayerController.SetTarget(rhinfo.transform);
                 }
                 else
                 {

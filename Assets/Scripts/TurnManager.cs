@@ -79,17 +79,17 @@ public class TurnManager : MonoBehaviour
         playerControllers.Add(playerController);
         foreach (var enemyController in enemyControllers)
         {
-            enemyController.CheckForNewPlayerManagers();
+            enemyController.CheckForNewPlayerControllers();
         }
     }
     
     public void EnemyControllerReportingForDuty(EnemyController enemyController)
     {
         enemyControllers.Add(enemyController);
-        enemyController.CheckForNewPlayerManagers();
+        enemyController.CheckForNewPlayerControllers();
     }
 
-    public List<PlayerController> GetCharacterManagers()
+    public List<PlayerController> GetCharacterControllers()
     {
         List<PlayerController> characters = new List<PlayerController>();
         foreach (PlayerController eachPC in playerControllers)

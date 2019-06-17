@@ -7,12 +7,14 @@ using UnityEngine.AI;
 public class PlayerController : MonoBehaviour
 {
     public Transform target;
+    public BaseCharacterClass enemyController;
     public float visualRange = 30.0f;
     public int currentAP;
     
     public int currentHealth;
     private BaseCharacterClass baseClass;
     private Vector3 targetMoveLocation;
+    public GameObject muzzleFlash;
 
     NavMeshAgent agent;
 
@@ -45,7 +47,6 @@ public class PlayerController : MonoBehaviour
             {
                 transform.rotation = Quaternion.LookRotation(moveDiff);
             }
-
             
             agent.SetDestination(targetMoveLocation);
         }
@@ -59,5 +60,30 @@ public class PlayerController : MonoBehaviour
     public bool AttemptToSpend(int cost, bool spendIfWeCan)
     {
         return baseClass.AttemptToSpend(cost, spendIfWeCan);
+    }
+
+    public void SetTarget(Transform target)
+    {
+        enemyController = target.GetComponent<BaseCharacterClass>();
+        Debug.Log($"set target to {enemyController.name}");
+        if (enemyController == null)
+        {
+            Debug.Log("We clicked on an enemy with no controller");
+        }
+    }
+
+    public void SingleShot()
+    {
+        if (enemyController == null)
+        {
+            Debug.Log("Can't shoot, no enemy selected.");
+        }
+        else
+        {
+            Debug.Log($"shooting at {enemyController.name}");
+            baseClass.ShootAtTarget(enemyController);
+            GameObject tempGO = Instantiate(muzzleFlash);
+            tempGO.transform.position = transform.position;
+        }
     }
 }

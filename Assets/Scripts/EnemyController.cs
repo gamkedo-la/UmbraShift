@@ -19,7 +19,8 @@ public class EnemyController : MonoBehaviour
     public int currentHealth;
     private NavMeshAgent agent;
     private BaseCharacterClass baseClass;
-    public List<PlayerController> playerManagers;
+    public List<PlayerController> playerControllers;
+    public List<PlayerController> visiblePlayers = new List<PlayerController>();
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +39,12 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (TurnManager.instance.isCombatModeActive)
+        {
+            target.position = transform.position;
+            visiblePlayers = EnemyManager.instance.GetVisiblePlayers();
+        }
+        
         if (moving)
         {
             Vector3 travelDiff = target.position - transform.position;
@@ -53,7 +60,7 @@ public class EnemyController : MonoBehaviour
             agent.SetDestination(target.position);
             if (!agent.pathPending)
             {
-                if (agent.remainingDistance <= agent.stoppingDistance)
+                if (agent.remainingDistance <= agent.stoppingDistance && TurnManager.instance.isCombatModeActive == false)
                 {
                     moving = false;
                     if (target == patrolPointOne)
@@ -69,7 +76,7 @@ public class EnemyController : MonoBehaviour
             }
         }
         noticeIndicator.text = "?";
-        foreach (PlayerController eachPC in playerManagers)
+        foreach (PlayerController eachPC in playerControllers)
         {
             Vector3 rayFromMeToPlayer = eachPC.transform.position - transform.position;
             float degreesNeededToFacePlayer = Quaternion.Angle(transform.rotation,
@@ -86,6 +93,7 @@ public class EnemyController : MonoBehaviour
 //                    Debug.Log($"collider name is {rhinfo.collider.name}");
 //                    Debug.Log($"rhinfo layer is {rhinfo.transform.gameObject.layer}");
                     noticeIndicator.text = rhinfo.collider.name;
+                    EnemyManager.instance.ReportEnemySighted(eachPC);
                     if (TurnManager.instance.isCombatModeActive == false)
                     {
                         TurnManager.instance.CombatMode();
@@ -95,9 +103,9 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    public void CheckForNewPlayerManagers()
+    public void CheckForNewPlayerControllers()
     {
-        playerManagers = TurnManager.instance.GetCharacterManagers();
+        playerControllers = TurnManager.instance.GetCharacterControllers();
     }
     
     public bool AttemptToSpend(int cost, bool spendIfWeCan)

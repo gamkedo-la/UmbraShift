@@ -7,10 +7,24 @@ public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager instance;
     public List<EnemyController> enemyControllers = new List<EnemyController>();
+    public List<PlayerController> playerControllers = new List<PlayerController>();
 
     public void EnemyControllerReportingForDuty(EnemyController enemyController)
     {
         enemyControllers.Add(enemyController);
+    }
+
+    public void ReportEnemySighted(PlayerController playerController)
+    {
+        if (playerControllers.Contains(playerController) == false)
+        {
+            playerControllers.Add(playerController);
+        }
+    }
+
+    public List<PlayerController> GetVisiblePlayers()
+    {
+        return playerControllers;
     }
 
     private void Awake()
@@ -35,7 +49,7 @@ public class EnemyManager : MonoBehaviour
     {
         while (true)
         {
-            List<PlayerController> playerControllers = TurnManager.instance.GetCharacterManagers();
+            List<PlayerController> playerControllers = TurnManager.instance.GetCharacterControllers();
 
             foreach (EnemyController enemy in enemyControllers)
             { 
