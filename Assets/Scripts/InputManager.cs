@@ -9,10 +9,12 @@ public class InputManager : MonoBehaviour
     public Material highlightedMat;
     public Transform playerMoveTarget;
     public Interactable lastUnderMouse;
+	public GameObject playerSelectIndicator;
 
     public UIController uiController;
+	private float playerHeight = 1.05f;
     
-    void Awake()
+	void Awake()
     {
         if (instance != null)
         {
@@ -29,7 +31,8 @@ public class InputManager : MonoBehaviour
         currentPlayerController = playerController;
         playerController.SetAsActivePlayerController();
         Debug.Log($"Set new manager from {currentPlayerController.name}");
-        BaseCharacterClass BCC = currentPlayerController.gameObject.GetComponent<BaseCharacterClass>();
+		SetSelectionIndicatorOnPlayer(playerController);
+		BaseCharacterClass BCC = currentPlayerController.gameObject.GetComponent<BaseCharacterClass>();
         if (BCC != null)
         {
             Debug.Log(BCC.avatar);
@@ -38,7 +41,18 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    public void SingleShotFromActivePlayer()
+	private void SetSelectionIndicatorOnPlayer(PlayerController playerController)
+	{
+		playerSelectIndicator.SetActive(true);
+		playerSelectIndicator.transform.position = playerController.transform.position;
+		playerSelectIndicator.transform.position = new Vector3(
+												playerController.transform.position.x,
+												playerController.transform.position.y - playerHeight,
+												playerController.transform.position.z);
+		playerSelectIndicator.transform.SetParent(playerController.transform);
+	}
+
+	public void SingleShotFromActivePlayer()
     {
         Debug.Log("Calling single shot on active player");
         currentPlayerController.SingleShot();
@@ -48,6 +62,7 @@ public class InputManager : MonoBehaviour
     void Start()
     {
         currentPlayerController = null;
+		playerSelectIndicator.SetActive(false);
     }
 
     // Update is called once per frame
