@@ -20,6 +20,26 @@ MonoBehaviour:
   - Name: Desktop
     Value: 688
   Exists: 1
+--- !u!114 &-7407963994804224267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: C:\Users\planz\Documents\GitHub\UmbraShift\Assets\Sounds\fmod_project\Build\Desktop\Master.bank
+  SubDir: 
+  lastModified: 636980164072656280
+  LoadResult: 0
+  FileSizes:
+  - Name: Desktop
+    Value: 9632
+  Exists: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33,18 +53,18 @@ MonoBehaviour:
   m_Name: FMODStudioCache
   m_EditorClassIdentifier: 
   EditorBanks:
-  - {fileID: 7101666436455302658}
-  - {fileID: 129858992237702779}
-  - {fileID: 1018101771507689201}
+  - {fileID: 6849344204805768859}
+  - {fileID: -7407963994804224267}
+  - {fileID: 6714152523030855723}
   EditorEvents:
-  - {fileID: 3033368627045863920}
-  - {fileID: 660605097876515006}
+  - {fileID: 5099375115820548448}
+  - {fileID: 6341671446272743549}
   EditorParameters: []
   MasterBanks:
-  - {fileID: 129858992237702779}
+  - {fileID: -7407963994804224267}
   StringsBanks:
-  - {fileID: 7101666436455302658}
-  stringsBankWriteTime: 636979421329258415
+  - {fileID: 6849344204805768859}
+  stringsBankWriteTime: 636980164072666289
   cacheVersion: 3
 --- !u!114 &129858992237702779
 MonoBehaviour:
@@ -154,6 +174,94 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 250
+--- !u!114 &5099375115820548448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/mouseup
+  m_EditorClassIdentifier: 
+  Path: event:/mouseup
+  guid: 71a25622e841734690a5742797a8d940
+  Banks:
+  - {fileID: -7407963994804224267}
+  - {fileID: 6714152523030855723}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 250
+--- !u!114 &6341671446272743549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/mousedown
+  m_EditorClassIdentifier: 
+  Path: event:/mousedown
+  guid: e4af82f994332e4f8c7ed43d392af65e
+  Banks:
+  - {fileID: -7407963994804224267}
+  - {fileID: 6714152523030855723}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 250
+--- !u!114 &6714152523030855723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/mouseclick.bank
+  m_EditorClassIdentifier: 
+  Path: C:\Users\planz\Documents\GitHub\UmbraShift\Assets\Sounds\fmod_project\Build\Desktop\mouseclick.bank
+  SubDir: 
+  lastModified: 636980164072676301
+  LoadResult: 0
+  FileSizes:
+  - Name: Desktop
+    Value: 9120
+  Exists: 1
+--- !u!114 &6849344204805768859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.strings.bank
+  m_EditorClassIdentifier: 
+  Path: C:\Users\planz\Documents\GitHub\UmbraShift\Assets\Sounds\fmod_project\Build\Desktop\Master.strings.bank
+  SubDir: 
+  lastModified: 636980164072666289
+  LoadResult: 0
+  FileSizes:
+  - Name: Desktop
+    Value: 832
+  Exists: 1
 --- !u!114 &7101666436455302658
 MonoBehaviour:
   m_ObjectHideFlags: 0
