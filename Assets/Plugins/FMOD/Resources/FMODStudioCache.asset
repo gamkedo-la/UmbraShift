@@ -1,0 +1,176 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7491976729924182272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.strings.bank
+  m_EditorClassIdentifier: 
+  Path: C:\Users\lhaus\Documents\GitHub\gamkedo\UmbraShift\Assets\Sounds\test_project\Build\Desktop\Master.strings.bank
+  SubDir: 
+  lastModified: 636979406996811801
+  LoadResult: 0
+  FileSizes:
+  - Name: Desktop
+    Value: 688
+  Exists: 1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
+  m_Name: FMODStudioCache
+  m_EditorClassIdentifier: 
+  EditorBanks:
+  - {fileID: 7101666436455302658}
+  - {fileID: 129858992237702779}
+  - {fileID: 1018101771507689201}
+  EditorEvents:
+  - {fileID: 3033368627045863920}
+  - {fileID: 660605097876515006}
+  EditorParameters: []
+  MasterBanks:
+  - {fileID: 129858992237702779}
+  StringsBanks:
+  - {fileID: 7101666436455302658}
+  stringsBankWriteTime: 636979421329258415
+  cacheVersion: 3
+--- !u!114 &129858992237702779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: C:\Users\lhaus\Documents\GitHub\gamkedo\UmbraShift\Assets\Sounds\fmod_project\Build\Desktop\Master.bank
+  SubDir: 
+  lastModified: 636979421329188348
+  LoadResult: 0
+  FileSizes:
+  - Name: Desktop
+    Value: 9632
+  Exists: 1
+--- !u!114 &660605097876515006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/mousedown
+  m_EditorClassIdentifier: 
+  Path: event:/mousedown
+  guid: e4af82f994332e4f8c7ed43d392af65e
+  Banks:
+  - {fileID: 129858992237702779}
+  - {fileID: 1018101771507689201}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 250
+--- !u!114 &983302273011223901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: C:\Users\lhaus\Documents\GitHub\gamkedo\UmbraShift\Assets\Sounds\test_project\Build\Desktop\Master.bank
+  SubDir: 
+  lastModified: 636979406996701689
+  LoadResult: 0
+  FileSizes:
+  - Name: Desktop
+    Value: 1000
+  Exists: 1
+--- !u!114 &1018101771507689201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/mouseclick.bank
+  m_EditorClassIdentifier: 
+  Path: C:\Users\lhaus\Documents\GitHub\gamkedo\UmbraShift\Assets\Sounds\fmod_project\Build\Desktop\mouseclick.bank
+  SubDir: 
+  lastModified: 636979421329528649
+  LoadResult: 0
+  FileSizes:
+  - Name: Desktop
+    Value: 9120
+  Exists: 1
+--- !u!114 &3033368627045863920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/mouseup
+  m_EditorClassIdentifier: 
+  Path: event:/mouseup
+  guid: 71a25622e841734690a5742797a8d940
+  Banks:
+  - {fileID: 129858992237702779}
+  - {fileID: 1018101771507689201}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 250
+--- !u!114 &7101666436455302658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.strings.bank
+  m_EditorClassIdentifier: 
+  Path: C:\Users\lhaus\Documents\GitHub\gamkedo\UmbraShift\Assets\Sounds\fmod_project\Build\Desktop\Master.strings.bank
+  SubDir: 
+  lastModified: 636979421329258415
+  LoadResult: 0
+  FileSizes:
+  - Name: Desktop
+    Value: 832
+  Exists: 1

@@ -17,7 +17,7 @@ public class UIController : MonoBehaviour
     public List<BaseCharacterClass> characters = new List<BaseCharacterClass>();
     public List<Button> characterButtons = new List<Button>();
 
-    public void SetCurrentCharacterName(string characterName)
+	public void SetCurrentCharacterName(string characterName)
     {
         currentSelectedCharacterName.text = characterName;
     }
@@ -58,6 +58,7 @@ public class UIController : MonoBehaviour
                 tempButton.onClick.AddListener(() =>
                 {
                     InputManager.instance.SetCurrentPlayerController(tempPC);
+					SoundManager.instance.playSound( "mousedown" );
                 });
                 characterButtons.Add(tempButton);
             }
@@ -69,6 +70,7 @@ public class UIController : MonoBehaviour
         endTurnButton.onClick.AddListener(() =>
         {
             TurnManager.instance.SwitchTurn();
-        });
+			SoundManager.instance.playSound( "mousedown" );
+		} );
     }
 }

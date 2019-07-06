@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2138677392}
-  m_IndirectSpecularColor: {r: 0.28502667, g: 0.3713932, b: 0.49600998, a: 1}
+  m_IndirectSpecularColor: {r: 0.2850269, g: 0.3713935, b: 0.49601045, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1122,6 +1122,7 @@ MonoBehaviour:
   highlightedMat: {fileID: 2100000, guid: 4a7ff5abd1546454c8ed5ddb6aec4afd, type: 2}
   playerMoveTarget: {fileID: 125909046}
   lastUnderMouse: {fileID: 0}
+  playerSelectIndicator: {fileID: 0}
   uiController: {fileID: 9821381}
 --- !u!114 &273953993
 MonoBehaviour:
@@ -5289,11 +5290,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bar
       objectReference: {fileID: 0}
-    - target: {fileID: -5355109508583794521, guid: fccedc59cb0324f4993c384406818c04,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 5c48d537da260034c91fc106dd27d131, type: 2}
     - target: {fileID: -4216859302048453862, guid: fccedc59cb0324f4993c384406818c04,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5349,6 +5345,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -5355109508583794521, guid: fccedc59cb0324f4993c384406818c04,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5c48d537da260034c91fc106dd27d131, type: 2}
     - target: {fileID: 3615338128647994664, guid: fccedc59cb0324f4993c384406818c04,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -6026,6 +6027,7 @@ GameObject:
   - component: {fileID: 1687258582}
   - component: {fileID: 1687258586}
   - component: {fileID: 1687258583}
+  - component: {fileID: 1687258587}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -6198,6 +6200,19 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &1687258587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687258581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ListenerNumber: -1
 --- !u!1 &1687641363
 GameObject:
   m_ObjectHideFlags: 0
