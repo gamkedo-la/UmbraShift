@@ -40,6 +40,50 @@ MonoBehaviour:
   - Name: Desktop
     Value: 9632
   Exists: 1
+--- !u!114 &-2246605047292552742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/mousedown
+  m_EditorClassIdentifier: 
+  Path: event:/mousedown
+  guid: e4af82f994332e4f8c7ed43d392af65e
+  Banks:
+  - {fileID: -590576075413885382}
+  - {fileID: 6872764364851294977}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 250
+--- !u!114 &-590576075413885382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: /Users/lanthos/repos/Umbra Shift/Assets/Sounds/fmod_project/Build/Desktop/Master.bank
+  SubDir: 
+  lastModified: 636981052770000000
+  LoadResult: 0
+  FileSizes:
+  - Name: Desktop
+    Value: 9600
+  Exists: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53,18 +97,18 @@ MonoBehaviour:
   m_Name: FMODStudioCache
   m_EditorClassIdentifier: 
   EditorBanks:
-  - {fileID: 6849344204805768859}
-  - {fileID: -7407963994804224267}
-  - {fileID: 6714152523030855723}
+  - {fileID: 9028551312394151002}
+  - {fileID: -590576075413885382}
+  - {fileID: 6872764364851294977}
   EditorEvents:
-  - {fileID: 5099375115820548448}
-  - {fileID: 6341671446272743549}
+  - {fileID: 1251207438499988002}
+  - {fileID: -2246605047292552742}
   EditorParameters: []
   MasterBanks:
-  - {fileID: -7407963994804224267}
+  - {fileID: -590576075413885382}
   StringsBanks:
-  - {fileID: 6849344204805768859}
-  stringsBankWriteTime: 636980164072666289
+  - {fileID: 9028551312394151002}
+  stringsBankWriteTime: 636981052770000000
   cacheVersion: 3
 --- !u!114 &129858992237702779
 MonoBehaviour:
@@ -150,6 +194,30 @@ MonoBehaviour:
   - Name: Desktop
     Value: 9120
   Exists: 1
+--- !u!114 &1251207438499988002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/mouseup
+  m_EditorClassIdentifier: 
+  Path: event:/mouseup
+  guid: 71a25622e841734690a5742797a8d940
+  Banks:
+  - {fileID: -590576075413885382}
+  - {fileID: 6872764364851294977}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 250
 --- !u!114 &3033368627045863920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,6 +330,26 @@ MonoBehaviour:
   - Name: Desktop
     Value: 832
   Exists: 1
+--- !u!114 &6872764364851294977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/mouseclick.bank
+  m_EditorClassIdentifier: 
+  Path: /Users/lanthos/repos/Umbra Shift/Assets/Sounds/fmod_project/Build/Desktop/mouseclick.bank
+  SubDir: 
+  lastModified: 636981052770000000
+  LoadResult: 0
+  FileSizes:
+  - Name: Desktop
+    Value: 9088
+  Exists: 1
 --- !u!114 &7101666436455302658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,6 +365,26 @@ MonoBehaviour:
   Path: C:\Users\lhaus\Documents\GitHub\gamkedo\UmbraShift\Assets\Sounds\fmod_project\Build\Desktop\Master.strings.bank
   SubDir: 
   lastModified: 636979421329258415
+  LoadResult: 0
+  FileSizes:
+  - Name: Desktop
+    Value: 832
+  Exists: 1
+--- !u!114 &9028551312394151002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.strings.bank
+  m_EditorClassIdentifier: 
+  Path: /Users/lanthos/repos/Umbra Shift/Assets/Sounds/fmod_project/Build/Desktop/Master.strings.bank
+  SubDir: 
+  lastModified: 636981052770000000
   LoadResult: 0
   FileSizes:
   - Name: Desktop

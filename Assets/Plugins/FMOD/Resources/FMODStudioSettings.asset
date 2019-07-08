@@ -15,9 +15,9 @@ MonoBehaviour:
   SwitchSettingsMigration: 1
   HasSourceProject: 1
   HasPlatforms: 1
-  sourceProjectPath: C:\Users\planz\Documents\GitHub\UmbraShift\Assets\Sounds\fmod_project\fmod_project.fspro
-  SourceProjectPathUnformatted: Assets\Sounds\fmod_project\fmod_project.fspro
-  SourceBankPathUnformatted: Assets\Sounds\fmod_project\Build
+  sourceProjectPath: /Users/lanthos/repos/Umbra Shift/Assets/Sounds/fmod_project/fmod_project.fspro
+  SourceProjectPathUnformatted: Assets/Sounds/fmod_project/fmod_project.fspro
+  SourceBankPathUnformatted: Assets/Sounds/fmod_project/Build
   AutomaticEventLoading: 1
   BankLoadType: 0
   AutomaticSampleLoading: 0
@@ -76,7 +76,9 @@ MonoBehaviour:
   - Platform: 20
     Value: 32
   Plugins: []
-  MasterBanks: []
-  Banks: []
+  MasterBanks:
+  - Master
+  Banks:
+  - mouseclick
   BanksToLoad: []
   LiveUpdatePort: 9264
