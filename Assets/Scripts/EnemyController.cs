@@ -88,15 +88,18 @@ public class EnemyController : MonoBehaviour
 
                 // add distance check before raycast
                 RaycastHit rhinfo;
-                if (Physics.Raycast(transform.position, rayFromMeToPlayer, out rhinfo, visualRange, LayerMask.GetMask("Player")))
+                if (Physics.Raycast(transform.position, rayFromMeToPlayer, out rhinfo, visualRange))
                 {
 //                    Debug.Log($"collider name is {rhinfo.collider.name}");
 //                    Debug.Log($"rhinfo layer is {rhinfo.transform.gameObject.layer}");
-                    noticeIndicator.text = rhinfo.collider.name;
-                    EnemyManager.instance.ReportEnemySighted(eachPC);
-                    if (TurnManager.instance.isCombatModeActive == false)
+                    if (rhinfo.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
                     {
-                        TurnManager.instance.CombatMode();
+                        noticeIndicator.text = rhinfo.collider.name;
+                        EnemyManager.instance.ReportEnemySighted(eachPC);
+                        if (TurnManager.instance.isCombatModeActive == false)
+                        {
+                            TurnManager.instance.CombatMode();
+                        }
                     }
                 }
             }
