@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class TurnManager : MonoBehaviour
 {
     public static TurnManager instance;
     List<PlayerController> playerControllers = new List<PlayerController>();
     List<EnemyController> enemyControllers = new List<EnemyController>();
-
-    public Text debugCombatText;
+    
     public bool playersTurn = true;
     public bool isCombatModeActive = false;
 
@@ -24,7 +22,11 @@ public class TurnManager : MonoBehaviour
         {
             instance = this;
         }
-        debugCombatText.text = $"Combat mode is {isCombatModeActive}";
+    }
+
+    public void Start()
+    {
+        DebugManager.instance.OverwriteDebugText($"Combat mode is {isCombatModeActive}");
     }
 
     // Update is called once per frame
@@ -70,7 +72,7 @@ public class TurnManager : MonoBehaviour
     public void CombatMode()
     {
         isCombatModeActive = !isCombatModeActive;
-        debugCombatText.text = $"Combat mode is {isCombatModeActive}";
+        DebugManager.instance.OverwriteDebugText($"Combat mode is {isCombatModeActive}");
         Debug.Log($"CombatModeActive = {isCombatModeActive}");
     }
 

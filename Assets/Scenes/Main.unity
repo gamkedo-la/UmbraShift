@@ -719,6 +719,12 @@ Transform:
   m_Father: {fileID: 1340283783}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &142832811 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 142832811, guid: 4a311a93f7e5f4934a748ee9baabc08b,
+    type: 3}
+  m_PrefabInstance: {fileID: 3082396616366829808}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &143462224
 GameObject:
   m_ObjectHideFlags: 0
@@ -1159,6 +1165,7 @@ GameObject:
   - component: {fileID: 273953990}
   - component: {fileID: 273953992}
   - component: {fileID: 273953993}
+  - component: {fileID: 273953994}
   m_Layer: 0
   m_Name: WorldManagerObjects
   m_TagString: Untagged
@@ -1178,7 +1185,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 233116aae04e748b89c105b655fc3354, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugCombatText: {fileID: 1540283463}
   playersTurn: 1
   isCombatModeActive: 0
 --- !u!4 &273953991
@@ -1227,6 +1233,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyControllers: []
   playerControllers: []
+--- !u!114 &273953994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 273953989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cadc7cb5bf7184c9aa81e1cba18630a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugText: {fileID: 1540283463}
+  debugPanel: {fileID: 142832811}
 --- !u!1 &283744549
 GameObject:
   m_ObjectHideFlags: 0
@@ -5228,5 +5248,20 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 273953992}
+    - target: {fileID: 3082396617528569014, guid: 4a311a93f7e5f4934a748ee9baabc08b,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 375.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3082396617528569014, guid: 4a311a93f7e5f4934a748ee9baabc08b,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 195.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3082396617528569013, guid: 4a311a93f7e5f4934a748ee9baabc08b,
+        type: 3}
+      propertyPath: m_Name
+      value: DebugText
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a311a93f7e5f4934a748ee9baabc08b, type: 3}
