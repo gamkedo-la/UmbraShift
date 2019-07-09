@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class SweepingWatch : MonoBehaviour
 {
-	public float maxArc = 90f;
+	[SerializeField] float maxArc = 90f;
+	[SerializeField] float minSpeed = 0.2f;
+	[SerializeField] float maxSpeed = 0.5f;
 	float speed;
 	float rotationAmount = 0f;
 	Vector3 defaultAngle;
@@ -12,7 +14,7 @@ public class SweepingWatch : MonoBehaviour
 
 	private void Start()
 	{
-		speed = Random.Range(0.2f, 0.5f);
+		speed = Random.Range(minSpeed, maxSpeed);
 		defaultAngle = transform.forward;
 		sweepingAngle = transform.forward;
 	}
