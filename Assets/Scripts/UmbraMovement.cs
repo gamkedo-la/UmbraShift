@@ -77,7 +77,7 @@ public class UmbraMovement : MonoBehaviour
             color = Vector3.SmoothDamp(new Vector3(tempColor.x, tempColor.y, tempColor.z), realColor, ref colorVelocity, shiftTime);
             rend.material.SetColor("_BaseColor", new Color(color.x, color.y, color.z));
             yield return new WaitForEndOfFrame();
-            print(velocity);
+//            print(velocity);
         }
         moving = false;
     }

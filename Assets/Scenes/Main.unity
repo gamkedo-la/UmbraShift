@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2138677392}
-  m_IndirectSpecularColor: {r: 0.28502667, g: 0.3713932, b: 0.49600998, a: 1}
+  m_IndirectSpecularColor: {r: 0.28502676, g: 0.37139347, b: 0.49601015, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1160,6 +1160,7 @@ GameObject:
   - component: {fileID: 273953992}
   - component: {fileID: 273953993}
   - component: {fileID: 273953994}
+  - component: {fileID: 273953995}
   m_Layer: 0
   m_Name: WorldManagerObjects
   m_TagString: Untagged
@@ -1236,9 +1237,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 273953989}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cadc7cb5bf7184c9aa81e1cba18630a2, type: 3}
+  m_Script: {fileID: 11500000, guid: 9589a131cb4183f4b8078d88883c5ef0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugText: {fileID: 2087967629}
+  debugPanel: {fileID: 1780885274}
+--- !u!114 &273953995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 273953989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad293283d5eca8f458ea4e500947c162, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MouseDownEvent: event:/mousedown
+  MouseUpEvent: event:/mouseup
 --- !u!1 &283744549
 GameObject:
   m_ObjectHideFlags: 0
@@ -4860,6 +4877,12 @@ PrefabInstance:
       objectReference: {fileID: 1010599039}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 388dcd396052c254abfe8a13b6a38ae0, type: 3}
+--- !u!1 &1780885274 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 142832811, guid: 4a311a93f7e5f4934a748ee9baabc08b,
+    type: 3}
+  m_PrefabInstance: {fileID: 3082396616366829808}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1803113621
 GameObject:
   m_ObjectHideFlags: 0
@@ -5256,6 +5279,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2087967629 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3082396617528569015, guid: 4a311a93f7e5f4934a748ee9baabc08b,
+    type: 3}
+  m_PrefabInstance: {fileID: 3082396616366829808}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2112045768 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3128641422639261334, guid: 16315fad2c7e63c4f9927a26b6c1b349,
