@@ -6,15 +6,6 @@ public class SoundManager : MonoBehaviour
 {
 	public static SoundManager instance;
 
-	// FMOD events
-	[FMODUnity.EventRef]
-	public string MouseDownEvent;
-	FMOD.Studio.EventInstance MouseDown;
-
-	[FMODUnity.EventRef]
-	public string MouseUpEvent;
-	FMOD.Studio.EventInstance MouseUp;
-
 	private void Awake ( )
 	{
 		if ( instance != null )
@@ -29,9 +20,9 @@ public class SoundManager : MonoBehaviour
 
 	public void playSound(string soundName)
 	{
-		MouseDown = FMODUnity.RuntimeManager.CreateInstance( MouseDownEvent );
-		MouseDown.set3DAttributes( FMODUnity.RuntimeUtils.To3DAttributes( Camera.main.gameObject ) );
-		MouseDown.start( );
+		FMOD.Studio.EventInstance soundEvent = FMODUnity.RuntimeManager.CreateInstance( soundName );
+		soundEvent.set3DAttributes( FMODUnity.RuntimeUtils.To3DAttributes( Camera.main.gameObject ) );
+		soundEvent.start( );
 	}
 	
 }
