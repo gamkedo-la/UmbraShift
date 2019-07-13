@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 targetMoveLocation;
     public GameObject muzzleFlash;
 
-    NavMeshAgent agent;
+    public NavMeshAgent agent;
 
     // Start is called before the first frame update
     void Start()

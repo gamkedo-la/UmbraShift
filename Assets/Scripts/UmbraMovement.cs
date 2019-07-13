@@ -42,7 +42,8 @@ public class UmbraMovement : MonoBehaviour
         {
             StartCoroutine(UmbraShift(shiftTime));
             moving = true;
-        }
+			pc.agent.isStopped = true;
+		}
             
         
     }
@@ -52,12 +53,15 @@ public class UmbraMovement : MonoBehaviour
     {
         while(transform.localScale.y > 0.011f)
         {
-            transform.localScale = Vector3.SmoothDamp(transform.localScale, shadowScale, ref velocity, shiftTime);
+			if (transform.localScale.y <= 0.1f)	{ pc.agent.isStopped = false; }
+			else { pc.agent.isStopped = true; }
+			transform.localScale = Vector3.SmoothDamp(transform.localScale, shadowScale, ref velocity, shiftTime);
             tempColor = rend.material.GetColor("_BaseColor");
             color = Vector3.SmoothDamp(new Vector3(tempColor.x, tempColor.y, tempColor.z), new Vector3(0, 0, 0), ref colorVelocity, shiftTime);
             rend.material.SetColor("_BaseColor", new Color(color.x, color.y, color.z));
             yield return new WaitForEndOfFrame();
         }
+
         
         // Waits until object is at destination
         while (transform.position.x != agent.destination.x || transform.position.z != agent.destination.z)
