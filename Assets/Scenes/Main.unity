@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2138677392}
-  m_IndirectSpecularColor: {r: 0.2851193, g: 0.3713429, b: 0.49467468, a: 1}
+  m_IndirectSpecularColor: {r: 0.28511912, g: 0.37134272, b: 0.49467418, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1846,6 +1846,7 @@ MonoBehaviour:
   currentHealth: 0
   muzzleFlash: {fileID: 752083658007179946, guid: 2af3308baefb64a4abb83663d22b9618,
     type: 3}
+  agent: {fileID: 0}
 --- !u!195 &437053385
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3564,7 +3565,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2632
+  m_Name: pb_Mesh-1848
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -5082,6 +5083,7 @@ MonoBehaviour:
   currentHealth: 0
   muzzleFlash: {fileID: 752083658007179946, guid: 2af3308baefb64a4abb83663d22b9618,
     type: 3}
+  agent: {fileID: 0}
 --- !u!195 &1512326331
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6792,6 +6794,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainUI
       objectReference: {fileID: 0}
+    - target: {fileID: 3082396616376511536, guid: 4a311a93f7e5f4934a748ee9baabc08b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3082396616376511541, guid: 4a311a93f7e5f4934a748ee9baabc08b,
         type: 3}
       propertyPath: characters.Array.data[0]
@@ -6936,5 +6943,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: DebugText
       objectReference: {fileID: 0}
+    - target: {fileID: 3082396616376511539, guid: 4a311a93f7e5f4934a748ee9baabc08b,
+        type: 3}
+      propertyPath: m_RenderMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3082396616376511539, guid: 4a311a93f7e5f4934a748ee9baabc08b,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1687258584}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a311a93f7e5f4934a748ee9baabc08b, type: 3}
