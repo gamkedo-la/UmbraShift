@@ -21,6 +21,7 @@ public class EnemyController : MonoBehaviour
     private BaseCharacterClass baseClass;
     public List<PlayerController> playerControllers;
     public List<PlayerController> visiblePlayers = new List<PlayerController>();
+    public PlayerController playerTarget;
 
     // Start is called before the first frame update
     void Start()
@@ -95,6 +96,7 @@ public class EnemyController : MonoBehaviour
                     if (rhinfo.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
                     {
                         noticeIndicator.text = rhinfo.collider.name;
+                        Debug.Log($"{name} is reporting {eachPC.name} as seen");
                         EnemyManager.instance.ReportEnemySighted(eachPC);
                         if (TurnManager.instance.isCombatModeActive == false)
                         {
@@ -104,6 +106,11 @@ public class EnemyController : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void SetTarget(PlayerController player)
+    {
+        playerTarget = player;
     }
 
     public void CheckForNewPlayerControllers()

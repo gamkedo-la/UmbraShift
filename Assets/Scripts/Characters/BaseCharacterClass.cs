@@ -26,7 +26,7 @@ public class BaseCharacterClass : MonoBehaviour
     public int hacking = 0;
 
     private int maxAPRefill = 5;
-    private int currentAP;
+    public int currentAP;
 
     public void Start()
     {

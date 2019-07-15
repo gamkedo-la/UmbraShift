@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = System.Random;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class EnemyManager : MonoBehaviour
     {
         if (playerControllers.Contains(playerController) == false)
         {
+            Debug.Log($"playerController name {playerController.name}");
             playerControllers.Add(playerController);
         }
     }
@@ -72,6 +74,19 @@ public class EnemyManager : MonoBehaviour
                     }
                 }
                 enemy.PlayerCanSee(playerCanSee);
+            }
+
+            if (TurnManager.instance.playersTurn == false && TurnManager.instance.isCombatModeActive)
+            {
+                foreach (var enemy in enemyControllers)
+                {
+                    BaseCharacterClass bcc = enemy.GetComponent<BaseCharacterClass>();
+                    if (bcc.currentAP >= 3)
+                    {
+                        int randIndex = UnityEngine.Random.Range(0, playerControllers.Count);
+                        enemy.SetTarget(playerControllers[randIndex]);
+                    }
+                }
             }
             yield return new WaitForSeconds(0.2f);
         }
