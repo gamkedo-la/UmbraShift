@@ -40,6 +40,30 @@ MonoBehaviour:
   - Name: Desktop
     Value: 9632
   Exists: 1
+--- !u!114 &-4242707346146010401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/mousedown
+  m_EditorClassIdentifier: 
+  Path: event:/mousedown
+  guid: e4af82f994332e4f8c7ed43d392af65e
+  Banks:
+  - {fileID: 3749931526698703796}
+  - {fileID: 3102364848234766188}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 250
 --- !u!114 &-2246605047292552742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,17 +121,17 @@ MonoBehaviour:
   m_Name: FMODStudioCache
   m_EditorClassIdentifier: 
   EditorBanks:
-  - {fileID: 9028551312394151002}
-  - {fileID: -590576075413885382}
-  - {fileID: 6872764364851294977}
+  - {fileID: 4306110284720651531}
+  - {fileID: 3749931526698703796}
+  - {fileID: 3102364848234766188}
   EditorEvents:
-  - {fileID: 1251207438499988002}
-  - {fileID: -2246605047292552742}
+  - {fileID: 5873731863420444959}
+  - {fileID: -4242707346146010401}
   EditorParameters: []
   MasterBanks:
-  - {fileID: -590576075413885382}
+  - {fileID: 3749931526698703796}
   StringsBanks:
-  - {fileID: 9028551312394151002}
+  - {fileID: 4306110284720651531}
   stringsBankWriteTime: 636981052770000000
   cacheVersion: 3
 --- !u!114 &129858992237702779
@@ -242,6 +266,66 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 250
+--- !u!114 &3102364848234766188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/mouseclick.bank
+  m_EditorClassIdentifier: 
+  Path: /Users/lanthos/repos/Umbra Shift/FMOD/Build/Desktop/mouseclick.bank
+  SubDir: 
+  lastModified: 636981052770000000
+  LoadResult: 0
+  FileSizes:
+  - Name: Desktop
+    Value: 9088
+  Exists: 1
+--- !u!114 &3749931526698703796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: /Users/lanthos/repos/Umbra Shift/FMOD/Build/Desktop/Master.bank
+  SubDir: 
+  lastModified: 636981052770000000
+  LoadResult: 0
+  FileSizes:
+  - Name: Desktop
+    Value: 9600
+  Exists: 1
+--- !u!114 &4306110284720651531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.strings.bank
+  m_EditorClassIdentifier: 
+  Path: /Users/lanthos/repos/Umbra Shift/FMOD/Build/Desktop/Master.strings.bank
+  SubDir: 
+  lastModified: 636981052770000000
+  LoadResult: 0
+  FileSizes:
+  - Name: Desktop
+    Value: 832
+  Exists: 1
 --- !u!114 &5099375115820548448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,6 +343,30 @@ MonoBehaviour:
   Banks:
   - {fileID: -7407963994804224267}
   - {fileID: 6714152523030855723}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 250
+--- !u!114 &5873731863420444959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/mouseup
+  m_EditorClassIdentifier: 
+  Path: event:/mouseup
+  guid: 71a25622e841734690a5742797a8d940
+  Banks:
+  - {fileID: 3749931526698703796}
+  - {fileID: 3102364848234766188}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1

@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: FMODStudioSettings
   m_EditorClassIdentifier: 
   SwitchSettingsMigration: 1
-  HasSourceProject: 1
+  HasSourceProject: 0
   HasPlatforms: 1
-  sourceProjectPath: /Users/lanthos/repos/Umbra Shift/Assets/Sounds/fmod_project/fmod_project.fspro
-  SourceProjectPathUnformatted: Assets/Sounds/fmod_project/fmod_project.fspro
-  SourceBankPathUnformatted: Assets/Sounds/fmod_project/Build
+  sourceProjectPath: FMOD/fmod_project.fspro
+  SourceProjectPathUnformatted: FMOD/fmod_project.fspro
+  SourceBankPathUnformatted: FMOD/Build
   AutomaticEventLoading: 1
   BankLoadType: 0
   AutomaticSampleLoading: 0
@@ -76,7 +76,9 @@ MonoBehaviour:
   - Platform: 20
     Value: 32
   Plugins: []
-  MasterBanks: []
-  Banks: []
+  MasterBanks:
+  - Master
+  Banks:
+  - mouseclick
   BanksToLoad: []
   LiveUpdatePort: 9264
