@@ -20,7 +20,7 @@ public class SoundManager : MonoBehaviour
 
 	public void playSound(string soundName)
 	{
-		FMOD.Studio.EventInstance soundEvent = FMODUnity.RuntimeManager.CreateInstance( soundName );
+		FMOD.Studio.EventInstance soundEvent = FMODUnity.RuntimeManager.CreateInstance( $"event:/{soundName}");
 		soundEvent.set3DAttributes( FMODUnity.RuntimeUtils.To3DAttributes( Camera.main.gameObject ) );
 		soundEvent.start( );
 	}
