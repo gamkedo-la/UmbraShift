@@ -19,14 +19,41 @@ public class BaseCharacterClass : MonoBehaviour
     public int maxHealth = 10;
     public bool isAlive = true;
     private int BasePercentageChanceToHit = 95;
-    
+
+    //WIP Stat adjustments
+    /*
+    public Stat strength;
+    public Stat dexterity;
+    public Stat constitution;
+    public Stat intelligence;
+    public Stat perception;*/
 
     // skills
     public int shooting = 0;
     public int hacking = 0;
 
+    //WIP Skill Adjustments
+    /*
+    public Stat hacking;
+    public Stat shooting;
+    public Stat investigation;
+    public Stat stealth;*/
+
     private int maxAPRefill = 5;
     public int currentAP;
+
+    public void Awake()
+    {
+        //WIP Stat and Skill adjustments
+        /*
+        maxHealth += constitution.GetValue();
+        armor.AddModifier(dexterity.GetValue());
+
+        hacking.AddModifier(intelligence.GetValue());
+        shooting.AddModifier(dexterity.GetValue());
+        investigation.AddModifier(perception.GetValue() + intelligence.GetValue());
+        stealth.AddModifier(dexterity.GetValue());*/
+    }
 
     public void Start()
     {
@@ -65,6 +92,8 @@ public class BaseCharacterClass : MonoBehaviour
         int PercentageChanceToHit = BasePercentageChanceToHit;
         PercentageChanceToHit += dexterity + shooting;
         PercentageChanceToHit -= target.dexterity;
+        //PercentageChanceToHit += shooting.GetValue();
+        //PercentageChanceToHit -= target.dexterity.GetValue();
         Debug.Log($"chance to hit {PercentageChanceToHit}");
         if (Random.Range(0, 100) <= PercentageChanceToHit)
         {
