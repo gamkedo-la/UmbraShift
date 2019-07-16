@@ -5,7 +5,6 @@ using UnityEngine;
 public class InputManager : MonoBehaviour
 {
     public static InputManager instance;
-    public PlayerController currentPlayerController;
     public Material highlightedMat;
     public Transform playerMoveTarget;
     public Interactable lastUnderMouse;
@@ -26,22 +25,9 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    public void SetCurrentPlayerController(PlayerController playerController)
-    {
-        currentPlayerController = playerController;
-        playerController.SetAsActivePlayerController();
-        Debug.Log($"Set new manager from {currentPlayerController.name}");
-		SetSelectionIndicatorOnPlayer(playerController);
-		BaseCharacterClass BCC = currentPlayerController.gameObject.GetComponent<BaseCharacterClass>();
-        if (BCC != null)
-        {
-            Debug.Log(BCC.avatar);
-            uiController.SetCurrentCharacterName(BCC.characterName);
-            uiController.SetCurrentCharacterAvatar(BCC.avatar);
-        }
-    }
+    
 
-	private void SetSelectionIndicatorOnPlayer(PlayerController playerController)
+	public void SetSelectionIndicatorOnPlayer(PlayerController playerController)
 	{
 		playerSelectIndicator.SetActive(true);
 		playerSelectIndicator.transform.position = playerController.transform.position;
@@ -55,13 +41,12 @@ public class InputManager : MonoBehaviour
 	public void SingleShotFromActivePlayer()
     {
         Debug.Log("Calling single shot on active player");
-        currentPlayerController.SingleShot();
+        TurnManager.instance.ActivePlayerController.SingleShot();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        currentPlayerController = null;
 		playerSelectIndicator.SetActive(false);
     }
 
@@ -73,7 +58,7 @@ public class InputManager : MonoBehaviour
             Debug.Log("I pressed C");
             TurnManager.instance.CombatMode();
         }
-        if (currentPlayerController == null)
+        if (TurnManager.instance.ActiveCharacter == null)
         {
             //Debug.Log("Action manager is null");
             return;
@@ -88,17 +73,17 @@ public class InputManager : MonoBehaviour
                 if (rhinfo.transform.gameObject.layer == LayerMask.NameToLayer("VisibleNPC"))
                 {
                     Debug.Log($"Clicked on {rhinfo.transform.name}");
-                    currentPlayerController.SetTarget(rhinfo.transform);
+                    TurnManager.instance.ActivePlayerController.SetTarget(rhinfo.transform);
                 }
                 else
                 {
-                    float moveDist = Vector3.Distance(rhinfo.point,currentPlayerController.transform.position);
+                    float moveDist = Vector3.Distance(rhinfo.point,TurnManager.instance.ActiveCharacter.transform.position);
                     int cost = Mathf.FloorToInt(moveDist / 10);
                     if (cost == 0)
                     {
                         cost = 1;
                     }
-                    if (TurnManager.instance.isCombatModeActive == false || currentPlayerController.AttemptToSpend(cost, true))
+                    if (TurnManager.instance.isCombatModeActive == false || TurnManager.instance.ActivePlayerController.AttemptToSpend(cost, true))
                         // this is order dependent and we need to check for is combat mode active first 
                     {
                         playerMoveTarget.transform.position = rhinfo.point;

@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (this == InputManager.instance.currentPlayerController)
+        if (this.gameObject == TurnManager.instance.ActiveCharacter)
         {
             targetMoveLocation = target.position;
             Vector3 travelDiff = targetMoveLocation - transform.position;

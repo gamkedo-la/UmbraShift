@@ -57,7 +57,7 @@ public class UIController : MonoBehaviour
             {
                 tempButton.onClick.AddListener(() =>
                 {
-                    InputManager.instance.SetCurrentPlayerController(tempPC);
+                    TurnManager.instance.SetActiveCharacter(tempPC.gameObject);
 					SoundManager.instance.playSound( "mousedown" );
                 });
                 characterButtons.Add(tempButton);

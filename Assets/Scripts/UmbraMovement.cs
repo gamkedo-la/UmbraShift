@@ -38,7 +38,7 @@ public class UmbraMovement : MonoBehaviour
     void Update()
     {
         // If player is currentPlayerController, and player is not at destination
-        if (pc == InputManager.instance.currentPlayerController && (transform.position.x != agent.destination.x || transform.position.z != agent.destination.z) && !moving)
+        if (pc == TurnManager.instance.ActivePlayerController && (transform.position.x != agent.destination.x || transform.position.z != agent.destination.z) && !moving)
         {
             StartCoroutine(UmbraShift(shiftTime));
             moving = true;

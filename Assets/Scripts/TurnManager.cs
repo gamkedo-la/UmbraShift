@@ -6,13 +6,18 @@ using UnityEngine;
 public class TurnManager : MonoBehaviour
 {
     public static TurnManager instance;
-    List<PlayerController> playerControllers = new List<PlayerController>();
+	public UIController uiController;
+	List<PlayerController> playerControllers = new List<PlayerController>();
     List<EnemyController> enemyControllers = new List<EnemyController>();
     
     public bool playersTurn = true;
     public bool isCombatModeActive = false;
+	private GameObject activeCharacter;
+	private PlayerController activePlayerController;
+	public GameObject ActiveCharacter { get { return activeCharacter; } }
+	public PlayerController ActivePlayerController { get { return activePlayerController; } }
 
-    private void Awake()
+	private void Awake()
     {
         if (instance != null)
         {
@@ -26,7 +31,9 @@ public class TurnManager : MonoBehaviour
 
     public void Start()
     {
-        DebugManager.instance.OverwriteDebugText($"Combat mode is {isCombatModeActive}");
+		activePlayerController = null;
+		activeCharacter = null;
+		DebugManager.instance.OverwriteDebugText($"Combat mode is {isCombatModeActive}");
     }
 
     // Update is called once per frame
@@ -38,6 +45,34 @@ public class TurnManager : MonoBehaviour
             SwitchTurn();
         }
     }
+
+	public void SetActiveCharacter(GameObject character)
+	{
+		activeCharacter = character;
+		if (character.GetComponent<PlayerController>()) 
+		{
+			activePlayerController = character.GetComponent<PlayerController>();
+			activePlayerController.SetAsActivePlayerController();
+			Debug.Log($"Set new manager from {activePlayerController.name}");
+			InputManager.instance.SetSelectionIndicatorOnPlayer(activePlayerController);
+			BaseCharacterClass BCC = activeCharacter.GetComponent<BaseCharacterClass>();
+			if (BCC != null)
+			{
+				Debug.Log(BCC.avatar);
+				uiController.SetCurrentCharacterName(BCC.characterName);
+				uiController.SetCurrentCharacterAvatar(BCC.avatar);
+			}
+		}
+		else { activePlayerController = null; }
+	}
+
+
+
+	public void ClearActiveCharacters()
+	{
+		activeCharacter = null;
+		activePlayerController = null;
+	}
 
     public void SwitchTurn()
     {
