@@ -8,8 +8,6 @@ public class InputManager : MonoBehaviour
     public Material highlightedMat;
     public Transform playerMoveTarget;
     public Interactable lastUnderMouse;
-	public GameObject playerSelectIndicator;
-
     public UIController uiController;
 	private float playerHeight = 1.05f;
     
@@ -25,18 +23,7 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    
-
-	public void SetSelectionIndicatorOnPlayer(PlayerController playerController)
-	{
-		playerSelectIndicator.SetActive(true);
-		playerSelectIndicator.transform.position = playerController.transform.position;
-		playerSelectIndicator.transform.position = new Vector3(
-												playerController.transform.position.x,
-												playerController.transform.position.y - playerHeight,
-												playerController.transform.position.z);
-		playerSelectIndicator.transform.SetParent(playerController.transform);
-	}
+  
 
 	public void SingleShotFromActivePlayer()
     {
@@ -44,12 +31,7 @@ public class InputManager : MonoBehaviour
         TurnManager.instance.ActivePlayerController.SingleShot();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-		playerSelectIndicator.SetActive(false);
-    }
-
+    
     // Update is called once per frame
     void Update()
     {

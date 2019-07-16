@@ -48,13 +48,13 @@ public class TurnManager : MonoBehaviour
 
 	public void SetActiveCharacter(GameObject character)
 	{
+		if (activePlayerController) { activePlayerController.DeactivateCharacter(); }
 		activeCharacter = character;
 		if (character.GetComponent<PlayerController>()) 
 		{
 			activePlayerController = character.GetComponent<PlayerController>();
 			activePlayerController.SetAsActivePlayerController();
 			Debug.Log($"Set new manager from {activePlayerController.name}");
-			InputManager.instance.SetSelectionIndicatorOnPlayer(activePlayerController);
 			BaseCharacterClass BCC = activeCharacter.GetComponent<BaseCharacterClass>();
 			if (BCC != null)
 			{

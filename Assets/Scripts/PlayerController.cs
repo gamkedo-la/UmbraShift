@@ -15,8 +15,8 @@ public class PlayerController : MonoBehaviour
     private BaseCharacterClass baseClass;
     private Vector3 targetMoveLocation;
     public GameObject muzzleFlash;
-
-    public NavMeshAgent agent;
+	public GameObject playerSelectIndicator;
+	public NavMeshAgent agent;
 
     // Start is called before the first frame update
     void Start()
@@ -55,6 +55,7 @@ public class PlayerController : MonoBehaviour
     public void SetAsActivePlayerController()
     {
         target.position = targetMoveLocation;
+		ActivateCharacter();
     }
 
     public bool AttemptToSpend(int cost, bool spendIfWeCan)
@@ -86,4 +87,24 @@ public class PlayerController : MonoBehaviour
             tempGO.transform.position = transform.position;
         }
     }
+
+	private void ToggleSelectionIndicator(bool selectionIndicatorOn)
+	{
+		playerSelectIndicator.SetActive(selectionIndicatorOn);
+	}
+
+	public void ActivateCharacter()
+	{
+		ToggleSelectionIndicator(true);
+	}
+
+	public void DeactivateCharacter()
+	{
+		ToggleSelectionIndicator(false);
+	}
+
+
+
+
+
 }
