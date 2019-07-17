@@ -15,7 +15,12 @@ public class EnemyManager : MonoBehaviour
         enemyControllers.Add(enemyController);
     }
 
-    public void ReportEnemySighted(PlayerController playerController)
+	public void EnemyControllerReportingOffDuty( EnemyController enemyController )
+	{
+		enemyControllers.Remove( enemyController );
+	}
+
+	public void ReportEnemySighted(PlayerController playerController)
     {
         if (playerControllers.Contains(playerController) == false)
         {
@@ -54,7 +59,7 @@ public class EnemyManager : MonoBehaviour
             List<PlayerController> playerControllers = TurnManager.instance.GetCharacterControllers();
 
             foreach (EnemyController enemy in enemyControllers)
-            { 
+            {
                 bool playerCanSee = false;
                 foreach (PlayerController player in playerControllers)
                 {

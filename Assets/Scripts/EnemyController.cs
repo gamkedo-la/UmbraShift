@@ -37,15 +37,21 @@ public class EnemyController : MonoBehaviour
         baseClass.ActionPointRefill();
     }
 
-    // Update is called once per frame
-    void Update()
+	void OnDisable( )
+	{
+        TurnManager.instance?.EnemyControllerReportingOffDuty(this);
+        EnemyManager.instance?.EnemyControllerReportingOffDuty(this);
+	}
+
+	// Update is called once per frame
+	void Update()
     {
         if (TurnManager.instance.isCombatModeActive)
         {
             target.position = transform.position;
             visiblePlayers = EnemyManager.instance.GetVisiblePlayers();
         }
-        
+
         if (moving)
         {
             Vector3 travelDiff = target.position - transform.position;
@@ -117,7 +123,7 @@ public class EnemyController : MonoBehaviour
     {
         playerControllers = TurnManager.instance.GetCharacterControllers();
     }
-    
+
     public bool AttemptToSpend(int cost, bool spendIfWeCan)
     {
         return baseClass.AttemptToSpend(cost, spendIfWeCan);

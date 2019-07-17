@@ -70,7 +70,7 @@ public class BaseCharacterClass : MonoBehaviour
         }
         currentAP = apRefreshed;
     }
-    
+
     public bool AttemptToSpend(int cost, bool spendIfWeCan)
     {
         if (cost <= currentAP)
@@ -103,7 +103,7 @@ public class BaseCharacterClass : MonoBehaviour
         {
             Debug.Log("Shot missed!");
         }
-        
+
     }
 
     public void BeenShot(BaseCharacterClass target)
@@ -114,6 +114,7 @@ public class BaseCharacterClass : MonoBehaviour
         {
             isAlive = false;
             Debug.Log("urg, I've died.");
+			Destroy( gameObject );
         }
     }
 

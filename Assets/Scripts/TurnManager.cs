@@ -9,7 +9,7 @@ public class TurnManager : MonoBehaviour
 	public UIController uiController;
 	List<PlayerController> playerControllers = new List<PlayerController>();
     List<EnemyController> enemyControllers = new List<EnemyController>();
-    
+
     public bool playersTurn = true;
     public bool isCombatModeActive = false;
 	private GameObject activeCharacter;
@@ -50,7 +50,7 @@ public class TurnManager : MonoBehaviour
 	{
 		if (activePlayerController) { activePlayerController.DeactivateCharacter(); }
 		activeCharacter = character;
-		if (character.GetComponent<PlayerController>()) 
+		if (character.GetComponent<PlayerController>())
 		{
 			activePlayerController = character.GetComponent<PlayerController>();
 			activePlayerController.SetAsActivePlayerController();
@@ -76,9 +76,9 @@ public class TurnManager : MonoBehaviour
 
     public void SwitchTurn()
     {
-        
+
         playersTurn = !playersTurn;
-        
+
         foreach (PlayerController eachPC in playerControllers)
         {
             if (playersTurn)
@@ -104,10 +104,14 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    public void CombatMode()
+    public void CombatMode( bool forceEndCombat = false )
     {
-        isCombatModeActive = !isCombatModeActive;
-        DebugManager.instance.OverwriteDebugText($"Combat mode is {isCombatModeActive}");
+		if (forceEndCombat)
+			isCombatModeActive = false;
+		else
+			isCombatModeActive = !isCombatModeActive;
+
+        DebugManager.instance?.OverwriteDebugText($"Combat mode is {isCombatModeActive}");
         Debug.Log($"CombatModeActive = {isCombatModeActive}");
     }
 
@@ -119,14 +123,31 @@ public class TurnManager : MonoBehaviour
             enemyController.CheckForNewPlayerControllers();
         }
     }
-    
-    public void EnemyControllerReportingForDuty(EnemyController enemyController)
+
+	public void PlayerControllerReportingOffDuty( PlayerController playerController )
+	{
+		playerControllers.Remove( playerController );
+		foreach ( var enemyController in enemyControllers )
+		{
+			enemyController.CheckForNewPlayerControllers( );
+		}
+	}
+
+	public void EnemyControllerReportingForDuty(EnemyController enemyController)
     {
         enemyControllers.Add(enemyController);
         enemyController.CheckForNewPlayerControllers();
     }
 
-    public List<PlayerController> GetCharacterControllers()
+	public void EnemyControllerReportingOffDuty( EnemyController enemyController )
+	{
+		enemyControllers.Remove( enemyController );
+
+		if ( enemyControllers.Count == 0 )
+			CombatMode( true );
+	}
+
+	public List<PlayerController> GetCharacterControllers()
     {
         List<PlayerController> characters = new List<PlayerController>();
         foreach (PlayerController eachPC in playerControllers)

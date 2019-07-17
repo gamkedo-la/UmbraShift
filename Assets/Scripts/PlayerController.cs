@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     public BaseCharacterClass enemyController;
     public float visualRange = 30.0f;
     public int currentAP;
-    
+
     public int currentHealth;
     private BaseCharacterClass baseClass;
     private Vector3 targetMoveLocation;
@@ -27,12 +27,17 @@ public class PlayerController : MonoBehaviour
         agent.updateRotation = false;
         currentHealth = baseClass.maxHealth;
         targetMoveLocation = transform.position;
-        
+
         baseClass.ActionPointRefill();
     }
 
-    // Update is called once per frame
-    void Update()
+	void OnDisable( )
+	{
+        TurnManager.instance?.PlayerControllerReportingOffDuty(this);
+	}
+
+	// Update is called once per frame
+	void Update()
     {
         if (this.gameObject == TurnManager.instance.ActiveCharacter)
         {
@@ -47,7 +52,7 @@ public class PlayerController : MonoBehaviour
             {
                 transform.rotation = Quaternion.LookRotation(moveDiff);
             }
-            
+
             agent.SetDestination(targetMoveLocation);
         }
     }
