@@ -10,10 +10,10 @@ public class BaseCharacterClass : MonoBehaviour
 
     public Sprite avatar;
     // base character stats
-    public int strength = 5;
+   /* public int strength = 5;
     public int dexterity = 5;
     public int intelligence = 5;
-    public int constitution = 5;
+    public int constitution = 5;*/
     public int level = 0;
     public int currentHealth;
     public int maxHealth = 10;
@@ -21,23 +21,23 @@ public class BaseCharacterClass : MonoBehaviour
     private int BasePercentageChanceToHit = 95;
 
     //WIP Stat adjustments
-    /*
+    
     public Stat strength;
     public Stat dexterity;
     public Stat constitution;
     public Stat intelligence;
-    public Stat perception;*/
+    public Stat perception;
 
     // skills
-    public int shooting = 0;
-    public int hacking = 0;
+    //public int shooting = 0;
+    //public int hacking = 0;
 
     //WIP Skill Adjustments
-    /*
+    
     public Stat hacking;
     public Stat shooting;
     public Stat investigation;
-    public Stat stealth;*/
+    public Stat stealth;
 
     private int maxAPRefill = 5;
     public int currentAP;
@@ -45,14 +45,14 @@ public class BaseCharacterClass : MonoBehaviour
     public void Awake()
     {
         //WIP Stat and Skill adjustments
-        /*
+        
         maxHealth += constitution.GetValue();
-        armor.AddModifier(dexterity.GetValue());
+        //armor.AddModifier(dexterity.GetValue());
 
         hacking.AddModifier(intelligence.GetValue());
         shooting.AddModifier(dexterity.GetValue());
         investigation.AddModifier(perception.GetValue() + intelligence.GetValue());
-        stealth.AddModifier(dexterity.GetValue());*/
+        stealth.AddModifier(dexterity.GetValue());
     }
 
     public void Start()
@@ -63,7 +63,7 @@ public class BaseCharacterClass : MonoBehaviour
     public void ActionPointRefill()
     {
         int apRefreshed = 2;
-        apRefreshed += Mathf.FloorToInt(dexterity / 2);
+        apRefreshed += Mathf.FloorToInt(dexterity.GetValue() / 2);
         if (apRefreshed > maxAPRefill)
         {
             apRefreshed = maxAPRefill;
@@ -90,11 +90,12 @@ public class BaseCharacterClass : MonoBehaviour
     {
         Debug.Log($"{name} shooting {target.name}");
         int PercentageChanceToHit = BasePercentageChanceToHit;
-        PercentageChanceToHit += dexterity + shooting;
-        PercentageChanceToHit -= target.dexterity;
-        //PercentageChanceToHit += shooting.GetValue();
-        //PercentageChanceToHit -= target.dexterity.GetValue();
+        //PercentageChanceToHit += dexterity + shooting;
+       //PercentageChanceToHit -= target.dexterity;
+        PercentageChanceToHit += shooting.GetValue();
+        PercentageChanceToHit -= target.dexterity.GetValue();
         Debug.Log($"chance to hit {PercentageChanceToHit}");
+
         if (Random.Range(0, 100) <= PercentageChanceToHit)
         {
             target.BeenShot(target);

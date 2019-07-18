@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2138677392}
-  m_IndirectSpecularColor: {r: 0.28511912, g: 0.37134272, b: 0.49467418, a: 1}
+  m_IndirectSpecularColor: {r: 0.2851193, g: 0.3713429, b: 0.49467468, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -564,16 +564,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Unknown
   avatar: {fileID: 0}
-  strength: 5
-  dexterity: 5
-  intelligence: 5
-  constitution: 5
   level: 0
   currentHealth: 0
   maxHealth: 10
   isAlive: 1
-  shooting: 0
-  hacking: 0
+  strength:
+    baseValue: 0
+  dexterity:
+    baseValue: 0
+  constitution:
+    baseValue: 0
+  intelligence:
+    baseValue: 0
+  perception:
+    baseValue: 0
+  hacking:
+    baseValue: 0
+  shooting:
+    baseValue: 0
+  investigation:
+    baseValue: 0
+  stealth:
+    baseValue: 0
   currentAP: 0
 --- !u!195 &125694716
 NavMeshAgent:
@@ -1803,6 +1815,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4756b4ac0af4fa248ab9067d248f0578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMoving: 0
   shiftTime: 0.25
 --- !u!114 &437053383
 MonoBehaviour:
@@ -1818,16 +1831,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Pam
   avatar: {fileID: 21300000, guid: 154ebf36e20654120a4c52750f4dd6d8, type: 3}
-  strength: 5
-  dexterity: 5
-  intelligence: 5
-  constitution: 5
   level: 0
   currentHealth: 0
   maxHealth: 0
   isAlive: 1
-  shooting: 0
-  hacking: 0
+  strength:
+    baseValue: 5
+  dexterity:
+    baseValue: 5
+  constitution:
+    baseValue: 5
+  intelligence:
+    baseValue: 5
+  perception:
+    baseValue: 5
+  hacking:
+    baseValue: 1
+  shooting:
+    baseValue: 1
+  investigation:
+    baseValue: 1
+  stealth:
+    baseValue: 1
   currentAP: 0
 --- !u!114 &437053384
 MonoBehaviour:
@@ -5042,6 +5067,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4756b4ac0af4fa248ab9067d248f0578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMoving: 0
   shiftTime: 0.25
 --- !u!114 &1512326329
 MonoBehaviour:
@@ -5057,16 +5083,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Bob
   avatar: {fileID: 21300000, guid: 984d49c0a8c2b49e192e0fbb42059e6c, type: 3}
-  strength: 5
-  dexterity: 5
-  intelligence: 5
-  constitution: 5
   level: 0
   currentHealth: 0
   maxHealth: 0
   isAlive: 1
-  shooting: 0
-  hacking: 0
+  strength:
+    baseValue: 5
+  dexterity:
+    baseValue: 5
+  constitution:
+    baseValue: 5
+  intelligence:
+    baseValue: 5
+  perception:
+    baseValue: 5
+  hacking:
+    baseValue: 1
+  shooting:
+    baseValue: 1
+  investigation:
+    baseValue: 1
+  stealth:
+    baseValue: 1
   currentAP: 0
 --- !u!114 &1512326330
 MonoBehaviour:
@@ -5948,16 +5986,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Unknown
   avatar: {fileID: 0}
-  strength: 5
-  dexterity: 5
-  intelligence: 5
-  constitution: 5
   level: 0
   currentHealth: 0
   maxHealth: 10
   isAlive: 1
-  shooting: 0
-  hacking: 0
+  strength:
+    baseValue: 0
+  dexterity:
+    baseValue: 0
+  constitution:
+    baseValue: 0
+  intelligence:
+    baseValue: 0
+  perception:
+    baseValue: 0
+  hacking:
+    baseValue: 0
+  shooting:
+    baseValue: 0
+  investigation:
+    baseValue: 0
+  stealth:
+    baseValue: 0
   currentAP: 0
 --- !u!195 &1803113626
 NavMeshAgent:
@@ -11779,10 +11829,6 @@ PrefabInstance:
       propertyPath: characters.Array.data[1]
       value: 
       objectReference: {fileID: 437053383}
-    - target: {fileID: 142832811, guid: 4a311a93f7e5f4934a748ee9baabc08b, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3082396617528569015, guid: 4a311a93f7e5f4934a748ee9baabc08b,
         type: 3}
       propertyPath: m_Text
@@ -11923,5 +11969,9 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1687258584}
+    - target: {fileID: 142832811, guid: 4a311a93f7e5f4934a748ee9baabc08b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a311a93f7e5f4934a748ee9baabc08b, type: 3}
