@@ -120,6 +120,26 @@ MonoBehaviour:
   - Name: Desktop
     Value: 832
   Exists: 1
+--- !u!114 &-5486493971536160520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.strings.bank
+  m_EditorClassIdentifier: 
+  Path: C:\2019\gamkedo\UmbraShift\FMOD\Build\Desktop\Master.strings.bank
+  SubDir: 
+  lastModified: 636990546469212194
+  LoadResult: 0
+  FileSizes:
+  - Name: Desktop
+    Value: 832
+  Exists: 1
 --- !u!114 &-5219612551792704030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,8 +215,8 @@ MonoBehaviour:
   Path: event:/mousedown
   guid: e4af82f994332e4f8c7ed43d392af65e
   Banks:
-  - {fileID: 6905048958193806288}
-  - {fileID: -5219612551792704030}
+  - {fileID: -878776071435076536}
+  - {fileID: -3293803073480988067}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -204,6 +224,26 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 250
+--- !u!114 &-3293803073480988067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/mouseclick.bank
+  m_EditorClassIdentifier: 
+  Path: C:\2019\gamkedo\UmbraShift\FMOD\Build\Desktop\mouseclick.bank
+  SubDir: 
+  lastModified: 636990546469217137
+  LoadResult: 0
+  FileSizes:
+  - Name: Desktop
+    Value: 9088
+  Exists: 1
 --- !u!114 &-2746392189897666997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,6 +308,26 @@ MonoBehaviour:
   - Name: Desktop
     Value: 9088
   Exists: 1
+--- !u!114 &-878776071435076536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: C:\2019\gamkedo\UmbraShift\FMOD\Build\Desktop\Master.bank
+  SubDir: 
+  lastModified: 636990546469202222
+  LoadResult: 0
+  FileSizes:
+  - Name: Desktop
+    Value: 9600
+  Exists: 1
 --- !u!114 &-590576075413885382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,18 +361,18 @@ MonoBehaviour:
   m_Name: FMODStudioCache
   m_EditorClassIdentifier: 
   EditorBanks:
-  - {fileID: 6483082747103693071}
-  - {fileID: 6905048958193806288}
-  - {fileID: -5219612551792704030}
+  - {fileID: -5486493971536160520}
+  - {fileID: -878776071435076536}
+  - {fileID: -3293803073480988067}
   EditorEvents:
   - {fileID: 5873731863420444959}
   - {fileID: -4242707346146010401}
   EditorParameters: []
   MasterBanks:
-  - {fileID: 6905048958193806288}
+  - {fileID: -878776071435076536}
   StringsBanks:
-  - {fileID: 6483082747103693071}
-  stringsBankWriteTime: 636987362709605332
+  - {fileID: -5486493971536160520}
+  stringsBankWriteTime: 636990546469212194
   cacheVersion: 3
 --- !u!114 &129858992237702779
 MonoBehaviour:
@@ -585,8 +645,8 @@ MonoBehaviour:
   Path: event:/mouseup
   guid: 71a25622e841734690a5742797a8d940
   Banks:
-  - {fileID: 6905048958193806288}
-  - {fileID: -5219612551792704030}
+  - {fileID: -878776071435076536}
+  - {fileID: -3293803073480988067}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
