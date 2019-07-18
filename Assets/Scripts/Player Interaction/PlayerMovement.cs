@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class PlayerMovement : MonoBehaviour
 {
 	NavMeshAgent navMeshAgent;
-	MovementTracer tracer;
+
 
 	private void Start()
 	{
