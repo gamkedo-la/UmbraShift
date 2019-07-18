@@ -98,7 +98,7 @@ public class PlayerController : MonoBehaviour
     public void SetHackTarget(Transform target)
     {
         hackableObject = target.GetComponent<Hackable>();
-        Debug.Log($"set hacking target to {enemyController.name}");
+        Debug.Log($"set hacking target to {hackableObject.name}");
         if(hackableObject == null)
         {
             Debug.Log("Not a hackable object");
