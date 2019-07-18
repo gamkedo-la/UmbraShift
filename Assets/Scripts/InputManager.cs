@@ -31,6 +31,12 @@ public class InputManager : MonoBehaviour
         TurnManager.instance.ActivePlayerController.SingleShot();
     }
 
+    public void HackFromActivePlayer()
+    {
+        Debug.Log("Calling Hack from active player");
+        TurnManager.instance.ActivePlayerController.Hack();
+    }
+
     
     // Update is called once per frame
     void Update()
@@ -56,6 +62,11 @@ public class InputManager : MonoBehaviour
                 {
                     Debug.Log($"Clicked on {rhinfo.transform.name}");
                     TurnManager.instance.ActivePlayerController.SetTarget(rhinfo.transform);
+                }
+                else if(rhinfo.transform.gameObject.layer == LayerMask.NameToLayer("Hackable"))
+                {
+                    Debug.Log($"Clicked on {rhinfo.transform.name}");
+                    TurnManager.instance.ActivePlayerController.SetHackTarget(rhinfo.transform);
                 }
                 else
                 {

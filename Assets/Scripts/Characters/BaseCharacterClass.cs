@@ -119,4 +119,20 @@ public class BaseCharacterClass : MonoBehaviour
         }
     }
 
+    public void AttemptHack(Hackable target)
+    {
+        Debug.Log($"{name} hacking {target.name}");
+        int PercentageChanceToHack = target.BasePercentageChanceToHack;
+        PercentageChanceToHack += hacking.GetValue();
+
+        if (Random.Range(0, 100) <= PercentageChanceToHack)
+        {
+            target.BeenHacked();
+        }
+        else
+        {
+            target.NotHacked();
+        }
+    }
+
 }

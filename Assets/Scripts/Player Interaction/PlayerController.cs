@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
 	public GameObject playerSelectIndicator;
 	public NavMeshAgent agent;
 
+    public Hackable hackableObject;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -90,6 +92,29 @@ public class PlayerController : MonoBehaviour
             baseClass.ShootAtTarget(enemyController);
             GameObject tempGO = Instantiate(muzzleFlash);
             tempGO.transform.position = transform.position;
+        }
+    }
+
+    public void SetHackTarget(Transform target)
+    {
+        hackableObject = target.GetComponent<Hackable>();
+        Debug.Log($"set hacking target to {enemyController.name}");
+        if(hackableObject == null)
+        {
+            Debug.Log("Not a hackable object");
+        }
+    }
+
+    public void Hack()
+    {
+        if(hackableObject == null)
+        {
+            Debug.Log("Can't be hacked");
+        }
+        else
+        {
+            Debug.Log("hacking " + hackableObject.name);
+            baseClass.AttemptHack(hackableObject);
         }
     }
 
