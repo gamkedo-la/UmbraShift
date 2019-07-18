@@ -1875,6 +1875,7 @@ MonoBehaviour:
     type: 3}
   playerSelectIndicator: {fileID: 2136828619}
   agent: {fileID: 0}
+  hackableObject: {fileID: 0}
 --- !u!195 &437053385
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5127,6 +5128,7 @@ MonoBehaviour:
     type: 3}
   playerSelectIndicator: {fileID: 1889413339}
   agent: {fileID: 0}
+  hackableObject: {fileID: 0}
 --- !u!195 &1512326331
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5707,7 +5709,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 10039
+    m_Bits: 26423
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
