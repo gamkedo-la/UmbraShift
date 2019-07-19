@@ -2199,11 +2199,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Scuplture (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 7293928331384438793, guid: 16315fad2c7e63c4f9927a26b6c1b349,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
     - target: {fileID: 3128641422639261334, guid: 16315fad2c7e63c4f9927a26b6c1b349,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2258,71 +2253,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4692271533945430616, guid: 16315fad2c7e63c4f9927a26b6c1b349,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 4016585476250869098, guid: 16315fad2c7e63c4f9927a26b6c1b349,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 1983756981382024122, guid: 16315fad2c7e63c4f9927a26b6c1b349,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 4080496497238703073, guid: 16315fad2c7e63c4f9927a26b6c1b349,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 7046810199142753284, guid: 16315fad2c7e63c4f9927a26b6c1b349,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 3455522028401956385, guid: 16315fad2c7e63c4f9927a26b6c1b349,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 1803138435358158960, guid: 16315fad2c7e63c4f9927a26b6c1b349,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 2713446643485656255, guid: 16315fad2c7e63c4f9927a26b6c1b349,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 5081366523798163746, guid: 16315fad2c7e63c4f9927a26b6c1b349,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 2089931741935711737, guid: 16315fad2c7e63c4f9927a26b6c1b349,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 1830960382977740298, guid: 16315fad2c7e63c4f9927a26b6c1b349,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 5979950045773061857, guid: 16315fad2c7e63c4f9927a26b6c1b349,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 7961276441512440370, guid: 16315fad2c7e63c4f9927a26b6c1b349,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16315fad2c7e63c4f9927a26b6c1b349, type: 3}
@@ -4591,7 +4521,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-20572
+  m_Name: pb_Mesh-2178
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -12622,6 +12552,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1288323833}
+    - target: {fileID: 3934896700020188947, guid: 4b1a49c8e2938b747a5ecb3f3dd8c29e,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3934896698694846874, guid: 4b1a49c8e2938b747a5ecb3f3dd8c29e,
         type: 3}
       propertyPath: m_Mesh
@@ -12651,6 +12586,11 @@ PrefabInstance:
         type: 3}
       propertyPath: InitialModule.startSize.scalar
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3934896700020188945, guid: 4b1a49c8e2938b747a5ecb3f3dd8c29e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b1a49c8e2938b747a5ecb3f3dd8c29e, type: 3}
