@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2138677392}
-  m_IndirectSpecularColor: {r: 0.2851193, g: 0.3713429, b: 0.49467468, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -217,7 +217,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 3082396616366829808}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 677920525}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c85f3648570ec42539f0610873674420, type: 3}
@@ -903,7 +903,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 151656451}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Test wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -945,6 +945,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3dd9deccc6ccf60458485873350b2e22,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3dd9deccc6ccf60458485873350b2e22,
         type: 3}
@@ -1050,6 +1055,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3dd9deccc6ccf60458485873350b2e22,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3dd9deccc6ccf60458485873350b2e22,
         type: 3}
@@ -1870,12 +1880,15 @@ MonoBehaviour:
   enemyController: {fileID: 0}
   visualRange: 30
   currentAP: 0
+  maxMoveWithAvailableAP: 0
+  movePerAP: 1
   currentHealth: 0
   muzzleFlash: {fileID: 752083658007179946, guid: 2af3308baefb64a4abb83663d22b9618,
     type: 3}
   playerSelectIndicator: {fileID: 2136828619}
   agent: {fileID: 0}
   hackableObject: {fileID: 0}
+  objectBeingInvestigated: {fileID: 0}
 --- !u!195 &437053385
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1990,6 +2003,11 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3dd9deccc6ccf60458485873350b2e22,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3dd9deccc6ccf60458485873350b2e22,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2088,7 +2106,7 @@ GameObject:
   m_Component:
   - component: {fileID: 461212585}
   - component: {fileID: 461212586}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Point Light (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2786,6 +2804,29 @@ Transform:
   m_Father: {fileID: 1965448917}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &677920525 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3082396616376511536, guid: 4a311a93f7e5f4934a748ee9baabc08b,
+    type: 3}
+  m_PrefabInstance: {fileID: 3082396616366829808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &677920526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 677920525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0465fe90d08fe54a8c95cba605525e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultCursor: {fileID: 2800000, guid: e38234c985bd712428e200bd2889cfa9, type: 3}
+  invalidCursor: {fileID: 2800000, guid: d9f5c02129db53546b5096690dab7364, type: 3}
+  moveCursor: {fileID: 2800000, guid: 78bebbf240acf194091b332c0a187a5a, type: 3}
+  attackCursor: {fileID: 2800000, guid: 9770f318d7f2fd140ae3c9ea00c1c4f2, type: 3}
+  hackCursor: {fileID: 2800000, guid: 6b518e4871215854f8e3d332b9282b0c, type: 3}
 --- !u!1 &688774537
 GameObject:
   m_ObjectHideFlags: 0
@@ -2869,7 +2910,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-105914
+  m_Name: pb_Mesh-20568
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3370,6 +3411,11 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3dd9deccc6ccf60458485873350b2e22,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3dd9deccc6ccf60458485873350b2e22,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3470,7 +3516,7 @@ GameObject:
   - component: {fileID: 782143299}
   - component: {fileID: 782143298}
   - component: {fileID: 782143297}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3559,7 +3605,7 @@ GameObject:
   m_Component:
   - component: {fileID: 847835532}
   - component: {fileID: 847835533}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3758,7 +3804,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-37476
+  m_Name: pb_Mesh-20300
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3767,7 +3813,7 @@ Mesh:
     topology: 0
     baseVertex: 0
     firstVertex: 0
-    vertexCount: 16
+    vertexCount: 9
     localAABB:
       m_Center: {x: 0.5, y: 0.5, z: 0}
       m_Extent: {x: 0.5, y: 0.5, z: 0}
@@ -3787,10 +3833,10 @@ Mesh:
   m_KeepVertices: 1
   m_KeepIndices: 1
   m_IndexFormat: 0
-  m_IndexBuffer: 000001000200010003000200040005000600050007000600080009000a0009000b000a000c000d000e000d000f000e00
+  m_IndexBuffer: 000001000200010003000200010004000300040005000300020003000600030007000600030005000700050008000700
   m_VertexData:
     serializedVersion: 3
-    m_VertexCount: 16
+    m_VertexCount: 9
     m_Channels:
     - stream: 0
       offset: 0
@@ -3810,6 +3856,10 @@ Mesh:
       dimension: 0
     - stream: 0
       offset: 40
+      format: 0
+      dimension: 2
+    - stream: 0
+      offset: 48
       format: 0
       dimension: 2
     - stream: 0
@@ -3844,12 +3894,8 @@ Mesh:
       offset: 0
       format: 0
       dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    m_DataSize: 768
-    _typelessdata: 00000000000000000000000000000000000000000000803f000080bf0000000000000000000080bf00000000000000000000003f000000000000000000000000000000000000803f000080bf0000000000000000000080bf000000bf00000000000000000000003f0000000000000000000000000000803f000080bf0000000000000000000080bf000000000000003f0000003f0000003f0000000000000000000000000000803f000080bf0000000000000000000080bf000000bf0000003f0000003f000000000000000000000000000000000000803f000080bf0000000000000000000080bf000000bf000000000000803f000000000000000000000000000000000000803f000080bf0000000000000000000080bf000080bf000000000000003f0000003f0000000000000000000000000000803f000080bf0000000000000000000080bf000000bf0000003f0000803f0000003f0000000000000000000000000000803f000080bf0000000000000000000080bf000080bf0000003f000000000000003f0000000000000000000000000000803f000080bf0000000000000000000080bf000000000000003f0000003f0000003f0000000000000000000000000000803f000080bf0000000000000000000080bf000000bf0000003f000000000000803f0000000000000000000000000000803f000080bf0000000000000000000080bf000000000000803f0000003f0000803f0000000000000000000000000000803f000080bf0000000000000000000080bf000000bf0000803f0000003f0000003f0000000000000000000000000000803f000080bf0000000000000000000080bf000000bf0000003f0000803f0000003f0000000000000000000000000000803f000080bf0000000000000000000080bf000080bf0000003f0000003f0000803f0000000000000000000000000000803f000080bf0000000000000000000080bf000000bf0000803f0000803f0000803f0000000000000000000000000000803f000080bf0000000000000000000080bf000080bf0000803f
+    m_DataSize: 504
+    _typelessdata: 00000000000000000000000000000000000000000000803f000080bf0000000000000000000080bf000000000000000000467b3f0bd7a33c0000003f000000000000000000000000000000000000803f000080bf0000000000000000000080bf000000bf0000000000467b3f6932003f000000000000003f0000000000000000000000000000803f000080bf0000000000000000000080bf000000000000003f5c32003f0bd7a33c0000003f0000003f0000000000000000000000000000803f000080bf0000000000000000000080bf000000bf0000003f5c32003f6932003f0000803f000000000000000000000000000000000000803f000080bf0000000000000000000080bf000080bf0000000000467b3f1b467b3f0000803f0000003f0000000000000000000000000000803f000080bf0000000000000000000080bf000080bf0000003f5c32003f1b467b3f000000000000803f0000000000000000000000000000803f000080bf0000000000000000000080bf000000000000803f0bd7a33c0bd7a33c0000003f0000803f0000000000000000000000000000803f000080bf0000000000000000000080bf000000bf0000803f11d7a33c6932003f0000803f0000803f0000000000000000000000000000803f000080bf0000000000000000000080bf000080bf0000803f17d7a33c1b467b3f
   m_CompressedMesh:
     m_Vertices:
       m_NumItems: 0
@@ -4256,7 +4302,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1204405597}
   - component: {fileID: 1204405598}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Point Light (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4446,6 +4492,11 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3dd9deccc6ccf60458485873350b2e22,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3dd9deccc6ccf60458485873350b2e22,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4540,7 +4591,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-102998
+  m_Name: pb_Mesh-20572
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4881,7 +4932,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-107570
+  m_Name: pb_Mesh-20570
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -5612,12 +5663,15 @@ MonoBehaviour:
   enemyController: {fileID: 0}
   visualRange: 30
   currentAP: 0
+  maxMoveWithAvailableAP: 0
+  movePerAP: 1
   currentHealth: 0
   muzzleFlash: {fileID: 752083658007179946, guid: 2af3308baefb64a4abb83663d22b9618,
     type: 3}
   playerSelectIndicator: {fileID: 1889413339}
   agent: {fileID: 0}
   hackableObject: {fileID: 0}
+  objectBeingInvestigated: {fileID: 0}
 --- !u!195 &1512326331
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6198,7 +6252,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 26423
+    m_Bits: 59191
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -6313,6 +6367,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4610308824765030490, guid: 388dcd396052c254abfe8a13b6a38ae0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 4610308824765030489, guid: 388dcd396052c254abfe8a13b6a38ae0,
         type: 3}
@@ -6941,7 +7000,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1939486379}
   - component: {fileID: 1939486380}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Point Light (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12041,7 +12100,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2055510394}
   - component: {fileID: 2055510395}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Point Light (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12492,6 +12551,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Hologram Planet Projector
+      objectReference: {fileID: 0}
+    - target: {fileID: 3934896698939881116, guid: 4b1a49c8e2938b747a5ecb3f3dd8c29e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 3934896698939881117, guid: 4b1a49c8e2938b747a5ecb3f3dd8c29e,
         type: 3}

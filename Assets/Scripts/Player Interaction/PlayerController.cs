@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     public BaseCharacterClass enemyController;
     public float visualRange = 30.0f;
     public int currentAP;
+	public float maxMoveWithAvailableAP;
+	public float movePerAP = 1f;
 
     public int currentHealth;
     private BaseCharacterClass baseClass;
@@ -42,7 +44,8 @@ public class PlayerController : MonoBehaviour
 	// Update is called once per frame
 	void Update()
     {
-        if (this.gameObject == TurnManager.instance.ActiveCharacter)
+		maxMoveWithAvailableAP = currentAP * movePerAP;
+		if (this.gameObject == TurnManager.instance.ActiveCharacter)
         {
             targetMoveLocation = target.position;
             Vector3 travelDiff = targetMoveLocation - transform.position;
