@@ -37,6 +37,12 @@ public class InputManager : MonoBehaviour
         TurnManager.instance.ActivePlayerController.Hack();
     }
 
+    public void InvestigateFromActivePlayer()
+    {
+        Debug.Log("Calling Investigate from active player");
+        TurnManager.instance.ActivePlayerController.Investigate();
+    }
+
     
     // Update is called once per frame
     void Update()
@@ -63,10 +69,18 @@ public class InputManager : MonoBehaviour
                     Debug.Log($"Clicked on {rhinfo.transform.name}");
                     TurnManager.instance.ActivePlayerController.SetTarget(rhinfo.transform);
                 }
-                else if(rhinfo.transform.gameObject.layer == LayerMask.NameToLayer("Hackable"))
+                else if(rhinfo.transform.gameObject.layer == LayerMask.NameToLayer("InteractableObject"))
                 {
                     Debug.Log($"Clicked on {rhinfo.transform.name}");
-                    TurnManager.instance.ActivePlayerController.SetHackTarget(rhinfo.transform);
+                    if (rhinfo.transform.gameObject.GetComponent<Hackable>())
+                    {
+                        TurnManager.instance.ActivePlayerController.SetHackTarget(rhinfo.transform);
+                    }
+                    if (rhinfo.transform.gameObject.GetComponent<canBeInvestigated>())
+                    {
+                        TurnManager.instance.ActivePlayerController.SetInvestigationTarget(rhinfo.transform);
+                    }
+
                 }
                 else
                 {

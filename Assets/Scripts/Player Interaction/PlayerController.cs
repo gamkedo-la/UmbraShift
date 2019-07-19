@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
 	public NavMeshAgent agent;
 
     public Hackable hackableObject;
+    public canBeInvestigated objectBeingInvestigated;
 
     // Start is called before the first frame update
     void Start()
@@ -115,6 +116,30 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("hacking " + hackableObject.name);
             baseClass.AttemptHack(hackableObject);
+        }
+    }
+
+    public void SetInvestigationTarget(Transform target)
+    {
+        objectBeingInvestigated = target.GetComponent<canBeInvestigated>();
+        Debug.Log("Taking a closer look at " + objectBeingInvestigated.name);
+
+        if(objectBeingInvestigated == null)
+        {
+            Debug.Log("Cannot understand object further.");
+        }
+    }
+
+    public void Investigate()
+    {
+        if(objectBeingInvestigated == null)
+        {
+            Debug.Log("Can't be investigated");
+        }
+        else
+        {
+            Debug.Log("investigating" + objectBeingInvestigated.name);
+            baseClass.AttemptInvestigation(objectBeingInvestigated);
         }
     }
 

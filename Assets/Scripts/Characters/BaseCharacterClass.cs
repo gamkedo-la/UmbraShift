@@ -135,4 +135,20 @@ public class BaseCharacterClass : MonoBehaviour
         }
     }
 
+    public void AttemptInvestigation(canBeInvestigated target)
+    {
+        Debug.Log($"{name} invetigating {target.name}");
+        int PercentageChanceToHack = target.BasePercentageChanceToInvestigate;
+        PercentageChanceToHack += investigation.GetValue();
+
+        if (Random.Range(0, 100) <= PercentageChanceToHack)
+        {
+            target.Investigated();
+        }
+        else
+        {
+            target.FailedToFindAnything();
+        }
+    }
+
 }
