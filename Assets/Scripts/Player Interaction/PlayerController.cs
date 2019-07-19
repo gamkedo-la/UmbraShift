@@ -99,6 +99,27 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void MultiShot(int numberOfShots)
+    {
+        //WIP
+        if (enemyController == null)
+        {
+            Debug.Log("Can't shoot, no enemy selected.");
+        }
+        else
+        {
+            Debug.Log($"shooting at {enemyController.name}");
+
+            for (int i = 0; i < numberOfShots; i++)
+            {
+                baseClass.ShootAtTarget(enemyController);
+                GameObject tempGO = Instantiate(muzzleFlash);
+                tempGO.transform.position = transform.position;
+            }
+            
+        }
+    }
+
     public void SetHackTarget(Transform target)
     {
         hackableObject = target.GetComponent<Hackable>();

@@ -9,19 +9,16 @@ public class BaseCharacterClass : MonoBehaviour
     public string characterName = "Unknown";
 
     public Sprite avatar;
-    // base character stats
-   /* public int strength = 5;
-    public int dexterity = 5;
-    public int intelligence = 5;
-    public int constitution = 5;*/
+   
     public int level = 0;
     public int currentHealth;
     public int maxHealth = 10;
     public bool isAlive = true;
     private int BasePercentageChanceToHit = 95;
 
-    //WIP Stat adjustments
-    
+
+    // base character stats
+
     public Stat strength;
     public Stat dexterity;
     public Stat constitution;
@@ -29,30 +26,24 @@ public class BaseCharacterClass : MonoBehaviour
     public Stat perception;
 
     // skills
-    //public int shooting = 0;
-    //public int hacking = 0;
-
-    //WIP Skill Adjustments
-    
+       
     public Stat hacking;
     public Stat shooting;
-    public Stat investigation;
-    public Stat stealth;
+    public Stat investigation;    
 
     private int maxAPRefill = 5;
     public int currentAP;
 
     public void Awake()
     {
-        //WIP Stat and Skill adjustments
+        
         
         maxHealth += constitution.GetValue();
         //armor.AddModifier(dexterity.GetValue());
 
         hacking.AddModifier(intelligence.GetValue());
         shooting.AddModifier(dexterity.GetValue());
-        investigation.AddModifier(perception.GetValue() + intelligence.GetValue());
-        stealth.AddModifier(dexterity.GetValue());
+        investigation.AddModifier(perception.GetValue() + intelligence.GetValue());        
     }
 
     public void Start()
@@ -89,9 +80,7 @@ public class BaseCharacterClass : MonoBehaviour
     public void ShootAtTarget(BaseCharacterClass target)
     {
         Debug.Log($"{name} shooting {target.name}");
-        int PercentageChanceToHit = BasePercentageChanceToHit;
-        //PercentageChanceToHit += dexterity + shooting;
-       //PercentageChanceToHit -= target.dexterity;
+        int PercentageChanceToHit = BasePercentageChanceToHit;        
         PercentageChanceToHit += shooting.GetValue();
         PercentageChanceToHit -= target.dexterity.GetValue();
         Debug.Log($"chance to hit {PercentageChanceToHit}");
@@ -104,7 +93,6 @@ public class BaseCharacterClass : MonoBehaviour
         {
             Debug.Log("Shot missed!");
         }
-
     }
 
     public void BeenShot(BaseCharacterClass target)
