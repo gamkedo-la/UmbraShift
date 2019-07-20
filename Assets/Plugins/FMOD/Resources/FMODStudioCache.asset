@@ -215,8 +215,8 @@ MonoBehaviour:
   Path: event:/mousedown
   guid: e4af82f994332e4f8c7ed43d392af65e
   Banks:
-  - {fileID: 2335452723968109116}
-  - {fileID: -328747051620834498}
+  - {fileID: -3975565644001310321}
+  - {fileID: -3144831367514536539}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -224,6 +224,26 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 250
+--- !u!114 &-3975565644001310321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: F:\Gamkedo Github Project Clones\UmbraShift\FMOD\Build\Desktop\Master.bank
+  SubDir: 
+  lastModified: 636990737726794774
+  LoadResult: 0
+  FileSizes:
+  - Name: Desktop
+    Value: 9600
+  Exists: 1
 --- !u!114 &-3293803073480988067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,6 +259,26 @@ MonoBehaviour:
   Path: C:\2019\gamkedo\UmbraShift\FMOD\Build\Desktop\mouseclick.bank
   SubDir: 
   lastModified: 636990546469217137
+  LoadResult: 0
+  FileSizes:
+  - Name: Desktop
+    Value: 9088
+  Exists: 1
+--- !u!114 &-3144831367514536539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/mouseclick.bank
+  m_EditorClassIdentifier: 
+  Path: F:\Gamkedo Github Project Clones\UmbraShift\FMOD\Build\Desktop\mouseclick.bank
+  SubDir: 
+  lastModified: 636990737726829763
   LoadResult: 0
   FileSizes:
   - Name: Desktop
@@ -401,18 +441,18 @@ MonoBehaviour:
   m_Name: FMODStudioCache
   m_EditorClassIdentifier: 
   EditorBanks:
-  - {fileID: 7998913902469206925}
-  - {fileID: 2335452723968109116}
-  - {fileID: -328747051620834498}
+  - {fileID: 1388366429952222738}
+  - {fileID: -3975565644001310321}
+  - {fileID: -3144831367514536539}
   EditorEvents:
   - {fileID: 5873731863420444959}
   - {fileID: -4242707346146010401}
   EditorParameters: []
   MasterBanks:
-  - {fileID: 2335452723968109116}
+  - {fileID: -3975565644001310321}
   StringsBanks:
-  - {fileID: 7998913902469206925}
-  stringsBankWriteTime: 636987430839661924
+  - {fileID: 1388366429952222738}
+  stringsBankWriteTime: 636990737726814749
   cacheVersion: 3
 --- !u!114 &129858992237702779
 MonoBehaviour:
@@ -522,6 +562,26 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 250
+--- !u!114 &1388366429952222738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.strings.bank
+  m_EditorClassIdentifier: 
+  Path: F:\Gamkedo Github Project Clones\UmbraShift\FMOD\Build\Desktop\Master.strings.bank
+  SubDir: 
+  lastModified: 636990737726814749
+  LoadResult: 0
+  FileSizes:
+  - Name: Desktop
+    Value: 832
+  Exists: 1
 --- !u!114 &2335452723968109116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -745,8 +805,8 @@ MonoBehaviour:
   Path: event:/mouseup
   guid: 71a25622e841734690a5742797a8d940
   Banks:
-  - {fileID: 2335452723968109116}
-  - {fileID: -328747051620834498}
+  - {fileID: -3975565644001310321}
+  - {fileID: -3144831367514536539}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1

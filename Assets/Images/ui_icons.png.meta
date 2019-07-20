@@ -23,6 +23,21 @@ TextureImporter:
   - first:
       213: 9041682994077213965
     second: containerIcon1
+  - first:
+      213: -3951038363544276882
+    second: playersTurnTop
+  - first:
+      213: 243349696356687603
+    second: activePlayerTurnIcon
+  - first:
+      213: -870803706624308795
+    second: shotIcon
+  - first:
+      213: 1212751222745378164
+    second: healthKitIcon
+  - first:
+      213: 180953469358534269
+    second: grenadeIcon
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -135,7 +150,7 @@ TextureImporter:
         width: 405
         height: 405
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -156,7 +171,7 @@ TextureImporter:
         width: 348
         height: 348
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -177,7 +192,7 @@ TextureImporter:
         width: 383
         height: 385
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -198,7 +213,7 @@ TextureImporter:
         width: 406
         height: 406
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -219,7 +234,7 @@ TextureImporter:
         width: 406
         height: 405
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -240,7 +255,7 @@ TextureImporter:
         width: 407
         height: 405
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -261,7 +276,7 @@ TextureImporter:
         width: 473
         height: 520
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -269,6 +284,111 @@ TextureImporter:
       bones: []
       spriteID: a903589f9432032469037ac0c9a103a5
       internalID: 9041682994077213965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: playersTurnTop
+      rect:
+        serializedVersion: 2
+        x: 1495
+        y: 2331
+        width: 1170
+        height: 457
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c1e0938f8844b142a8636abb3a475c7
+      internalID: -3951038363544276882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: activePlayerTurnIcon
+      rect:
+        serializedVersion: 2
+        x: 1327
+        y: 2484
+        width: 131
+        height: 298
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f7e8bea08103e041b8e3d8af7811954
+      internalID: 243349696356687603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shotIcon
+      rect:
+        serializedVersion: 2
+        x: 1226
+        y: 2543
+        width: 71
+        height: 230
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5eb32a1411281d24faad0620ef3bca48
+      internalID: -870803706624308795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: healthKitIcon
+      rect:
+        serializedVersion: 2
+        x: 975
+        y: 2562
+        width: 215
+        height: 221
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f975c8412142aab409a657573ac66cad
+      internalID: 1212751222745378164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grenadeIcon
+      rect:
+        serializedVersion: 2
+        x: 812
+        y: 2579
+        width: 133
+        height: 216
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a3a253544eaf4c4cae69a7863c0bacf
+      internalID: 180953469358534269
       vertices: []
       indices: 
       edges: []
