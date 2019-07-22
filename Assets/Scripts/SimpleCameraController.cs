@@ -18,9 +18,9 @@ namespace UnityTemplateProjects
                 pitch = t.eulerAngles.x;
                 yaw = t.eulerAngles.y;
                 roll = t.eulerAngles.z;
-                x = t.position.x;
-                y = t.position.y;
-                z = t.position.z;
+                x = t.parent.position.x;
+                y = t.parent.position.y;
+                z = t.parent.position.z;
             }
 
             public void Translate(Vector3 translation)
@@ -30,7 +30,7 @@ namespace UnityTemplateProjects
                 flatTranslation.y = 0;
                 flatTranslation.Normalize();
                 x += flatTranslation.x;
-                y += flatTranslation.y;
+//                y += flatTranslation.y; // should be 0 anyway
                 z += flatTranslation.z;
             }
 
@@ -48,9 +48,12 @@ namespace UnityTemplateProjects
             public void UpdateTransform(Transform t)
             {
                 t.eulerAngles = new Vector3(pitch, yaw, roll);
-                t.position = new Vector3(x, y, z);
+                t.parent.position = new Vector3(x, y, z); // moving pivot, not camera directly
             }
         }
+
+        private bool manualControlled = false;  // true if the below variable is above 0
+        private float timeoutRemainingBeforeAutoCam = 0.0f;
         
         CameraState m_TargetCameraState = new CameraState();
         CameraState m_InterpolatingCameraState = new CameraState();
@@ -81,29 +84,41 @@ namespace UnityTemplateProjects
         Vector3 GetInputTranslationDirection()
         {
             Vector3 direction = new Vector3();
+            bool cameraInput = false;
             if (Input.GetKey(KeyCode.W))
             {
                 direction += Vector3.forward;
+                cameraInput = true;
             }
             if (Input.GetKey(KeyCode.S))
             {
                 direction += Vector3.back;
+                cameraInput = true;
             }
             if (Input.GetKey(KeyCode.A))
             {
                 direction += Vector3.left;
+                cameraInput = true;
             }
             if (Input.GetKey(KeyCode.D))
             {
                 direction += Vector3.right;
+                cameraInput = true;
             }
             if (Input.GetKey(KeyCode.Q))
             {
                 direction += Vector3.down;
+                cameraInput = true;
             }
             if (Input.GetKey(KeyCode.E))
             {
                 direction += Vector3.up;
+                cameraInput = true;
+            }
+
+            if (cameraInput)
+            {
+                timeoutRemainingBeforeAutoCam = 3.0f; // needs to be constant
             }
             return direction;
         }
@@ -132,7 +147,8 @@ namespace UnityTemplateProjects
                 Cursor.lockState = CursorLockMode.None;
             }
 
-            // Rotation
+            /*
+            // Rotation - does bad things to the camera for this game
             if (Input.GetMouseButton(1))
             {
                 var mouseMovement = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y") * (invertY ? 1 : -1));
@@ -141,30 +157,43 @@ namespace UnityTemplateProjects
 
                 m_TargetCameraState.yaw += mouseMovement.x * mouseSensitivityFactor;
                 m_TargetCameraState.pitch += mouseMovement.y * mouseSensitivityFactor;
-            }
-            
-            // Translation
+            }*/
             var translation = GetInputTranslationDirection() * Time.deltaTime;
-
-            // Speed up movement when shift key held
-            if (Input.GetKey(KeyCode.LeftShift))
+            manualControlled = timeoutRemainingBeforeAutoCam > 0.0f;
+            if (manualControlled)
             {
-                translation *= 10.0f;
-            }
+                timeoutRemainingBeforeAutoCam -= Time.deltaTime;
+                // Translation
+                
+
+                // Speed up movement when shift key held
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    translation *= 10.0f;
+                }
             
-            // Modify movement by a boost factor (defined in Inspector and modified in play mode through the mouse scroll wheel)
-            boost += Input.mouseScrollDelta.y * 0.2f;
-            translation *= Mathf.Pow(2.0f, boost);
+                // Modify movement by a boost factor (defined in Inspector and modified in play mode through the mouse scroll wheel)
+                boost += Input.mouseScrollDelta.y * 0.2f;
+                translation *= Mathf.Pow(2.0f, boost);
 
-            m_TargetCameraState.Translate(translation);
+                m_TargetCameraState.Translate(translation);
+                
+                // Framerate-independent interpolation
+                // Calculate the lerp amount, such that we get 99% of the way to our target in the specified time
+                var positionLerpPct = 1f - Mathf.Exp((Mathf.Log(1f - 0.99f) / positionLerpTime) * Time.deltaTime);
+                var rotationLerpPct = 1f - Mathf.Exp((Mathf.Log(1f - 0.99f) / rotationLerpTime) * Time.deltaTime);
+                m_InterpolatingCameraState.LerpTowards(m_TargetCameraState, positionLerpPct, rotationLerpPct);
 
-            // Framerate-independent interpolation
-            // Calculate the lerp amount, such that we get 99% of the way to our target in the specified time
-            var positionLerpPct = 1f - Mathf.Exp((Mathf.Log(1f - 0.99f) / positionLerpTime) * Time.deltaTime);
-            var rotationLerpPct = 1f - Mathf.Exp((Mathf.Log(1f - 0.99f) / rotationLerpTime) * Time.deltaTime);
-            m_InterpolatingCameraState.LerpTowards(m_TargetCameraState, positionLerpPct, rotationLerpPct);
+                m_InterpolatingCameraState.UpdateTransform(transform);
+            }
+            else
+            {
+                if (TurnManager.instance.ActiveCharacter != null)
+                {
+                    transform.parent.transform.position = TurnManager.instance.ActiveCharacter.transform.position;
+                }
+            }
 
-            m_InterpolatingCameraState.UpdateTransform(transform);
         }
     }
 

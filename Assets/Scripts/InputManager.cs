@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
 {
@@ -64,6 +65,11 @@ public class InputManager : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
 //                Debug.Log($"Layer is {rhinfo.transform.gameObject.layer} and mask {LayerMask.NameToLayer("VisibleNPC")}");
+                if (EventSystem.current.IsPointerOverGameObject())
+                {
+                    Debug.Log("click blocked by UI");
+                    return;
+                }
                 if (rhinfo.transform.gameObject.layer == LayerMask.NameToLayer("VisibleNPC"))
                 {
                     Debug.Log($"Clicked on {rhinfo.transform.name}");

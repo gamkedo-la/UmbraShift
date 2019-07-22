@@ -59,7 +59,7 @@ public class TurnManager : MonoBehaviour
 			if (BCC != null)
 			{
 				Debug.Log(BCC.avatar);
-				uiController.SetCurrentCharacterName(BCC.characterName);
+//				uiController.SetCurrentCharacterName(BCC.characterName);
 				uiController.SetCurrentCharacterAvatar(BCC.avatar);
 			}
 		}
