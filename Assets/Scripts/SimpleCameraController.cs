@@ -26,10 +26,12 @@ namespace UnityTemplateProjects
             public void Translate(Vector3 translation)
             {
                 Vector3 rotatedTranslation = Quaternion.Euler(pitch, yaw, roll) * translation;
-
-                x += rotatedTranslation.x;
-                y += rotatedTranslation.y;
-                z += rotatedTranslation.z;
+                Vector3 flatTranslation = rotatedTranslation;
+                flatTranslation.y = 0;
+                flatTranslation.Normalize();
+                x += flatTranslation.x;
+                y += flatTranslation.y;
+                z += flatTranslation.z;
             }
 
             public void LerpTowards(CameraState target, float positionLerpPct, float rotationLerpPct)
