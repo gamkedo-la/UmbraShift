@@ -113,8 +113,8 @@ public class PlayerController : MonoBehaviour
             for (int i = 0; i < numberOfShots; i++)
             {
                 baseClass.ShootAtTarget(enemyController);
-                GameObject tempGO = Instantiate(muzzleFlash);
-                tempGO.transform.position = transform.position;
+                //GameObject tempGO = Instantiate(muzzleFlash);
+                //tempGO.transform.position = transform.position;
             }
             
         }
