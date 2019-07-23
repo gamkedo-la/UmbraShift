@@ -30,10 +30,10 @@ public class InputManager : MonoBehaviour
         TurnManager.instance.ActivePlayerController.SingleShot();
     }
 
-    public void MultiShotFromActivePlayer()
+    public void MultiShotFromActivePlayer(int amountOfShots)
     {
         Debug.Log("Calling multiple shots from active player");
-        TurnManager.instance.ActivePlayerController.MultiShot(4); //TODO change hard coded "4" to UI input amount.
+        TurnManager.instance.ActivePlayerController.MultiShot(amountOfShots); //TODO change hard coded "4" to UI input amount.
     }
 
     public void HackFromActivePlayer()
