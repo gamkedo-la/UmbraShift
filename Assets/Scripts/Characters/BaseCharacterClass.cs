@@ -81,8 +81,7 @@ public class BaseCharacterClass : MonoBehaviour
     {
         Debug.Log($"{name} shooting {target.name}");
         int PercentageChanceToHit = BasePercentageChanceToHit;        
-        PercentageChanceToHit += shooting.GetValue();
-        Debug.Log("Shooting accuracy is currently " + shooting.GetValue());
+        PercentageChanceToHit += shooting.GetValue();        
         PercentageChanceToHit -= target.dexterity.GetValue();
         Debug.Log($"chance to hit {PercentageChanceToHit}");
 

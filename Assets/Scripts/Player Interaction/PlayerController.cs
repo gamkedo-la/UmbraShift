@@ -112,19 +112,17 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log($"shooting at {enemyController.name}");
 
-            for (int i = 0; i < (numberOfShots - 1); i++)
+            for (int i = 0; i < (numberOfShots); i++)
             {
                 baseClass.ShootAtTarget(enemyController);
                 //GameObject tempGO = Instantiate(muzzleFlash);
                 //tempGO.transform.position = transform.position;
-                baseClass.shooting.AddModifier(multiShotAccuracyPenalty);
-                //Debug.Log("Shooting accuracy is currently " + baseClass.shooting.GetValue());
+                baseClass.shooting.AddModifier(multiShotAccuracyPenalty);                
             }
 
-            for (int i = 0; i < (numberOfShots - 1); i++)
+            for (int i = 0; i < (numberOfShots); i++)
             {
-                baseClass.shooting.RemoveModifier(multiShotAccuracyPenalty);
-                //Debug.Log("Shooting accuracy is currently " + baseClass.shooting.GetValue());
+                baseClass.shooting.RemoveModifier(multiShotAccuracyPenalty);                
             }
         }
     }
