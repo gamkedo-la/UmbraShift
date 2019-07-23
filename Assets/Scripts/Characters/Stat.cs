@@ -8,6 +8,7 @@ public class Stat
     [SerializeField]
     private int baseValue;
 
+    [SerializeField]
     private List<int> modifiers = new List<int>();
 
     public int GetValue()
