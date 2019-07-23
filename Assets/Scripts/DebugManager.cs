@@ -24,7 +24,7 @@ public class DebugManager : MonoBehaviour
 
     public void OverwriteDebugText(string newText)
     {
-        debugText.text = newText;
+		if (debugText) { debugText.text = newText; }
     }
 
     private void Update()

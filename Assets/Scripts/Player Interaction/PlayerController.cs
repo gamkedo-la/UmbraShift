@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
-    public Transform target;
+	public Transform target;
     public BaseCharacterClass enemyController;
     public float visualRange = 30.0f;
     public int currentAP;
@@ -22,12 +22,13 @@ public class PlayerController : MonoBehaviour
 
     public Hackable hackableObject;
     public canBeInvestigated objectBeingInvestigated;
+	public bool isMainCharacter = false;
 
-    // Start is called before the first frame update
-    void Start()
+	// Start is called before the first frame update
+	void Start()
     {
-        TurnManager.instance.PlayerControllerReportingForDuty(this);
-        baseClass = GetComponent<BaseCharacterClass>();
+		TurnManager.instance.PlayerControllerReportingForDuty(this);
+		baseClass = GetComponent<BaseCharacterClass>();
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         currentHealth = baseClass.maxHealth;
@@ -47,7 +48,7 @@ public class PlayerController : MonoBehaviour
 		maxMoveWithAvailableAP = currentAP * movePerAP;
 		if (this.gameObject == TurnManager.instance.ActiveCharacter)
         {
-            targetMoveLocation = target.position;
+			targetMoveLocation = target.position;
             Vector3 travelDiff = targetMoveLocation - transform.position;
             travelDiff.y = 0.0f;
 

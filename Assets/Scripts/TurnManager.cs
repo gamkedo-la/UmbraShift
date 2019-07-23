@@ -14,8 +14,12 @@ public class TurnManager : MonoBehaviour
     public bool isCombatModeActive = false;
 	private GameObject activeCharacter;
 	private PlayerController activePlayerController;
+	private PlayerController mainCharacterController;
+	private NewCameraController newCameraController;
 	public GameObject ActiveCharacter { get { return activeCharacter; } }
 	public PlayerController ActivePlayerController { get { return activePlayerController; } }
+	public PlayerController MainCharacterController { get { return mainCharacterController; } }
+	public NewCameraController NewCameraController { get { return newCameraController; } }
 
 	private void Awake()
     {
@@ -34,6 +38,7 @@ public class TurnManager : MonoBehaviour
 		activePlayerController = null;
 		activeCharacter = null;
 		DebugManager.instance.OverwriteDebugText($"Combat mode is {isCombatModeActive}");
+		newCameraController = FindObjectOfType<NewCameraController>();
     }
 
     // Update is called once per frame
@@ -50,6 +55,8 @@ public class TurnManager : MonoBehaviour
 	{
 		if (activePlayerController) { activePlayerController.DeactivateCharacter(); }
 		activeCharacter = character;
+		if (newCameraController && newCameraController.CAMERA_ACTIVE==false) { newCameraController.InitialzieCameraHome(activeCharacter);}
+		else if (newCameraController) { newCameraController.AssignCameraHome(activeCharacter); }
 		if (character.GetComponent<PlayerController>())
 		{
 			activePlayerController = character.GetComponent<PlayerController>();
@@ -118,6 +125,7 @@ public class TurnManager : MonoBehaviour
     public void PlayerControllerReportingForDuty(PlayerController playerController)
     {
         playerControllers.Add(playerController);
+		if (playerController.isMainCharacter) { mainCharacterController = playerController; }
         foreach (var enemyController in enemyControllers)
         {
             enemyController.CheckForNewPlayerControllers();

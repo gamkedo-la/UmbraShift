@@ -1808,7 +1808,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 233116aae04e748b89c105b655fc3354, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiController: {fileID: 0}
+  uiController: {fileID: 9821381}
   playersTurn: 1
   isCombatModeActive: 0
 --- !u!4 &273953991
@@ -1841,6 +1841,7 @@ MonoBehaviour:
   playerMoveTarget: {fileID: 125909046}
   lastUnderMouse: {fileID: 0}
   uiController: {fileID: 9821381}
+  newCameraController: {fileID: 0}
 --- !u!114 &273953993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2441,6 +2442,7 @@ MonoBehaviour:
   agent: {fileID: 0}
   hackableObject: {fileID: 0}
   objectBeingInvestigated: {fileID: 0}
+  isMainCharacter: 0
 --- !u!195 &437053385
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5574,6 +5576,36 @@ Transform:
   m_Father: {fileID: 1491342775}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1193883181
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1193883182}
+  m_Layer: 0
+  m_Name: CameraDest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1193883182
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1193883181}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1204405596
 GameObject:
   m_ObjectHideFlags: 0
@@ -7268,6 +7300,7 @@ MonoBehaviour:
   agent: {fileID: 0}
   hackableObject: {fileID: 0}
   objectBeingInvestigated: {fileID: 0}
+  isMainCharacter: 0
 --- !u!195 &1512326331
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -7996,6 +8029,7 @@ GameObject:
   - component: {fileID: 1687258586}
   - component: {fileID: 1687258583}
   - component: {fileID: 1687258587}
+  - component: {fileID: 1687258588}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -8018,7 +8052,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687258581}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: be76e5f14cfee674cb30b491fb72b09b, type: 3}
   m_Name: 
@@ -8181,6 +8215,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ListenerNumber: -1
+--- !u!114 &1687258588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687258581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6076721d8a2ec3f478ee23f2f1688c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraDest: {fileID: 1193883182}
+  panSpeed: 40
+  maxDistance: 10
 --- !u!1001 &1743101206
 PrefabInstance:
   m_ObjectHideFlags: 0

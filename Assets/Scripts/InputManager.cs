@@ -11,7 +11,9 @@ public class InputManager : MonoBehaviour
     public Interactable lastUnderMouse;
     public UIController uiController;
 	private float playerHeight = 1.05f;
-    
+	public NewCameraController newCameraController; 
+	private const float INPUT_THRESHOLD = 0.1f;
+
 	void Awake()
     {
         if (instance != null)
@@ -22,7 +24,12 @@ public class InputManager : MonoBehaviour
         {
             instance = this;
         }
-    }  
+    }
+
+	public void Start()
+	{
+		newCameraController = FindObjectOfType<NewCameraController>();
+	}
 
 	public void SingleShotFromActivePlayer()
     {
@@ -52,7 +59,8 @@ public class InputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C))
+		if (newCameraController) { ProcessControlsForNewCameraController(); }
+		if (Input.GetKeyDown(KeyCode.C))
         {
             Debug.Log("I pressed C");
             TurnManager.instance.CombatMode();
@@ -141,4 +149,13 @@ public class InputManager : MonoBehaviour
             }
         }
     }
+
+	void ProcessControlsForNewCameraController()
+	{
+		Vector3 camMovementInput = Vector3.zero;
+		camMovementInput.x = camMovementInput.x + Input.GetAxis("CameraHorizontal");
+		camMovementInput.z = camMovementInput.z + Input.GetAxis("CameraVertical");
+		newCameraController.MoveCameraDest(camMovementInput);
+		if (Input.GetButtonDown("CameraReset")) { newCameraController.ResetCameraDest(); }
+	}
 }
