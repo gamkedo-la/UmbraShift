@@ -10,22 +10,24 @@ public class PlayerController : MonoBehaviour
     public BaseCharacterClass enemyController;
     public float visualRange = 30.0f;
     public int currentAP;
-	public float maxMoveWithAvailableAP;
-	public float movePerAP = 1f;
+    public float maxMoveWithAvailableAP;
+    public float movePerAP = 1f;
 
     public int currentHealth;
     private BaseCharacterClass baseClass;
     private Vector3 targetMoveLocation;
     public GameObject muzzleFlash;
-	public GameObject playerSelectIndicator;
-	public NavMeshAgent agent;
+    public GameObject playerSelectIndicator;
+    public NavMeshAgent agent;
 
     public Hackable hackableObject;
     public canBeInvestigated objectBeingInvestigated;
 	public bool isMainCharacter = false;
 
-	// Start is called before the first frame update
-	void Start()
+    public int multiShotAccuracyPenalty = -15;
+
+    // Start is called before the first frame update
+    void Start()
     {
 		TurnManager.instance.PlayerControllerReportingForDuty(this);
 		baseClass = GetComponent<BaseCharacterClass>();
@@ -37,16 +39,16 @@ public class PlayerController : MonoBehaviour
         baseClass.ActionPointRefill();
     }
 
-	void OnDisable( )
-	{
-        TurnManager.instance?.PlayerControllerReportingOffDuty(this);
-	}
-
-	// Update is called once per frame
-	void Update()
+    void OnDisable()
     {
-		maxMoveWithAvailableAP = currentAP * movePerAP;
-		if (this.gameObject == TurnManager.instance.ActiveCharacter)
+        TurnManager.instance?.PlayerControllerReportingOffDuty(this);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        maxMoveWithAvailableAP = currentAP * movePerAP;
+        if (this.gameObject == TurnManager.instance.ActiveCharacter)
         {
 			targetMoveLocation = target.position;
             Vector3 travelDiff = targetMoveLocation - transform.position;
@@ -67,7 +69,7 @@ public class PlayerController : MonoBehaviour
     public void SetAsActivePlayerController()
     {
         target.position = targetMoveLocation;
-		ActivateCharacter();
+        ActivateCharacter();
     }
 
     public bool AttemptToSpend(int cost, bool spendIfWeCan)
@@ -111,13 +113,18 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log($"shooting at {enemyController.name}");
 
-            for (int i = 0; i < numberOfShots; i++)
+            for (int i = 0; i < (numberOfShots); i++)
             {
                 baseClass.ShootAtTarget(enemyController);
                 //GameObject tempGO = Instantiate(muzzleFlash);
                 //tempGO.transform.position = transform.position;
+                baseClass.shooting.AddModifier(multiShotAccuracyPenalty);                
             }
-            
+
+            for (int i = 0; i < (numberOfShots); i++)
+            {
+                baseClass.shooting.RemoveModifier(multiShotAccuracyPenalty);                
+            }
         }
     }
 
@@ -125,7 +132,7 @@ public class PlayerController : MonoBehaviour
     {
         hackableObject = target.GetComponent<Hackable>();
         Debug.Log($"set hacking target to {hackableObject.name}");
-        if(hackableObject == null)
+        if (hackableObject == null)
         {
             Debug.Log("Not a hackable object");
         }
@@ -133,7 +140,7 @@ public class PlayerController : MonoBehaviour
 
     public void Hack()
     {
-        if(hackableObject == null)
+        if (hackableObject == null)
         {
             Debug.Log("Can't be hacked");
         }
@@ -149,7 +156,7 @@ public class PlayerController : MonoBehaviour
         objectBeingInvestigated = target.GetComponent<canBeInvestigated>();
         Debug.Log("Taking a closer look at " + objectBeingInvestigated.name);
 
-        if(objectBeingInvestigated == null)
+        if (objectBeingInvestigated == null)
         {
             Debug.Log("Cannot understand object further.");
         }
@@ -157,7 +164,7 @@ public class PlayerController : MonoBehaviour
 
     public void Investigate()
     {
-        if(objectBeingInvestigated == null)
+        if (objectBeingInvestigated == null)
         {
             Debug.Log("Can't be investigated");
         }
@@ -168,20 +175,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-	private void ToggleSelectionIndicator(bool selectionIndicatorOn)
-	{
-		playerSelectIndicator.SetActive(selectionIndicatorOn);
-	}
+    private void ToggleSelectionIndicator(bool selectionIndicatorOn)
+    {
+        playerSelectIndicator.SetActive(selectionIndicatorOn);
+    }
 
-	public void ActivateCharacter()
-	{
-		ToggleSelectionIndicator(true);
-	}
+    public void ActivateCharacter()
+    {
+        ToggleSelectionIndicator(true);
+    }
 
-	public void DeactivateCharacter()
-	{
-		ToggleSelectionIndicator(false);
-	}
+    public void DeactivateCharacter()
+    {
+        ToggleSelectionIndicator(false);
+    }
 
 
 

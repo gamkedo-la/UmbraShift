@@ -102,7 +102,7 @@ public class EnemyController : MonoBehaviour
                     if (rhinfo.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
                     {
                         noticeIndicator.text = rhinfo.collider.name;
-                        Debug.Log($"{name} is reporting {eachPC.name} as seen");
+                       // Debug.Log($"{name} is reporting {eachPC.name} as seen");
                         EnemyManager.instance.ReportEnemySighted(eachPC);
                         if (TurnManager.instance.isCombatModeActive == false)
                         {

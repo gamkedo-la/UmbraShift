@@ -14,7 +14,7 @@ public class BaseCharacterClass : MonoBehaviour
     public int currentHealth;
     public int maxHealth = 10;
     public bool isAlive = true;
-    private int BasePercentageChanceToHit = 95;
+    public int BasePercentageChanceToHit = 90;
 
 
     // base character stats
@@ -81,7 +81,7 @@ public class BaseCharacterClass : MonoBehaviour
     {
         Debug.Log($"{name} shooting {target.name}");
         int PercentageChanceToHit = BasePercentageChanceToHit;        
-        PercentageChanceToHit += shooting.GetValue();
+        PercentageChanceToHit += shooting.GetValue();        
         PercentageChanceToHit -= target.dexterity.GetValue();
         Debug.Log($"chance to hit {PercentageChanceToHit}");
 
