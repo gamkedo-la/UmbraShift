@@ -9,21 +9,23 @@ public struct UIPos
 	public Vector2 closedPosMax;
 	public Vector2 openPosMin;
 	public Vector2 openPosMax;
-	private Vector2 openingVector;
-	private Vector2 closingVector;
-	private float distance;
-	private const float OPENING_SPEED = 1f;
-	private const float CLOSING_SPEED = 1f;
+	public Vector2 openingVector;
+	public Vector2 closingVector;
+	public float distance;
+	public float openingSpeed;
+	public float closingSpeed;
 
-	public UIPos (Vector2 openMin, Vector2 openMax, Vector2 opening)
+	public UIPos (Vector2 openMin, Vector2 openMax, Vector2 closing)
 	{
 		openPosMin = openMin;
 		openPosMax = openMax;
-		closedPosMin = openMin + opening;
-		closedPosMax = openMax + opening;
-		openingVector = opening;
-		closingVector = -opening;
-		distance = opening.magnitude;
+		closingVector = closing;
+		openingVector = -closing;
+		closedPosMin = openMin + closing;
+		closedPosMax = openMax + closing;
+		distance = closing.magnitude;
+		openingSpeed = 2.5f;
+		closingSpeed = 2.5f;
 	}
 
 
@@ -35,14 +37,14 @@ public class Chatbox : MonoBehaviour
 	public enum MoveStatus { Open, Opening, Closed, Closing}
 	private MoveStatus status;
 	private RectTransform rect;
-	private UIPos chatBoxPos;
-	private const float CLOSED_DISTANCE=20f;
-
+	private UIPos chatboxPos;
+	private float distOpenToClose=Screen.width/5;
+	private const float DIST_THRESHOLD = 0.1f;
 
     void Start()
     {
 		rect = GetComponent<RectTransform>();
-		chatBoxPos = new UIPos(rect.offsetMin, rect.offsetMax, Vector2.right * CLOSED_DISTANCE);
+		chatboxPos = new UIPos(rect.offsetMin, rect.offsetMax, Vector2.right * distOpenToClose);
 		SetChatBoxStatus(MoveStatus.Closed);
 	}
 
@@ -50,48 +52,58 @@ public class Chatbox : MonoBehaviour
 	{
 		if (moveStatus == MoveStatus.Open)
 		{
-			rect.offsetMin = chatBoxPos.openPosMin;
-			rect.offsetMax = chatBoxPos.openPosMax;
+			rect.offsetMin = chatboxPos.openPosMin;
+			rect.offsetMax = chatboxPos.openPosMax;
 			status = MoveStatus.Open;
 			return;
 		}
 		else 
 		{
-			rect.offsetMin = chatBoxPos.closedPosMin;
-			rect.offsetMax = chatBoxPos.closedPosMax;
+			rect.offsetMin = chatboxPos.closedPosMin;
+			rect.offsetMax = chatboxPos.closedPosMax;
 			return;
 		}
 	}
     
     void Update()
     {
-        //if (status == MoveStatus.Opening){ MoveChatbox (some arguments);}
-		//if (status == MoveStatus.Closing) { MoveChatbox (some arguments);}
+        if (status == MoveStatus.Opening) 
+		{
+			Move(chatboxPos.openingVector, chatboxPos.openingSpeed, chatboxPos.closedPosMin);
+		}
+		if (status == MoveStatus.Closing) 
+		{ 
+			Move (chatboxPos.closingVector, chatboxPos.closingSpeed, chatboxPos.openPosMin);
+		}
 	}
 
 	public void Open()
 	{ 
 		SetChatBoxStatus(MoveStatus.Closed);
-		//MoveChatBox (chatBoxPos.openingVector, chatBoxPos.OPENING_SPEED, chatboxPos.OpenPosMin);
+		status = MoveStatus.Opening;
 	}
 
 	public void Close()
 	{
 		SetChatBoxStatus(MoveStatus.Open);
-		//MoveChatbox (chatboxPos.closingVector, chatboxPos.CLOSING_SPEED, chatboxPos.ClosedPosMin);
+		status = MoveStatus.Closing;
 	}
 
-	private void MoveChatbox(Vector2 direction, float speed, Vector2 destination)
+	private void Move(Vector2 direction, float speed, Vector2 origin)
 	{
-		//TODO: consider changing MoveChatBox to a MoveUIPos that can be used by any other UI scripts with the struct
-		//TODO: consider using a LERP value for moveChatBox instead of speed
-		CheckForDestination(destination);
+		rect.offsetMin = rect.offsetMin + (direction * speed * Time.deltaTime);
+		rect.offsetMax = rect.offsetMax + (direction * speed * Time.deltaTime);
+		CheckForDestination(origin);
 	}
 
-	private void CheckForDestination(Vector2 destination)
+	private void CheckForDestination(Vector2 origin)
 	{
-		//check to see if the chatbox is close to where it's supposed to end up
-		//if it is, change its status to a new MoveStatus and use SetChatboxPos to set its final place
+		float dist = Vector2.Distance(rect.offsetMin, origin);
+		if (dist >= chatboxPos.distance) 
+		{ 
+			if (status == MoveStatus.Opening) 	{ SetChatBoxStatus(MoveStatus.Open);   }
+			else if (status == MoveStatus.Closing) 	{ SetChatBoxStatus(MoveStatus.Closed); }
+		}
 	}
 
 
