@@ -10362,9 +10362,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 328935665}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8c429bf753b9422484232bd0c68b870, type: 3}
+  m_Script: {fileID: 11500000, guid: 5770c7319a1a62742ba91143dda2aa81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BasePercentageChanceToHack: 95
+  chatbox: {fileID: 0}
 --- !u!65 &328935668
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10387,11 +10389,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 328935665}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5770c7319a1a62742ba91143dda2aa81, type: 3}
+  m_Script: {fileID: 11500000, guid: a8c429bf753b9422484232bd0c68b870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BasePercentageChanceToHack: 95
-  chatbox: {fileID: 3082396616366829810}
 --- !u!4 &334334743 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 7284012fa96c6024b8fd4b5529223730,
