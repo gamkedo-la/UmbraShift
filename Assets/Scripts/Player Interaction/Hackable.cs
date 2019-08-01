@@ -9,13 +9,17 @@ public class Hackable : MonoBehaviour
 
     public int BasePercentageChanceToHack = 95;
 
+    public Chatbox chatbox;
+
     public void BeenHacked()
     {
         Debug.Log("Hack the Planet!");
+        //TODO: affect chatbox main text and/or options here.
     }
 
     public void NotHacked()
     {
         Debug.Log("Access Denied Nerd");
+        //TODO: affect chatbox main text and/or options here.
     }
 }
