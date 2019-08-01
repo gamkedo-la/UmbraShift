@@ -34,12 +34,26 @@ public struct UIPos
 
 public class Chatbox : MonoBehaviour
 {
+	//Screen Info
+	private InteractionScreen currentScreen;
+	private UIoption lastOptionChosen;
+	private bool interactable = false;
+	[SerializeField] private Text handle;
+	[SerializeField] private Image portrait;
+	[SerializeField] private Text description;
+	[SerializeField] private Button option1;
+	[SerializeField] private Button option2;
+	[SerializeField] private Button option3;
+	[SerializeField] private Color boxColor;
+
+	//Movement and Position
 	public enum MoveStatus { Open, Opening, Closed, Closing}
 	private MoveStatus status;
 	private RectTransform rect;
 	private UIPos chatboxPos;
 	private float distOpenToClose=Screen.width/5;
 	private const float DIST_THRESHOLD = 0.1f;
+	
 
     void Start()
     {
@@ -77,16 +91,20 @@ public class Chatbox : MonoBehaviour
 		}
 	}
 
-	public void Open()
+	public void Open(InteractionScreen openingScreen)
 	{ 
 		SetChatBoxStatus(MoveStatus.Closed);
 		status = MoveStatus.Opening;
+		currentScreen = openingScreen;
+		interactable = true;
+		UpdateScreen();
 	}
 
 	public void Close()
 	{
 		SetChatBoxStatus(MoveStatus.Open);
 		status = MoveStatus.Closing;
+		interactable = false;
 	}
 
 	private void Move(Vector2 direction, float speed, Vector2 origin)
@@ -106,5 +124,49 @@ public class Chatbox : MonoBehaviour
 		}
 	}
 
+	private void UpdateScreen()
+	{
+		option1.gameObject.SetActive(false); 
+		option2.gameObject.SetActive(false); 
+		option3.gameObject.SetActive(false);
+		handle.text = currentScreen.handle;
+		portrait.sprite = currentScreen.portrait;
+		description.text = currentScreen.description;
+		boxColor = currentScreen.color;
 
+		if (currentScreen.options.Length >= 1) { option1.gameObject.SetActive(true); }
+		if (currentScreen.options.Length >= 2) { option2.gameObject.SetActive(true); }
+		if (currentScreen.options.Length >= 3) { option3.gameObject.SetActive(true); }
+		if (option1.gameObject.activeSelf) 
+		{ 
+			option1.GetComponentInChildren<Text>().text = currentScreen.options[0].optionText; 
+		}
+		if (option2.gameObject.activeSelf) 
+		{ 
+			option2.GetComponentInChildren<Text>().text = currentScreen.options[1].optionText; 
+		}
+		if (option3.gameObject.activeSelf) 
+		{ 
+			option3.GetComponentInChildren<Text>().text = currentScreen.options[2].optionText; 
+		}
+	}
+
+	public void OptionChoice (int optionNumber)
+	{
+		if (interactable)
+		{
+			if (optionNumber==1) { lastOptionChosen = currentScreen.options[0]; }
+			else if (optionNumber == 2) { lastOptionChosen = currentScreen.options[1]; }
+			else if (optionNumber == 3) { lastOptionChosen = currentScreen.options[2]; }
+			if (lastOptionChosen.lastInteraction)
+			{
+				Close();
+			}
+			else 
+			{
+				currentScreen = lastOptionChosen.optionLeadsTo;
+				UpdateScreen();
+			}
+		}
+	}
 }

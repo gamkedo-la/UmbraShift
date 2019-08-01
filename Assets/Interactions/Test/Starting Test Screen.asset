@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edb2b2b67986080488b20bf5d981747f, type: 3}
+  m_Name: Starting Test Screen
+  m_EditorClassIdentifier: 
+  portrait: {fileID: 21300000, guid: 984d49c0a8c2b49e192e0fbb42059e6c, type: 3}
+  handle: Questioner
+  description: 'Are you ready to answer this question?  '
+  color: {r: 0, g: 0, b: 0, a: 0}
+  options:
+  - optionText: Yes
+    optionLeadsTo: {fileID: 11400000, guid: a96739843753b314fa02b0d7feca4130, type: 2}
+    lastInteraction: 0
+    id: 0
+  - optionText: No
+    optionLeadsTo: {fileID: 11400000, guid: 638c78fd2ddfcdb4bb5bb46c55e1cdb6, type: 2}
+    lastInteraction: 0
+    id: 0
+  - optionText: Leave
+    optionLeadsTo: {fileID: 11400000, guid: 5020ab1fd4e5e6e45a35013cdb48e7d9, type: 2}
+    lastInteraction: 0
+    id: 0
