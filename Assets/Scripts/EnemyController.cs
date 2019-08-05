@@ -22,6 +22,8 @@ public class EnemyController : MonoBehaviour
     public List<PlayerController> playerControllers;
     public List<PlayerController> visiblePlayers = new List<PlayerController>();
     public PlayerController playerTarget;
+    private float yellowAlertStateTimer = 0.0f;
+    private bool isPlayerSeen = false;
 
     // Start is called before the first frame update
     void Start()
@@ -50,6 +52,14 @@ public class EnemyController : MonoBehaviour
         {
             target.position = transform.position;
             visiblePlayers = EnemyManager.instance.GetVisiblePlayers();
+        }
+
+        if (isPlayerSeen)
+        {
+            moving = false;
+            Vector3 eyeLevel = playerTarget.transform.position;
+            eyeLevel.y = transform.position.y;
+            transform.LookAt(eyeLevel);
         }
 
         if (moving)
@@ -83,6 +93,7 @@ public class EnemyController : MonoBehaviour
             }
         }
         noticeIndicator.text = "?";
+        isPlayerSeen = false;
         foreach (PlayerController eachPC in playerControllers)
         {
             Vector3 rayFromMeToPlayer = eachPC.transform.position - transform.position;
@@ -103,14 +114,35 @@ public class EnemyController : MonoBehaviour
                     {
                         noticeIndicator.text = rhinfo.collider.name;
                        // Debug.Log($"{name} is reporting {eachPC.name} as seen");
-                        EnemyManager.instance.ReportEnemySighted(eachPC);
-                        if (TurnManager.instance.isCombatModeActive == false)
-                        {
-                            TurnManager.instance.CombatMode();
-                        }
+                       isPlayerSeen = true;
+                       playerTarget = eachPC;
                     }
                 }
             }
+        }
+
+        if (isPlayerSeen)
+        {
+            yellowAlertStateTimer += Time.deltaTime;
+            if (yellowAlertStateTimer > 3.0f)
+            {
+                RaiseAlarm(playerTarget);
+            }
+        }
+        else
+        {
+            yellowAlertStateTimer = 0.0f;
+            playerTarget = null;
+            moving = true;
+        }
+    }
+
+    private void RaiseAlarm(PlayerController enemy)
+    {
+        EnemyManager.instance.ReportEnemySighted(enemy);
+        if (TurnManager.instance.isCombatModeActive == false)
+        {
+            TurnManager.instance.CombatMode();
         }
     }
 

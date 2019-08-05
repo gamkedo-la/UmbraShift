@@ -9,6 +9,9 @@ public class EnemyManager : MonoBehaviour
     public static EnemyManager instance;
     public List<EnemyController> enemyControllers = new List<EnemyController>();
     public List<PlayerController> playerControllers = new List<PlayerController>();
+    private float yellowAlertTimer = 0.0f;
+    public float maxAlertTime = 10.0f;
+    public bool atRedAlert = false;
 
     public void EnemyControllerReportingForDuty(EnemyController enemyController)
     {
@@ -49,6 +52,7 @@ public class EnemyManager : MonoBehaviour
     private void Start()
     {
         StartCoroutine(CheckIfPlayerCanSeeNPCs());
+        StartCoroutine(CountdownAlertState());
     }
 
     // Update is called once per frame
@@ -95,5 +99,18 @@ public class EnemyManager : MonoBehaviour
             }
             yield return new WaitForSeconds(0.2f);
         }
+    }
+
+    IEnumerator CountdownAlertState()
+    {
+        while (true)
+        {
+            if (yellowAlertTimer > 0.0f)
+            {
+                yellowAlertTimer -= 1.0f;
+            }
+            yield return new WaitForSeconds(1.0f);
+        }
+
     }
 }
