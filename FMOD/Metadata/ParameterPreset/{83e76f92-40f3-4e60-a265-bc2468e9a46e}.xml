@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="ParameterPreset" id="{83e76f92-40f3-4e60-a265-bc2468e9a46e}">
+		<property name="name">
+			<value>Random Menu Mix</value>
+		</property>
+		<relationship name="folder">
+			<destination>{71bff589-30bc-4832-9fe5-ee75fd635dd9}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{d348fa1b-5716-4539-9178-8ddc28cb0b56}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{d348fa1b-5716-4539-9178-8ddc28cb0b56}">
+		<property name="parameterType">
+			<value>1</value>
+		</property>
+		<property name="maximum">
+			<value>6</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>
