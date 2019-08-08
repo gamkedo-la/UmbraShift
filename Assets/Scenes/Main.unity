@@ -12605,6 +12605,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4756b4ac0af4fa248ab9067d248f0578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lights:
+  - {fileID: 786268408}
+  - {fileID: 782333326}
+  - {fileID: 1709462131}
   isMoving: 0
   shiftTime: 0.25
 --- !u!114 &437053383
@@ -12770,9 +12774,9 @@ Transform:
   m_LocalPosition: {x: -3.1149988, y: 1.15, z: 2.2700257}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 786268407}
   - {fileID: 728965716}
   - {fileID: 2136828623}
-  - {fileID: 786268407}
   - {fileID: 782333325}
   - {fileID: 1709462130}
   m_Father: {fileID: 1340283783}
@@ -20521,7 +20525,7 @@ Transform:
   m_LocalScale: {x: 0.45, y: 0.45, z: 0.45}
   m_Children: []
   m_Father: {fileID: 437053389}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &728965717
 SphereCollider:
@@ -22163,7 +22167,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 437053389}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 41.82, y: 0, z: 0}
 --- !u!108 &786268408
 Light:
@@ -37936,6 +37940,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4756b4ac0af4fa248ab9067d248f0578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lights:
+  - {fileID: 751541795}
+  - {fileID: 1501508991}
+  - {fileID: 1951155250}
   isMoving: 0
   shiftTime: 0.25
 --- !u!114 &1512326329
@@ -57244,7 +57252,7 @@ Transform:
   m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
   m_Children: []
   m_Father: {fileID: 437053389}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2138677391
 GameObject:

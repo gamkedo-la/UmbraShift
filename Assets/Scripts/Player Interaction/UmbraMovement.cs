@@ -8,8 +8,8 @@ public class UmbraMovement : MonoBehaviour
 {
     NavMeshAgent agent;
     PlayerController pc;
-    
 
+	[SerializeField] Light[] lights;
     
     public bool isMoving = false;
     Vector3 velocity = Vector3.zero;
@@ -21,6 +21,8 @@ public class UmbraMovement : MonoBehaviour
 
     Vector3 shadowScale;
     Renderer rend;
+
+	bool lightsOn = true;
 
     public float shiftTime = 0.25F;
 
@@ -52,8 +54,10 @@ public class UmbraMovement : MonoBehaviour
     // Rescale object to 0.01 on y, change color to black
     private IEnumerator UmbraShift(float t)
     {
+		foreach (Light light in lights) { light.enabled = false; }
         while(!Mathf.Approximately(transform.localScale.y, 0.01f)) // Because SmoothDamp only gets arbitrarily close to the target value
         {
+	
 			if (transform.localScale.y <= 0.1f)	{ pc.agent.isStopped = false; }
 			else { pc.agent.isStopped = true; }
 
@@ -61,6 +65,7 @@ public class UmbraMovement : MonoBehaviour
             
             color = Vector3.SmoothDamp(ToVector3(rend.material.GetColor("_BaseColor")), Vector3.zero, ref colorVelocity, shiftTime);
             rend.material.SetColor("_BaseColor", new Color(color.x, color.y, color.z));
+
 
             yield return new WaitForEndOfFrame();
         }
@@ -70,7 +75,8 @@ public class UmbraMovement : MonoBehaviour
         while(agent.velocity != Vector3.zero) { yield return new WaitForEndOfFrame(); }
 
         StartCoroutine(ReSize());
-        yield return null;
+		foreach (Light light in lights) { light.enabled = true; }
+		yield return null;
     }
 
     // After motion stops, rescale object and return color to normal
