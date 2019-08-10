@@ -29,14 +29,18 @@ public class BaseCharacterClass : MonoBehaviour
        
     public Stat hacking;
     public Stat shooting;
-    public Stat investigation;    
+    public Stat investigation;
+
+    [SerializeField]
+    private InitialStatManager initialStatManager;
 
     private int maxAPRefill = 5;
     public int currentAP;
 
     public void Awake()
     {
-        
+        initialStatManager = FindObjectOfType<InitialStatManager>();
+        InitializeStats();
         
         maxHealth += constitution.GetValue();
         //armor.AddModifier(dexterity.GetValue());
@@ -49,6 +53,12 @@ public class BaseCharacterClass : MonoBehaviour
     public void Start()
     {
         currentHealth = maxHealth;
+    }
+
+    public void InitializeStats()
+    {
+        //Initialize Base Stat Values from Character Creation
+        strength.GetBaseValueFromCharacterCreation(initialStatManager.baseStrength);
     }
 
     public void ActionPointRefill()

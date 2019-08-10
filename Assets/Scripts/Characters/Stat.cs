@@ -11,6 +11,12 @@ public class Stat
     [SerializeField]
     private List<int> modifiers = new List<int>();
 
+    public int GetBaseValueFromCharacterCreation(int sheetValue)
+    {
+        baseValue = sheetValue;
+        return baseValue;
+    }
+
     public int GetValue()
     {
         int finalValue = baseValue;
