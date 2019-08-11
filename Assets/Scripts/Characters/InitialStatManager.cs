@@ -4,11 +4,19 @@ using UnityEngine;
 
 public class InitialStatManager : MonoBehaviour
 {
-    public int baseStrength = 0;
-    public int dex = 0;
+  
 
-    public int SetBaseStrength(int baseStrength)
+    public List<int> InitialStats = new List<int>();
+
+    public int currentElementID = 0;
+
+    public void SetCurrentElementID(int elementID)
     {
-        return baseStrength;
+        currentElementID = elementID;
+    }
+
+    public void SetBaseStat(int baseStat)
+    {
+        InitialStats[currentElementID] = baseStat;
     }
 }

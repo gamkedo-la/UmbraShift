@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 9081230654925087385}
   - component: {fileID: 9081230654925087456}
   m_Layer: 10
-  m_Name: Player1
+  m_Name: PlayerTest
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -135,9 +135,17 @@ MonoBehaviour:
   enemyController: {fileID: 0}
   visualRange: 30
   currentAP: 0
+  maxMoveWithAvailableAP: 0
+  movePerAP: 1
   currentHealth: 0
   muzzleFlash: {fileID: 752083658007179946, guid: 2af3308baefb64a4abb83663d22b9618,
     type: 3}
+  playerSelectIndicator: {fileID: 0}
+  agent: {fileID: 0}
+  hackableObject: {fileID: 0}
+  objectBeingInvestigated: {fileID: 0}
+  isMainCharacter: 0
+  multiShotAccuracyPenalty: -15
 --- !u!114 &9081230654925087385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,17 +159,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterName: Bob
+  playerCharacter: 1
   avatar: {fileID: 21300000, guid: 984d49c0a8c2b49e192e0fbb42059e6c, type: 3}
-  strength: 5
-  dexterity: 5
-  intelligence: 5
-  constitution: 5
   level: 0
   currentHealth: 0
   maxHealth: 0
   isAlive: 1
-  shooting: 0
-  hacking: 0
+  BasePercentageChanceToHit: 90
+  strength:
+    baseValue: 0
+    modifiers: 
+  dexterity:
+    baseValue: 0
+    modifiers: 
+  constitution:
+    baseValue: 0
+    modifiers: 
+  intelligence:
+    baseValue: 0
+    modifiers: 
+  perception:
+    baseValue: 0
+    modifiers: 
+  hacking:
+    baseValue: 0
+    modifiers: 
+  shooting:
+    baseValue: 0
+    modifiers: 
+  investigation:
+    baseValue: 0
+    modifiers: 
+  takingDamageSound: event:/Male_Grunt_1
+  initialStatManager: {fileID: 0}
+  currentAP: 0
 --- !u!54 &9081230654925087456
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -8,6 +8,8 @@ public class BaseCharacterClass : MonoBehaviour
 {
     public string characterName = "Unknown";
 
+    public bool playerCharacter = false;
+
     public Sprite avatar;
    
     public int level = 0;
@@ -15,7 +17,6 @@ public class BaseCharacterClass : MonoBehaviour
     public int maxHealth = 10;
     public bool isAlive = true;
     public int BasePercentageChanceToHit = 90;
-
 
     // base character stats
 
@@ -60,8 +61,19 @@ public class BaseCharacterClass : MonoBehaviour
 
     public void InitializeStats()
     {
-        //Initialize Base Stat Values from Character Creation
-        strength.GetBaseValueFromCharacterCreation(initialStatManager.baseStrength);
+        if (playerCharacter)
+        {
+            //Initialize Base Stat Values from Character Creation
+            strength.GetBaseValueFromCharacterCreation(initialStatManager.InitialStats[0]);
+            dexterity.GetBaseValueFromCharacterCreation(initialStatManager.InitialStats[1]);
+            constitution.GetBaseValueFromCharacterCreation(initialStatManager.InitialStats[2]);
+            intelligence.GetBaseValueFromCharacterCreation(initialStatManager.InitialStats[3]);
+            perception.GetBaseValueFromCharacterCreation(initialStatManager.InitialStats[4]);
+            hacking.GetBaseValueFromCharacterCreation(initialStatManager.InitialStats[5]);
+            shooting.GetBaseValueFromCharacterCreation(initialStatManager.InitialStats[6]);
+            investigation.GetBaseValueFromCharacterCreation(initialStatManager.InitialStats[7]);
+        }
+        else return;        
     }
 
     public void ActionPointRefill()
