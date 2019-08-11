@@ -66,6 +66,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
     public void SetAsActivePlayerController()
     {
         target.position = targetMoveLocation;
