@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="ParameterPreset" id="{51bfbb2b-9f38-498c-98a9-1ed52326522b}">
+		<property name="name">
+			<value>Air con</value>
+		</property>
+		<relationship name="folder">
+			<destination>{71bff589-30bc-4832-9fe5-ee75fd635dd9}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{0c2bb37e-b738-4b39-933f-7c02fee55adf}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{0c2bb37e-b738-4b39-933f-7c02fee55adf}">
+		<property name="initialValue">
+			<value>0.050000000000000003</value>
+		</property>
+	</object>
+</objects>

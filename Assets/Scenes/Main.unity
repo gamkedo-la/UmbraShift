@@ -5344,6 +5344,7 @@ MonoBehaviour:
   investigation:
     baseValue: 0
     modifiers: 
+  takingDamageSound: event:/Male_Grunt_1
   initialStatManager: {fileID: 0}
   currentAP: 0
 --- !u!195 &125694716
@@ -9205,6 +9206,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad293283d5eca8f458ea4e500947c162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maleGrunt1: event:/Male_Grunt_1
+  maleGrunt2: event:/Male_Grunt_2
+  maleGrunt3: event:/Male_Grunt_3
+  maleGruntMI: event:/HumanMaleGruntMI
 --- !u!4 &277599584 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 7284012fa96c6024b8fd4b5529223730,
@@ -13015,6 +13020,7 @@ MonoBehaviour:
   investigation:
     baseValue: 1
     modifiers: 
+  takingDamageSound: event:/Male_Grunt_1
   initialStatManager: {fileID: 0}
   currentAP: 0
 --- !u!114 &437053384
@@ -14909,6 +14915,50 @@ Transform:
   m_Father: {fileID: 1646416881}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &520579555
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 520579556}
+  - component: {fileID: 520579557}
+  m_Layer: 0
+  m_Name: MicBoom
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &520579556
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 520579555}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.47, y: -0.75, z: 6.83}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1687258585}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &520579557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 520579555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ListenerNumber: -1
 --- !u!1 &520997920
 GameObject:
   m_ObjectHideFlags: 0
@@ -24139,6 +24189,41 @@ Transform:
   m_Father: {fileID: 288452805}
   m_RootOrder: 37
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &837541235 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6295539277355839949, guid: 484c65d99039afe4da50f3fdf1c03f4f,
+    type: 3}
+  m_PrefabInstance: {fileID: 1580293328}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &837541236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 837541235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  Event: event:/BarNoise
+  PlayEvent: 1
+  StopEvent: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params:
+  - Name: Air con
+    Value: 0.154
+  - Name: Crowd Volume
+    Value: 0.311
+  - Name: Random Sounds
+    Value: 0.061
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1001 &837731575
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39576,6 +39661,7 @@ MonoBehaviour:
   investigation:
     baseValue: 1
     modifiers: 
+  takingDamageSound: event:/Male_Grunt_1
   initialStatManager: {fileID: 0}
   currentAP: 0
 --- !u!114 &1512326330
@@ -40535,6 +40621,101 @@ Transform:
   m_Father: {fileID: 288452805}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1580293328
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6295539277355839949, guid: 484c65d99039afe4da50f3fdf1c03f4f,
+        type: 3}
+      propertyPath: m_Name
+      value: BarAudioSource
+      objectReference: {fileID: 0}
+    - target: {fileID: 6295539277355839939, guid: 484c65d99039afe4da50f3fdf1c03f4f,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6295539277355839939, guid: 484c65d99039afe4da50f3fdf1c03f4f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6295539277355839939, guid: 484c65d99039afe4da50f3fdf1c03f4f,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6295539277355839939, guid: 484c65d99039afe4da50f3fdf1c03f4f,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6295539277355839939, guid: 484c65d99039afe4da50f3fdf1c03f4f,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6295539277355839939, guid: 484c65d99039afe4da50f3fdf1c03f4f,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6295539277355839939, guid: 484c65d99039afe4da50f3fdf1c03f4f,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6295539277355839939, guid: 484c65d99039afe4da50f3fdf1c03f4f,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: 6295539277355839939, guid: 484c65d99039afe4da50f3fdf1c03f4f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6295539277355839939, guid: 484c65d99039afe4da50f3fdf1c03f4f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6295539277355839939, guid: 484c65d99039afe4da50f3fdf1c03f4f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6295539277355839948, guid: 484c65d99039afe4da50f3fdf1c03f4f,
+        type: 3}
+      propertyPath: Params.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6295539277355839948, guid: 484c65d99039afe4da50f3fdf1c03f4f,
+        type: 3}
+      propertyPath: Params.Array.data[1].Value
+      value: 0.377
+      objectReference: {fileID: 0}
+    - target: {fileID: 6295539277355839948, guid: 484c65d99039afe4da50f3fdf1c03f4f,
+        type: 3}
+      propertyPath: Params.Array.data[0].Value
+      value: 0.533
+      objectReference: {fileID: 0}
+    - target: {fileID: 6295539277355839948, guid: 484c65d99039afe4da50f3fdf1c03f4f,
+        type: 3}
+      propertyPath: Params.Array.data[4].Value
+      value: 0.41
+      objectReference: {fileID: 0}
+    - target: {fileID: 6295539277355839948, guid: 484c65d99039afe4da50f3fdf1c03f4f,
+        type: 3}
+      propertyPath: Event
+      value: event:/BarNoise
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6295539277355839948, guid: 484c65d99039afe4da50f3fdf1c03f4f, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 484c65d99039afe4da50f3fdf1c03f4f, type: 3}
 --- !u!1001 &1588979169
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -43676,7 +43857,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687258581}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!114 &1687258583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43770,7 +43951,8 @@ Transform:
   m_LocalRotation: {x: -0.25984865, y: 0.30752313, z: -0.08770859, w: -0.9111616}
   m_LocalPosition: {x: 1.9927654, y: 8.383771, z: -9.089359}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 520579556}
   m_Father: {fileID: 1965448917}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
@@ -43841,7 +44023,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687258581}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
   m_Name: 
@@ -47187,6 +47369,7 @@ MonoBehaviour:
   investigation:
     baseValue: 0
     modifiers: 
+  takingDamageSound: event:/Male_Grunt_1
   initialStatManager: {fileID: 0}
   currentAP: 0
 --- !u!195 &1803113626

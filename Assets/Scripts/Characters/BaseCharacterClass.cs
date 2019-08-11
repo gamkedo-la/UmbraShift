@@ -31,6 +31,9 @@ public class BaseCharacterClass : MonoBehaviour
     public Stat shooting;
     public Stat investigation;
 
+    //Sounds
+    public string takingDamageSound= "event:/Male_Grunt_1";
+
     [SerializeField]
     private InitialStatManager initialStatManager;
 
@@ -108,7 +111,7 @@ public class BaseCharacterClass : MonoBehaviour
     public void BeenShot(BaseCharacterClass target)
     {
         currentHealth -= 2;
-        FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.maleGrunt1,target.transform.position);
+        FMODUnity.RuntimeManager.PlayOneShot(target.takingDamageSound, target.transform.position);
         Debug.Log($"I was shot: {target.name} and now have {currentHealth}/{maxHealth}");
         if (currentHealth <= 0)
         {
