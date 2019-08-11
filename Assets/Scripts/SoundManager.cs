@@ -6,7 +6,14 @@ public class SoundManager : MonoBehaviour
 {
 	public static SoundManager instance;
 
-	private void Awake ( )
+    public string maleGrunt1 = "event:/Male_Grunt_1";
+    public string maleGrunt2 = "event:/Male_Grunt_2";
+    public string maleGrunt3 = "event:/Male_Grunt_3";
+    public string maleGruntMI = "event:/HumanMaleGruntMI";
+
+
+
+    private void Awake ( )
 	{
 		if ( instance != null )
 		{
