@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class GridSpace : MonoBehaviour
 {
-	public delegate void SquareSelectEventHandler(Vector3 pos);
+	public delegate void SquareSelectEventHandler(Vector3 pos, RaycastHit squareInfo);
 	public event SquareSelectEventHandler SquareSelected;
 
 	private Camera cam;
@@ -20,6 +20,9 @@ public class GridSpace : MonoBehaviour
     {
 		cam = Camera.main;
 		squareImage = GetComponentInChildren<Image>();
+		string[] validLayerNames = new string[] { "Floor" };
+		LayerMask validLayers = LayerMask.GetMask(validLayerNames);
+		Update();
     }
 
 
@@ -28,8 +31,9 @@ public class GridSpace : MonoBehaviour
 		if (CheckForValidGridSpace("Floor"))
 		{
 			ShowGridSquare(true);
-			MoveSquareSpaceToMouseCursor();
-			ResolveMouseClicks();
+			Vector3 gridCoord = GetGridCoord(_hitInfo.point);
+			MoveSquareSpaceTo(gridCoord);
+			ResolveMouseClicks(_hitInfo);
 		}
 		else { ShowGridSquare(false); }
     }
@@ -46,12 +50,10 @@ public class GridSpace : MonoBehaviour
 			squareImage.enabled = status;
 	}
 
-	private void MoveSquareSpaceToMouseCursor()
+	private void MoveSquareSpaceTo(Vector3 gridCoord)
 	{
-		Vector3 spaceHit = GetGridCoord(_hitInfo.point);
-		this.gameObject.transform.position = spaceHit;
+		this.gameObject.transform.position = gridCoord;
 	}
-
 
 	public Vector3 GetGridCoord (Vector3 coord)
 	{
@@ -63,20 +65,20 @@ public class GridSpace : MonoBehaviour
 		return new Vector3(x, y, z);
 	}
 
-	private void ResolveMouseClicks()
+	private void ResolveMouseClicks(RaycastHit squareInfo)
 	{
 		if (Input.GetMouseButtonDown(0))
 		{
-			OnSquareSelected();
+			OnSquareSelected(squareInfo);
 		}
 	}
 
 
-	protected virtual void OnSquareSelected()
+	protected virtual void OnSquareSelected(RaycastHit squareInfo)
 	{
 		if (SquareSelected != null)
 		{
-			SquareSelected(transform.position);
+			SquareSelected(transform.position, squareInfo);
 		}
 	}
 
