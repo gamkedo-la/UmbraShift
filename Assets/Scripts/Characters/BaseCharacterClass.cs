@@ -63,6 +63,7 @@ public class BaseCharacterClass : MonoBehaviour
     {
         if (playerCharacter)
         {
+            characterName = initialStatManager.playerName;
             //Initialize Base Stat Values from Character Creation
             strength.GetBaseValueFromCharacterCreation(initialStatManager.InitialStats[0]);
             dexterity.GetBaseValueFromCharacterCreation(initialStatManager.InitialStats[1]);
