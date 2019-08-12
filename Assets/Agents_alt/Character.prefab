@@ -803,8 +803,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f34ebb922e7d984fa06454afb44d54a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canMove: 1
-  pathMaterial: {fileID: 2100000, guid: 050b3e65e4a769546bc40ad48b8d58ce, type: 2}
+  m_canMove: 1
+  m_activeControl: 1
+  m_pathMaterial: {fileID: 2100000, guid: 050b3e65e4a769546bc40ad48b8d58ce, type: 2}
 --- !u!195 &-4436031905199504386
 NavMeshAgent:
   m_ObjectHideFlags: 0

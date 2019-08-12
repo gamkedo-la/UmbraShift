@@ -11,26 +11,24 @@ public class Selection : MonoBehaviour
 	Image image;
 	GridSpace gridSpace;
 	ActionType actionAvailable;
-	private TextMeshProUGUI text;
 
 	public delegate void MoveSelectionEventHandler(Vector3 pos, RaycastHit squareInfo);
+	public delegate void NonMoveSelectionEventHandler();
 	public event MoveSelectionEventHandler MoveSelected;
-
+	public event NonMoveSelectionEventHandler NonMoveSelected;
 
 	private void Start()
 	{
 		image = GetComponentInChildren<Image>();
-		text = GetComponentInChildren<TextMeshProUGUI>();
 		ShowSelectionMarker(false);
 		gridSpace = FindObjectOfType<GridSpace>();
 		gridSpace.SquareSelected += OnSquareSelected;
+		actionAvailable = ActionType.None;
 	}
 
 	private void ShowSelectionMarker(bool status)
 	{
 		image.enabled = status;
-		text.enabled = status;
-		text.transform.rotation = Camera.main.transform.rotation;
 	}
 
 	private void ColorSelectionMarker(ActionType action)
@@ -38,11 +36,6 @@ public class Selection : MonoBehaviour
 		if (action==ActionType.Moveable) { image.color = Color.green; }
 	}
 
-	private void SetSelectionText (int apCost) 
-	{
-		text.text = apCost.ToString();
-	}
-    
 	private ActionType ScanContentsOfSquare(RaycastHit squareInfo, Vector3 pos)
 	{
 		if (LayerMask.LayerToName(squareInfo.collider.gameObject.layer) == "Floor") { return ActionType.Moveable; }
@@ -53,9 +46,9 @@ public class Selection : MonoBehaviour
 	{
 		actionAvailable = ScanContentsOfSquare(squareInfo, pos);
 		ShowSelectionMarker(true);
-		SetSelectionText(UnityEngine.Random.Range(0,4));		//TODO: Get actual AP cost data instead of a random number
 		ColorSelectionMarker(actionAvailable);
 		this.transform.position = pos;
+		if (actionAvailable != ActionType.Moveable && NonMoveSelected != null) { NonMoveSelected(); }
 		if (actionAvailable==ActionType.Moveable && MoveSelected != null) { MoveSelected(pos, squareInfo); }
 		
 	}
