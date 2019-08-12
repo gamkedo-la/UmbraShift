@@ -39,7 +39,7 @@ public class UmbraMovement : MonoBehaviour
         rend = GetComponent<Renderer>();
         realColor = ToVector3(rend.material.GetColor("_BaseColor"));
 
-        walkingEvent = FMODUnity.RuntimeManager.CreateInstance(SoundManager.instance.footSteps);
+        walkingEvent = FMODUnity.RuntimeManager.CreateInstance(SoundManager.instance.footSteps2);
     }
 
 

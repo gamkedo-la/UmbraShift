@@ -143,6 +143,7 @@ public class EnemyController : MonoBehaviour
         if (TurnManager.instance.isCombatModeActive == false)
         {
             TurnManager.instance.CombatMode();
+            UmbraEventManager.instance.ActivateAlarm();
         }
     }
 

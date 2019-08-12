@@ -120,6 +120,11 @@ public class TurnManager : MonoBehaviour
 
         DebugManager.instance?.OverwriteDebugText($"Combat mode is {isCombatModeActive}");
         Debug.Log($"CombatModeActive = {isCombatModeActive}");
+
+        if (!isCombatModeActive&&UmbraEventManager.instance.alertState)
+        {
+            UmbraEventManager.instance.DeactivateAlarm();
+        }
     }
 
     public void PlayerControllerReportingForDuty(PlayerController playerController)

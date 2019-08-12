@@ -9212,8 +9212,10 @@ MonoBehaviour:
   maleGrunt2: event:/Male_Grunt_2
   maleGrunt3: event:/Male_Grunt_3
   maleGruntMI: event:/HumanMaleGruntMI
-  footSteps: event:/HumanFootSteps
+  footSteps1: event:/HumanFootSteps_1
+  footSteps2: event:/HumanFootSteps_2
   gunshotPistol1: event:/Gun_Shot_Pistol_1
+  inGameMusic: event:/InGameMusic
 --- !u!114 &273953996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9223,20 +9225,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 273953989}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c4d9a58cc280e44dbf09867fc6db79d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CollisionTag: 
-  Event: 
-  PlayEvent: 0
-  StopEvent: 0
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: -1
-  OverrideMaxDistance: -1
 --- !u!4 &277599584 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 7284012fa96c6024b8fd4b5529223730,
@@ -14888,6 +14879,7 @@ GameObject:
   - component: {fileID: 518083985}
   - component: {fileID: 518083984}
   - component: {fileID: 518083983}
+  - component: {fileID: 518083986}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -14943,6 +14935,19 @@ Transform:
   m_Father: {fileID: 1646416881}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &518083986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518083982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5649fd274a3db4544aece94c80dfb190, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alertState: 0
 --- !u!1 &520997920
 GameObject:
   m_ObjectHideFlags: 0

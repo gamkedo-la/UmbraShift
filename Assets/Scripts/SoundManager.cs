@@ -10,9 +10,12 @@ public class SoundManager : MonoBehaviour
     public string maleGrunt2 = "event:/Male_Grunt_2";
     public string maleGrunt3 = "event:/Male_Grunt_3";
     public string maleGruntMI = "event:/HumanMaleGruntMI";
-    public string footSteps = "event:/HumanFootSteps";
+    public string footSteps1 = "event:/HumanFootSteps_1";
+    public string footSteps2 = "event:/HumanFootSteps_2";
     public string gunshotPistol1 = "event:/Gun_Shot_Pistol_1";
 
+
+    public string inGameMusic = "event:/InGameMusic";
 
 
     private void Awake ( )
