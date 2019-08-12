@@ -11,6 +11,7 @@ public class SoundManager : MonoBehaviour
     public string maleGrunt3 = "event:/Male_Grunt_3";
     public string maleGruntMI = "event:/HumanMaleGruntMI";
     public string footSteps = "event:/HumanFootSteps";
+    public string gunshotPistol1 = "event:/Gun_Shot_Pistol_1";
 
 
 

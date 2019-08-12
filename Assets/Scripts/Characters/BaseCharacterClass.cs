@@ -33,7 +33,7 @@ public class BaseCharacterClass : MonoBehaviour
     public Stat investigation;
 
     //Sounds
-    public string takingDamageSound= "event:/Male_Grunt_1";
+    public string takingDamageSound= "event:/Male_Grunt_2";
 
     [SerializeField]
     private InitialStatManager initialStatManager;
@@ -110,7 +110,7 @@ public class BaseCharacterClass : MonoBehaviour
         PercentageChanceToHit += shooting.GetValue();        
         PercentageChanceToHit -= target.dexterity.GetValue();
         Debug.Log($"chance to hit {PercentageChanceToHit}");
-
+        FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.gunshotPistol1);
         if (Random.Range(0, 100) <= PercentageChanceToHit)
         {
             target.BeenShot(target);
