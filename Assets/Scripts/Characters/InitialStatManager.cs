@@ -18,6 +18,8 @@ public class InitialStatManager : MonoBehaviour
 
     public int currentElementID = 0;
 
+    public int currentPortraitElementID = 0;
+
     public void NameCharacter()
     {
         playerName = inputField.text;
@@ -35,6 +37,35 @@ public class InitialStatManager : MonoBehaviour
 
     void Awake()
     {
-        playerPortrait.sprite = playerPortraitOptions[0];
+        playerPortrait.sprite = playerPortraitOptions[currentPortraitElementID];
+    }
+
+    void Update()
+    {
+        playerPortrait.sprite = playerPortraitOptions[currentPortraitElementID];
+    }
+
+    public void NextPortrait()
+    {
+        if(currentPortraitElementID < playerPortraitOptions.Length-1)
+        {
+            currentPortraitElementID += 1;
+        }
+        else
+        {
+            currentPortraitElementID = 0;
+        }
+    }
+
+    public void PreviousPortrait()
+    {
+        if(currentPortraitElementID >= 1)
+        {
+            currentPortraitElementID -= 1;
+        }
+        else
+        {
+            currentPortraitElementID = playerPortraitOptions.Length-1;
+        }
     }
 }
