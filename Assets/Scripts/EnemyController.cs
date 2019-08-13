@@ -147,10 +147,12 @@ public class EnemyController : MonoBehaviour
         
         if (TurnManager.instance.isCombatModeActive == false)
         {
+            
             TurnManager.instance.CombatMode();
             UmbraEventManager.instance.ActivateAlarm();
             Debug.Log("Playing Enemy Alert Sound");
-            FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.enemyAlerted2);
+            FMODUnity.RuntimeManager.PlayOneShot("event:/Alerted_Guard_ML");
+
         }
     }
 
