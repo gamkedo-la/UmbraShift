@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
 	private bool m_showingPathData = false;
 	private Vector3 m_destination;
 	private int m_remainingWaypoints=0;
-	private const float MOVE_DEST_THRESHOLD = 0.05f;
+	private const float MOVE_DEST_THRESHOLD = 0.2f;
 	private const float SELECTION_THRESHOLD = 0.4f;
 	private const float SIGHT_THRESHOLD = 5f;
 	Vector3[] m_gridpoints;
@@ -37,13 +37,12 @@ public class PlayerMovement : MonoBehaviour
 		m_gridpoints = new Vector3[0];
 		m_selection.MoveSelected += OnMoveSelected;
 		m_selection.NonMoveSelected += OnNonMoveSelected;
-
 	}
 
 	private void OnMoveSelected(Vector3 pos, RaycastHit squareInfo)
 	{
 		if (movingInProcess || !m_activeControl || !m_canMove) { return; }
-		if (Vector3.Distance(pos, m_destination) < SELECTION_THRESHOLD)
+		if (DistanceOnPlane(pos, m_destination) < SELECTION_THRESHOLD)
 		{
 			m_confirmed = true;
 		}
@@ -64,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
 		m_confirmed = false;
 		m_destination = Vector3.positiveInfinity;
 		m_gridpoints = new Vector3[0];
+		transform.position = m_gridSpace.GetGridCoord(transform.position);
 		//reset all path stuff, movement has completed, user cancelled, or user clicked on something else
 	}
 
@@ -72,17 +72,19 @@ public class PlayerMovement : MonoBehaviour
 		if (!m_activeControl || !m_canMove) { return; }
 		if (!movingInProcess) { return; }
 		CheckForArrival();
+		if (!movingInProcess) { return; }
 		DrawLinesAlongGridpoints();
 		MoveOnPath();
 	}
 
 	private void CheckForArrival()
 	{
-		if (Vector3.Distance(transform.position, m_gridpoints[0]) < MOVE_DEST_THRESHOLD) 
+		Debug.Log("Gridpoints: " + m_gridpoints[0]);
+		if (DistanceOnPlane(transform.position, m_gridpoints[0]) < MOVE_DEST_THRESHOLD)
 		{
 			RemoveNextGridpoint();
 		}
-		if (m_gridpoints.Length<2 && Vector3.Distance(transform.position, m_gridpoints[0]) < MOVE_DEST_THRESHOLD)
+		if (DistanceOnPlane(transform.position, m_destination) < MOVE_DEST_THRESHOLD)
 		{
 			EndMovement();
 		}
@@ -91,9 +93,9 @@ public class PlayerMovement : MonoBehaviour
 	private void RemoveNextGridpoint()
 	{
 		Vector3[] tempArray = new Vector3[m_gridpoints.Length - 1];
-		for (int i=1; i<m_gridpoints.Length; i++)
+		for (int i=0; i<tempArray.Length; i++)
 		{
-			tempArray[i - 1] = m_gridpoints[i];
+			tempArray[i] = m_gridpoints[i+1];
 		}
 		m_gridpoints = tempArray;
 	}
@@ -107,7 +109,6 @@ public class PlayerMovement : MonoBehaviour
 		DrawLinesAlongGridpoints();
 	}
 
-	   
 	private void BeginMovingOnPath()
 	{
 		movingInProcess = true;
@@ -131,6 +132,13 @@ public class PlayerMovement : MonoBehaviour
 		return gridpoints;
 	}
 
+	private float DistanceOnPlane (Vector3 a, Vector3 b)
+	{
+		a.y = 0f;
+		b.y = 0;
+		return Vector3.Distance(a, b);
+	}
+
 	private void DrawLinesAlongGridpoints()
 	{
 		m_path.enabled = true;
@@ -151,11 +159,12 @@ public class PlayerMovement : MonoBehaviour
 
 	private void MoveOnPath()
 	{
-		Vector3 horizFacing = new Vector3((m_gridpoints[0] - transform.position).x, 0f, (m_gridpoints[0] - transform.position).z);
-		transform.rotation = Quaternion.LookRotation(horizFacing);
-		if (Vector3.Angle(transform.forward, m_gridpoints[0]-transform.position)<SIGHT_THRESHOLD) 
-		{
-			m_navMeshAgent.Move((m_gridpoints[0] - transform.position).normalized * Time.deltaTime * _movementSpeed);
+		Vector3 dirTowardWaypoint = m_gridpoints[0] - transform.position;
+		dirTowardWaypoint.y = 0f;
+		if (DistanceOnPlane(dirTowardWaypoint, transform.position) > MOVE_DEST_THRESHOLD) 
+		{ 
+			transform.rotation = Quaternion.LookRotation(dirTowardWaypoint);
+			transform.position = transform.position + (dirTowardWaypoint.normalized * Time.deltaTime * _movementSpeed);
 		}	
 	}
 
