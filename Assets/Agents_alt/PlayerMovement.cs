@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
 	private bool m_showingPathData = false;
 	private Vector3 m_destination;
 	private int m_remainingWaypoints=0;
-	private const float MOVE_DEST_THRESHOLD = 0.2f;
+	private const float MOVE_DEST_THRESHOLD = 0.05f;
 	private const float SELECTION_THRESHOLD = 0.4f;
 	private const float SIGHT_THRESHOLD = 5f;
 	Vector3[] m_gridpoints;
@@ -79,14 +79,15 @@ public class PlayerMovement : MonoBehaviour
 
 	private void CheckForArrival()
 	{
-		Debug.Log("Gridpoints: " + m_gridpoints[0]);
 		if (DistanceOnPlane(transform.position, m_gridpoints[0]) < MOVE_DEST_THRESHOLD)
 		{
 			RemoveNextGridpoint();
+			transform.position = m_gridSpace.GetGridCoord(transform.position);
 		}
 		if (DistanceOnPlane(transform.position, m_destination) < MOVE_DEST_THRESHOLD)
 		{
 			EndMovement();
+			transform.position = m_gridSpace.GetGridCoord(transform.position);
 		}
 	}
 
