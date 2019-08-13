@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="MixerGroup" id="{38c23dbc-9b0e-4954-9e3c-dcff9cde998b}">
+		<property name="volume">
+			<value>-19.5</value>
+		</property>
+		<property name="name">
+			<value>SecurityCameras</value>
+		</property>
+		<relationship name="effectChain">
+			<destination>{42250945-5aac-42c2-b865-6631d29da774}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{88ae8b91-adb5-426e-ab8f-545a36bfccef}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{c0403d92-6590-4f91-ad70-0ccfb824c404}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{42250945-5aac-42c2-b865-6631d29da774}">
+		<relationship name="effects">
+			<destination>{da03dcc7-d81d-41bd-a704-7d435e8a1d2f}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{88ae8b91-adb5-426e-ab8f-545a36bfccef}" />
+	<object class="MixerBusFader" id="{da03dcc7-d81d-41bd-a704-7d435e8a1d2f}" />
+</objects>

@@ -13,6 +13,10 @@ public class SoundManager : MonoBehaviour
     public string footSteps1 = "event:/HumanFootSteps_1";
     public string footSteps2 = "event:/HumanFootSteps_2";
     public string gunshotPistol1 = "event:/Gun_Shot_Pistol_1";
+    public string gunshotPistol1MS = "event:/Gun_Shot_Pistol_1-ML";
+    public string enemyAlerted1 = "event:/Alerted_Guard_1";
+    public string enemyAlerted2 = "event:/Alerted_Guard_2";
+    public string enemyAlerted3 = "event:/Alerted_Guard_3";
 
 
     public string inGameMusic = "event:/InGameMusic";

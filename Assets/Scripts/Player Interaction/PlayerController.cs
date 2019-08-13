@@ -98,6 +98,7 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log($"shooting at {enemyController.name}");
             baseClass.ShootAtTarget(enemyController);
+            
             GameObject tempGO = Instantiate(muzzleFlash);
             tempGO.transform.position = transform.position;
         }
@@ -119,7 +120,8 @@ public class PlayerController : MonoBehaviour
                 baseClass.ShootAtTarget(enemyController);
                 //GameObject tempGO = Instantiate(muzzleFlash);
                 //tempGO.transform.position = transform.position;
-                baseClass.shooting.AddModifier(multiShotAccuracyPenalty);                
+                baseClass.shooting.AddModifier(multiShotAccuracyPenalty);
+                //FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.gunshotPistol1MS);
             }
 
             for (int i = 0; i < (numberOfShots); i++)

@@ -25,6 +25,9 @@ public class EnemyController : MonoBehaviour
     private float yellowAlertStateTimer = 0.0f;
     private bool isPlayerSeen = false;
 
+
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +40,7 @@ public class EnemyController : MonoBehaviour
         currentHealth = baseClass.maxHealth;
         EnemyManager.instance.EnemyControllerReportingForDuty(this);
         baseClass.ActionPointRefill();
+       
     }
 
 	void OnDisable( )
@@ -140,10 +144,13 @@ public class EnemyController : MonoBehaviour
     private void RaiseAlarm(PlayerController enemy)
     {
         EnemyManager.instance.ReportEnemySighted(enemy);
+        
         if (TurnManager.instance.isCombatModeActive == false)
         {
             TurnManager.instance.CombatMode();
             UmbraEventManager.instance.ActivateAlarm();
+            Debug.Log("Playing Enemy Alert Sound");
+            FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.enemyAlerted2);
         }
     }
 
