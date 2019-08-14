@@ -8,7 +8,9 @@ using UnityEngine.UI;
 public class GridSpace : MonoBehaviour
 {
 	public delegate void SquareSelectEventHandler(Vector3 pos, RaycastHit squareInfo);
+	public delegate void CancelSelectEventHandler();
 	public event SquareSelectEventHandler SquareSelected;
+	public event CancelSelectEventHandler CancelSelected;
 
 	private Camera cam;
 	private LayerMask layerMask;
@@ -24,7 +26,7 @@ public class GridSpace : MonoBehaviour
 		LayerMask validLayers = LayerMask.GetMask(validLayerNames);
 		Update();
     }
-
+	
 
 	void Update()
 	{
@@ -55,7 +57,7 @@ public class GridSpace : MonoBehaviour
 		this.gameObject.transform.position = gridCoord;
 	}
 
-	public Vector3 GetGridCoord (Vector3 coord)
+	static public Vector3 GetGridCoord (Vector3 coord)
 	{
 		float x = Mathf.RoundToInt(coord.x);
 		if (x % 2 != 0) { x = x + 1; }
@@ -71,6 +73,11 @@ public class GridSpace : MonoBehaviour
 		{
 			OnSquareSelected(squareInfo);
 		}
+
+		if (Input.GetMouseButtonDown(1))
+		{
+			OnCancelSelected();
+		}
 	}
 
 
@@ -79,6 +86,14 @@ public class GridSpace : MonoBehaviour
 		if (SquareSelected != null)
 		{
 			SquareSelected(transform.position, squareInfo);
+		}
+	}
+
+	protected virtual void OnCancelSelected()
+	{
+		if (CancelSelected != null)
+		{
+			CancelSelected();
 		}
 	}
 

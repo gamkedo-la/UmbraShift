@@ -3,12 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public enum ActionType { None, Moveable, Attackable, Hackable, Talkable, OtherInteractable }
-public class Selection : MonoBehaviour
+public class PlayerInputGrid : MonoBehaviour
 {
-	Image image;
+	//Image image;
 	GridSpace gridSpace;
 	ActionType actionAvailable;
 
@@ -19,22 +18,22 @@ public class Selection : MonoBehaviour
 
 	private void Start()
 	{
-		image = GetComponentInChildren<Image>();
-		ShowSelectionMarker(false);
+		//image = GetComponentInChildren<Image>();
+		//ShowSelectionMarker(false);
 		gridSpace = FindObjectOfType<GridSpace>();
 		gridSpace.SquareSelected += OnSquareSelected;
 		actionAvailable = ActionType.None;
 	}
 
-	private void ShowSelectionMarker(bool status)
-	{
-		image.enabled = status;
-	}
+	//private void ShowSelectionMarker(bool status)
+	//{
+	//	image.enabled = status;
+	//}
 
-	private void ColorSelectionMarker(ActionType action)
-	{
-		if (action==ActionType.Moveable) { image.color = Color.green; }
-	}
+	//private void ColorSelectionMarker(ActionType action)
+	//{
+	//	if (action==ActionType.Moveable) { image.color = Color.green; }
+	//}
 
 	private ActionType ScanContentsOfSquare(RaycastHit squareInfo, Vector3 pos)
 	{
@@ -45,11 +44,12 @@ public class Selection : MonoBehaviour
 	protected virtual void OnSquareSelected (Vector3 pos, RaycastHit squareInfo)
 	{
 		actionAvailable = ScanContentsOfSquare(squareInfo, pos);
-		ShowSelectionMarker(true);
-		ColorSelectionMarker(actionAvailable);
+		//ShowSelectionMarker(true);
+		//ColorSelectionMarker(actionAvailable);
 		this.transform.position = pos;
 		if (actionAvailable != ActionType.Moveable && NonMoveSelected != null) { NonMoveSelected(); }
 		if (actionAvailable==ActionType.Moveable && MoveSelected != null) { MoveSelected(pos, squareInfo); }
 		
 	}
+
 }
