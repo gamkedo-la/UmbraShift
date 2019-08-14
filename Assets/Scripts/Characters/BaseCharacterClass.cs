@@ -112,7 +112,7 @@ public class BaseCharacterClass : MonoBehaviour
         PercentageChanceToHit += shooting.GetValue();        
         PercentageChanceToHit -= target.dexterity.GetValue();
         Debug.Log($"chance to hit {PercentageChanceToHit}");
-        FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.gunshotPistol1);
+             
         if (Random.Range(0, 100) <= PercentageChanceToHit)
         {
             target.BeenShot(target);

@@ -101,6 +101,8 @@ public class PlayerController : MonoBehaviour
             
             GameObject tempGO = Instantiate(muzzleFlash);
             tempGO.transform.position = transform.position;
+
+            FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.gunshotPistol1);
         }
     }
 
@@ -114,7 +116,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             Debug.Log($"shooting at {enemyController.name}");
-
+            PlayMultiShotSounds(numberOfShots);
             for (int i = 0; i < (numberOfShots); i++)
             {
                 baseClass.ShootAtTarget(enemyController);
@@ -193,8 +195,32 @@ public class PlayerController : MonoBehaviour
         ToggleSelectionIndicator(false);
     }
 
+    private void PlayMultiShotSounds(int numberOfShots)
+    {
+
+        switch(numberOfShots)
+
+        {
+            case 2:
+
+                FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.gunshotPistol1_2shots);
+                break;
+            case 3:
+
+                FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.gunshotPistol1_3shots);
+                break;
+            case 4:
+
+                FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.gunshotPistol1_4shots);
+                break;
+
+            default:
+           
+                FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.gunshotPistol1);
+                break;
+        }
 
 
 
-
+    }
 }

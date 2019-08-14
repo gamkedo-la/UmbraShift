@@ -13,7 +13,9 @@ public class SoundManager : MonoBehaviour
     public string footSteps1 = "event:/HumanFootSteps_1";
     public string footSteps2 = "event:/HumanFootSteps_2";
     public string gunshotPistol1 = "event:/Gun_Shot_Pistol_1";
-    public string gunshotPistol1MS = "event:/Gun_Shot_Pistol_1-ML";
+    public string gunshotPistol1_2shots = "event:/Gun_Shot_Pistol_1-burst2";
+    public string gunshotPistol1_3shots = "event:/Gun_Shot_Pistol_1-burst3";
+    public string gunshotPistol1_4shots = "event:/Gun_Shot_Pistol_1-burst4";
     public string enemyAlerted1 = "event:/Alerted_Guard_1";
     public string enemyAlerted2 = "event:/Alerted_Guard_2";
     public string enemyAlerted3 = "event:/Alerted_Guard_3";
@@ -22,7 +24,7 @@ public class SoundManager : MonoBehaviour
     public string inGameMusic = "event:/InGameMusic";
 
 
-    private void Awake ( )
+    private void Start ( )
 	{
 		if ( instance != null )
 		{
@@ -40,5 +42,11 @@ public class SoundManager : MonoBehaviour
 		soundEvent.set3DAttributes( FMODUnity.RuntimeUtils.To3DAttributes( Camera.main.gameObject ) );
 		soundEvent.start( );
 	}
+
+    public void PlayUISelectSound()
+    {
+        Debug.Log("Playing UI Select");
+        FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Select");
+    }
 	
 }
