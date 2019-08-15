@@ -36,8 +36,10 @@ public class PlayerInputGrid : MonoBehaviour
 	//}
 
 	private ActionType ScanContentsOfSquare(RaycastHit squareInfo, Vector3 pos)
-	{
+	{				//TODO: not sure which layer name we'll be using yet for valid movement, so I wrote several
 		if (LayerMask.LayerToName(squareInfo.collider.gameObject.layer) == "Floor") { return ActionType.Moveable; }
+		else if (LayerMask.LayerToName(squareInfo.collider.gameObject.layer) == "Ground") { return ActionType.Moveable; }
+		else if (LayerMask.LayerToName(squareInfo.collider.gameObject.layer) == "WalkableArea") { return ActionType.Moveable; }
 		else return ActionType.None;
 	}
 
@@ -46,7 +48,7 @@ public class PlayerInputGrid : MonoBehaviour
 		actionAvailable = ScanContentsOfSquare(squareInfo, pos);
 		//ShowSelectionMarker(true);
 		//ColorSelectionMarker(actionAvailable);
-		this.transform.position = pos;
+		//this.transform.position = pos;
 		if (actionAvailable != ActionType.Moveable && NonMoveSelected != null) { NonMoveSelected(); }
 		if (actionAvailable==ActionType.Moveable && MoveSelected != null) { MoveSelected(pos, squareInfo); }
 		

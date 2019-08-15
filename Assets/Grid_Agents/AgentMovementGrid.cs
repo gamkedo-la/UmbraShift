@@ -14,6 +14,7 @@ public class AgentMovementGrid : MonoBehaviour
 	private bool m_confirmed = false;
 	private bool movingInProcess = false;
 	private bool settingPathInProcess = true;
+	private Collider[] m_colliders;
 
 	//lines
 	[SerializeField] private Material m_validPathMaterial;
@@ -27,13 +28,14 @@ public class AgentMovementGrid : MonoBehaviour
 	[SerializeField] private GameObject markerPrefab;
 	private Vector3[] m_waypoints;
 	private GameObject[] m_markers;
+	private float[] m_waypointCosts;
 
 	//movement
 	private const float MOVE_DEST_THRESHOLD = 0.1f;
 	private float _movementSpeed = 3f;  //consider moving this to a player stats script instead
 	private float _rotationSpeed = 1f;
-	private float _MaxMovementPoints = 6f;
-	private float _MovementPointsAvail = 6f;
+	private float m_MaxMovementPoints = 50f;
+	private float m_MovementPointsAvail = 50f;
 
 
 	private void Start()
@@ -50,6 +52,19 @@ public class AgentMovementGrid : MonoBehaviour
 		m_player_input.MoveSelected += OnMoveSelected;
 		m_player_input.NonMoveSelected += OnNonMoveSelected;
 		m_gridSpace.CancelSelected += OnCancelSelected;
+		m_colliders = GetComponentsInChildren<Collider>();
+	}
+
+	private void Update()
+	{
+		if (!m_activeControl || !m_canMove) { return; }
+		if (movingInProcess) { return; }
+		if (m_waypoints.Length < 1) { InitializeWaypoints(); }
+		m_waypoints[0] = GridSpace.GetGridCoord(transform.position);
+		DrawLineToMouse(GetNewestWaypoint());
+		if (!movingInProcess) { return; }
+		CheckForArrival();
+		MoveOnPath();
 	}
 
 	private void ResetVariables()
@@ -67,13 +82,15 @@ public class AgentMovementGrid : MonoBehaviour
 	private void OnMoveSelected(Vector3 pos, RaycastHit squareInfo)
 	{
 		if (movingInProcess || !m_activeControl || !m_canMove) { return; }
-		
-		if (m_waypoints.Length<1) { InitializeWaypoints(); }
-		bool valid = TestWaypoint(m_waypoints[m_waypoints.Length-1], pos);
+
+		bool valid = TestWaypoint(GetNewestWaypoint(), pos);
 		if (!valid) { return; }		//or draw invalid path
 		else 
 		{
-			PlaceMarker(pos);
+			float mpCost = Vector3.Distance(GetNewestWaypoint(), pos);
+			if (mpCost > m_MovementPointsAvail) { return; }
+			if (m_markers.Length < 2) { PlaceMarker(transform.position, 0f); }	//TODO: Can probably remove this once movement is working
+			PlaceMarker(pos, mpCost);			
 			DrawLineThroughMarkers();
 		}
 	}
@@ -82,46 +99,48 @@ public class AgentMovementGrid : MonoBehaviour
 	{
 		m_waypoints = new Vector3[1];
 		m_waypoints[0] = GridSpace.GetGridCoord(transform.position);
+		m_waypointCosts = new float[1];
+		m_waypointCosts[0] = 0f;
+		m_markers = new GameObject[1];
+		m_markers[0] = null;
 	}
 
-	private void PlaceMarker(Vector3 pos)
+	private void PlaceMarker(Vector3 pos, float mpCost)
 	{
-		if (m_waypoints.Length == 0) { AddNewPosToAnArray(m_waypoints, GridSpace.GetGridCoord(transform.position)); }
-		m_waypoints = AddNewPosToAnArray(m_waypoints, pos);
-		GameObject marker = GameObject.Instantiate(markerPrefab, pos, Quaternion.identity, this.transform);
-		
+		if (m_waypoints.Length == 0 || m_waypointCosts.Length == 0) 
+		{ 
+			InitializeWaypoints(); 
+		}
+		m_waypoints = ExpandArray<Vector3>(m_waypoints, pos);
+		GameObject marker = GameObject.Instantiate(markerPrefab, pos, Quaternion.identity);
+		marker.transform.Rotate(transform.right, 90f);
+		m_markers = ExpandArray<GameObject>(m_markers, marker);
+		m_waypointCosts = ExpandArray<float>(m_waypointCosts, mpCost);
+		m_MovementPointsAvail = m_MovementPointsAvail - mpCost;
+		//if (m_MovementPointsAvail<0f) { OnCancelSelected(); }
+	}
+
+	private Vector3 GetNewestWaypoint()
+	{
+		if (m_waypoints.Length == 0) { InitializeWaypoints(); }
+		return m_waypoints[m_waypoints.Length - 1];
 	}
 	   
-	private GameObject[] AddNewMarkerToAnArray(GameObject[] array, GameObject marker)
+	private T[] ExpandArray<T> (T[] array, T val)
 	{
-		GameObject[] newArray = new GameObject[array.Length + 1];
+		T[] newArray = new T[array.Length + 1];
 		for (int i = 0; i < array.Length; i++) { newArray[i] = array[i]; }
-		newArray[newArray.Length - 1] = marker;
+		newArray[newArray.Length - 1] = val;
 		return newArray;
 	}
 
-	private GameObject[] RemoveLastMarkerFromAnArray(GameObject[] array)
+	private T[] ContractArray<T>(T[] array)
 	{
-		GameObject[] newArray = new GameObject[array.Length - 1];
+		T[] newArray = new T[array.Length - 1];
 		for (int i = 0; i < array.Length - 1; i++) { newArray[i] = array[i]; }
 		return newArray;
 	}
-
-	private Vector3[] AddNewPosToAnArray(Vector3[] array, Vector3 pos)
-	{
-		Vector3[] newArray = new Vector3[array.Length + 1];
-		for (int i = 0; i < array.Length; i++) { newArray[i] = array[i]; }
-		newArray[newArray.Length-1] = pos;
-		return newArray;
-	}
-
-	private Vector3[] RemoveLastPosFromAnArray(Vector3[] array)
-	{
-		Vector3[] newArray = new Vector3[array.Length - 1];
-		for (int i = 0; i < array.Length-1; i++) { newArray[i] = array[i]; }
-		return newArray;
-	}
-
+	
 	private void DrawLineThroughMarkers()
 	{
 		m_waypointLine.enabled = true;
@@ -137,12 +156,15 @@ public class AgentMovementGrid : MonoBehaviour
 	{
 		Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hitInfo;
-		Physics.Raycast(ray, out hitInfo, 100f);
+		Physics.Raycast(ray, out hitInfo, 1000f);
 		Vector3 mousePos = GridSpace.GetGridCoord(hitInfo.point);
 		bool pathIsClear = TestWaypoint(origin, mousePos);
 		Material lineColor = m_validPathMaterial;
-		if (!pathIsClear) { lineColor = m_blockedPathMaterial; }
-		if (Vector3.Distance(origin, mousePos) > _MovementPointsAvail) { lineColor = m_farPathMaterial; }
+		if (!pathIsClear) 
+		{ 
+			lineColor = m_blockedPathMaterial;			//TODO: more consequences than this
+		}
+		if (DistanceOnPlane(origin, mousePos) > m_MovementPointsAvail) { lineColor = m_farPathMaterial; }	//TODO: more consequences than this
 		m_mouseLine.material = lineColor;
 		m_mouseLine.startWidth = 0.05f;
 		m_mouseLine.endWidth = 0.05f;
@@ -157,24 +179,42 @@ public class AgentMovementGrid : MonoBehaviour
 	private void OnCancelSelected()
 	{
 		if (m_waypoints.Length < 3) { EndMovement(); return; }
-		m_waypoints = RemoveLastPosFromAnArray(m_waypoints);
-		GameObject markerToDestroy = m_markers[m_markers.Length];
-		m_markers = RemoveLastMarkerFromAnArray(m_markers);
+		m_waypoints = ContractArray<Vector3>(m_waypoints);
+		GameObject markerToDestroy = m_markers[m_markers.Length-1];
+		m_markers = ContractArray<GameObject>(m_markers);
+		m_MovementPointsAvail = Mathf.Clamp(m_MovementPointsAvail + m_waypointCosts[m_waypointCosts.Length - 1], 0f, m_MaxMovementPoints);
+		m_waypointCosts = ContractArray<float>(m_waypointCosts);
 		Destroy(markerToDestroy);
+		DrawLineThroughMarkers();
 	}
 
 	private bool TestWaypoint(Vector3 startPosition, Vector3 testPosition)
 	{
 		bool isPathClear = true;
-		int layersToIgnore = LayerMask.GetMask("Player");
 		startPosition.y = testPosition.y + 1;
 		testPosition.y = testPosition.y + 1;
-		RaycastHit hitInfo;
-		bool hit = Physics.SphereCast(startPosition, 0.45f, testPosition - startPosition, out hitInfo, (testPosition - startPosition).magnitude);
-		if (hit) { isPathClear = false; }
+		Vector3 ray = testPosition - startPosition;
+		RaycastHit[] hitArray = Physics.SphereCastAll(startPosition, 0.35f, ray, ray.magnitude);
+		List<RaycastHit> hitList = new List<RaycastHit>();
+
+		foreach (RaycastHit hit in hitArray)
+		{
+			bool hitIsOnSelf = false;
+			foreach (Collider myCollider in m_colliders)
+			{
+				if (hit.collider == myCollider) 
+				{
+					hitIsOnSelf = true;
+				}
+			}
+			if (!hitIsOnSelf) { hitList.Add(hit); }
+		}
+		
+		foreach (RaycastHit hit in hitList) { Debug.Log("Hit: " + hit.point + "    Obj: " + hit.collider.name); }
+	
+		if (hitList.Count > 0) { isPathClear = false; }
 		return isPathClear;
 	}
-
 
 
 	private void OnNonMoveSelected()
@@ -189,94 +229,69 @@ public class AgentMovementGrid : MonoBehaviour
 		//reset all path stuff, movement has completed, user cancelled, or user clicked on something else
 	}
 
-	private void Update()
-	{
-		if (!m_activeControl || !m_canMove) { return; }
-		if (!movingInProcess) { return; }
-		DrawLineToMouse(m_waypoints[m_waypoints.Length-1]);
-		//CheckForArrival();
-		//if (!movingInProcess) { return; }
-		//MoveOnPath();
-	}
-
-	/*
-	private void CheckForArrival()
-	{
-		if (DistanceOnPlane(transform.position, m_gridpoints[0]) < MOVE_DEST_THRESHOLD)
-		{
-			RemoveNextGridpoint();
-			transform.position = m_gridSpace.GetGridCoord(transform.position);
-		}
-		if (DistanceOnPlane(transform.position, m_destination) < MOVE_DEST_THRESHOLD)
-		{
-			EndMovement();
-			transform.position = m_gridSpace.GetGridCoord(transform.position);
-		}
-	}
-
-	private void RemoveNextGridpoint()
-	{
-		Vector3[] tempArray = new Vector3[m_gridpoints.Length - 1];
-		for (int i = 0; i < tempArray.Length; i++)
-		{
-			tempArray[i] = m_gridpoints[i + 1];
-		}
-		m_gridpoints = tempArray;
-	}
-
-	private void CreateNewPath(Vector3 dest)
-	{
-		m_showingPathData = true;
-		m_destination = dest;
-		NavMeshPath path = CalcNavMeshPathTo(dest);
-		m_gridpoints = CalcGridpointsFromNavMeshPath(path);
-		DrawLinesAlongGridpoints();
-	}
-
 	private void BeginMovingOnPath()
 	{
 		movingInProcess = true;
 	}
 
-	private NavMeshPath CalcNavMeshPathTo(Vector3 destGridCoord)
-	{
-		NavMeshPath pathToCalc = new NavMeshPath();
-		NavMesh.CalculatePath(transform.position, destGridCoord, NavMesh.AllAreas, pathToCalc);       //consider adding some area masks
-		return pathToCalc;
-	}
-
-	private Vector3[] CalcGridpointsFromNavMeshPath(NavMeshPath path)
-	{
-		Vector3[] waypoints = path.corners;
-		Vector3[] gridpoints = new Vector3[waypoints.Length - 1];
-		for (int i = 1; i < waypoints.Length; i++)
-		{
-			gridpoints[i - 1] = m_gridSpace.GetGridCoord(waypoints[i]);
-		}
-		return gridpoints;
-	}
-
 	private float DistanceOnPlane(Vector3 a, Vector3 b)
 	{
 		a.y = 0f;
-		b.y = 0;
+		b.y = 0f;
 		return Vector3.Distance(a, b);
 	}
 
+	private void CheckForArrival()
+	{
+		if (DistanceOnPlane(transform.position, m_waypoints[1]) < MOVE_DEST_THRESHOLD)
+		{
+			transform.position = GridSpace.GetGridCoord(m_waypoints[1]);
+			RemoveWaypointOnArrival();
+			m_waypoints[0] = transform.position;
+			DrawLineThroughMarkers();
+			movingInProcess = false;
+		}
+		if (m_waypoints.Length < 2) 
+		{
+			EndMovement();
+		}
+	}
+
+	private void RemoveWaypointOnArrival()
+	{
+		if (m_waypoints.Length<2) { return; }
+		m_waypoints = RemovePositionOneInArray<Vector3>(m_waypoints);
+		GameObject markerToDestroy = m_markers[1];
+		m_markers = RemovePositionOneInArray<GameObject>(m_markers);
+		m_waypointCosts = RemovePositionOneInArray<float>(m_waypointCosts);
+		Destroy(markerToDestroy);
+	}
+
+	private T[] RemovePositionOneInArray<T>(T[] array)
+	{
+		
+		T[] newArray = new T[array.Length - 1];
+		for (int i = 1; i < array.Length; i++) 
+		{
+			newArray[i] = array[i+1];
+		}
+		newArray[0] = array[0];
+		return newArray;
+	}
 	
 
 	private void MoveOnPath()
 	{
-		Vector3 dirTowardWaypoint = m_gridpoints[0] - transform.position;
+		Vector3 dirTowardWaypoint = m_waypoints[1] - transform.position;
 		dirTowardWaypoint.y = 0f;
 		if (DistanceOnPlane(dirTowardWaypoint, transform.position) > MOVE_DEST_THRESHOLD)
 		{
-			transform.rotation = Quaternion.LookRotation(dirTowardWaypoint);
+			transform.rotation = Quaternion.LookRotation(dirTowardWaypoint);			//TODO: consider a slower rotation
 			transform.position = transform.position + (dirTowardWaypoint.normalized * Time.deltaTime * _movementSpeed);
 		}
 	}
-	*/
-	
+
+
 
 
 }
