@@ -54,6 +54,7 @@ public class GridSpace : MonoBehaviour
 
 	private void MoveSquareSpaceTo(Vector3 gridCoord)
 	{
+		gridCoord.y += 0.2f;
 		this.gameObject.transform.position = gridCoord;
 	}
 
@@ -85,7 +86,7 @@ public class GridSpace : MonoBehaviour
 	{
 		if (SquareSelected != null)
 		{
-			SquareSelected(transform.position, squareInfo);
+			SquareSelected(this.gameObject.transform.position, squareInfo);
 		}
 	}
 
