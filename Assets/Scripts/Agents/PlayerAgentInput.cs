@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public enum ActionType { None, Moveable, Attackable, Hackable, Talkable, OtherInteractable }
-public class PlayerInputGrid : MonoBehaviour
+public class PlayerAgentInput : MonoBehaviour
 {
 	//Image image;
 	GridSpace gridSpace;

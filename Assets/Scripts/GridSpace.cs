@@ -21,6 +21,8 @@ public class GridSpace : MonoBehaviour
 	void Start()
     {
 		cam = Camera.main;
+		Canvas canvas = GetComponent<Canvas>();
+		if (canvas && cam) { canvas.worldCamera = cam; }
 		squareImage = GetComponentInChildren<Image>();
 		string[] validLayerNames = new string[] { "Floor" };
 		LayerMask validLayers = LayerMask.GetMask(validLayerNames);
