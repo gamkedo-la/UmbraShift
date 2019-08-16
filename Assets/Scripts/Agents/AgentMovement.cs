@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AgentMovementGrid : MonoBehaviour
+public class AgentMovement : MonoBehaviour
 {
 	//control
 	[SerializeField] private bool m_canMove = true;
 	[SerializeField] private bool m_activeControl = true;
 	private GridSpace m_gridSpace;
-	private PlayerInputGrid m_player_input;
+	private PlayerAgentInput m_player_input;
 	private const float SELECTION_THRESHOLD = 0.4f;
 	private bool m_confirmed = false;
 	private bool movingInProcess = false;
@@ -42,7 +42,7 @@ public class AgentMovementGrid : MonoBehaviour
 	{
 		cam = Camera.main;
 		m_gridSpace = FindObjectOfType<GridSpace>();
-		m_player_input = FindObjectOfType<PlayerInputGrid>();
+		m_player_input = FindObjectOfType<PlayerAgentInput>();
 		GameObject waypointLineGO = new GameObject();
 		GameObject mouseLineGO = new GameObject();
 		m_waypointLine = waypointLineGO.AddComponent(typeof(LineRenderer)) as LineRenderer;
@@ -58,11 +58,14 @@ public class AgentMovementGrid : MonoBehaviour
 	private void Update()
 	{
 		if (!m_activeControl || !m_canMove) { return; }
-		if (movingInProcess) { return; }
-		if (m_waypoints.Length < 1) { InitializeWaypoints(); }
-		m_waypoints[0] = GridSpace.GetGridCoord(transform.position);
-		DrawLineToMouse(GetNewestWaypoint());
-		if (!movingInProcess) { return; }
+		DrawLineThroughMarkers();
+		if (!movingInProcess)
+		{
+			if (m_waypoints.Length < 1) { InitializeWaypoints(); }
+			m_waypoints[0] = GridSpace.GetGridCoord(transform.position);
+			DrawLineToMouse(GetNewestWaypoint());
+			return;
+		}
 		CheckForArrival();
 		MoveOnPath();
 	}
@@ -83,13 +86,18 @@ public class AgentMovementGrid : MonoBehaviour
 	{
 		if (movingInProcess || !m_activeControl || !m_canMove) { return; }
 
+		if (GridSpace.GetGridCoord(pos) == GridSpace.GetGridCoord(GetNewestWaypoint())
+			&& GridSpace.GetGridCoord(pos) != GridSpace.GetGridCoord(transform.position))
+		{
+			BeginMovingOnPath();
+			return;
+		}
 		bool valid = TestWaypoint(GetNewestWaypoint(), pos);
-		if (!valid) { return; }		//or draw invalid path
+		if (!valid) { return; }		
 		else 
 		{
 			float mpCost = Vector3.Distance(GetNewestWaypoint(), pos);
 			if (mpCost > m_MovementPointsAvail) { return; }
-			if (m_markers.Length < 2) { PlaceMarker(transform.position, 0f); }	//TODO: Can probably remove this once movement is working
 			PlaceMarker(pos, mpCost);			
 			DrawLineThroughMarkers();
 		}
@@ -117,7 +125,6 @@ public class AgentMovementGrid : MonoBehaviour
 		m_markers = ExpandArray<GameObject>(m_markers, marker);
 		m_waypointCosts = ExpandArray<float>(m_waypointCosts, mpCost);
 		m_MovementPointsAvail = m_MovementPointsAvail - mpCost;
-		//if (m_MovementPointsAvail<0f) { OnCancelSelected(); }
 	}
 
 	private Vector3 GetNewestWaypoint()
@@ -249,7 +256,6 @@ public class AgentMovementGrid : MonoBehaviour
 			RemoveWaypointOnArrival();
 			m_waypoints[0] = transform.position;
 			DrawLineThroughMarkers();
-			movingInProcess = false;
 		}
 		if (m_waypoints.Length < 2) 
 		{
@@ -271,23 +277,26 @@ public class AgentMovementGrid : MonoBehaviour
 	{
 		
 		T[] newArray = new T[array.Length - 1];
-		for (int i = 1; i < array.Length; i++) 
+		for (int i = 0; i < newArray.Length; i++)
 		{
 			newArray[i] = array[i+1];
 		}
-		newArray[0] = array[0];
 		return newArray;
 	}
 	
 
 	private void MoveOnPath()
 	{
-		Vector3 dirTowardWaypoint = m_waypoints[1] - transform.position;
-		dirTowardWaypoint.y = 0f;
-		if (DistanceOnPlane(dirTowardWaypoint, transform.position) > MOVE_DEST_THRESHOLD)
+		if (m_waypoints.Length > 1)
 		{
-			transform.rotation = Quaternion.LookRotation(dirTowardWaypoint);			//TODO: consider a slower rotation
-			transform.position = transform.position + (dirTowardWaypoint.normalized * Time.deltaTime * _movementSpeed);
+			Vector3 dirTowardWaypoint = m_waypoints[1] - transform.position;
+			dirTowardWaypoint.y = 0f;
+			if (DistanceOnPlane(dirTowardWaypoint, transform.position) > MOVE_DEST_THRESHOLD)
+			{
+				transform.rotation = Quaternion.LookRotation(dirTowardWaypoint);            //TODO: consider a slower rotation
+				transform.position = transform.position + (dirTowardWaypoint.normalized * Time.deltaTime * _movementSpeed);
+			}
+			DrawLineThroughMarkers();
 		}
 	}
 
