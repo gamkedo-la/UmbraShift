@@ -19,6 +19,7 @@ public class SoundManager : MonoBehaviour
     public string enemyAlerted1 = "event:/Alerted_Guard_1";
     public string enemyAlerted2 = "event:/Alerted_Guard_2";
     public string enemyAlerted3 = "event:/Alerted_Guard_3";
+    public string securityAlarm = "event:/Security Alarm";
 
 
     public string inGameMusic = "event:/InGameMusic";
