@@ -38,8 +38,12 @@ public class AgentMovement : MonoBehaviour
 	private float m_MovePntsPerAction = 500f;   //Amount set high for Demo & Debug purposes only
 	private float m_MovementPointsAvail = 0f;
 
+    //sound
+    private FMOD.Studio.EventInstance walkingEvent;
 
-	private void Start()
+
+
+    private void Start()
 	{
 		cam = Camera.main;
 		m_gridSpace = FindObjectOfType<GridSpace>();
@@ -54,7 +58,10 @@ public class AgentMovement : MonoBehaviour
 		m_player_input.NonMoveSelected += OnNonMoveSelected;
 		m_gridSpace.CancelSelected += OnCancelSelected;
 		m_colliders = GetComponentsInChildren<Collider>();
-	}
+        walkingEvent = FMODUnity.RuntimeManager.CreateInstance(SoundManager.instance.footSteps2);
+
+
+    }
 
 	private void ActionUsedForMovement()          //Demo & Debug purposes only
 	{
@@ -89,7 +96,23 @@ public class AgentMovement : MonoBehaviour
 			CheckForArrival();
 			MoveOnPath();
 		}
-	}
+
+
+        if (movingInProcess)
+        {
+            
+            if (!walkingEvent.IsPlaying())
+            {
+                Debug.Log("Starting Walking sound");
+                walkingEvent.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(gameObject));
+                walkingEvent.start();
+            }
+        }
+        else
+        {
+            walkingEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        }
+    }
 
 	private void ResetVariables()
 	{

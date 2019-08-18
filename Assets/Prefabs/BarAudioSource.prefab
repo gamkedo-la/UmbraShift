@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6295539277355839939}
-  - component: {fileID: 6295539277355839948}
+  - component: {fileID: 837541236}
   m_Layer: 0
   m_Name: BarAudioSource
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6295539277355839948
+--- !u!114 &837541236
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -51,10 +51,12 @@ MonoBehaviour:
   TriggerOnce: 0
   Preload: 0
   Params:
+  - Name: Air con
+    Value: 0.088
   - Name: Crowd Volume
-    Value: 0.585
+    Value: 0.091
   - Name: Random Sounds
-    Value: 0.882
+    Value: 0.061
   OverrideAttenuation: 0
   OverrideMinDistance: 1
   OverrideMaxDistance: 20

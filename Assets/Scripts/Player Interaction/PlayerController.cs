@@ -98,11 +98,11 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log($"shooting at {enemyController.name}");
             baseClass.ShootAtTarget(enemyController);
-            
+            FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.gunshotPistol1);
             GameObject tempGO = Instantiate(muzzleFlash);
             tempGO.transform.position = transform.position;
 
-            FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.gunshotPistol1);
+            
         }
     }
 

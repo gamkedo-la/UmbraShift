@@ -28,7 +28,7 @@ public class SoundManager : MonoBehaviour
     public string inGameMusic = "event:/InGameMusic";
 
 
-    private void Start ( )
+    private void Awake ( )
 	{
 		if ( instance != null )
 		{
