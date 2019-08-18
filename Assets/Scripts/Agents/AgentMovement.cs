@@ -8,6 +8,7 @@ public class AgentMovement : MonoBehaviour
 	//control
 	[SerializeField] private bool m_canMove = true;
 	[SerializeField] private bool m_activeControl = true;
+	private bool m_movementActivated = false;
 	private GridSpace m_gridSpace;
 	private PlayerAgentInput m_player_input;
 	private const float SELECTION_THRESHOLD = 0.4f;
@@ -32,10 +33,10 @@ public class AgentMovement : MonoBehaviour
 
 	//movement
 	private const float MOVE_DEST_THRESHOLD = 0.1f;
-	private float _movementSpeed = 3f;  //consider moving this to a player stats script instead
+	private float _movementSpeed = 5f;  //consider moving this to a player stats script instead
 	private float _rotationSpeed = 1f;
-	private float m_MaxMovementPoints = 50f;
-	private float m_MovementPointsAvail = 50f;
+	private float m_MovePntsPerAction = 500f;   //Amount set high for Demo & Debug purposes only
+	private float m_MovementPointsAvail = 0f;
 
 
 	private void Start()
@@ -55,19 +56,39 @@ public class AgentMovement : MonoBehaviour
 		m_colliders = GetComponentsInChildren<Collider>();
 	}
 
+	private void ActionUsedForMovement()          //Demo & Debug purposes only
+	{
+		if (m_movementActivated == false)
+		{
+			m_MovementPointsAvail = m_MovePntsPerAction;
+			m_movementActivated = true;
+			settingPathInProcess = true;
+		}
+		else if (m_movementActivated == true) 
+		{
+			m_MovementPointsAvail = 0;
+			m_movementActivated = false;
+			settingPathInProcess = false;
+		}
+	}
+
 	private void Update()
 	{
-		if (!m_activeControl || !m_canMove) { return; }
-		DrawLineThroughMarkers();
-		if (!movingInProcess)
+		if (Input.GetKeyDown(KeyCode.Space)) { ActionUsedForMovement(); }
+		if (m_movementActivated)
 		{
-			if (m_waypoints.Length < 1) { InitializeWaypoints(); }
-			m_waypoints[0] = GridSpace.GetGridCoord(transform.position);
-			DrawLineToMouse(GetNewestWaypoint());
-			return;
+			if (!m_activeControl || !m_canMove) { return; }
+			DrawLineThroughMarkers();
+			if (!movingInProcess && settingPathInProcess)
+			{
+				if (m_waypoints.Length < 1) { InitializeWaypoints(); }
+				m_waypoints[0] = GridSpace.GetGridCoord(transform.position);
+				DrawLineToMouse(GetNewestWaypoint());
+				return;
+			}
+			CheckForArrival();
+			MoveOnPath();
 		}
-		CheckForArrival();
-		MoveOnPath();
 	}
 
 	private void ResetVariables()
@@ -80,11 +101,12 @@ public class AgentMovement : MonoBehaviour
 		settingPathInProcess = false;
 		m_mouseLine.enabled = false;
 		m_waypointLine.enabled = false;
+		m_movementActivated = false;
 	}
 
 	private void OnMoveSelected(Vector3 pos, RaycastHit squareInfo)
 	{
-		if (movingInProcess || !m_activeControl || !m_canMove) { return; }
+		if (!settingPathInProcess || !m_activeControl || !m_canMove) { return; }
 
 		if (GridSpace.GetGridCoord(pos) == GridSpace.GetGridCoord(GetNewestWaypoint())
 			&& GridSpace.GetGridCoord(pos) != GridSpace.GetGridCoord(transform.position))
@@ -189,7 +211,7 @@ public class AgentMovement : MonoBehaviour
 		m_waypoints = ContractArray<Vector3>(m_waypoints);
 		GameObject markerToDestroy = m_markers[m_markers.Length-1];
 		m_markers = ContractArray<GameObject>(m_markers);
-		m_MovementPointsAvail = Mathf.Clamp(m_MovementPointsAvail + m_waypointCosts[m_waypointCosts.Length - 1], 0f, m_MaxMovementPoints);
+		m_MovementPointsAvail = Mathf.Clamp(m_MovementPointsAvail + m_waypointCosts[m_waypointCosts.Length - 1], 0f, m_MovePntsPerAction);
 		m_waypointCosts = ContractArray<float>(m_waypointCosts);
 		Destroy(markerToDestroy);
 		DrawLineThroughMarkers();
@@ -239,6 +261,7 @@ public class AgentMovement : MonoBehaviour
 	private void BeginMovingOnPath()
 	{
 		movingInProcess = true;
+		settingPathInProcess = false;
 	}
 
 	private float DistanceOnPlane(Vector3 a, Vector3 b)
