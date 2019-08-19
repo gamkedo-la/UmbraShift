@@ -9,13 +9,49 @@ public class PauseScreenActions : MonoBehaviour
     public Slider masterVolumeSlider;
     public GameObject pauseMenuPanel;
 
-    public void UpdateMasterVolume()
+
+    FMOD.Studio.Bus musicBus;
+    FMOD.Studio.Bus sfxBus;
+
+
+    private void Awake()
+    {
+        musicBus= FMODUnity.RuntimeManager.GetBus("bus:/Music");
+        sfxBus= FMODUnity.RuntimeManager.GetBus("bus:/SoundFx");
+    }
+
+
+
+
+
+
+
+
+    public void UpdateMusicVolume(float value)
     {
 
-        
+       
+        musicBus.setVolume(value);
+
+    }
 
 
-        FMODUnity.RuntimeManager.StudioSystem.setParameterByName("Master Volume", masterVolumeSlider.value);
+    public void UpdateSoundFxVolume(float value)
+    {
+
+
+        sfxBus.setVolume(value);
+       
+
+    }
+
+
+
+    public void UpdateMasterVolume(float value)
+    {
+
+        FMODUnity.RuntimeManager.StudioSystem.setParameterByName("Master Volume",value);
+       
     }
 
     private void Update()
