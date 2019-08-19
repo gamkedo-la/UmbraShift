@@ -22,7 +22,7 @@ public class UmbraMovement : MonoBehaviour
     Vector3 shadowScale;
     Renderer rend;
 
-    private FMOD.Studio.EventInstance walkingEvent;
+   
 
     bool lightsOn = true;
 
@@ -39,7 +39,7 @@ public class UmbraMovement : MonoBehaviour
         rend = GetComponent<Renderer>();
         realColor = ToVector3(rend.material.GetColor("_BaseColor"));
 
-        walkingEvent = FMODUnity.RuntimeManager.CreateInstance(SoundManager.instance.footSteps2);
+       
     }
 
 
@@ -53,21 +53,7 @@ public class UmbraMovement : MonoBehaviour
 			pc.agent.isStopped = true;
         }
 
-        if (isMoving)
-        {
-            
-            
-            if (!walkingEvent.IsPlaying()) {
-                Debug.Log("Starting Walking sound");
-                walkingEvent.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(gameObject));
-                walkingEvent.start();
-            }
-        }
-        else
-        {
-            walkingEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        }
-        
+               
     }
 
     // Rescale object to 0.01 on y, change color to black
