@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +13,7 @@ public class UIActionBarController : MonoBehaviour
 	private Vector3[] skillIconLocations;
 	private GameManager turnManager;
 	private bool actionBarHidden=false;
+//Comment test - Kyle
 
 
 	private void Start()
