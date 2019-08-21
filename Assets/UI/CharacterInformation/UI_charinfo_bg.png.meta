@@ -1,7 +1,13 @@
 fileFormatVersion: 2
 guid: 84d0f54fad85ef245937ab32f34b64ba
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 2812974174748519224
+    second: UI_charinfo_bg_00
+  - first:
+      213: -4571415079101585518
+    second: UI_charinfo_bg_2
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -40,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -115,11 +121,53 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: UI_charinfo_bg_00
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 5
+        width: 173
+        height: 189
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b72eaa8ed29ee864088f083b375cc4dd
+      internalID: 2812974174748519224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_charinfo_bg_2
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 13
+        width: 134
+        height: 165
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26280f30b2c676845b9bb873849e9886
+      internalID: -4571415079101585518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 454d440db26621745ad8499acb5dedbf
     internalID: 0
     vertices: []
     indices: 

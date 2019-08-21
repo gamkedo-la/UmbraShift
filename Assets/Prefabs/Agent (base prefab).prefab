@@ -839,9 +839,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7629084898544693017}
   - component: {fileID: 6616824351585436827}
+  - component: {fileID: 1510621138018115810}
   - component: {fileID: 7629084898544693019}
   m_Layer: 0
-  m_Name: Character
+  m_Name: Agent (base prefab)
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -882,6 +883,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1510621138018115810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7629084898544693018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 599646f9d94b6a7439b25b4e8fd2c184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7629084898544693019
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -58,7 +58,7 @@ public class AgentMovement : MonoBehaviour
 		m_player_input.NonMoveSelected += OnNonMoveSelected;
 		m_gridSpace.CancelSelected += OnCancelSelected;
 		m_colliders = GetComponentsInChildren<Collider>();
-        walkingEvent = FMODUnity.RuntimeManager.CreateInstance(SoundManager.instance.footSteps2);
+        //walkingEvent = FMODUnity.RuntimeManager.CreateInstance(SoundManager.instance.footSteps2);
 
 
     }
@@ -76,6 +76,8 @@ public class AgentMovement : MonoBehaviour
 			m_MovementPointsAvail = 0;
 			m_movementActivated = false;
 			settingPathInProcess = false;
+			ResetVariables();
+			DrawLineThroughMarkers();
 		}
 	}
 
@@ -342,6 +344,7 @@ public class AgentMovement : MonoBehaviour
 				transform.rotation = Quaternion.LookRotation(dirTowardWaypoint);            //TODO: consider a slower rotation
 				transform.position = transform.position + (dirTowardWaypoint.normalized * Time.deltaTime * _movementSpeed);
 			}
+			m_waypoints[0] = transform.position;
 			DrawLineThroughMarkers();
 		}
 	}
