@@ -13,7 +13,6 @@ public class UIActionBarController : MonoBehaviour
 	private Vector3[] skillIconLocations;
 	private GameManager turnManager;
 	private bool actionBarHidden=false;
-//Comment test - Kyle
 
 
 	private void Start()
