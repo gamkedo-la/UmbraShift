@@ -8,28 +8,43 @@ public class AgentStats : MonoBehaviour
 	// float movementPoints;
 	// float actionPoints;
 	[SerializeField] private Sprite portraitImage;
-	[SerializeField] private string characterName;
+	[SerializeField] private string characterName = "DefaultName";
+	private AgentMovement agentMovement;
+	private int currentActionPoints = 0;
+	private int maxActionPoints = 2;
+	
+	public AgentMovement AgentMovement { get { return agentMovement; } }
+	public int CurrentActionPoints { get { return currentActionPoints; } }
 	public Sprite PortraitImage { get { return portraitImage; } }
 	public string CharacterName { get { return characterName; } }
-
-    
-	public Sprite GetPortraitImage()
-	{
-		return portraitImage;
-	}
-
-	public string GetCharacterName()
-	{
-		return characterName;
-	}
-
+	
+	
 	void Start()
-    {
-        
-    }
+	{
+		agentMovement = GetComponent<AgentMovement>();
+		currentActionPoints = maxActionPoints;
+	}
 
-    void Update()
-    {
-        
-    }
+
+	public Sprite GetPortraitImage() { return portraitImage; }
+	public string GetCharacterName() { return characterName; }
+	public AgentMovement GetAgentMovement() { return agentMovement; }
+	public int GetCurrentActionPoints() { return currentActionPoints; }
+	
+	public bool SpendActionPoints(int apCost)
+	{
+		if (apCost <= currentActionPoints)
+		{
+			AdjustActionPoints(-apCost);
+			return true;
+		}
+		else { return false; }
+	}
+
+	public void AdjustActionPoints (int amt)
+	{
+		currentActionPoints = currentActionPoints + amt;
+	}
+	
+    
 }

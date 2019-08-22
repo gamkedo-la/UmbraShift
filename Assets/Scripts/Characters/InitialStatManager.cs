@@ -20,6 +20,14 @@ public class InitialStatManager : MonoBehaviour
 
     public int currentPortraitElementID = 0;
 
+    public int maxStatTotal = 20;
+
+    public TMP_Text errorMessage;
+
+    public TMP_Text statTotalNumber;
+
+    private ChangeScene sceneChangeButton;
+
     public void NameCharacter()
     {
         playerName = inputField.text;
@@ -32,12 +40,17 @@ public class InitialStatManager : MonoBehaviour
 
     public void SetBaseStat(int baseStat)
     {
+        Debug.Log("triggered set base stat");
         InitialStats[currentElementID] = baseStat;
+        Debug.Log(InitialStats[currentElementID]);
+        CheckMaxStatCap();
     }
 
     void Awake()
     {
+        errorMessage.enabled = false;
         playerPortrait.sprite = playerPortraitOptions[currentPortraitElementID];
+        sceneChangeButton = FindObjectOfType<ChangeScene>();
     }
 
     void Update()
@@ -66,6 +79,29 @@ public class InitialStatManager : MonoBehaviour
         else
         {
             currentPortraitElementID = playerPortraitOptions.Length-1;
+        }
+    }
+
+    void CheckMaxStatCap()
+    {
+        int statTotal = 0;
+
+        for (int i = 0; i < InitialStats.Count; i++)
+        {
+            statTotal += InitialStats[i];
+        }
+
+        statTotalNumber.text = statTotal.ToString();
+
+        if (statTotal > maxStatTotal)
+        {
+            sceneChangeButton.gameObject.SetActive(false);
+            errorMessage.enabled = true;
+        }
+        else
+        {
+            sceneChangeButton.gameObject.SetActive(true);
+            errorMessage.enabled = false;
         }
     }
 }

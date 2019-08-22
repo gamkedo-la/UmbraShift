@@ -13,8 +13,12 @@ public class PlayerAgentInput : MonoBehaviour
 
 	public delegate void MoveSelectionEventHandler(Vector3 pos, RaycastHit squareInfo);
 	public delegate void NonMoveSelectionEventHandler();
+	public delegate void PortraitButtonPressEventHandler();
+	public delegate void MoveButtonPressEventHandler();
 	public event MoveSelectionEventHandler MoveSelected;
 	public event NonMoveSelectionEventHandler NonMoveSelected;
+	public event PortraitButtonPressEventHandler PortraitButtonPressed;
+	public event MoveButtonPressEventHandler MoveButtonPressed;
 
 	private void Start()
 	{
@@ -51,7 +55,16 @@ public class PlayerAgentInput : MonoBehaviour
 		//this.transform.position = pos;
 		if (actionAvailable != ActionType.Moveable && NonMoveSelected != null) { NonMoveSelected(); }
 		if (actionAvailable==ActionType.Moveable && MoveSelected != null) { MoveSelected(pos, squareInfo); }
-		
+	}
+
+	public void OnPortraitButtonPressed()
+	{
+		PortraitButtonPressed();
+	}
+
+	public void OnMoveButtonPressed()
+	{
+		MoveButtonPressed();
 	}
 
 }
