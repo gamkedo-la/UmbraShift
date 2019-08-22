@@ -22,15 +22,15 @@ public class BaseCharacterClass : MonoBehaviour
 
     public Stat strength;
     public Stat dexterity;
-    public Stat constitution;
-    public Stat intelligence;
-    public Stat perception;
+    public Stat intellect;
 
     // skills
        
     public Stat hacking;
     public Stat shooting;
     public Stat investigation;
+    public Stat medicine;
+    public Stat fastTalking;
 
     //Sounds
     public string takingDamageSound= "event:/Male_Grunt_2";
@@ -46,12 +46,13 @@ public class BaseCharacterClass : MonoBehaviour
         initialStatManager = FindObjectOfType<InitialStatManager>();
         InitializeStats();
         
-        maxHealth += constitution.GetValue();
         //armor.AddModifier(dexterity.GetValue());
 
-        hacking.AddModifier(intelligence.GetValue());
+        hacking.AddModifier(intellect.GetValue());
         shooting.AddModifier(dexterity.GetValue());
-        investigation.AddModifier(perception.GetValue() + intelligence.GetValue());        
+        investigation.AddModifier(intellect.GetValue());
+        medicine.AddModifier(intellect.GetValue());
+        fastTalking.AddModifier(intellect.GetValue());
     }
 
     public void Start()
@@ -69,12 +70,12 @@ public class BaseCharacterClass : MonoBehaviour
             //Initialize Base Stat Values from Character Creation
             strength.GetBaseValueFromCharacterCreation(initialStatManager.InitialStats[0]);
             dexterity.GetBaseValueFromCharacterCreation(initialStatManager.InitialStats[1]);
-            constitution.GetBaseValueFromCharacterCreation(initialStatManager.InitialStats[2]);
-            intelligence.GetBaseValueFromCharacterCreation(initialStatManager.InitialStats[3]);
-            perception.GetBaseValueFromCharacterCreation(initialStatManager.InitialStats[4]);
-            hacking.GetBaseValueFromCharacterCreation(initialStatManager.InitialStats[5]);
-            shooting.GetBaseValueFromCharacterCreation(initialStatManager.InitialStats[6]);
-            investigation.GetBaseValueFromCharacterCreation(initialStatManager.InitialStats[7]);
+            intellect.GetBaseValueFromCharacterCreation(initialStatManager.InitialStats[2]);
+            hacking.GetBaseValueFromCharacterCreation(initialStatManager.InitialStats[3]);
+            shooting.GetBaseValueFromCharacterCreation(initialStatManager.InitialStats[4]);
+            investigation.GetBaseValueFromCharacterCreation(initialStatManager.InitialStats[5]);
+            medicine.GetBaseValueFromCharacterCreation(initialStatManager.InitialStats[6]);
+            fastTalking.GetBaseValueFromCharacterCreation(initialStatManager.InitialStats[7]);
         }
         else return;        
     }
