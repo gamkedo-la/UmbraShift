@@ -17,6 +17,7 @@ public class GridSpace : MonoBehaviour
 	private const float MAX_DISTANCE = 200f;
 	private Image squareImage;
 	private RaycastHit _hitInfo;
+	static private bool showingGridSquare = false;
 
 	void Start()
     {
@@ -32,15 +33,16 @@ public class GridSpace : MonoBehaviour
 
 	void Update()
 	{
-		if (CheckForValidGridSpace("Floor"))
+		if (showingGridSquare && CheckForValidGridSpace("Floor"))
 		{
-			ShowGridSquare(true);
+			squareImage.enabled = true;
 			Vector3 gridCoord = GetGridCoord(_hitInfo.point);
 			MoveSquareSpaceTo(gridCoord);
 			ResolveMouseClicks(_hitInfo);
 		}
-		else { ShowGridSquare(false); }
+		else { squareImage.enabled = false; }
     }
+
 
 	private bool CheckForValidGridSpace(string layer)
 	{
@@ -49,9 +51,9 @@ public class GridSpace : MonoBehaviour
 		return Physics.Raycast(ray, out _hitInfo, MAX_DISTANCE, -layerMask);
 	}
 
-	private void ShowGridSquare (bool status)
+	static public void ShowGridSquare (bool status)
 	{
-			squareImage.enabled = status;
+			showingGridSquare = status;
 	}
 
 	private void MoveSquareSpaceTo(Vector3 gridCoord)

@@ -63,7 +63,7 @@ public class AgentMovement : MonoBehaviour
 
     }
 
-	private void ActionUsedForMovement()          //Demo & Debug purposes only
+	public void ActionUsedForMovement()     
 	{
 		if (m_movementActivated == false)
 		{
@@ -276,7 +276,7 @@ public class AgentMovement : MonoBehaviour
 		EndMovement();
 	}
 
-	private void EndMovement()
+	public  void EndMovement()
 	{
 		ResetVariables();
 		transform.position = GridSpace.GetGridCoord(transform.position);
