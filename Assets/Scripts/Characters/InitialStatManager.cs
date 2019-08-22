@@ -32,7 +32,9 @@ public class InitialStatManager : MonoBehaviour
 
     public void SetBaseStat(int baseStat)
     {
+        Debug.Log("triggered set base stat");
         InitialStats[currentElementID] = baseStat;
+        Debug.Log(InitialStats[currentElementID]);
     }
 
     void Awake()
