@@ -241,7 +241,7 @@ GameObject:
   - component: {fileID: 160537234}
   - component: {fileID: 160537233}
   m_Layer: 5
-  m_Name: StatTotal (1)
+  m_Name: StatTotalNumber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9770,6 +9770,11 @@ PrefabInstance:
       propertyPath: errorMessage
       value: 
       objectReference: {fileID: 1451022913}
+    - target: {fileID: 4492874477475936637, guid: 25ed6e858b8ea96428751ea1d69435ca,
+        type: 3}
+      propertyPath: statTotalNumber
+      value: 
+      objectReference: {fileID: 160537233}
     - target: {fileID: 4492874477475936636, guid: 25ed6e858b8ea96428751ea1d69435ca,
         type: 3}
       propertyPath: m_LocalPosition.x
