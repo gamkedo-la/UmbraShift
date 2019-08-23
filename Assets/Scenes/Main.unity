@@ -5327,13 +5327,7 @@ MonoBehaviour:
   dexterity:
     baseValue: 0
     modifiers: 
-  constitution:
-    baseValue: 0
-    modifiers: 
-  intelligence:
-    baseValue: 0
-    modifiers: 
-  perception:
+  intellect:
     baseValue: 0
     modifiers: 
   hacking:
@@ -5343,6 +5337,12 @@ MonoBehaviour:
     baseValue: 0
     modifiers: 
   investigation:
+    baseValue: 0
+    modifiers: 
+  medicine:
+    baseValue: 0
+    modifiers: 
+  fastTalking:
     baseValue: 0
     modifiers: 
   takingDamageSound: event:/Male_Grunt_1
@@ -12867,14 +12867,8 @@ MonoBehaviour:
   dexterity:
     baseValue: 5
     modifiers: 
-  constitution:
-    baseValue: 5
-    modifiers: 
-  intelligence:
-    baseValue: 5
-    modifiers: 
-  perception:
-    baseValue: 5
+  intellect:
+    baseValue: 0
     modifiers: 
   hacking:
     baseValue: 1
@@ -12884,6 +12878,12 @@ MonoBehaviour:
     modifiers: 
   investigation:
     baseValue: 1
+    modifiers: 
+  medicine:
+    baseValue: 0
+    modifiers: 
+  fastTalking:
+    baseValue: 0
     modifiers: 
   takingDamageSound: event:/Male_Grunt_1
   initialStatManager: {fileID: 0}
@@ -39552,14 +39552,8 @@ MonoBehaviour:
   dexterity:
     baseValue: 5
     modifiers: 
-  constitution:
-    baseValue: 5
-    modifiers: 
-  intelligence:
-    baseValue: 5
-    modifiers: 
-  perception:
-    baseValue: 5
+  intellect:
+    baseValue: 0
     modifiers: 
   hacking:
     baseValue: 1
@@ -39569,6 +39563,12 @@ MonoBehaviour:
     modifiers: 
   investigation:
     baseValue: 1
+    modifiers: 
+  medicine:
+    baseValue: 0
+    modifiers: 
+  fastTalking:
+    baseValue: 0
     modifiers: 
   takingDamageSound: event:/Male_Grunt_1
   initialStatManager: {fileID: 0}
@@ -47334,13 +47334,7 @@ MonoBehaviour:
   dexterity:
     baseValue: 0
     modifiers: 
-  constitution:
-    baseValue: 0
-    modifiers: 
-  intelligence:
-    baseValue: 0
-    modifiers: 
-  perception:
+  intellect:
     baseValue: 0
     modifiers: 
   hacking:
@@ -47350,6 +47344,12 @@ MonoBehaviour:
     baseValue: 0
     modifiers: 
   investigation:
+    baseValue: 0
+    modifiers: 
+  medicine:
+    baseValue: 0
+    modifiers: 
+  fastTalking:
     baseValue: 0
     modifiers: 
   takingDamageSound: event:/Male_Grunt_1
@@ -60903,7 +60903,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 84d0f54fad85ef245937ab32f34b64ba,
+      objectReference: {fileID: 246585467790299047, guid: 84d0f54fad85ef245937ab32f34b64ba,
         type: 3}
     - target: {fileID: 3082396615951341052, guid: 4a311a93f7e5f4934a748ee9baabc08b,
         type: 3}

@@ -5327,13 +5327,7 @@ MonoBehaviour:
   dexterity:
     baseValue: 0
     modifiers: 
-  constitution:
-    baseValue: 0
-    modifiers: 
-  intelligence:
-    baseValue: 0
-    modifiers: 
-  perception:
+  intellect:
     baseValue: 0
     modifiers: 
   hacking:
@@ -5343,6 +5337,12 @@ MonoBehaviour:
     baseValue: 0
     modifiers: 
   investigation:
+    baseValue: 0
+    modifiers: 
+  medicine:
+    baseValue: 0
+    modifiers: 
+  fastTalking:
     baseValue: 0
     modifiers: 
   takingDamageSound: event:/Male_Grunt_1
@@ -13071,14 +13071,8 @@ MonoBehaviour:
   dexterity:
     baseValue: 5
     modifiers: 
-  constitution:
-    baseValue: 5
-    modifiers: 
-  intelligence:
-    baseValue: 5
-    modifiers: 
-  perception:
-    baseValue: 5
+  intellect:
+    baseValue: 0
     modifiers: 
   hacking:
     baseValue: 1
@@ -13088,6 +13082,12 @@ MonoBehaviour:
     modifiers: 
   investigation:
     baseValue: 1
+    modifiers: 
+  medicine:
+    baseValue: 0
+    modifiers: 
+  fastTalking:
+    baseValue: 0
     modifiers: 
   takingDamageSound: event:/Male_Grunt_1
   initialStatManager: {fileID: 0}
@@ -39762,14 +39762,8 @@ MonoBehaviour:
   dexterity:
     baseValue: 5
     modifiers: 
-  constitution:
-    baseValue: 5
-    modifiers: 
-  intelligence:
-    baseValue: 5
-    modifiers: 
-  perception:
-    baseValue: 5
+  intellect:
+    baseValue: 0
     modifiers: 
   hacking:
     baseValue: 1
@@ -39779,6 +39773,12 @@ MonoBehaviour:
     modifiers: 
   investigation:
     baseValue: 1
+    modifiers: 
+  medicine:
+    baseValue: 0
+    modifiers: 
+  fastTalking:
+    baseValue: 0
     modifiers: 
   takingDamageSound: event:/Male_Grunt_1
   initialStatManager: {fileID: 0}
@@ -47627,13 +47627,7 @@ MonoBehaviour:
   dexterity:
     baseValue: 0
     modifiers: 
-  constitution:
-    baseValue: 0
-    modifiers: 
-  intelligence:
-    baseValue: 0
-    modifiers: 
-  perception:
+  intellect:
     baseValue: 0
     modifiers: 
   hacking:
@@ -47643,6 +47637,12 @@ MonoBehaviour:
     baseValue: 0
     modifiers: 
   investigation:
+    baseValue: 0
+    modifiers: 
+  medicine:
+    baseValue: 0
+    modifiers: 
+  fastTalking:
     baseValue: 0
     modifiers: 
   takingDamageSound: event:/Male_Grunt_1
@@ -61131,12 +61131,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3082396615951341052, guid: 4a311a93f7e5f4934a748ee9baabc08b,
         type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 84d0f54fad85ef245937ab32f34b64ba,
-        type: 3}
-    - target: {fileID: 3082396615951341052, guid: 4a311a93f7e5f4934a748ee9baabc08b,
-        type: 3}
       propertyPath: m_Type
       value: 0
       objectReference: {fileID: 0}
@@ -61537,21 +61531,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8977940027923167245, guid: 4a311a93f7e5f4934a748ee9baabc08b,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8977940027923167245, guid: 4a311a93f7e5f4934a748ee9baabc08b,
-        type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8977940027923167245, guid: 4a311a93f7e5f4934a748ee9baabc08b,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1298383626163531492, guid: 4a311a93f7e5f4934a748ee9baabc08b,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -61562,6 +61541,21 @@ PrefabInstance:
       propertyPath: m_AnchorMax.x
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8977940027923167245, guid: 4a311a93f7e5f4934a748ee9baabc08b,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8977940027923167245, guid: 4a311a93f7e5f4934a748ee9baabc08b,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8977940027923167245, guid: 4a311a93f7e5f4934a748ee9baabc08b,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5931974147243996202, guid: 4a311a93f7e5f4934a748ee9baabc08b,
         type: 3}
       propertyPath: m_AnchorMin.x
@@ -61577,16 +61571,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2164846307544361084, guid: 4a311a93f7e5f4934a748ee9baabc08b,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2164846307544361084, guid: 4a311a93f7e5f4934a748ee9baabc08b,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3374460970087687924, guid: 4a311a93f7e5f4934a748ee9baabc08b,
         type: 3}
       propertyPath: m_AnchorMin.x
@@ -61598,6 +61582,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3374460970087687924, guid: 4a311a93f7e5f4934a748ee9baabc08b,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2164846307544361084, guid: 4a311a93f7e5f4934a748ee9baabc08b,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2164846307544361084, guid: 4a311a93f7e5f4934a748ee9baabc08b,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
