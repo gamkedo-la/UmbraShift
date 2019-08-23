@@ -123,7 +123,7 @@ public class PlayerController : MonoBehaviour
                 //GameObject tempGO = Instantiate(muzzleFlash);
                 //tempGO.transform.position = transform.position;
                 baseClass.shooting.AddModifier(multiShotAccuracyPenalty);
-                //FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.gunshotPistol1MS);
+              
             }
 
             for (int i = 0; i < (numberOfShots); i++)
@@ -145,12 +145,15 @@ public class PlayerController : MonoBehaviour
 
     public void Hack()
     {
+
+        FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.playerObjectInteraction1);
         if (hackableObject == null)
         {
             Debug.Log("Can't be hacked");
         }
         else
         {
+
             Debug.Log("hacking " + hackableObject.name);
             baseClass.AttemptHack(hackableObject);
         }
@@ -169,12 +172,14 @@ public class PlayerController : MonoBehaviour
 
     public void Investigate()
     {
+        FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.playerObjectInteraction1);
         if (objectBeingInvestigated == null)
         {
             Debug.Log("Can't be investigated");
         }
         else
         {
+           
             Debug.Log("investigating" + objectBeingInvestigated.name);
             baseClass.AttemptInvestigation(objectBeingInvestigated);
         }

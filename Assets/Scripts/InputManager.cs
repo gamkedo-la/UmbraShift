@@ -45,12 +45,14 @@ public class InputManager : MonoBehaviour
 
     public void HackFromActivePlayer()
     {
+        
         Debug.Log("Calling Hack from active player");
         TurnManager.instance.ActivePlayerController.Hack();
     }
 
     public void InvestigateFromActivePlayer()
     {
+       
         Debug.Log("Calling Investigate from active player");
         TurnManager.instance.ActivePlayerController.Investigate();
     }
