@@ -5,17 +5,17 @@ using UnityEngine.AI;
 
 public class AgentMovement : MonoBehaviour
 {
+
 	//control
-	[SerializeField] private bool m_canMove = true;
-	[SerializeField] private bool m_activeControl = true;
-	private bool m_movementActivated = false;
 	private GridSpace m_gridSpace;
 	private PlayerAgentInput m_player_input;
+	private AgentActionManager m_actionManager;
 	private const float SELECTION_THRESHOLD = 0.4f;
-	private bool m_confirmed = false;
-	private bool movingInProcess = false;
-	private bool settingPathInProcess = true;
+	private const float TESTING_WIDTH = 0.95f;
+	private bool m_movementSystemInUse = false;
 	private Collider[] m_colliders;
+	private enum MovementMode { Unmoveable, MovingAround, PathBuilding }
+	private MovementMode currentMode = MovementMode.Unmoveable;
 
 	//lines
 	[SerializeField] private Material m_validPathMaterial;
@@ -23,19 +23,18 @@ public class AgentMovement : MonoBehaviour
 	[SerializeField] private Material m_blockedPathMaterial;
 	private LineRenderer m_waypointLine;
 	private LineRenderer m_mouseLine;
-	private Camera cam;
+	private Camera m_cam;
 
 	//waypoints
-	[SerializeField] private GameObject markerPrefab;
+	[SerializeField] private GameObject m_markerPrefab;
 	private Vector3[] m_waypoints;
 	private GameObject[] m_markers;
 	private float[] m_waypointCosts;
 
 	//movement
 	private const float MOVE_DEST_THRESHOLD = 0.1f;
-	private float _movementSpeed = 5f;  //consider moving this to a player stats script instead
-	private float _rotationSpeed = 1f;
-	private float m_MovePntsPerAction = 500f;   //Amount set high for Demo & Debug purposes only
+	private float m_movementSpeed = 5f;  //consider moving this to a player stats script instead
+	private float m_rotationSpeed = 1f;
 	private float m_MovementPointsAvail = 0f;
 
     //sound
@@ -45,50 +44,39 @@ public class AgentMovement : MonoBehaviour
 
     private void Start()
 	{
-		cam = Camera.main;
+		m_cam = Camera.main;
 		m_gridSpace = FindObjectOfType<GridSpace>();
 		m_player_input = FindObjectOfType<PlayerAgentInput>();
+		m_actionManager = GetComponent<AgentActionManager>();
 		GameObject waypointLineGO = new GameObject();
 		GameObject mouseLineGO = new GameObject();
 		m_waypointLine = waypointLineGO.AddComponent(typeof(LineRenderer)) as LineRenderer;
 		m_mouseLine = mouseLineGO.AddComponent(typeof(LineRenderer)) as LineRenderer;
 		m_waypoints = new Vector3[0];
 		m_markers = new GameObject[0];
-		m_player_input.MoveSelected += OnMoveSelected;
+		m_player_input.MoveSelected += OnMovableTileSelected;
 		m_player_input.NonMoveSelected += OnNonMoveSelected;
 		m_gridSpace.CancelSelected += OnCancelSelected;
 		m_colliders = GetComponentsInChildren<Collider>();
         //walkingEvent = FMODUnity.RuntimeManager.CreateInstance(SoundManager.instance.footSteps2);
-
-
     }
 
-	public void ActionUsedForMovement()     
+	public void MovementActionStarted()     
 	{
-		if (m_movementActivated == false)
-		{
-			m_MovementPointsAvail = m_MovePntsPerAction;
-			m_movementActivated = true;
-			settingPathInProcess = true;
-		}
-		else if (m_movementActivated == true) 
-		{
-			m_MovementPointsAvail = 0;
-			m_movementActivated = false;
-			settingPathInProcess = false;
-			ResetVariables();
-			DrawLineThroughMarkers();
-		}
+		m_movementSystemInUse = true;
+		currentMode = MovementMode.PathBuilding;
+		m_mouseLine.enabled = true;
+		GridSpace.ShowGridSquare(true);
+		m_MovementPointsAvail = GetComponent<AgentStats>().MovementPointsPerAction;
 	}
 
 	private void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Space)) { ActionUsedForMovement(); }
-		if (m_movementActivated)
+		if (m_movementSystemInUse==true)
 		{
-			if (!m_activeControl || !m_canMove) { return; }
+			if (currentMode == MovementMode.Unmoveable) { return; }
 			DrawLineThroughMarkers();
-			if (!movingInProcess && settingPathInProcess)
+			if (currentMode==MovementMode.PathBuilding)
 			{
 				if (m_waypoints.Length < 1) { InitializeWaypoints(); }
 				m_waypoints[0] = GridSpace.GetGridCoord(transform.position);
@@ -100,7 +88,7 @@ public class AgentMovement : MonoBehaviour
 		}
 
 
-        if (movingInProcess)
+        if (currentMode == MovementMode.MovingAround)
         {
             
             if (!walkingEvent.IsPlaying())
@@ -121,29 +109,28 @@ public class AgentMovement : MonoBehaviour
 		m_waypoints = new Vector3[0];
 		foreach (GameObject marker in m_markers) { Destroy(marker); }
 		m_markers = new GameObject[0];
-		m_confirmed = false;
-		movingInProcess = false;
-		settingPathInProcess = false;
+		currentMode = MovementMode.Unmoveable;
 		m_mouseLine.enabled = false;
 		m_waypointLine.enabled = false;
-		m_movementActivated = false;
+		m_movementSystemInUse = false;
+		GridSpace.ShowGridSquare(false);
 	}
 
-	private void OnMoveSelected(Vector3 pos, RaycastHit squareInfo)
+	private void OnMovableTileSelected(Vector3 pos, RaycastHit squareInfo)
 	{
-		if (!settingPathInProcess || !m_activeControl || !m_canMove) { return; }
+		if (currentMode == MovementMode.Unmoveable) { return; }
 
 		if (GridSpace.GetGridCoord(pos) == GridSpace.GetGridCoord(GetNewestWaypoint())
 			&& GridSpace.GetGridCoord(pos) != GridSpace.GetGridCoord(transform.position))
 		{
-			BeginMovingOnPath();
+			currentMode = MovementMode.MovingAround;
 			return;
 		}
 		bool valid = TestWaypoint(GetNewestWaypoint(), pos);
 		if (!valid) { return; }		
 		else 
 		{
-			float mpCost = Vector3.Distance(GetNewestWaypoint(), pos);
+			float mpCost = Vector3.Distance(GetNewestWaypoint(), pos);			//change this to the responsibility of AgentActionManager
 			if (mpCost > m_MovementPointsAvail) { return; }
 			PlaceMarker(pos, mpCost);			
 			DrawLineThroughMarkers();
@@ -167,7 +154,7 @@ public class AgentMovement : MonoBehaviour
 			InitializeWaypoints(); 
 		}
 		m_waypoints = ExpandArray<Vector3>(m_waypoints, pos);
-		GameObject marker = GameObject.Instantiate(markerPrefab, pos, Quaternion.identity);
+		GameObject marker = GameObject.Instantiate(m_markerPrefab, pos, Quaternion.identity);
 		marker.transform.Rotate(transform.right, 90f);
 		m_markers = ExpandArray<GameObject>(m_markers, marker);
 		m_waypointCosts = ExpandArray<float>(m_waypointCosts, mpCost);
@@ -208,7 +195,7 @@ public class AgentMovement : MonoBehaviour
 
 	private void DrawLineToMouse(Vector3 origin)
 	{
-		Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+		Ray ray = m_cam.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hitInfo;
 		Physics.Raycast(ray, out hitInfo, 1000f);
 		Vector3 mousePos = GridSpace.GetGridCoord(hitInfo.point);
@@ -236,7 +223,7 @@ public class AgentMovement : MonoBehaviour
 		m_waypoints = ContractArray<Vector3>(m_waypoints);
 		GameObject markerToDestroy = m_markers[m_markers.Length-1];
 		m_markers = ContractArray<GameObject>(m_markers);
-		m_MovementPointsAvail = Mathf.Clamp(m_MovementPointsAvail + m_waypointCosts[m_waypointCosts.Length - 1], 0f, m_MovePntsPerAction);
+		m_MovementPointsAvail = Mathf.Clamp(m_MovementPointsAvail + m_waypointCosts[m_waypointCosts.Length - 1], 0f, Mathf.Infinity);
 		m_waypointCosts = ContractArray<float>(m_waypointCosts);
 		Destroy(markerToDestroy);
 		DrawLineThroughMarkers();
@@ -248,7 +235,7 @@ public class AgentMovement : MonoBehaviour
 		startPosition.y = testPosition.y + 1;
 		testPosition.y = testPosition.y + 1;
 		Vector3 ray = testPosition - startPosition;
-		RaycastHit[] hitArray = Physics.SphereCastAll(startPosition, 0.35f, ray, ray.magnitude);
+		RaycastHit[] hitArray = Physics.SphereCastAll(startPosition, TESTING_WIDTH, ray, ray.magnitude);
 		List<RaycastHit> hitList = new List<RaycastHit>();
 
 		foreach (RaycastHit hit in hitArray)
@@ -278,17 +265,12 @@ public class AgentMovement : MonoBehaviour
 
 	public  void EndMovement()
 	{
-		ResetVariables();
 		transform.position = GridSpace.GetGridCoord(transform.position);
+		ResetVariables();
+		m_actionManager.ReportEndOfAction();
 		//reset all path stuff, movement has completed, user cancelled, or user clicked on something else
 	}
-
-	private void BeginMovingOnPath()
-	{
-		movingInProcess = true;
-		settingPathInProcess = false;
-	}
-
+	
 	private float DistanceOnPlane(Vector3 a, Vector3 b)
 	{
 		a.y = 0f;
@@ -342,7 +324,7 @@ public class AgentMovement : MonoBehaviour
 			if (DistanceOnPlane(dirTowardWaypoint, transform.position) > MOVE_DEST_THRESHOLD)
 			{
 				transform.rotation = Quaternion.LookRotation(dirTowardWaypoint);            //TODO: consider a slower rotation
-				transform.position = transform.position + (dirTowardWaypoint.normalized * Time.deltaTime * _movementSpeed);
+				transform.position = transform.position + (dirTowardWaypoint.normalized * Time.deltaTime * m_movementSpeed);
 			}
 			m_waypoints[0] = transform.position;
 			DrawLineThroughMarkers();

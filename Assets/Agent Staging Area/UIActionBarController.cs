@@ -57,30 +57,8 @@ public class UIActionBarController : MonoBehaviour
 
 	protected virtual void OnMoveButtonPressed()
 	{
-		Debug.Log("Move pressed.");
 		if (!playerHasIconControl) { return; }
-		int actionPointsRequired = 1;
-		AgentStats agent = turnManager.ActiveCharacter;
-		if (!resolvingMovement)
-		{
-			if (agent.SpendActionPoints(actionPointsRequired))
-			{
-				resolvingMovement = true;
-				agent.AgentMovement.ActionUsedForMovement(); 
-			}
-		}
-		else 
-		{ 
-			agent.AgentMovement.EndMovement();
-			agent.AdjustActionPoints(actionPointsRequired);
-			resolvingMovement = false;
-		}
-
-		//TODO: I'm kind of thinking that the responsibility for attempting to setting and paying action costs
-		//should be the responsibility of an agent-based script.  Maybe AgentStats.  
-		//Especially since different agents might have different AP costs for the same actions.
-		//Maybe we should simply tell that script what is being attempted, and let that script figure out
-		//if action points need to be spent or whatever.  
+		turnManager.ActiveCharacter.GetComponent<AgentActionManager>().AttemptMoveAction();
 	}
 
 	private void SetSkillIcons()
@@ -117,7 +95,7 @@ public class UIActionBarController : MonoBehaviour
 
 	private IEnumerator MoveIcon (GameObject icon, Vector3 start, Vector3 finish)
 	{
-		playerHasIconControl = false;
+		LockIconControl();
 		float counter = 0;
 		float duration = iconDriftTime;
 		Vector3 currentPosition = start;
@@ -128,7 +106,17 @@ public class UIActionBarController : MonoBehaviour
 			icon.transform.position = currentPosition;
 			yield return null;
 		}
+		ResetIconControl();
+	}
+
+	public void ResetIconControl() 
+	{
 		playerHasIconControl = true;
+	}
+
+	public void LockIconControl()
+	{
+		playerHasIconControl = false;
 	}
 
 }

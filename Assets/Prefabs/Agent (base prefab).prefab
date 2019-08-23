@@ -840,6 +840,7 @@ GameObject:
   - component: {fileID: 7629084898544693017}
   - component: {fileID: 6616824351585436827}
   - component: {fileID: 1510621138018115810}
+  - component: {fileID: 8763745042985732552}
   - component: {fileID: 7629084898544693019}
   m_Layer: 0
   m_Name: Agent (base prefab)
@@ -895,6 +896,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 599646f9d94b6a7439b25b4e8fd2c184, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  portraitImage: {fileID: 0}
+  characterName: DefaultName
+--- !u!114 &8763745042985732552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7629084898544693018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65e1ea34f7fef714c8c9b2dbe3ecab63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7629084898544693019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -908,12 +923,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_canMove: 1
-  m_activeControl: 1
   m_validPathMaterial: {fileID: 2100000, guid: 050b3e65e4a769546bc40ad48b8d58ce, type: 2}
   m_farPathMaterial: {fileID: 2100000, guid: 9b5c823121652174786ab7a3b3684317, type: 2}
   m_blockedPathMaterial: {fileID: 2100000, guid: 439f176c9ed823c468e6c1f872f48ba3,
     type: 2}
-  markerPrefab: {fileID: 543562813194063526, guid: 6eeb38caa10ff5045b44e5f342bebf7b,
+  m_markerPrefab: {fileID: 543562813194063526, guid: 6eeb38caa10ff5045b44e5f342bebf7b,
     type: 3}
 --- !u!1 &7629084898631342145
 GameObject:

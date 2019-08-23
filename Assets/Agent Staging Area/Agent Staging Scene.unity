@@ -429,12 +429,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7664a55254a990943b8274cc4a3c0a30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ActionBarPortrait: {fileID: 0}
-  ActionBarPortraitFrame: {fileID: 0}
-  mainButton: {fileID: 0}
-  activeCharacterName: {fileID: 0}
-  skillIcons: []
-  hidingSpot: {fileID: 0}
+  ActionBarPortrait: {fileID: 606919989}
+  ActionBarPortraitFrame: {fileID: 743912911}
+  mainButton: {fileID: 936877310}
+  activeCharacterName: {fileID: 131740660}
+  skillIcons:
+  - {fileID: 939446594}
+  hidingSpot: {fileID: 563668685}
 --- !u!1 &248737080
 GameObject:
   m_ObjectHideFlags: 0
@@ -535,7 +536,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 322207223}
-  - component: {fileID: 322207224}
   m_Layer: 5
   m_Name: ActionBar
   m_TagString: Untagged
@@ -565,25 +565,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &322207224
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 322207222}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7664a55254a990943b8274cc4a3c0a30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ActionBarPortrait: {fileID: 606919989}
-  ActionBarPortraitFrame: {fileID: 743912911}
-  mainButton: {fileID: 936877310}
-  activeCharacterName: {fileID: 131740660}
-  skillIcons:
-  - {fileID: 939446594}
-  hidingSpot: {fileID: 563668685}
 --- !u!114 &334702809 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3199330265715997723, guid: f14411c10e27c8d4098f4907cb2198ae,
@@ -789,7 +770,7 @@ Transform:
   m_GameObject: {fileID: 529959902}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6.07, y: 0, z: -13.95}
-  m_LocalScale: {x: 4, y: 1, z: 7}
+  m_LocalScale: {x: 4, y: 2, z: 7}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1

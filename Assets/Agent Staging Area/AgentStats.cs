@@ -12,7 +12,9 @@ public class AgentStats : MonoBehaviour
 	private AgentMovement agentMovement;
 	private int currentActionPoints = 0;
 	private int maxActionPoints = 2;
-	
+	private int movementPointsPerAction = 20;
+	public int MovementPointsPerAction { get { return movementPointsPerAction; } }
+
 	public AgentMovement AgentMovement { get { return agentMovement; } }
 	public int CurrentActionPoints { get { return currentActionPoints; } }
 	public Sprite PortraitImage { get { return portraitImage; } }
@@ -30,6 +32,7 @@ public class AgentStats : MonoBehaviour
 	public string GetCharacterName() { return characterName; }
 	public AgentMovement GetAgentMovement() { return agentMovement; }
 	public int GetCurrentActionPoints() { return currentActionPoints; }
+	public int GetMovementPointsPerAction()	{ return movementPointsPerAction; }
 	
 	public bool SpendActionPoints(int apCost)
 	{
