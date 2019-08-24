@@ -23,6 +23,8 @@ public class SoundManager : MonoBehaviour
     public string enemyAlerted3 = "event:/Alerted_Guard_3";
     public string securityAlarm = "event:/Security Alarm";
     public string playerObjectInteraction1 = "event:/Player_Interaction_1";
+    public string doorSimpleOpening = "event:/Objects/DoorSimpleOpening";
+    public string doorSimpleClosing = "event:/Objects/DoorSimpleClosing";
 
 
     public string inGameMusic = "event:/InGameMusic";
