@@ -384,6 +384,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 8827d8b625f032f4db4f34ef700d8854, type: 2}
+    - target: {fileID: 920115904651557271, guid: 76373b681e23b51489490affc904d3f6,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 25.734
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 76373b681e23b51489490affc904d3f6, type: 3}
 --- !u!1 &236163488
@@ -1484,8 +1489,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 334702809}
-        m_MethodName: OnMoveButtonPressed
+      - m_Target: {fileID: 236163490}
+        m_MethodName: UIMoveButtonWasPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

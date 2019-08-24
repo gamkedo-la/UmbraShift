@@ -5,20 +5,23 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public enum ActionType { None, Moveable, Attackable, Hackable, Talkable, OtherInteractable }
+public enum ActionInProcess { None, Moving, Shooting, Hacking, Talking, Investigating }
 public class PlayerAgentInput : MonoBehaviour
 {
-	//Image image;
-	GridSpace gridSpace;
-	ActionType actionAvailable;
-
+	private GridSpace gridSpace;
+	private GameManager gameManager;
+	private ActionType actionAvailable;
+	public ActionInProcess actionInProcess = ActionInProcess.None;
 	public delegate void MoveSelectionEventHandler(Vector3 pos, RaycastHit squareInfo);
 	public delegate void NonMoveSelectionEventHandler();
 	public delegate void PortraitButtonPressEventHandler();
-	public delegate void MoveButtonPressEventHandler();
+	public delegate void MoveHotkeyPressEventHandler();
 	public event MoveSelectionEventHandler MoveSelected;
 	public event NonMoveSelectionEventHandler NonMoveSelected;
 	public event PortraitButtonPressEventHandler PortraitButtonPressed;
-	public event MoveButtonPressEventHandler MoveButtonPressed;
+	public event MoveHotkeyPressEventHandler MoveHotkeyWasPressed;
+
+
 
 	private void Start()
 	{
@@ -27,17 +30,19 @@ public class PlayerAgentInput : MonoBehaviour
 		gridSpace = FindObjectOfType<GridSpace>();
 		gridSpace.SquareSelected += OnSquareSelected;
 		actionAvailable = ActionType.None;
+		gameManager = FindObjectOfType<GameManager>();
 	}
 
-	//private void ShowSelectionMarker(bool status)
-	//{
-	//	image.enabled = status;
-	//}
-
-	//private void ColorSelectionMarker(ActionType action)
-	//{
-	//	if (action==ActionType.Moveable) { image.color = Color.green; }
-	//}
+	private void Update()
+	{
+		if (actionInProcess == ActionInProcess.None)
+		{
+			if (Input.GetKeyDown(KeyCode.M)) 
+			{
+				OnMoveHotkeyPressed();
+			} 
+		}
+	}
 
 	private ActionType ScanContentsOfSquare(RaycastHit squareInfo, Vector3 pos)
 	{				//TODO: not sure which layer name we'll be using yet for valid movement, so I wrote several
@@ -62,9 +67,15 @@ public class PlayerAgentInput : MonoBehaviour
 		PortraitButtonPressed();
 	}
 
-	public void OnMoveButtonPressed()
+	protected virtual void OnMoveHotkeyPressed()
 	{
-		MoveButtonPressed();
+		MoveHotkeyWasPressed();
+	}
+
+	public void InitiateMoveAction()
+	{
+		actionInProcess = ActionInProcess.Moving;
+		gameManager.ActiveCharacter.GetComponent<AgentActionManager>().OnMoveActionSelected();
 	}
 
 }

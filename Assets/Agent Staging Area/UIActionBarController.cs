@@ -13,23 +13,22 @@ public class UIActionBarController : MonoBehaviour
 	[SerializeField] private Transform hidingSpot;
 	private Vector3[] skillIconLocations;
 	private GameManager turnManager;
-	private bool actionBarHidden=false;
+	private bool actionBarHidden=true;
 	private PlayerAgentInput inputManager;
 	private float iconDriftTime = 0.5f;
 	private bool playerHasIconControl = true;
 	private IEnumerator revealingIcon;
 	private IEnumerator hidingIcon;
 	private bool resolvingMovement = false;
-
+	
 	private void Start()
     {
 		inputManager = FindObjectOfType<PlayerAgentInput>();
 		inputManager.PortraitButtonPressed += OnPortraitButtonPressed;
-		inputManager.MoveButtonPressed += OnMoveButtonPressed;
+		inputManager.MoveHotkeyWasPressed += OnMoveHotkeyPressed;
 		skillIconLocations = new Vector3[skillIcons.Length];
 		turnManager = FindObjectOfType<GameManager>();
 		SetSkillIcons();
-		HideActionBar();
     }
 	
     private void Update()
@@ -55,10 +54,16 @@ public class UIActionBarController : MonoBehaviour
 		}
 	}
 
-	protected virtual void OnMoveButtonPressed()
+	protected virtual void OnMoveHotkeyPressed()
 	{
 		if (!playerHasIconControl) { return; }
-		turnManager.ActiveCharacter.GetComponent<AgentActionManager>().AttemptMoveAction();
+		UIMoveButtonWasPressed();
+	}
+
+	public void UIMoveButtonWasPressed()
+	{
+		if (!playerHasIconControl) { return; }
+		inputManager.InitiateMoveAction();
 	}
 
 	private void SetSkillIcons()
@@ -66,6 +71,7 @@ public class UIActionBarController : MonoBehaviour
 		for (int i = 0; i < skillIcons.Length; i++)
 		{
 			skillIconLocations[i] = skillIcons[i].transform.position;
+			skillIcons[i].transform.position = hidingSpot.position;
 		}
 	}
 
