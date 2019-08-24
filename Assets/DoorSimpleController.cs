@@ -11,6 +11,6 @@ public class DoorSimpleController : MonoBehaviour
 
     public void PlayClosingSound()
     {
-
+        FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.doorSimpleClosing);
     }
 }
