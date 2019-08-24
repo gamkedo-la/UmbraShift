@@ -12,8 +12,11 @@ public class AgentStats : MonoBehaviour
 	private AgentMovement agentMovement;
 	private int currentActionPoints = 0;
 	private int maxActionPoints = 2;
+
 	private int movementPointsPerAction = 20;
 	public int MovementPointsPerAction { get { return movementPointsPerAction; } }
+	private float movementSpeed = 7f;
+	public float MovementSpeed { get { return movementSpeed; } }
 
 	public AgentMovement AgentMovement { get { return agentMovement; } }
 	public int CurrentActionPoints { get { return currentActionPoints; } }

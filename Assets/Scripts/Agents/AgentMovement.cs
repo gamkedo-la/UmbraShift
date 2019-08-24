@@ -8,33 +8,33 @@ public class AgentMovement : MonoBehaviour
 
 	//control
 	private GridSpace m_gridSpace;
-	private PlayerAgentInput m_player_input;
 	private AgentActionManager m_actionManager;
+	private AgentStats m_agentStats;
+	private PlayerAgentInput m_agentInput;
 	private const float SELECTION_THRESHOLD = 0.4f;
-	private const float TESTING_WIDTH = 0.95f;
 	private bool m_movementSystemInUse = false;
 	private Collider[] m_colliders;
-	private enum MovementMode { Unmoveable, MovingAround, PathBuilding }
-	private MovementMode currentMode = MovementMode.Unmoveable;
+	private enum MovementMode { Inactive, MovingAround, PathBuilding }
+	private MovementMode currentMode = MovementMode.Inactive;
 
-	//lines
-	[SerializeField] private Material m_validPathMaterial;
-	[SerializeField] private Material m_farPathMaterial;
-	[SerializeField] private Material m_blockedPathMaterial;
-	private LineRenderer m_waypointLine;
-	private LineRenderer m_mouseLine;
-	private Camera m_cam;
-
-	//waypoints
+	//path building
 	[SerializeField] private GameObject m_markerPrefab;
+	private LineRenderer m_waypointLine;
+	private Camera m_cam;
 	private Vector3[] m_waypoints;
 	private GameObject[] m_markers;
 	private float[] m_waypointCosts;
 
+	//path testing
+	[SerializeField] private Material m_validPathMaterial;
+	[SerializeField] private Material m_farPathMaterial;
+	[SerializeField] private Material m_blockedPathMaterial;
+	private const float TESTING_WIDTH = 0.95f;
+	private LineRenderer m_mouseLine;
+
 	//movement
 	private const float MOVE_DEST_THRESHOLD = 0.1f;
-	private float m_movementSpeed = 5f;  //consider moving this to a player stats script instead
-	private float m_rotationSpeed = 1f;
+	private float m_movementSpeed;
 	private float m_MovementPointsAvail = 0f;
 
     //sound
@@ -46,17 +46,18 @@ public class AgentMovement : MonoBehaviour
 	{
 		m_cam = Camera.main;
 		m_gridSpace = FindObjectOfType<GridSpace>();
-		m_player_input = FindObjectOfType<PlayerAgentInput>();
+		m_agentInput = FindObjectOfType<PlayerAgentInput>();
 		m_actionManager = GetComponent<AgentActionManager>();
+		m_agentStats = GetComponent<AgentStats>();
 		GameObject waypointLineGO = new GameObject();
 		GameObject mouseLineGO = new GameObject();
 		m_waypointLine = waypointLineGO.AddComponent(typeof(LineRenderer)) as LineRenderer;
 		m_mouseLine = mouseLineGO.AddComponent(typeof(LineRenderer)) as LineRenderer;
 		m_waypoints = new Vector3[0];
 		m_markers = new GameObject[0];
-		m_player_input.MoveSelected += OnMovableTileSelected;
-		m_player_input.NonMoveSelected += OnNonMoveSelected;
 		m_gridSpace.CancelSelected += OnCancelSelected;
+		m_agentInput.MoveSelected += OnMovableTileSelected;
+		//m_agentInput.NonMoveSelected += OnNonMoveSelected;
 		m_colliders = GetComponentsInChildren<Collider>();
         //walkingEvent = FMODUnity.RuntimeManager.CreateInstance(SoundManager.instance.footSteps2);
     }
@@ -64,17 +65,18 @@ public class AgentMovement : MonoBehaviour
 	public void MovementActionStarted()     
 	{
 		m_movementSystemInUse = true;
+		m_movementSpeed = m_agentStats.MovementSpeed;
+		m_MovementPointsAvail = m_agentStats.MovementPointsPerAction;
 		currentMode = MovementMode.PathBuilding;
 		m_mouseLine.enabled = true;
 		GridSpace.ShowGridSquare(true);
-		m_MovementPointsAvail = GetComponent<AgentStats>().MovementPointsPerAction;
 	}
 
 	private void Update()
 	{
 		if (m_movementSystemInUse==true)
 		{
-			if (currentMode == MovementMode.Unmoveable) { return; }
+			if (currentMode == MovementMode.Inactive) { return; }
 			DrawLineThroughMarkers();
 			if (currentMode==MovementMode.PathBuilding)
 			{
@@ -109,7 +111,7 @@ public class AgentMovement : MonoBehaviour
 		m_waypoints = new Vector3[0];
 		foreach (GameObject marker in m_markers) { Destroy(marker); }
 		m_markers = new GameObject[0];
-		currentMode = MovementMode.Unmoveable;
+		currentMode = MovementMode.Inactive;
 		m_mouseLine.enabled = false;
 		m_waypointLine.enabled = false;
 		m_movementSystemInUse = false;
@@ -118,7 +120,7 @@ public class AgentMovement : MonoBehaviour
 
 	private void OnMovableTileSelected(Vector3 pos, RaycastHit squareInfo)
 	{
-		if (currentMode == MovementMode.Unmoveable) { return; }
+		if (currentMode == MovementMode.Inactive) { return; }
 
 		if (GridSpace.GetGridCoord(pos) == GridSpace.GetGridCoord(GetNewestWaypoint())
 			&& GridSpace.GetGridCoord(pos) != GridSpace.GetGridCoord(transform.position))
@@ -130,7 +132,7 @@ public class AgentMovement : MonoBehaviour
 		if (!valid) { return; }		
 		else 
 		{
-			float mpCost = Vector3.Distance(GetNewestWaypoint(), pos);			//change this to the responsibility of AgentActionManager
+			float mpCost = Vector3.Distance(GetNewestWaypoint(), pos);
 			if (mpCost > m_MovementPointsAvail) { return; }
 			PlaceMarker(pos, mpCost);			
 			DrawLineThroughMarkers();
@@ -219,7 +221,7 @@ public class AgentMovement : MonoBehaviour
 
 	private void OnCancelSelected()
 	{
-		if (m_waypoints.Length < 3) { EndMovement(); return; }
+		if (m_waypoints.Length < 3) { m_actionManager.ReportActionCancelled(); EndMovement(); return; }
 		m_waypoints = ContractArray<Vector3>(m_waypoints);
 		GameObject markerToDestroy = m_markers[m_markers.Length-1];
 		m_markers = ContractArray<GameObject>(m_markers);
@@ -255,12 +257,6 @@ public class AgentMovement : MonoBehaviour
 	
 		if (hitList.Count > 0) { isPathClear = false; }
 		return isPathClear;
-	}
-
-
-	private void OnNonMoveSelected()
-	{
-		EndMovement();
 	}
 
 	public  void EndMovement()
