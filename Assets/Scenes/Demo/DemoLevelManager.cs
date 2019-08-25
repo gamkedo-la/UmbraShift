@@ -10,10 +10,16 @@ public class DemoLevelManager : MonoBehaviour
 	[SerializeField] private Canvas canvas;
 	private SceneManager sceneManager;
 	private int levelToPlay = 0;
+	static bool DemoLevelManagerAlreadyExists = false;
 
 	private void Awake()
 	{
-		DontDestroyOnLoad(canvas.gameObject);
+		if (DemoLevelManagerAlreadyExists) { Destroy(this.gameObject); }
+		else
+		{
+			DemoLevelManagerAlreadyExists = true;
+			DontDestroyOnLoad(canvas.gameObject);
+		}
 	}
 
 	public void AdvanceLevel()
