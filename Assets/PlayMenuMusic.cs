@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public class PlayMenuMusic : MonoBehaviour
 {
@@ -18,5 +19,10 @@ public class PlayMenuMusic : MonoBehaviour
     {
         menuMusicEvent.setParameterByName("Random Menu Mix", randomLoop);
         menuMusicEvent.start();
+    }
+
+    private void OnDestroy()
+    {
+        menuMusicEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
 }
