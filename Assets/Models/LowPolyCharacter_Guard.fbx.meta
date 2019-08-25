@@ -12,7 +12,27 @@ ModelImporter:
   - first:
       74: -4274770991410265338
     second: Armature|Walking
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Black
+    second: {fileID: 2100000, guid: 543c75c6d7b35f54295d3bb2ee783b7c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: GuardFlesh
+    second: {fileID: 2100000, guid: a3e8828d9069a9b489c44ef00134f450, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Guard_Uniform
+    second: {fileID: 2100000, guid: 7e7533a664780c243b5cde339b6373d4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hair
+    second: {fileID: 2100000, guid: d20b183fc9bf4ee4fb28b6b757b0361f, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -176,7 +196,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.002
+    globalScale: 0.2
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

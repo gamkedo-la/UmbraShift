@@ -12,7 +12,32 @@ ModelImporter:
   - first:
       74: -4274770991410265338
     second: Armature|Walking
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Boots
+    second: {fileID: 2100000, guid: 0193f056647f7a248949ab75964606ba, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Flesh
+    second: {fileID: 2100000, guid: 82ac1a73827b3d2498a93f9f87fa0ce7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hair
+    second: {fileID: 2100000, guid: a6a79deb00eea2741a459a1fa4b6e86b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Jeans
+    second: {fileID: 2100000, guid: dc69f0e8d440169409c11a20e1132ff7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Torso
+    second: {fileID: 2100000, guid: 927dc4ff962a14f4486d849c801570d5, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

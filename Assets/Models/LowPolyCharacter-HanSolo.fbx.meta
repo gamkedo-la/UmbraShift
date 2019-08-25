@@ -6,7 +6,32 @@ ModelImporter:
   - first:
       74: -8945691123924629249
     second: Armature|Idle
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Boots
+    second: {fileID: 2100000, guid: b0114697d2dfac74490794c51ce4bbfc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Flesh
+    second: {fileID: 2100000, guid: 7777daaf816426248980c71307767fca, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hair
+    second: {fileID: 2100000, guid: 130bb875694d31f4fbb3e7f50c43d130, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Jacket
+    second: {fileID: 2100000, guid: 68ee595fb2446834bb81f6dc768271ff, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Trousers
+    second: {fileID: 2100000, guid: 13a4837ecbfefea40848e2b04fe1d743, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
