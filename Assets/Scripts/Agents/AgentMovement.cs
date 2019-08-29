@@ -56,7 +56,7 @@ public class AgentMovement : MonoBehaviour
 		m_waypoints = new Vector3[0];
 		m_markers = new GameObject[0];
 		m_gridSpace.CancelSelected += OnCancelSelected;
-		m_agentInput.MoveSelected += OnMovableTileSelected;
+		//m_agentInput.gridSpaceSelected += OnMovableTileSelected;
 		//m_agentInput.NonMoveSelected += OnNonMoveSelected;
 		m_colliders = GetComponentsInChildren<Collider>();
         //walkingEvent = FMODUnity.RuntimeManager.CreateInstance(SoundManager.instance.footSteps2);

@@ -6,31 +6,31 @@ using UnityEngine.UI;
 
 public enum ActionType { None, Moveable, Attackable, Hackable, Talkable, OtherInteractable }
 public enum ActionInProcess { None, Moving, Shooting, Hacking, Talking, Investigating }
+
 public class PlayerAgentInput : MonoBehaviour
 {
 	private GridSpace gridSpace;
-	private GameManager gameManager;
+	private AgentTurnManager turnManager;
+	private UIActionBarController actionBarController;
 	private ActionType actionAvailable;
 	public ActionInProcess actionInProcess = ActionInProcess.None;
-	public delegate void MoveSelectionEventHandler(Vector3 pos, RaycastHit squareInfo);
-	public delegate void NonMoveSelectionEventHandler();
-	public delegate void PortraitButtonPressEventHandler();
-	public delegate void MoveHotkeyPressEventHandler();
-	public event MoveSelectionEventHandler MoveSelected;
-	public event NonMoveSelectionEventHandler NonMoveSelected;
-	public event PortraitButtonPressEventHandler PortraitButtonPressed;
-	public event MoveHotkeyPressEventHandler MoveHotkeyWasPressed;
-
-
-
+	public delegate void SelectionEventHandler(Vector3 pos, RaycastHit squareInfo);
+	public event SelectionEventHandler selectedSquare;
+	private bool inputLocked = false;
+	public bool InputLocked { get { return inputLocked; } set { inputLocked = value; } }
+	
+	public void LockInput(bool locking)
+	{
+		inputLocked = locking;
+	}
+	
 	private void Start()
 	{
-		//image = GetComponentInChildren<Image>();
-		//ShowSelectionMarker(false);
+		actionBarController = FindObjectOfType<UIActionBarController>();
 		gridSpace = FindObjectOfType<GridSpace>();
 		gridSpace.SquareSelected += OnSquareSelected;
 		actionAvailable = ActionType.None;
-		gameManager = FindObjectOfType<GameManager>();
+		turnManager = FindObjectOfType<AgentTurnManager>();
 	}
 
 	private void Update()
@@ -39,7 +39,7 @@ public class PlayerAgentInput : MonoBehaviour
 		{
 			if (Input.GetKeyDown(KeyCode.M)) 
 			{
-				OnMoveHotkeyPressed();
+				actionBarController.OnMoveActionButtonPressed();
 			} 
 		}
 	}
@@ -58,24 +58,14 @@ public class PlayerAgentInput : MonoBehaviour
 		//ShowSelectionMarker(true);
 		//ColorSelectionMarker(actionAvailable);
 		//this.transform.position = pos;
-		if (actionAvailable != ActionType.Moveable && NonMoveSelected != null) { NonMoveSelected(); }
-		if (actionAvailable==ActionType.Moveable && MoveSelected != null) { MoveSelected(pos, squareInfo); }
-	}
-
-	public void OnPortraitButtonPressed()
-	{
-		PortraitButtonPressed();
-	}
-
-	protected virtual void OnMoveHotkeyPressed()
-	{
-		MoveHotkeyWasPressed();
+		//if (actionAvailable != ActionType.Moveable && NonMoveSelected != null) { NonMoveSelected(); }
+		//if (actionAvailable==ActionType.Moveable && gridSpaceSelected != null) { gridSpaceSelected(pos, squareInfo); }
 	}
 
 	public void InitiateMoveAction()
 	{
 		actionInProcess = ActionInProcess.Moving;
-		gameManager.ActiveCharacter.GetComponent<AgentActionManager>().OnMoveActionSelected();
+		turnManager.ActiveCharacter.GetComponent<AgentActionManager>().OnMoveActionSelected();
 	}
 
 }

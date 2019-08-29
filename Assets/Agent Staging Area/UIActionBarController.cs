@@ -7,31 +7,50 @@ public class UIActionBarController : MonoBehaviour
 {
 	[SerializeField] private Image ActionBarPortrait;
 	[SerializeField] private Image ActionBarPortraitFrame;
-	[SerializeField] private Button mainButton;
 	[SerializeField] private Text activeCharacterName;
-	[SerializeField] private GameObject[] skillIcons;
+	[SerializeField] private UIIcon[] actionIconSet;
+	[SerializeField] private UIIcon rewindActionIcon;
+	[SerializeField] private UIIcon playActionIcon;
+	[SerializeField] private UIIcon stopActionIcon;
+
 	[SerializeField] private Transform hidingSpot;
-	private Vector3[] skillIconLocations;
-	private GameManager turnManager;
-	private bool actionBarHidden=true;
+	[SerializeField] private Transform[] homeSpot;
+
+	private UIIcon iconInMemory = null;
+	private AgentTurnManager turnManager;
 	private PlayerAgentInput inputManager;
-	private float iconDriftTime = 0.5f;
+	private AgentActionManager actionManager;
 	private bool playerHasIconControl = true;
-	private IEnumerator revealingIcon;
-	private IEnumerator hidingIcon;
-	private bool resolvingMovement = false;
+	private IEnumerator movingIcons;
 	
 	private void Start()
     {
 		inputManager = FindObjectOfType<PlayerAgentInput>();
-		inputManager.PortraitButtonPressed += OnPortraitButtonPressed;
-		inputManager.MoveHotkeyWasPressed += OnMoveHotkeyPressed;
-		skillIconLocations = new Vector3[skillIcons.Length];
-		turnManager = FindObjectOfType<GameManager>();
-		SetSkillIcons();
-    }
+		turnManager = FindObjectOfType<AgentTurnManager>();
+		actionManager = FindObjectOfType<AgentActionManager>();
+		SetInitialIconPositions();
+		UpdatePortraitInfo();
+	}
+
+	private void SetInitialIconPositions()
+	{
+		UIIcon[] icons = FindObjectsOfType<UIIcon>();
+		foreach (UIIcon icon in icons) 
+		{
+			icon.SetHidePosition(hidingSpot.position);
+			icon.SetHomePosition(homeSpot[icon.ActionIconNum-1].position);
+			if (icon.hidden == true) { icon.transform.position = icon.hidePosition; }
+			else if (icon.hidden == false) { icon.transform.position = icon.homePosition; }
+		}
+	}
+
+
+	public bool IconsAreBusy()
+	{
+		return !playerHasIconControl;
+	}
 	
-    private void Update()
+    public void UpdatePortraitInfo()
     {
 		if (ActionBarPortrait && turnManager && turnManager.ActiveCharacter && turnManager.ActiveCharacter.PortraitImage) 
 		{ 
@@ -44,66 +63,33 @@ public class UIActionBarController : MonoBehaviour
 		}
 	}
 
-	protected virtual void OnPortraitButtonPressed()
+	public void OnPortraitButtonPressed()
 	{
-		if (!playerHasIconControl) { return; }
-		else
-		{
-			if (actionBarHidden == true) { RevealActionBar(); }
-			else if (actionBarHidden == false) { HideActionBar(); }
+		UpdatePortraitInfo();		// TODO: pause game and show character info window
+	}
+
+	private void HideActionIcon(UIIcon icon, bool hiding)
+	{
+		if (hiding == true && icon.hidden == false) 
+		{ 
+			movingIcons = MoveIcon(icon, icon.homePosition, icon.hidePosition);
+			icon.hidden = true;
 		}
-	}
-
-	protected virtual void OnMoveHotkeyPressed()
-	{
-		if (!playerHasIconControl) { return; }
-		UIMoveButtonWasPressed();
-	}
-
-	public void UIMoveButtonWasPressed()
-	{
-		if (!playerHasIconControl) { return; }
-		inputManager.InitiateMoveAction();
-	}
-
-	private void SetSkillIcons()
-	{
-		for (int i = 0; i < skillIcons.Length; i++)
-		{
-			skillIconLocations[i] = skillIcons[i].transform.position;
-			skillIcons[i].transform.position = hidingSpot.position;
+		else if (hiding == false && icon.hidden == true) 
+		{ 
+			movingIcons = MoveIcon(icon, icon.hidePosition, icon.homePosition);
+			icon.hidden = false;
 		}
+		else return;
+		StartCoroutine(movingIcons);
 	}
+	
 
-	private void RevealActionBar()
-	{
-		actionBarHidden = false;
-		for (int i = 0; i < skillIcons.Length; i++)
-		{
-			//skillIcons[i].transform.position = skillIconLocations[i];
-			//skillIcons[i].SetActive(true);
-			revealingIcon = MoveIcon(skillIcons[i], hidingSpot.position, skillIconLocations[i]);
-			StartCoroutine(revealingIcon);
-
-		}
-	}
-
-	private void HideActionBar()
-	{
-		actionBarHidden = true;
-		foreach (GameObject skillIcon in skillIcons) 
-		{
-			//skillIcon.SetActive(false);
-			hidingIcon = MoveIcon(skillIcon, skillIcon.transform.position, hidingSpot.position);
-			StartCoroutine(hidingIcon);
-		}
-	}
-
-	private IEnumerator MoveIcon (GameObject icon, Vector3 start, Vector3 finish)
+	private IEnumerator MoveIcon (UIIcon icon, Vector3 start, Vector3 finish)
 	{
 		LockIconControl();
 		float counter = 0;
-		float duration = iconDriftTime;
+		float duration = icon.driftTime;
 		Vector3 currentPosition = start;
 		while (counter<duration)
 		{
@@ -125,4 +111,85 @@ public class UIActionBarController : MonoBehaviour
 		playerHasIconControl = false;
 	}
 
+	public void OnMoveActionButtonPressed() 
+	{
+		if (playerHasIconControl && !inputManager.InputLocked)
+		{
+			Debug.Log("Move" + " button was pressed.");
+			foreach (UIIcon icon in actionIconSet) { HideActionIcon(icon, true); }
+			HideActionIcon(stopActionIcon, false);
+			HideActionIcon(rewindActionIcon, false);
+			HideActionIcon(playActionIcon, false);
+		}
+	}
+
+	public void OnShootActionButtonPressed()
+	{
+		if (playerHasIconControl && !inputManager.InputLocked)
+		{
+			Debug.Log("Shoot" + " button was pressed.");
+			foreach (UIIcon icon in actionIconSet) { HideActionIcon(icon, true); }
+			HideActionIcon(stopActionIcon, false);
+			HideActionIcon(rewindActionIcon, false);
+			HideActionIcon(playActionIcon, false);
+		}
+	}
+
+	public void OnInteractActionButtonPressed()
+	{
+		if (playerHasIconControl && !inputManager.InputLocked)
+		{
+			Debug.Log("Interact" + " button was pressed.");
+			foreach (UIIcon icon in actionIconSet) { HideActionIcon(icon, true); }
+			HideActionIcon(playActionIcon, false);
+		}
+	}
+
+	public void OnHackActionButtonPressed()
+	{
+		if (playerHasIconControl && !inputManager.InputLocked)
+		{
+			Debug.Log("Hack" + " button was pressed.");
+			foreach (UIIcon icon in actionIconSet) { HideActionIcon(icon, true); }
+			HideActionIcon(stopActionIcon, false);
+			HideActionIcon(rewindActionIcon, false);
+			HideActionIcon(playActionIcon, false);
+		}
+	}
+
+	public void OnStopButtonPressed()
+	{
+		if (playerHasIconControl && !inputManager.InputLocked)
+		{
+			Debug.Log("Stop" + " button was pressed.");
+			foreach (UIIcon icon in actionIconSet) { HideActionIcon(icon, false); }
+			HideActionIcon(stopActionIcon, true);
+			HideActionIcon(rewindActionIcon, true);
+			HideActionIcon(playActionIcon, true);
+		}
+	}
+
+	public void OnPlayButtonPressed()
+	{
+		if (playerHasIconControl && !inputManager.InputLocked)
+		{
+			Debug.Log("Play" + " button was pressed.");
+			foreach (UIIcon icon in actionIconSet) { HideActionIcon(icon, false); }
+			HideActionIcon(stopActionIcon, true);
+			HideActionIcon(rewindActionIcon, true);
+			HideActionIcon(playActionIcon, true);
+		}
+	}
+
+	public void OnRewindButtonPressed()
+	{
+		if (playerHasIconControl && !inputManager.InputLocked)
+		{
+			Debug.Log("Rewind" + " button was pressed.");
+			foreach (UIIcon icon in actionIconSet) { HideActionIcon(icon, false); }
+			HideActionIcon(stopActionIcon, true);
+			HideActionIcon(rewindActionIcon, true);
+			HideActionIcon(playActionIcon, true);
+		}
+	}
 }

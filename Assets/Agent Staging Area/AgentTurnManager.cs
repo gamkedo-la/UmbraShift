@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class AgentTurnManager : MonoBehaviour
 {
 	[SerializeField] private AgentStats mainPlayerCharacter = null;
 	[SerializeField] private AgentStats altPlayerCharacter = null;
