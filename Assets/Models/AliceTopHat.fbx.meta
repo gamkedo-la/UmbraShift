@@ -4,20 +4,20 @@ ModelImporter:
   serializedVersion: 25
   internalIDToNameTable:
   - first:
-      74: -5363706408893898685
-    second: Armature.001|Armature.001|Armature|Idle|Armature|Idle
+      74: 4903934113886263215
+    second: Armature|Armature.001|Armature|Idle|Armature|Idle
   - first:
-      74: -9048347579470746496
-    second: Armature.001|Armature.001|Armature|Walking|Armature|Walking
+      74: 3439432763627945661
+    second: Armature|Armature.001|Armature|Walking|Armature|Walking
   - first:
-      74: 4699274299699868179
-    second: Armature.001|Idle
+      74: -8945691123924629249
+    second: Armature|Idle
   - first:
-      74: 6511214741489532685
-    second: Armature.001|ServingAtBar
+      74: 3130455588549255856
+    second: Armature|ServingAtBar
   - first:
-      74: -6991723973015678290
-    second: Armature.001|Walking
+      74: -4274770991410265338
+    second: Armature|Walking
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -68,7 +68,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 3
+    animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -77,9 +77,9 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Armature.001|Armature.001|Armature|Idle|Armature|Idle
-      takeName: Armature.001|Armature.001|Armature|Idle|Armature|Idle
-      internalID: -5363706408893898685
+      name: Armature|Armature.001|Armature|Idle|Armature|Idle
+      takeName: Armature|Armature.001|Armature|Idle|Armature|Idle
+      internalID: 4903934113886263215
       firstFrame: 0
       lastFrame: 1
       wrapMode: 0
@@ -106,9 +106,9 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature.001|Armature.001|Armature|Walking|Armature|Walking
-      takeName: Armature.001|Armature.001|Armature|Walking|Armature|Walking
-      internalID: -9048347579470746496
+      name: Armature|Armature.001|Armature|Walking|Armature|Walking
+      takeName: Armature|Armature.001|Armature|Walking|Armature|Walking
+      internalID: 3439432763627945661
       firstFrame: 0
       lastFrame: 39
       wrapMode: 0
@@ -135,9 +135,9 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature.001|Idle
-      takeName: Armature.001|Idle
-      internalID: 4699274299699868179
+      name: Armature|Idle
+      takeName: Armature|Idle
+      internalID: -8945691123924629249
       firstFrame: 0
       lastFrame: 1
       wrapMode: 0
@@ -164,9 +164,9 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature.001|ServingAtBar
-      takeName: Armature.001|ServingAtBar
-      internalID: 6511214741489532685
+      name: Armature|ServingAtBar
+      takeName: Armature|ServingAtBar
+      internalID: 3130455588549255856
       firstFrame: 0
       lastFrame: 29
       wrapMode: 0
@@ -193,9 +193,9 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature.001|Walking
-      takeName: Armature.001|Walking
-      internalID: -6991723973015678290
+      name: Armature|Walking
+      takeName: Armature|Walking
+      internalID: -4274770991410265338
       firstFrame: 0
       lastFrame: 39
       wrapMode: 0
@@ -224,7 +224,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 0.2
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -270,10 +270,10 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.2
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 1
+    hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 2
