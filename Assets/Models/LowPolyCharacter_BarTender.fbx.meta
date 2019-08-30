@@ -12,6 +12,9 @@ ModelImporter:
   - first:
       74: -4274770991410265338
     second: Armature|Walking
+  - first:
+      74: -782891797600886673
+    second: Armature|Walking
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -41,11 +44,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Armature|ServingAtBar (1)
-      takeName: Armature|ServingAtBar
-      internalID: -8945691123924629249
+      name: Armature|ServingDrink
+      takeName: Armature|ServingDrink
+      internalID: -4274770991410265338
       firstFrame: 0
-      lastFrame: 29
+      lastFrame: 59
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -70,11 +73,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature|ServingAtBar
-      takeName: Armature|ServingAtBar
-      internalID: 3130455588549255856
+      name: Armature|Idle
+      takeName: Armature|Idle
+      internalID: -8945691123924629249
       firstFrame: 0
-      lastFrame: 29
+      lastFrame: 1
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -101,7 +104,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Armature|Walking
       takeName: Armature|Walking
-      internalID: -4274770991410265338
+      internalID: -782891797600886673
       firstFrame: 0
       lastFrame: 39
       wrapMode: 0
@@ -176,7 +179,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.01
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
