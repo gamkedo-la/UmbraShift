@@ -39735,6 +39735,7 @@ GameObject:
   - component: {fileID: 1512326329}
   - component: {fileID: 1512326336}
   - component: {fileID: 1512326328}
+  - component: {fileID: 1512326337}
   m_Layer: 10
   m_Name: Player1
   m_TagString: Player
@@ -39952,6 +39953,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1512326337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512326327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52500b33b46911a46ae5b66e2aa95bd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spaces: 4
+  items: []
+  itemsInSlot: 
 --- !u!1 &1512765568
 GameObject:
   m_ObjectHideFlags: 0
@@ -60228,6 +60244,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Managers
       objectReference: {fileID: 0}
+    - target: {fileID: 2271865240472961439, guid: bf28f1221b25eec49b55454d852eaac4,
+        type: 3}
+      propertyPath: playerMoveTarget
+      value: 
+      objectReference: {fileID: 125909046}
+    - target: {fileID: 2271865240472961439, guid: bf28f1221b25eec49b55454d852eaac4,
+        type: 3}
+      propertyPath: uiController
+      value: 
+      objectReference: {fileID: 9821381}
     - target: {fileID: 2271865240700626598, guid: bf28f1221b25eec49b55454d852eaac4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -60284,16 +60310,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2271865240472961425, guid: bf28f1221b25eec49b55454d852eaac4,
-        type: 3}
-      propertyPath: uiController
-      value: 
-      objectReference: {fileID: 9821381}
-    - target: {fileID: 2271865240472961439, guid: bf28f1221b25eec49b55454d852eaac4,
-        type: 3}
-      propertyPath: playerMoveTarget
-      value: 
-      objectReference: {fileID: 125909046}
-    - target: {fileID: 2271865240472961439, guid: bf28f1221b25eec49b55454d852eaac4,
         type: 3}
       propertyPath: uiController
       value: 
@@ -60597,6 +60613,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainUI
       objectReference: {fileID: 0}
+    - target: {fileID: 3082396616376511541, guid: 4a311a93f7e5f4934a748ee9baabc08b,
+        type: 3}
+      propertyPath: characters.Array.data[0]
+      value: 
+      objectReference: {fileID: 1512326329}
+    - target: {fileID: 3082396616376511541, guid: 4a311a93f7e5f4934a748ee9baabc08b,
+        type: 3}
+      propertyPath: characters.Array.data[1]
+      value: 
+      objectReference: {fileID: 437053383}
     - target: {fileID: 3082396616376511540, guid: 4a311a93f7e5f4934a748ee9baabc08b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -60707,16 +60733,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1687258584}
-    - target: {fileID: 3082396616376511541, guid: 4a311a93f7e5f4934a748ee9baabc08b,
-        type: 3}
-      propertyPath: characters.Array.data[0]
-      value: 
-      objectReference: {fileID: 1512326329}
-    - target: {fileID: 3082396616376511541, guid: 4a311a93f7e5f4934a748ee9baabc08b,
-        type: 3}
-      propertyPath: characters.Array.data[1]
-      value: 
-      objectReference: {fileID: 437053383}
     - target: {fileID: 3136627528918868841, guid: 4a311a93f7e5f4934a748ee9baabc08b,
         type: 3}
       propertyPath: m_AnchorMin.y
