@@ -10,6 +10,10 @@ public class SoundManager : MonoBehaviour
     public string maleGrunt2 = "event:/Male_Grunt_2";
     public string maleGrunt3 = "event:/Male_Grunt_3";
     public string maleGruntMI = "event:/HumanMaleGruntMI";
+    public string maleDeath1 = "event:/Male_Death_1";
+    public string maleDeath2 = "event:/Male_Death_2";
+    public string maleDeath3 = "event:/Male_Death_3";
+    public string maleDeathMI = "event:/Male_Death_MI";
     public string footSteps1 = "event:/HumanFootSteps_1";
     public string footSteps2 = "event:/HumanFootSteps_2";
     public string footSteps4 = "event:/HumanFootSteps_4";
