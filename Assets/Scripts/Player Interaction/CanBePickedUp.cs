@@ -14,6 +14,7 @@ public class CanBePickedUp : Interactable
         base.ObjectSelected();
         inventory = TurnManager.instance.ActivePlayerController.gameObject.GetComponent<Inventory>();
         inventory.Add(item);
+        //  Destroy(gameObject);
     }
 
    

@@ -40,7 +40,8 @@ public class Inventory : MonoBehaviour
             }
             
         }
-       return true;
+        
+        return true;
     }
 
     public void AddToStack(Item item, int amount)
