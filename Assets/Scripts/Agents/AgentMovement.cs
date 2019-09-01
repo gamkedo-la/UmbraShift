@@ -5,231 +5,275 @@ using UnityEngine.AI;
 
 public class AgentMovement : MonoBehaviour
 {
-
-	//control
-	private GridSpace m_gridSpace;
-	private AgentActionManager m_actionManager;
-	private AgentStats m_agentStats;
-	private PlayerAgentInput m_agentInput;
-	private const float SELECTION_THRESHOLD = 0.4f;
-	private bool m_movementSystemInUse = false;
-	private Collider[] m_colliders;
-	private enum MovementMode { Inactive, MovingAround, PathBuilding }
-	private MovementMode currentMode = MovementMode.Inactive;
-
-	//path building
-	[SerializeField] private GameObject m_markerPrefab;
-	private LineRenderer m_waypointLine;
-	private Camera m_cam;
-	private Vector3[] m_waypoints;
-	private GameObject[] m_markers;
-	private float[] m_waypointCosts;
-
-	//path testing
+	[Header("Mouse lines")]
+	[SerializeField] private GameObject waypointPrefab;
 	[SerializeField] private Material m_validPathMaterial;
-	[SerializeField] private Material m_farPathMaterial;
 	[SerializeField] private Material m_blockedPathMaterial;
+	[SerializeField] private Material m_farPathMaterial;
+
+	private enum MovementMode { Inactive, PathBuilding, MovingAround }
+	private MovementMode movementMode = MovementMode.Inactive;
+	private List<Transform> waypointsPlaced;
+	private List<float> waypointCosts;
+	private AgentTurnManager turnManager;
+	private float movePointsAvailable = 0;
+	private float movementSpeed = 0;
+	private Vector3 originalPositionAtActionStart;
+	private Collider[] colliders;
+	private Camera cameraForRaycastingToMouse;
 	private const float TESTING_WIDTH = 0.95f;
-	private LineRenderer m_mouseLine;
+	private const float ARRIVAL_THRESHOLD = 0.1f;
+	private LineRenderer waypointLine;
+	private LineRenderer mouseLine;
+	private GridSelectionController selectionController;
 
-	//movement
-	private const float MOVE_DEST_THRESHOLD = 0.1f;
-	private float m_movementSpeed;
-	private float m_MovementPointsAvail = 0f;
-
-    //sound
-    private FMOD.Studio.EventInstance walkingEvent;
-
-
-
-    private void Start()
+	private void Start()
 	{
-		m_cam = Camera.main;
-		m_gridSpace = FindObjectOfType<GridSpace>();
-		m_agentInput = FindObjectOfType<PlayerAgentInput>();
-		m_actionManager = GetComponent<AgentActionManager>();
-		m_agentStats = GetComponent<AgentStats>();
+		turnManager = FindObjectOfType<AgentTurnManager>();
+		colliders = GetComponentsInChildren<Collider>();
+		cameraForRaycastingToMouse = Camera.main;
 		GameObject waypointLineGO = new GameObject();
 		GameObject mouseLineGO = new GameObject();
-		m_waypointLine = waypointLineGO.AddComponent(typeof(LineRenderer)) as LineRenderer;
-		m_mouseLine = mouseLineGO.AddComponent(typeof(LineRenderer)) as LineRenderer;
-		m_waypoints = new Vector3[0];
-		m_markers = new GameObject[0];
-		m_gridSpace.CancelSelected += OnCancelSelected;
-		//m_agentInput.gridSpaceSelected += OnMovableTileSelected;
-		//m_agentInput.NonMoveSelected += OnNonMoveSelected;
-		m_colliders = GetComponentsInChildren<Collider>();
-        //walkingEvent = FMODUnity.RuntimeManager.CreateInstance(SoundManager.instance.footSteps2);
-    }
-
-	public void MovementActionStarted()     
-	{
-		m_movementSystemInUse = true;
-		m_movementSpeed = m_agentStats.MovementSpeed;
-		m_MovementPointsAvail = m_agentStats.MovementPointsPerAction;
-		currentMode = MovementMode.PathBuilding;
-		m_mouseLine.enabled = true;
-		GridSpace.ShowGridSquare(true);
+		waypointLine = waypointLineGO.AddComponent(typeof(LineRenderer)) as LineRenderer;
+		mouseLine = mouseLineGO.AddComponent(typeof(LineRenderer)) as LineRenderer;
+		selectionController = FindObjectOfType<GridSelectionController>();
+		selectionController.selectedSquare += SquareSelected;
+		waypointsPlaced = new List<Transform>();
+		waypointCosts = new List<float>();
 	}
 
 	private void Update()
 	{
-		if (m_movementSystemInUse==true)
-		{
-			if (currentMode == MovementMode.Inactive) { return; }
-			DrawLineThroughMarkers();
-			if (currentMode==MovementMode.PathBuilding)
-			{
-				if (m_waypoints.Length < 1) { InitializeWaypoints(); }
-				m_waypoints[0] = GridSpace.GetGridCoord(transform.position);
-				DrawLineToMouse(GetNewestWaypoint());
-				return;
-			}
-			CheckForArrival();
-			MoveOnPath();
-		}
+		if (movementMode == MovementMode.PathBuilding) { PathBuildingUpdate(); }
+		if (movementMode == MovementMode.MovingAround) { MovingAroundUpdate(); }
+	}
 
-
-        if (currentMode == MovementMode.MovingAround)
-        {
-            
-            if (!walkingEvent.IsPlaying())
-            {
-                Debug.Log("Starting Walking sound");
-                walkingEvent.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(gameObject));
-                walkingEvent.start();
-            }
-        }
-        else
-        {
-            walkingEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        }
-    }
-
-	private void ResetVariables()
+	private void RefreshMovementPoints()
 	{
-		m_waypoints = new Vector3[0];
-		foreach (GameObject marker in m_markers) { Destroy(marker); }
-		m_markers = new GameObject[0];
-		currentMode = MovementMode.Inactive;
-		m_mouseLine.enabled = false;
-		m_waypointLine.enabled = false;
-		m_movementSystemInUse = false;
+		movePointsAvailable = turnManager.ActiveCharacter.MovementPointsPerAction;
+	}
+
+	private float DetermineSpeed()
+	{
+		return turnManager.ActiveCharacter.MovementSpeed;
+	}
+
+	private void ResetVariables()	///////////////////////////////
+	{
+		movePointsAvailable = 0;
+		movementSpeed = 0f;
+		movementMode = MovementMode.Inactive;
+		if (waypointsPlaced.Count > 0) 
+		{
+			foreach (Transform waypoint in waypointsPlaced) { Destroy(waypoint.gameObject); }
+		}
+		waypointsPlaced.Clear();
+		waypointCosts.Clear();
+		waypointLine.enabled = false;
+		mouseLine.enabled = false;
 		GridSpace.ShowGridSquare(false);
 	}
 
-	private void OnMovableTileSelected(Vector3 pos, RaycastHit squareInfo)
+	public void EndMovement()
 	{
-		if (currentMode == MovementMode.Inactive) { return; }
+		
+	}
 
-		if (GridSpace.GetGridCoord(pos) == GridSpace.GetGridCoord(GetNewestWaypoint())
-			&& GridSpace.GetGridCoord(pos) != GridSpace.GetGridCoord(transform.position))
+	public void ActionStarted()
+	{
+		ResetVariables();
+		transform.position = GridSpace.GetGridCoord(transform.position);
+		originalPositionAtActionStart = transform.position;
+		movementSpeed = DetermineSpeed();
+		RefreshMovementPoints();
+		BeginPathBuilding();
+	}
+
+	private void BeginPathBuilding()
+	{
+		GridSpace.ShowGridSquare(true);
+		movementMode = MovementMode.PathBuilding;
+		mouseLine.enabled = true;
+		waypointLine.enabled = true;
+	}
+
+	private void BeginMovingAround()
+	{
+		GridSpace.ShowGridSquare(false);
+		movementMode = MovementMode.MovingAround;
+		mouseLine.enabled = false;
+	}
+
+	public void Undo()
+	{
+		if (waypointsPlaced.Count > 0 && movementMode == MovementMode.PathBuilding)
 		{
-			currentMode = MovementMode.MovingAround;
-			return;
+			int max = waypointsPlaced.Count - 1;
+			Transform waypoint = waypointsPlaced[max];
+			waypointsPlaced.RemoveAt(max);
+			PayMovePoints(-waypointCosts[max]);
+			waypointCosts.RemoveAt(max);
+			Destroy(waypoint.gameObject);
 		}
-		bool valid = TestWaypoint(GetNewestWaypoint(), pos);
-		if (!valid) { return; }		
-		else 
+	}
+
+	public void ActionCancel()
+	{
+		ResetVariables();
+		GridSpace.ShowGridSquare(false);
+		EndMovement();
+	}
+
+	public void ActionContinue()
+	{
+		if (waypointsPlaced.Count > 0 && movementMode == MovementMode.PathBuilding)
 		{
-			float mpCost = Vector3.Distance(GetNewestWaypoint(), pos);
-			if (mpCost > m_MovementPointsAvail) { return; }
-			PlaceMarker(pos, mpCost);			
-			DrawLineThroughMarkers();
+			BeginMovingAround();
 		}
 	}
 
-	private void InitializeWaypoints()
+	public void ActionComplete()
 	{
-		m_waypoints = new Vector3[1];
-		m_waypoints[0] = GridSpace.GetGridCoord(transform.position);
-		m_waypointCosts = new float[1];
-		m_waypointCosts[0] = 0f;
-		m_markers = new GameObject[1];
-		m_markers[0] = null;
-	}
-
-	private void PlaceMarker(Vector3 pos, float mpCost)
-	{
-		if (m_waypoints.Length == 0 || m_waypointCosts.Length == 0) 
-		{ 
-			InitializeWaypoints(); 
+		if (movementMode == MovementMode.PathBuilding)
+		{
+			BeginMovingAround();
 		}
-		m_waypoints = ExpandArray<Vector3>(m_waypoints, pos);
-		GameObject marker = GameObject.Instantiate(m_markerPrefab, pos, Quaternion.identity);
-		marker.transform.Rotate(transform.right, 90f);
-		m_markers = ExpandArray<GameObject>(m_markers, marker);
-		m_waypointCosts = ExpandArray<float>(m_waypointCosts, mpCost);
-		m_MovementPointsAvail = m_MovementPointsAvail - mpCost;
+		else if (movementMode == MovementMode.MovingAround)
+		{
+			ResetVariables();
+			GridSpace.ShowGridSquare(false);
+			EndMovement();
+			turnManager.ActiveCharacter.actionManager.ReportEndOfAction();
+		}
 	}
 
-	private Vector3 GetNewestWaypoint()
+	private void PathBuildingUpdate()
 	{
-		if (m_waypoints.Length == 0) { InitializeWaypoints(); }
-		return m_waypoints[m_waypoints.Length - 1];
-	}
-	   
-	private T[] ExpandArray<T> (T[] array, T val)
-	{
-		T[] newArray = new T[array.Length + 1];
-		for (int i = 0; i < array.Length; i++) { newArray[i] = array[i]; }
-		newArray[newArray.Length - 1] = val;
-		return newArray;
+		DrawLineThroughWaypoints(); 
+		DrawLineToMouse();
 	}
 
-	private T[] ContractArray<T>(T[] array)
+	private void MovingAroundUpdate()
 	{
-		T[] newArray = new T[array.Length - 1];
-		for (int i = 0; i < array.Length - 1; i++) { newArray[i] = array[i]; }
-		return newArray;
-	}
-	
-	private void DrawLineThroughMarkers()
-	{
-		m_waypointLine.enabled = true;
-		m_waypointLine.material = m_validPathMaterial;
-		m_waypointLine.startWidth = 0.05f;
-		m_waypointLine.endWidth = 0.05f;
-		m_waypointLine.positionCount = m_waypoints.Length;
-		m_waypointLine.SetPositions(m_waypoints);
-		m_waypointLine.useWorldSpace = true;
+		DrawLineThroughWaypoints();
+		CheckForArrivalAtWaypoint();
+		RotateTowardNextWaypoint();
+		MoveTowardNextWaypoint();
+		CheckForMovementComplete();
 	}
 
-	private void DrawLineToMouse(Vector3 origin)
+	private void CheckForArrivalAtWaypoint()
 	{
-		Ray ray = m_cam.ScreenPointToRay(Input.mousePosition);
+		float dist = DistanceOnPlane(transform.position, waypointsPlaced[0].position);
+		if (dist < ARRIVAL_THRESHOLD)
+		{
+			Transform waypoint = waypointsPlaced[0];
+			waypointsPlaced.RemoveAt(0);
+			waypointCosts.RemoveAt(0);
+			Destroy(waypoint.gameObject);
+		}
+	}
+
+	private void RotateTowardNextWaypoint()
+	{
+		if (waypointsPlaced.Count > 0)
+		{ transform.LookAt(waypointsPlaced[0]); };
+	}
+
+	private void MoveTowardNextWaypoint()
+	{
+		if (waypointsPlaced.Count > 0)
+		{
+			float dist = DistanceOnPlane(transform.position, waypointsPlaced[0].position);
+			float moveDist = Mathf.Clamp(movementSpeed * Time.deltaTime, 0, dist);
+			Vector3 moveVector = (waypointsPlaced[0].position - transform.position) * moveDist;
+			Vector3 pos = transform.position + moveVector;
+			transform.position = pos;
+		}
+	}
+
+	private void CheckForMovementComplete()
+	{
+		if (waypointsPlaced.Count == 0)
+		{
+			transform.position = GridSpace.GetGridCoord(transform.position);
+			ActionComplete();
+		}
+	}
+
+
+	private void SquareSelected(Vector3 pos, RaycastHit squareInfo, Action actionAvailableInSquare)
+	{
+		if (movementMode == MovementMode.PathBuilding) { SquareSelectedWhilePathBuilding(pos, squareInfo, actionAvailableInSquare); }
+		if (movementMode == MovementMode.MovingAround) { SquareSelectedWhileMovingAround(pos, squareInfo, actionAvailableInSquare); }
+	}
+
+	private void SquareSelectedWhilePathBuilding(Vector3 pos, RaycastHit squareInfo, Action actionAvailableInSquare)
+	{
+		if (actionAvailableInSquare == Action.Move) 
+		{
+			Vector3 latestWaypointPos = GetLatestWaypointPos();
+			bool valid = TestWaypoint(latestWaypointPos, pos);
+			float cost = DistanceOnPlane(latestWaypointPos, pos);
+			bool inMoveBudget = movePointsAvailable >= cost;
+			if (valid && GridSpace.GetGridCoord(pos) == GridSpace.GetGridCoord(GetLatestWaypointPos())) 
+			{
+				BeginMovingAround();
+				return; 
+			}
+			if (valid && inMoveBudget) { AttemptToPlaceWaypoint(pos); }
+		}
+	}
+
+	private void SquareSelectedWhileMovingAround(Vector3 pos, RaycastHit squareInfo, Action actionAvailableInSquare)
+	{
+		//do nothing?
+	}
+
+	private void DrawLineToMouse()
+	{
+		Ray ray = cameraForRaycastingToMouse.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hitInfo;
 		Physics.Raycast(ray, out hitInfo, 1000f);
 		Vector3 mousePos = GridSpace.GetGridCoord(hitInfo.point);
+		Vector3 origin;
+		if (waypointsPlaced.Count > 0) { origin = waypointsPlaced[waypointsPlaced.Count - 1].position; }
+		else { origin = GridSpace.GetGridCoord(transform.position); }
 		bool pathIsClear = TestWaypoint(origin, mousePos);
 		Material lineColor = m_validPathMaterial;
-		if (!pathIsClear) 
-		{ 
-			lineColor = m_blockedPathMaterial;			//TODO: more consequences than this
+		if (!pathIsClear)
+		{
+			lineColor = m_blockedPathMaterial;
 		}
-		if (DistanceOnPlane(origin, mousePos) > m_MovementPointsAvail) { lineColor = m_farPathMaterial; }	//TODO: more consequences than this
-		m_mouseLine.material = lineColor;
-		m_mouseLine.startWidth = 0.05f;
-		m_mouseLine.endWidth = 0.05f;
-		m_mouseLine.positionCount = 2;
+		if (DistanceOnPlane(origin, mousePos) > movePointsAvailable) { lineColor = m_farPathMaterial; }
+		mouseLine.material = lineColor;
+		mouseLine.startWidth = 0.05f;
+		mouseLine.endWidth = 0.05f;
+		mouseLine.positionCount = 2;
 		Vector3[] positions = new Vector3[2];
 		positions[0] = origin;
 		positions[1] = mousePos;
-		m_mouseLine.SetPositions(positions);
-		m_mouseLine.useWorldSpace = true;
+		mouseLine.SetPositions(positions);
+		mouseLine.useWorldSpace = true;
 	}
 
-	private void OnCancelSelected()
+	private void DrawLineThroughWaypoints()
 	{
-		if (m_waypoints.Length < 3) { m_actionManager.ReportActionCancelled(); EndMovement(); return; }
-		m_waypoints = ContractArray<Vector3>(m_waypoints);
-		GameObject markerToDestroy = m_markers[m_markers.Length-1];
-		m_markers = ContractArray<GameObject>(m_markers);
-		m_MovementPointsAvail = Mathf.Clamp(m_MovementPointsAvail + m_waypointCosts[m_waypointCosts.Length - 1], 0f, Mathf.Infinity);
-		m_waypointCosts = ContractArray<float>(m_waypointCosts);
-		Destroy(markerToDestroy);
-		DrawLineThroughMarkers();
+		waypointLine.material = m_validPathMaterial;
+		waypointLine.startWidth = 0.05f;
+		waypointLine.endWidth = 0.05f;
+		waypointLine.positionCount = waypointsPlaced.Count+1;
+		List<Vector3> positions = new List<Vector3>();
+		positions.Add(transform.position);
+		foreach (Transform waypoint in waypointsPlaced) 
+		{
+			positions.Add(waypoint.position);
+		}
+		Vector3[] positionsArray = positions.ToArray();
+		waypointLine.SetPositions(positionsArray);
+		waypointLine.useWorldSpace = true;
 	}
+
 
 	private bool TestWaypoint(Vector3 startPosition, Vector3 testPosition)
 	{
@@ -243,30 +287,20 @@ public class AgentMovement : MonoBehaviour
 		foreach (RaycastHit hit in hitArray)
 		{
 			bool hitIsOnSelf = false;
-			foreach (Collider myCollider in m_colliders)
+			foreach (Collider myCollider in colliders)
 			{
-				if (hit.collider == myCollider) 
+				if (hit.collider == myCollider)
 				{
 					hitIsOnSelf = true;
 				}
 			}
 			if (!hitIsOnSelf) { hitList.Add(hit); }
 		}
-		
-		foreach (RaycastHit hit in hitList) { Debug.Log("Hit: " + hit.point + "    Obj: " + hit.collider.name); }
-	
+
 		if (hitList.Count > 0) { isPathClear = false; }
 		return isPathClear;
 	}
 
-	public  void EndMovement()
-	{
-		transform.position = GridSpace.GetGridCoord(transform.position);
-		ResetVariables();
-		m_actionManager.ReportEndOfAction();
-		//reset all path stuff, movement has completed, user cancelled, or user clicked on something else
-	}
-	
 	private float DistanceOnPlane(Vector3 a, Vector3 b)
 	{
 		a.y = 0f;
@@ -274,57 +308,32 @@ public class AgentMovement : MonoBehaviour
 		return Vector3.Distance(a, b);
 	}
 
-	private void CheckForArrival()
+	private void AttemptToPlaceWaypoint(Vector3 pos)
 	{
-		if (DistanceOnPlane(transform.position, m_waypoints[1]) < MOVE_DEST_THRESHOLD)
+		Vector3 latestWaypointPos = GetLatestWaypointPos();
+		pos = GridSpace.GetGridCoord(pos);
+		float moveCost = DistanceOnPlane(latestWaypointPos, pos);
+		if (movePointsAvailable >= moveCost)
 		{
-			transform.position = GridSpace.GetGridCoord(m_waypoints[1]);
-			RemoveWaypointOnArrival();
-			m_waypoints[0] = transform.position;
-			DrawLineThroughMarkers();
-		}
-		if (m_waypoints.Length < 2) 
-		{
-			EndMovement();
+			PayMovePoints(moveCost);
+			waypointCosts.Add(moveCost);
+			GameObject waypoint = Instantiate(waypointPrefab, pos, Quaternion.LookRotation(cameraForRaycastingToMouse.transform.position - pos));
+			waypoint.name = "Waypoint";
+			waypointsPlaced.Add(waypoint.transform);
 		}
 	}
 
-	private void RemoveWaypointOnArrival()
+	private void PayMovePoints(float cost)
 	{
-		if (m_waypoints.Length<2) { return; }
-		m_waypoints = RemovePositionOneInArray<Vector3>(m_waypoints);
-		GameObject markerToDestroy = m_markers[1];
-		m_markers = RemovePositionOneInArray<GameObject>(m_markers);
-		m_waypointCosts = RemovePositionOneInArray<float>(m_waypointCosts);
-		Destroy(markerToDestroy);
+		movePointsAvailable -= cost;
 	}
 
-	private T[] RemovePositionOneInArray<T>(T[] array)
+	private Vector3 GetLatestWaypointPos()
 	{
-		
-		T[] newArray = new T[array.Length - 1];
-		for (int i = 0; i < newArray.Length; i++)
-		{
-			newArray[i] = array[i+1];
-		}
-		return newArray;
-	}
-	
-
-	private void MoveOnPath()
-	{
-		if (m_waypoints.Length > 1)
-		{
-			Vector3 dirTowardWaypoint = m_waypoints[1] - transform.position;
-			dirTowardWaypoint.y = 0f;
-			if (DistanceOnPlane(dirTowardWaypoint, transform.position) > MOVE_DEST_THRESHOLD)
-			{
-				transform.rotation = Quaternion.LookRotation(dirTowardWaypoint);            //TODO: consider a slower rotation
-				transform.position = transform.position + (dirTowardWaypoint.normalized * Time.deltaTime * m_movementSpeed);
-			}
-			m_waypoints[0] = transform.position;
-			DrawLineThroughMarkers();
-		}
+		Vector3 pos;
+		if (waypointsPlaced.Count > 0) { pos = waypointsPlaced[waypointsPlaced.Count - 1].position; }
+		else { pos = transform.position; }
+		return GridSpace.GetGridCoord(pos);
 	}
 
 

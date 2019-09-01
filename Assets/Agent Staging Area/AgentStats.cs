@@ -22,11 +22,14 @@ public class AgentStats : MonoBehaviour
 	public int CurrentActionPoints { get { return currentActionPoints; } }
 	public Sprite PortraitImage { get { return portraitImage; } }
 	public string CharacterName { get { return characterName; } }
+
+	public AgentActionManager actionManager;
 	
 	
 	void Start()
 	{
 		agentMovement = GetComponent<AgentMovement>();
+		actionManager = GetComponent<AgentActionManager>();
 		currentActionPoints = maxActionPoints;
 	}
 
@@ -37,16 +40,6 @@ public class AgentStats : MonoBehaviour
 	public int GetCurrentActionPoints() { return currentActionPoints; }
 	public int GetMovementPointsPerAction()	{ return movementPointsPerAction; }
 	
-	public bool SpendActionPoints(int apCost)
-	{
-		if (apCost <= currentActionPoints)
-		{
-			AdjustActionPoints(-apCost);
-			return true;
-		}
-		else { return false; }
-	}
-
 	public void AdjustActionPoints (int amt)
 	{
 		currentActionPoints = currentActionPoints + amt;

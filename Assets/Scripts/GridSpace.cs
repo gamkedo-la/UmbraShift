@@ -8,9 +8,7 @@ using UnityEngine.UI;
 public class GridSpace : MonoBehaviour
 {
 	public delegate void SquareSelectEventHandler(Vector3 pos, RaycastHit squareInfo);
-	public delegate void CancelSelectEventHandler();
 	public event SquareSelectEventHandler SquareSelected;
-	public event CancelSelectEventHandler CancelSelected;
 
 	private Camera cam;
 	private LayerMask layerMask;
@@ -25,7 +23,7 @@ public class GridSpace : MonoBehaviour
 		Canvas canvas = GetComponent<Canvas>();
 		if (canvas && cam) { canvas.worldCamera = cam; }
 		squareImage = GetComponentInChildren<Image>();
-		string[] validLayerNames = new string[] { "Floor" };
+		string[] validLayerNames = new string[] { "UI", "Floor" };
 		LayerMask validLayers = LayerMask.GetMask(validLayerNames);
 		Update();
     }
@@ -47,8 +45,9 @@ public class GridSpace : MonoBehaviour
 	private bool CheckForValidGridSpace(string layer)
 	{
 		layerMask = LayerMask.NameToLayer(layer);
+		LayerMask layerMaskUI = LayerMask.GetMask("UI", layer);
 		Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-		return Physics.Raycast(ray, out _hitInfo, MAX_DISTANCE, -layerMask);
+		return Physics.Raycast(ray, out _hitInfo, MAX_DISTANCE, layerMaskUI);
 	}
 
 	static public void ShowGridSquare (bool status)
@@ -65,10 +64,11 @@ public class GridSpace : MonoBehaviour
 	static public Vector3 GetGridCoord (Vector3 coord)
 	{
 		float x = Mathf.RoundToInt(coord.x);
-		if (x % 2 != 0) { x = x + 1; }
+		float gridSize = 1f;
+		if ((x % gridSize) != 0) { x = x + 1; }
 		float y = coord.y;
 		float z = Mathf.RoundToInt(coord.z);
-		if (z % 2 != 0) { z = z + 1; }
+		if ((z % gridSize) != 0) { z = z + 1; }
 		return new Vector3(x, y, z);
 	}
 
@@ -76,12 +76,7 @@ public class GridSpace : MonoBehaviour
 	{
 		if (Input.GetMouseButtonDown(0))
 		{
-			OnSquareSelected(squareInfo);
-		}
-
-		if (Input.GetMouseButtonDown(1))
-		{
-			OnCancelSelected();
+			OnSquareSelected(squareInfo); 
 		}
 	}
 
@@ -91,14 +86,6 @@ public class GridSpace : MonoBehaviour
 		if (SquareSelected != null)
 		{
 			SquareSelected(this.gameObject.transform.position, squareInfo);
-		}
-	}
-
-	protected virtual void OnCancelSelected()
-	{
-		if (CancelSelected != null)
-		{
-			CancelSelected();
 		}
 	}
 

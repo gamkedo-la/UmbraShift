@@ -9,27 +9,34 @@ public class UIActionBarController : MonoBehaviour
 	[SerializeField] private Image ActionBarPortraitFrame;
 	[SerializeField] private Text activeCharacterName;
 	[SerializeField] private UIIcon[] actionIconSet;
-	[SerializeField] private UIIcon rewindActionIcon;
-	[SerializeField] private UIIcon playActionIcon;
-	[SerializeField] private UIIcon stopActionIcon;
+	[SerializeField] private UIIcon undoActionIcon;
+	[SerializeField] private UIIcon continueActionIcon;
+	[SerializeField] private UIIcon cancelActionIcon;
+	[SerializeField] private UIIcon moveActionIcon;
+	[SerializeField] private UIIcon shootActionIcon;
+	[SerializeField] private UIIcon interactActionIcon;
+	[SerializeField] private UIIcon hackActionIcon;
 
 	[SerializeField] private Transform hidingSpot;
 	[SerializeField] private Transform[] homeSpot;
+	[SerializeField] private float iconMoveSpeed = 20f;
 
 	private UIIcon iconInMemory = null;
+	private UIIcon[] allIcons;
 	private AgentTurnManager turnManager;
-	private PlayerAgentInput inputManager;
-	private AgentActionManager actionManager;
+	private PlayerHotkeyInput inputManager;
 	private bool playerHasIconControl = true;
 	private IEnumerator movingIcons;
 	
+	
 	private void Start()
     {
-		inputManager = FindObjectOfType<PlayerAgentInput>();
+		allIcons = FindObjectsOfType<UIIcon>();
+		inputManager = FindObjectOfType<PlayerHotkeyInput>();
 		turnManager = FindObjectOfType<AgentTurnManager>();
-		actionManager = FindObjectOfType<AgentActionManager>();
 		SetInitialIconPositions();
 		UpdatePortraitInfo();
+		FindObjectOfType<GridSelectionController>().RightClick += OnUndoActionButtonPressed;
 	}
 
 	private void SetInitialIconPositions()
@@ -68,30 +75,20 @@ public class UIActionBarController : MonoBehaviour
 		UpdatePortraitInfo();		// TODO: pause game and show character info window
 	}
 
-	private void HideActionIcon(UIIcon icon, bool hiding)
-	{
-		if (hiding == true && icon.hidden == false) 
-		{ 
-			movingIcons = MoveIcon(icon, icon.homePosition, icon.hidePosition);
-			icon.hidden = true;
-		}
-		else if (hiding == false && icon.hidden == true) 
-		{ 
-			movingIcons = MoveIcon(icon, icon.hidePosition, icon.homePosition);
-			icon.hidden = false;
-		}
-		else return;
-		StartCoroutine(movingIcons);
-	}
-	
-
-	private IEnumerator MoveIcon (UIIcon icon, Vector3 start, Vector3 finish)
+	private IEnumerator MoveIcon(UIIcon icon, Vector3 start, Vector3 finish)
 	{
 		LockIconControl();
 		float counter = 0;
-		float duration = icon.driftTime;
+		float delay = icon.GetFlashDelay();
+		float duration = (icon.driftTime / iconMoveSpeed) + delay;
 		Vector3 currentPosition = start;
-		while (counter<duration)
+		while (counter < delay)
+		{
+			counter = counter + Time.deltaTime;
+			yield return null;
+		}
+		counter = 0;
+		while (counter < duration)
 		{
 			counter = counter + Time.deltaTime;
 			currentPosition = Vector3.Lerp(start, finish, counter / duration);
@@ -101,6 +98,22 @@ public class UIActionBarController : MonoBehaviour
 		ResetIconControl();
 	}
 
+	private void HideActionIcon(UIIcon icon, bool tryingToHide)
+	{
+		if (tryingToHide && !icon.hidden) 
+		{ 
+			movingIcons = MoveIcon(icon, icon.homePosition, icon.hidePosition);
+			icon.hidden = true;
+		}
+		else if (!tryingToHide && icon.hidden) 
+		{ 
+			movingIcons = MoveIcon(icon, icon.hidePosition, icon.homePosition);
+			icon.hidden = false;
+		}
+		else return;
+		StartCoroutine(movingIcons);
+	}
+	
 	public void ResetIconControl() 
 	{
 		playerHasIconControl = true;
@@ -111,85 +124,110 @@ public class UIActionBarController : MonoBehaviour
 		playerHasIconControl = false;
 	}
 
-	public void OnMoveActionButtonPressed() 
+	
+		
+	public void OnMoveActionButtonPressed()
 	{
-		if (playerHasIconControl && !inputManager.InputLocked)
-		{
-			Debug.Log("Move" + " button was pressed.");
-			foreach (UIIcon icon in actionIconSet) { HideActionIcon(icon, true); }
-			HideActionIcon(stopActionIcon, false);
-			HideActionIcon(rewindActionIcon, false);
-			HideActionIcon(playActionIcon, false);
-		}
+		if (!moveActionIcon.hidden && playerHasIconControl && !inputManager.InputLocked)
+		{ AttemptAction(Action.Move, true, false); }
 	}
 
 	public void OnShootActionButtonPressed()
 	{
-		if (playerHasIconControl && !inputManager.InputLocked)
-		{
-			Debug.Log("Shoot" + " button was pressed.");
-			foreach (UIIcon icon in actionIconSet) { HideActionIcon(icon, true); }
-			HideActionIcon(stopActionIcon, false);
-			HideActionIcon(rewindActionIcon, false);
-			HideActionIcon(playActionIcon, false);
-		}
+		if (!shootActionIcon.hidden && playerHasIconControl && !inputManager.InputLocked)
+		{ AttemptAction(Action.Shoot, true, false); }
 	}
 
 	public void OnInteractActionButtonPressed()
 	{
-		if (playerHasIconControl && !inputManager.InputLocked)
-		{
-			Debug.Log("Interact" + " button was pressed.");
-			foreach (UIIcon icon in actionIconSet) { HideActionIcon(icon, true); }
-			HideActionIcon(playActionIcon, false);
-		}
+		if (!interactActionIcon.hidden && playerHasIconControl && !inputManager.InputLocked)
+		{ AttemptAction(Action.Interact, true, false); }
 	}
 
 	public void OnHackActionButtonPressed()
 	{
-		if (playerHasIconControl && !inputManager.InputLocked)
-		{
-			Debug.Log("Hack" + " button was pressed.");
-			foreach (UIIcon icon in actionIconSet) { HideActionIcon(icon, true); }
-			HideActionIcon(stopActionIcon, false);
-			HideActionIcon(rewindActionIcon, false);
-			HideActionIcon(playActionIcon, false);
-		}
+		if (!hackActionIcon.hidden && playerHasIconControl && !inputManager.InputLocked)
+		{ AttemptAction(Action.Hack, true, false); }
 	}
 
-	public void OnStopButtonPressed()
+	public void OnContinueActionButtonPressed()
 	{
-		if (playerHasIconControl && !inputManager.InputLocked)
-		{
-			Debug.Log("Stop" + " button was pressed.");
-			foreach (UIIcon icon in actionIconSet) { HideActionIcon(icon, false); }
-			HideActionIcon(stopActionIcon, true);
-			HideActionIcon(rewindActionIcon, true);
-			HideActionIcon(playActionIcon, true);
-		}
+		if (!continueActionIcon.hidden && playerHasIconControl && !inputManager.InputLocked)
+		{ AttemptAction(Action.Continue, true, false); }
 	}
 
-	public void OnPlayButtonPressed()
+	public void OnCancelActionButtonPressed()
 	{
-		if (playerHasIconControl && !inputManager.InputLocked)
-		{
-			Debug.Log("Play" + " button was pressed.");
-			foreach (UIIcon icon in actionIconSet) { HideActionIcon(icon, false); }
-			HideActionIcon(stopActionIcon, true);
-			HideActionIcon(rewindActionIcon, true);
-			HideActionIcon(playActionIcon, true);
-		}
+		if (!cancelActionIcon.hidden && playerHasIconControl && !inputManager.InputLocked)
+		{ AttemptAction(Action.Cancel, false, true); }
 	}
 
-	public void OnRewindButtonPressed()
+	public void OnUndoActionButtonPressed()
 	{
-		if (playerHasIconControl && !inputManager.InputLocked)
-		{
-			Debug.Log("Rewind" + " button was pressed.");
-			foreach (UIIcon icon in actionIconSet) { HideActionIcon(icon, false); }
-			HideActionIcon(stopActionIcon, true);
-			HideActionIcon(rewindActionIcon, true);
-			HideActionIcon(playActionIcon, true);
-		}
+		if (!undoActionIcon.hidden && playerHasIconControl && !inputManager.InputLocked)
+		{ AttemptAction(Action.Undo, true, false); }
 	}
+
+	public void ReadyForNextAction()
+	{
+		inputManager.InputLocked = false;
+		playerHasIconControl = true;
+		HideActionIcon(cancelActionIcon, true);
+		HideActionIcon(continueActionIcon, true);
+		HideActionIcon(undoActionIcon, true);
+		foreach (UIIcon iconInSet in actionIconSet) { HideActionIcon(iconInSet, false); }
+		turnManager.ActiveCharacter.actionManager.actionInProgress = Action.None;
+	}
+
+
+
+	private void AttemptAction(Action action, bool hideActionSet, bool hideActionControlsSet)
+	{
+		playerHasIconControl = false;
+		float actionDelay = 0f;
+		foreach (UIIcon icon in allIcons)
+		{
+			if (icon.ActionWhenPressed == action)
+			{
+				actionDelay = icon.GetFlashDelay();
+				if (turnManager.ActiveCharacter.actionManager.CanActionBePerformed(action))
+				{
+					icon.Flash(Color.green);
+					if (hideActionSet==true) 
+					{
+						foreach (UIIcon iconInSet in actionIconSet) { HideActionIcon(iconInSet, true); }
+					}
+					else 
+					{
+						foreach (UIIcon iconInSet in actionIconSet) { HideActionIcon(iconInSet, false); }
+					}
+					if (hideActionControlsSet==true)
+					{
+						HideActionIcon(cancelActionIcon, true);
+						HideActionIcon(undoActionIcon, true);
+						HideActionIcon(continueActionIcon, true);
+					}
+					else 
+					{
+						HideActionIcon(cancelActionIcon, false);
+						HideActionIcon(undoActionIcon, false);
+						HideActionIcon(continueActionIcon, false);
+					}
+				}
+				else icon.Flash(Color.red);
+				break;
+			}
+		}
+		StartCoroutine(BeginAction(action, actionDelay));
+	}
+
+	private IEnumerator BeginAction(Action action, float delay)
+	{
+		yield return new WaitForSeconds(delay*2);
+		playerHasIconControl = true;
+		turnManager.ActiveCharacter.actionManager.PerformAction(action);
+	}
+
+
+	
 }
