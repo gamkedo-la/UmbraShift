@@ -34,7 +34,7 @@ public class Interactable : MonoBehaviour
         currentRenderer.material = defaultMat;
     }
 
-    public void ObjectSelected()
+    public virtual void ObjectSelected()
     {
 //        Debug.Log("Setting highlight material");
         currentRenderer.material = InputManager.instance.highlightedMat;
