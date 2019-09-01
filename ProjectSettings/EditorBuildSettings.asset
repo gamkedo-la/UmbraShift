@@ -6,11 +6,20 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 506b4810b1b6769408a5c74ee8f8d242
+  - enabled: 1
     path: Assets/Scenes/CharacterCreation.unity
     guid: 0ef3a892b24cd9d45803c063e3f64661
   - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
-    guid: 506b4810b1b6769408a5c74ee8f8d242
+    path: Assets/Scenes/Base/Base_bar.unity
+    guid: a37e4e57388d4e9419cda9e7a3ceb00b
+  - enabled: 1
+    path: Assets/Scenes/Base/Base_basement.unity
+    guid: effbb5bf5a38c23469516070788847bf
+  - enabled: 1
+    path: Assets/Scenes/Warehouse.unity
+    guid: 1e0ab92a61c9cdf428016b688c2b83ae
   - enabled: 1
     path: Assets/Scenes/Main.unity
     guid: d1c3109bdb54ad54c8a2b2838528e640
@@ -20,16 +29,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Demo/Demo1.unity
     guid: b3f27e4af5567194f94a95cb5cb6c798
-  - enabled: 0
-    path: 
-    guid: d783e3e41acf78647ab9e18ee19e893d
-  - enabled: 0
-    path: 
-    guid: eb93238bd3c924a4496406865ac87deb
-  - enabled: 0
-    path: 
-    guid: 704c363d3856a8d4ab05f5a47b0b723a
-  - enabled: 1
-    path: Assets/Scenes/Base/Base_basement.unity
-    guid: effbb5bf5a38c23469516070788847bf
   m_configObjects: {}

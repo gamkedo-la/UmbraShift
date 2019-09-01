@@ -14,7 +14,7 @@ public class LvlLoader : MonoBehaviour
         currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
 
         if (currentSceneIndex == 0) {
-            LoadNextScene();
+           // LoadNextScene();
         }
     }
 
