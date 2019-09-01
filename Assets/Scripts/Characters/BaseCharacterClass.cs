@@ -133,8 +133,26 @@ public class BaseCharacterClass : MonoBehaviour
         {
             isAlive = false;
             Debug.Log("urg, I've died.");
+            PlayDeathSound();
 			Destroy( gameObject );
         }
+    }
+    /**
+     * Play Character or enemy death sound effect. 
+     * 
+     * Update this method with logic to handle different player or enemy sounds.
+     * 
+    */  
+    private void PlayDeathSound()
+    {
+      // if (playerCharacter)
+        //{
+            FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.maleDeathMI);
+        //}
+        //else
+       // {
+       //     FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.maleDeathMI);
+        //}
     }
 
     public void AttemptHack(Hackable target)

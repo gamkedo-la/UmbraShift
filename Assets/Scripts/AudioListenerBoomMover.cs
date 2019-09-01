@@ -17,6 +17,9 @@ public class AudioListenerBoomMover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector3(mainCameraTransform.position.x+offsetX, offsetY, mainCameraTransform.position.z+offsetZ);
+        if (mainCameraTransform != null)
+        {
+            transform.position = new Vector3(mainCameraTransform.position.x + offsetX, offsetY, mainCameraTransform.position.z + offsetZ);
+        }
     }
 }

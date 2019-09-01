@@ -24,6 +24,7 @@ public class EnemyController : MonoBehaviour
     public PlayerController playerTarget;
     private float yellowAlertStateTimer = 0.0f;
     private bool isPlayerSeen = false;
+    private Animator animator;
 
 
     
@@ -40,6 +41,7 @@ public class EnemyController : MonoBehaviour
         currentHealth = baseClass.maxHealth;
         EnemyManager.instance.EnemyControllerReportingForDuty(this);
         baseClass.ActionPointRefill();
+        animator = GetComponentInChildren<Animator>();
        
     }
 
@@ -66,6 +68,10 @@ public class EnemyController : MonoBehaviour
             transform.LookAt(eyeLevel);
         }
 
+        if (animator.GetBool("isWalking") != moving){
+            animator.SetBool("isWalking", moving);
+        }
+
         if (moving)
         {
             Vector3 travelDiff = target.position - transform.position;
@@ -84,6 +90,7 @@ public class EnemyController : MonoBehaviour
                 if (agent.remainingDistance <= agent.stoppingDistance && TurnManager.instance.isCombatModeActive == false)
                 {
                     moving = false;
+                    
                     if (target == patrolPointOne)
                     {
                         target = patrolPointTwo;

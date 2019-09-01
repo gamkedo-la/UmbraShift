@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
 
     public int multiShotAccuracyPenalty = -15;
 
+    private Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +39,8 @@ public class PlayerController : MonoBehaviour
         targetMoveLocation = transform.position;
 
         baseClass.ActionPointRefill();
+
+        animator = GetComponentInChildren<Animator>();
     }
 
     void OnDisable()
@@ -98,13 +102,23 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log($"shooting at {enemyController.name}");
             baseClass.ShootAtTarget(enemyController);
-            FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.gunshotPistol1);
+            transform.LookAt(enemyController.transform.position);
+            animator.SetTrigger("FirePistol");
+
+            // might need to move this to the animation Track.
+            FireWeapon();
+
             GameObject tempGO = Instantiate(muzzleFlash);
             tempGO.transform.position = transform.position;
 
             
         }
     }
+
+    public void FireWeapon()
+    {
+        FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.gunshotPistol1);
+    } 
 
     public void MultiShot(int numberOfShots)
     {

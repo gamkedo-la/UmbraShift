@@ -24,9 +24,13 @@ public class ChangeScene : MonoBehaviour
 
         SceneManager.MoveGameObjectToScene(moveObjectToNextScene, nextScene);
 
+       
+
+        
+
         yield return null;
 
-        SceneManager.UnloadSceneAsync(0);
+        SceneManager.UnloadSceneAsync("CharacterCreation");
     }
 
 }
