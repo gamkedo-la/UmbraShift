@@ -35,8 +35,15 @@ public class UIActionBarController : MonoBehaviour
 		inputManager = FindObjectOfType<PlayerHotkeyInput>();
 		turnManager = FindObjectOfType<AgentTurnManager>();
 		SetInitialIconPositions();
-		UpdatePortraitInfo();
 		FindObjectOfType<GridSelectionController>().RightClick += OnUndoActionButtonPressed;
+		UpdatePortraitInfo();
+		StartCoroutine("DelayedUpdate");
+	}
+
+	private IEnumerator DelayedUpdate()
+	{
+		yield return new WaitForSeconds(1f);
+		UpdatePortraitInfo();
 	}
 
 	private void SetInitialIconPositions()
@@ -72,7 +79,8 @@ public class UIActionBarController : MonoBehaviour
 
 	public void OnPortraitButtonPressed()
 	{
-		UpdatePortraitInfo();		// TODO: pause game and show character info window
+		UpdatePortraitInfo();       // TODO: pause game and show character info window
+		DelayedUpdate();
 	}
 
 	private IEnumerator MoveIcon(UIIcon icon, Vector3 start, Vector3 finish)

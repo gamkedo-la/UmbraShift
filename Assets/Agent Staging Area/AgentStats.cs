@@ -31,6 +31,18 @@ public class AgentStats : MonoBehaviour
 		agentMovement = GetComponent<AgentMovement>();
 		actionManager = GetComponent<AgentActionManager>();
 		currentActionPoints = maxActionPoints;
+		StartCoroutine("DelayedUpdate");
+	}
+
+	private IEnumerator DelayedUpdate()
+	{
+		yield return new WaitForSeconds(0.5f);
+		InitialStatManager initialStatManager = FindObjectOfType<InitialStatManager>();
+		if (initialStatManager)
+		{
+			characterName = initialStatManager.playerName;
+			portraitImage = initialStatManager.playerPortrait.sprite;
+		}
 	}
 
 

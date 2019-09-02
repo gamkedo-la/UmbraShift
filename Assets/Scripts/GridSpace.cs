@@ -17,16 +17,23 @@ public class GridSpace : MonoBehaviour
 	private RaycastHit _hitInfo;
 	static private bool showingGridSquare = false;
 
+
 	void Start()
     {
-		cam = Camera.main;
-		Canvas canvas = GetComponent<Canvas>();
-		if (canvas && cam) { canvas.worldCamera = cam; }
+		UpdateWorldCamera();
 		squareImage = GetComponentInChildren<Image>();
 		string[] validLayerNames = new string[] { "UI", "Floor" };
 		LayerMask validLayers = LayerMask.GetMask(validLayerNames);
 		Update();
+		
     }
+
+	void UpdateWorldCamera()
+	{
+		cam = Camera.main;
+		Canvas canvas = GetComponent<Canvas>();
+		if (canvas && cam) { canvas.worldCamera = cam; }
+	}
 	
 
 	void Update()
