@@ -10,6 +10,10 @@ public class PlayMenuMusic : MonoBehaviour
 
     void Awake() 
     {
+
+        
+        //FMODUnity.RuntimeManager.GetBus("bus:/Music").setVolume(PlayerPrefs.GetFloat("MusicVolume", 75.0F));
+
         randomLoop = Random.Range(0, 3);
         menuMusicEvent = FMODUnity.RuntimeManager.CreateInstance("event:/Menu_remixes");
     }
