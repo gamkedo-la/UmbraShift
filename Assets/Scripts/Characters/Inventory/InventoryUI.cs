@@ -7,10 +7,14 @@ public class InventoryUI : MonoBehaviour
 
     public Transform itemsParent;
 
+    public GameObject inventoryUI;
+
     [SerializeField]
     Inventory inventory;
 
     InventorySlot[] slots;
+
+    public string inventoryMenuInput = "Inventory";
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +29,11 @@ public class InventoryUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetButtonDown(inventoryMenuInput))
+        {
+            inventoryUI.SetActive(!inventoryUI.activeSelf);
+
+        }
     }
 
     void UpdateUI()
