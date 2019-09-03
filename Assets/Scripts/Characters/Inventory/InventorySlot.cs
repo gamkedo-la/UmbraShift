@@ -29,7 +29,7 @@ public class InventorySlot : MonoBehaviour
 
     private void Awake()
     {
-        itemName.text = "Empty";
+        //itemName.text = "Empty";
         numberofItemsInSlotDisplay.text = numberOfItemsInStack.ToString();
         inventory = baseCharacter.gameObject.GetComponent<Inventory>();
 
@@ -52,7 +52,7 @@ public class InventorySlot : MonoBehaviour
         icon.sprite = item.icon;
         icon.enabled = true;
         removeButton.interactable = true;
-        itemName.text = item.name;
+        //itemName.text = item.name;
     }
 
     public void AddToNumberInSlot(Item newItem)
