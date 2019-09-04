@@ -18,6 +18,10 @@ MonoBehaviour:
 
 '
   color: {r: 0, g: 0, b: 0, a: 0}
-  options: []
+  options:
+  - optionText: Add Credstick to Inventory
+    optionLeadsTo: {fileID: 0}
+    lastInteraction: 1
+    id: 0
   inventory: {fileID: 0}
   itemToReceive: {fileID: 11400000, guid: c1da1e1796e52f542a03acf0d35984a4, type: 2}

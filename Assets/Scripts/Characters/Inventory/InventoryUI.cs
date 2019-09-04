@@ -19,6 +19,7 @@ public class InventoryUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        inventory = FindObjectOfType<Inventory>();
         
         //inventory = TurnManager.instance.MainCharacterController.gameObject.GetComponent<Inventory>();
         inventory.onItemChangedCallback += UpdateUI;

@@ -80,8 +80,8 @@ public class InventorySlot : MonoBehaviour
         removeButton.interactable = false;
         //itemName.text = "Empty";
         numberOfItemsInStack = 0;
-        numberofItemsInSlotDisplay.text = numberOfItemsInStack.ToString();
-        numberofItemsInSlotDisplay.enabled = false;
+        //numberofItemsInSlotDisplay.text = numberOfItemsInStack.ToString();
+        //numberofItemsInSlotDisplay.enabled = false;
     }
 
     public void OnRemoveButton()
