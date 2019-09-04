@@ -6,6 +6,7 @@ public class AgentActionManager : MonoBehaviour
 {
 	private UIActionBarController m_uiActionBarController;
 	private AgentMovement m_agentMovement;
+	private AgentShooting m_agentShooting;
 	private AgentStats m_agentStats;
 	public Action actionInProgress = Action.None;
 
@@ -21,6 +22,7 @@ public class AgentActionManager : MonoBehaviour
 		m_uiActionBarController = FindObjectOfType<UIActionBarController>();
 		m_agentStats = GetComponent<AgentStats>();
 		m_agentMovement = GetComponent<AgentMovement>();
+		m_agentShooting = GetComponent<AgentShooting>();
 	}
 
 	public bool CanActionBePerformed(Action actionAttempted)
@@ -73,6 +75,17 @@ public class AgentActionManager : MonoBehaviour
 				transactionInProcessAP = moveCostAP;
 				m_agentMovement.ActionStarted();
 				actionInProgress = Action.Move;
+			}
+		}
+
+		if (action==Action.Shoot)
+		{
+			if (shootCostAP > m_agentStats.CurrentActionPoints) { ReportActionCancelled(); }
+			else
+			{
+				transactionInProcessAP = shootCostAP;
+				m_agentShooting.ActionStarted();
+				actionInProgress = Action.Shoot;
 			}
 		}
 	}

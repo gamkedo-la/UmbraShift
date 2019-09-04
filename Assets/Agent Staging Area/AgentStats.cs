@@ -9,6 +9,7 @@ public class AgentStats : MonoBehaviour
 	// float actionPoints;
 	[SerializeField] private Sprite portraitImage;
 	[SerializeField] private string characterName = "DefaultName";
+	[SerializeField] private WeaponDesign equippedWeapon;
 	private AgentMovement agentMovement;
 	private int currentActionPoints = 0;
 	private int maxActionPoints = 2;
@@ -17,6 +18,7 @@ public class AgentStats : MonoBehaviour
 	public int MovementPointsPerAction { get { return movementPointsPerAction; } }
 	private float movementSpeed = 7f;
 	public float MovementSpeed { get { return movementSpeed; } }
+	public WeaponDesign EquippedWeapon { get{ return equippedWeapon; } }
 
 	public AgentMovement AgentMovement { get { return agentMovement; } }
 	public int CurrentActionPoints { get { return currentActionPoints; } }
