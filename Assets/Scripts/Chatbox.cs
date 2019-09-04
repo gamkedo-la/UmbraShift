@@ -60,6 +60,8 @@ public class Chatbox : MonoBehaviour
 		rect = GetComponent<RectTransform>();
 		chatboxPos = new UIPos(rect.offsetMin, rect.offsetMax, Vector2.right * distOpenToClose);
 		SetChatBoxStatus(MoveStatus.Closed);
+
+        
 	}
 
 	public void SetChatBoxStatus(MoveStatus moveStatus)
@@ -166,6 +168,15 @@ public class Chatbox : MonoBehaviour
 			{
 				currentScreen = lastOptionChosen.optionLeadsTo;
 				UpdateScreen();
+
+                //Inventory test
+                currentScreen.inventory = FindObjectOfType<Inventory>(); //Inventory test
+                if (currentScreen.inventory != null)
+                {
+                    Debug.Log("Inventory called");
+                    currentScreen.inventory.Add(currentScreen.itemToReceive);                    
+                }
+                //end Inventory test
 			}
 		}
 	}

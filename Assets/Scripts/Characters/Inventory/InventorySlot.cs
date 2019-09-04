@@ -78,7 +78,7 @@ public class InventorySlot : MonoBehaviour
         icon.sprite = null;
         icon.enabled = false;
         removeButton.interactable = false;
-        itemName.text = "Empty";
+        //itemName.text = "Empty";
         numberOfItemsInStack = 0;
         numberofItemsInSlotDisplay.text = numberOfItemsInStack.ToString();
         numberofItemsInSlotDisplay.enabled = false;

@@ -33,4 +33,7 @@ public class InteractionScreen : ScriptableObject
 	public Color color;
 	[Space]	[Space]	[Space]
 	public UIoption[] options;
+
+    public Inventory inventory;
+    public Item itemToReceive;
 }
