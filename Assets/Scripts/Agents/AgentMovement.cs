@@ -26,7 +26,7 @@ public class AgentMovement : MonoBehaviour
 	private LineRenderer waypointLine;
 	private LineRenderer mouseLine;
 	private GridSelectionController selectionController;
-    public Material defaultMaterial;
+    public Animator animator;
 
     private void Start()
 	{
@@ -43,6 +43,8 @@ public class AgentMovement : MonoBehaviour
 		selectionController.selectedSquare += SquareSelected;
 		waypointsPlaced = new List<Transform>();
 		waypointCosts = new List<float>();
+
+        animator=GetComponentInChildren<Animator>();
 	}
 
 	private void Update()
@@ -174,7 +176,8 @@ public class AgentMovement : MonoBehaviour
 			waypointsPlaced.RemoveAt(0);
 			waypointCosts.RemoveAt(0);
 			Destroy(waypoint.gameObject);
-		}
+            animator.SetBool("isWalking", false);
+        }
 	}
 
 	private void RotateTowardNextWaypoint()
@@ -192,6 +195,10 @@ public class AgentMovement : MonoBehaviour
 			Vector3 moveVector = (waypointsPlaced[0].position - transform.position) * moveDist;
 			Vector3 pos = transform.position + moveVector;
 			transform.position = pos;
+            if (!animator.GetBool("isWalking"))
+            {
+                animator.SetBool("isWalking", true);
+            }
 		}
 	}
 

@@ -8,6 +8,8 @@ public class AgentShooting : MonoBehaviour
 	[SerializeField] Material lineMaterial;
 	private bool shootingSystemInUse = false;
 	public bool ShootingSystemInUse { get { return shootingSystemInUse; } }
+    public Animator animator;
+
 	private List<Targetable> targetList;
 	private WeaponDesign weapon;
 	private enum ShootingMode { Aiming, Firing, None}
@@ -27,6 +29,7 @@ public class AgentShooting : MonoBehaviour
 	private const float FIELD_OF_VIEW = 45f;
 	private bool rotatingNow = false;
 
+
 	private void Start()
     {
 		targetList = new List<Targetable>();
@@ -34,6 +37,7 @@ public class AgentShooting : MonoBehaviour
 		GameObject mouseLineGO = new GameObject();
 		mouseLine = mouseLineGO.AddComponent(typeof(LineRenderer)) as LineRenderer;
         mouseLine.GetComponent<LineRenderer>().enabled = false;
+        //animator = GetComponentInChildren<Animator>();
 
     }
 
@@ -57,6 +61,8 @@ public class AgentShooting : MonoBehaviour
 		shootingMode = ShootingMode.Aiming;
 		DetermineRange();
 		ActivateTargetingIndicators();
+        animator.SetBool("isPistolDrawn", true);
+       
 	}
 
 	private void AimingUpdate()
@@ -74,7 +80,10 @@ public class AgentShooting : MonoBehaviour
 
 	private void FiringUpdate()
 	{
-	
+
+
+
+        animator.SetBool("isPistolDrawn", false);
 	}
 
 	private void DetermineRange()

@@ -903,10 +903,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afee1fcd0909ad84689d06f6df7e4d29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 0}
+  targetImage: {fileID: 0}
   Shootable: 1
   Interactable: 0
   Hackable: 0
+  height: 0
+  rangeToTarget: 0
 --- !u!114 &1510621138018115810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -921,6 +923,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   portraitImage: {fileID: 0}
   characterName: DefaultName
+  equippedWeapon: {fileID: 0}
   actionManager: {fileID: 0}
 --- !u!114 &8763745042985732552
 MonoBehaviour:
@@ -952,6 +955,7 @@ MonoBehaviour:
   m_blockedPathMaterial: {fileID: 2100000, guid: 439f176c9ed823c468e6c1f872f48ba3,
     type: 2}
   m_farPathMaterial: {fileID: 2100000, guid: 9b5c823121652174786ab7a3b3684317, type: 2}
+  animator: {fileID: 1987118594753236608}
 --- !u!114 &7878929400474279258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -964,6 +968,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fcef62cce6366d49a99f8d3e3e161ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firePoint: {fileID: 0}
+  lineMaterial: {fileID: 0}
+  animator: {fileID: 1987118594753236608}
 --- !u!1 &7629084898631342145
 GameObject:
   m_ObjectHideFlags: 0
@@ -1570,6 +1577,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4e266dbaf577594eae2689f9dcda9dc, type: 3}
+--- !u!95 &1987118594753236608 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: -6057140222963153312, guid: e4e266dbaf577594eae2689f9dcda9dc,
+    type: 3}
+  m_PrefabInstance: {fileID: 3486664459263019232}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8437962382965449722 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: e4e266dbaf577594eae2689f9dcda9dc,
