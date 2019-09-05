@@ -9,7 +9,7 @@ public class EquipmentSlotDisplay : MonoBehaviour
     [SerializeField]
     public Image equipmentIcon;
 
-    [SerializeField]
-    public TextMeshProUGUI itemName;   
+   // [SerializeField]
+    //public TextMeshProUGUI itemName;   
 
 }
