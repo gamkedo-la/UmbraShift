@@ -58,7 +58,7 @@ public class EquipmentManager : MonoBehaviour
 
         equipmentUI.equipmentSlotDisplays[slotIndex].equipmentIcon.enabled = true;
         equipmentUI.equipmentSlotDisplays[slotIndex].equipmentIcon.sprite = currentEquipment[slotIndex].icon;
-        equipmentUI.equipmentSlotDisplays[slotIndex].itemName.text = currentEquipment[slotIndex].name;
+        //equipmentUI.equipmentSlotDisplays[slotIndex].itemName.text = currentEquipment[slotIndex].name;
 
     }
 
@@ -82,7 +82,7 @@ public class EquipmentManager : MonoBehaviour
 
             equipmentUI.equipmentSlotDisplays[slotIndex].equipmentIcon.enabled = false;
             equipmentUI.equipmentSlotDisplays[slotIndex].equipmentIcon.sprite = null;
-            equipmentUI.equipmentSlotDisplays[slotIndex].itemName.text = "Empty";
+            //equipmentUI.equipmentSlotDisplays[slotIndex].itemName.text = "Empty";
         }
     }
 
