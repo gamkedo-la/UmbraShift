@@ -12,17 +12,34 @@ public class Targetable : MonoBehaviour
 	[SerializeField] public float height;
 	private bool validTarget = true;
 	public bool ValidTarget { get { return validTarget; } }
-	
+	private Vector3 targetPos;
+	public Vector3 TargetPos { get { return targetPos; } }
+	private Color defaultColor;
+	public enum RangeCat { None, Optimum, Long, Exceeded }
+	public RangeCat rangeToTarget;
+
+	private void Start()
+	{
+		defaultColor = targetImage.color;
+		targetPos = UpdateTargetPos();
+	}
+
+	private Vector3 UpdateTargetPos()
+	{
+		Vector3 pos = transform.position;
+		pos.y = pos.y + height;
+		return pos;
+	}
+
 	private void Update()
 	{
+		targetPos = UpdateTargetPos();
 		if (validTarget && targetImage)
 		{
-			Vector3 pos = transform.position;
-			pos.y = pos.y + height;
-			Vector3 PositionOnScreen = Camera.main.WorldToScreenPoint(pos);
+			Vector3 PositionOnScreen = Camera.main.WorldToScreenPoint(targetPos);
 			targetImage.rectTransform.position = PositionOnScreen;
 		}
-		else { Debug.Log(gameObject.name + " Targetable script is missing information."); }
+		
 	}
 
 	public Vector3 ShowTarget()
@@ -34,10 +51,21 @@ public class Targetable : MonoBehaviour
 
 	public void HideTarget()
 	{
+		targetImage.color = defaultColor;
+		rangeToTarget = RangeCat.None;
 		targetImage.enabled = false;
 		validTarget = false;
 	}
 
+	public void SetColor()
+	{
+		targetImage.color = defaultColor;
+	}
+
+	public void SetColor(Color newColor)
+	{
+		targetImage.color = newColor;
+	}
 	
 
 }

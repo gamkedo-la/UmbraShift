@@ -5,7 +5,7 @@ using UnityEngine;
 
 public enum Quality { None, Terrible, Average, Effective, Superior }
 public enum Hinderance { None, Negligable, Average, Hindering, Severe}
-public enum MaxRange { Adjacent, Short, Medium, Long, Infinite}
+public enum MaxRange { Adjacent=2, Short=12, Medium=21, Long=30, Infinite=999}
 public enum ItemType { Pistol, Rifle}
 public enum AmmoType { Type_IV_Biogel_Rounds }
 public enum FiringMode { Single_Shot_Only, Burst_Fire}
