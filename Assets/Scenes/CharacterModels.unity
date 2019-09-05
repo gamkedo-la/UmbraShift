@@ -120,6 +120,75 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &972498833
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5537152186052798827, guid: 60978be4d4e2f9840bbf98a4ce67a0db,
+        type: 3}
+      propertyPath: m_Name
+      value: LowPolyCharacter-HanSolo (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8830630106543332216, guid: 60978be4d4e2f9840bbf98a4ce67a0db,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.589
+      objectReference: {fileID: 0}
+    - target: {fileID: 8830630106543332216, guid: 60978be4d4e2f9840bbf98a4ce67a0db,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8830630106543332216, guid: 60978be4d4e2f9840bbf98a4ce67a0db,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8830630106543332216, guid: 60978be4d4e2f9840bbf98a4ce67a0db,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8830630106543332216, guid: 60978be4d4e2f9840bbf98a4ce67a0db,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8830630106543332216, guid: 60978be4d4e2f9840bbf98a4ce67a0db,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8830630106543332216, guid: 60978be4d4e2f9840bbf98a4ce67a0db,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8830630106543332216, guid: 60978be4d4e2f9840bbf98a4ce67a0db,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8830630106543332216, guid: 60978be4d4e2f9840bbf98a4ce67a0db,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8830630106543332216, guid: 60978be4d4e2f9840bbf98a4ce67a0db,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8830630106543332216, guid: 60978be4d4e2f9840bbf98a4ce67a0db,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 60978be4d4e2f9840bbf98a4ce67a0db, type: 3}
 --- !u!1 &1276763826
 GameObject:
   m_ObjectHideFlags: 0
@@ -305,6 +374,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Heavy machine gun
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: bdc0e9299e559eb408c354fa5d3722db,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: bdc0e9299e559eb408c354fa5d3722db,
         type: 3}
