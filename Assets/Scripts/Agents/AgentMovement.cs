@@ -26,8 +26,9 @@ public class AgentMovement : MonoBehaviour
 	private LineRenderer waypointLine;
 	private LineRenderer mouseLine;
 	private GridSelectionController selectionController;
+    public Material defaultMaterial;
 
-	private void Start()
+    private void Start()
 	{
 		turnManager = FindObjectOfType<AgentTurnManager>();
 		colliders = GetComponentsInChildren<Collider>();
@@ -35,8 +36,10 @@ public class AgentMovement : MonoBehaviour
 		GameObject waypointLineGO = new GameObject();
 		GameObject mouseLineGO = new GameObject();
 		waypointLine = waypointLineGO.AddComponent(typeof(LineRenderer)) as LineRenderer;
+        waypointLine.GetComponent<LineRenderer>().enabled = false;
 		mouseLine = mouseLineGO.AddComponent(typeof(LineRenderer)) as LineRenderer;
-		selectionController = FindObjectOfType<GridSelectionController>();
+        mouseLine.GetComponent<LineRenderer>().enabled = false;
+        selectionController = FindObjectOfType<GridSelectionController>();
 		selectionController.selectedSquare += SquareSelected;
 		waypointsPlaced = new List<Transform>();
 		waypointCosts = new List<float>();

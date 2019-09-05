@@ -33,7 +33,9 @@ public class AgentShooting : MonoBehaviour
 		cameraForRaycastingToMouse = Camera.main;
 		GameObject mouseLineGO = new GameObject();
 		mouseLine = mouseLineGO.AddComponent(typeof(LineRenderer)) as LineRenderer;
-	}
+        mouseLine.GetComponent<LineRenderer>().enabled = false;
+
+    }
 
     private void Update()
     {
