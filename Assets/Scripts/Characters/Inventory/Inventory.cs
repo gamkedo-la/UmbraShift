@@ -13,6 +13,13 @@ public class Inventory : MonoBehaviour
     public List<Item> items = new List<Item>();
     public List<int> itemsInSlot = new List<int>();
 
+    private EquipmentManager equipmentManager;
+
+    private void Start()
+    {
+        equipmentManager = GetComponent<EquipmentManager>();
+    }
+
     public bool Add(Item item)
     {
         if(item != item.isDefaultItem)
@@ -33,6 +40,8 @@ public class Inventory : MonoBehaviour
                 items.Add(item);
                 itemsInSlot.Add(0);
             }
+
+            item.equipmentManager = this.equipmentManager;
 
             if (onItemChangedCallback != null)
             {

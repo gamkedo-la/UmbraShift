@@ -12,6 +12,8 @@ public class Item : ScriptableObject
 
     public string itemDescription = "Item description here.";
 
+    public EquipmentManager equipmentManager;
+
     public virtual void Use()
     {
         Debug.Log("Using" + name);
