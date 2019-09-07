@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum Quality { None, Terrible, Average, Effective, Superior }
+public enum Quality { None, Terrible=-20, Average=-10, Effective=10, Superior=20 }
 public enum Hinderance { None, Negligable, Average, Hindering, Severe}
 public enum MaxRange { Adjacent=2, Short=12, Medium=21, Long=30, Infinite=999}
 public enum ItemType { Pistol, Rifle}

@@ -37,10 +37,10 @@ public class AgentLocalUI : MonoBehaviour
 								}
 	}
 
-	public void ShowAccuracy()
+	public void ShowAccuracy(int accuracy)
 	{
 		showName = ShowText(true, nameText, Color.grey, 12, GetComponent<AgentStats>().CharacterName);
-		showInfo = ShowText(true, infoText, Color.white, 12, "70% to hit");
+		showInfo = ShowText(true, infoText, Color.white, 12, accuracy.ToString() + "% to hit");
 	}
 
 	public void Reset()

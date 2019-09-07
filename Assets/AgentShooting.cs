@@ -77,8 +77,10 @@ public class AgentShooting : MonoBehaviour
 		closestTargetNearMouse = DetermineClosestTargetNearMouse();
 		if (closestTargetNearMouse) { targetLocked = DetermineIfClosestTargetIsLocked(); }
 		else { targetLocked = null; }
+		int accuracy = 0;
+		if (targetLocked) { accuracy = Mathf.Clamp(DetermineAccuracy(), 0, 99); }
+		if (targetLocked) { ShowAccuracy(accuracy, targetLocked, true); }
 		SetTargetedPoint(prevClosestTargetNearMouse);
-		if (targetLocked) { ShowAccuracy(targetLocked, true); }
 		DrawLineToTargetedPoint();
 		if (!rotatingNow) { RotateTowardTargetedPoint(); }
 		//snap targetedpoint to target if mouse is close to target
@@ -111,11 +113,37 @@ public class AgentShooting : MonoBehaviour
 		}
 	}
 
-	private void ShowAccuracy(Targetable target, bool toShow)
+	private int DetermineAccuracy()
+	{
+		int shootSkill = Mathf.Clamp(GetComponent<AgentStats>().Shooting.GetValue(),0,12);
+		int baseAcc = 10;
+		if (targetLocked.rangeToTarget == Targetable.RangeCat.Optimum) { baseAcc += 10; }
+		int acc = baseAcc;
+		if (shootSkill > 0) { acc += Mathf.Clamp(shootSkill - 0, 0, 2) * 10; }
+		if (shootSkill > 2) { acc += Mathf.Clamp(shootSkill - 2, 0, 4) * 5; }
+		if (shootSkill > 6) { acc += Mathf.Clamp(shootSkill - 6, 0, 4) * 4; }
+		if (shootSkill > 10) { acc += Mathf.Clamp(shootSkill - 10, 0, 2) * 0; }
+		int accModifier = (int)weapon.Accuracy;
+		bool longRangePenalty = (weapon.Type == ItemType.Pistol
+								 && targetLocked.rangeToTarget == Targetable.RangeCat.Long
+								 && accModifier < 0);
+		bool shortRangeBonus = (weapon.Type == ItemType.Pistol
+								 && targetLocked.rangeToTarget == Targetable.RangeCat.Optimum
+								 && accModifier > 0);
+		bool longRangeBonus = (weapon.Type == ItemType.Rifle
+								 && targetLocked.rangeToTarget == Targetable.RangeCat.Long
+								 && accModifier > 0);
+		if (longRangePenalty) { acc -= accModifier; }
+		else if (shortRangeBonus) { acc += accModifier; }
+		else if (longRangeBonus) { acc += accModifier; }
+		return acc;
+	}
+
+	private void ShowAccuracy(int accuracy, Targetable target, bool toShow)
 	{
 		AgentLocalUI targetAgentUI = target.gameObject.GetComponent<AgentLocalUI>();
 		if (!targetAgentUI) { return; }
-		if (toShow) { targetAgentUI.ShowAccuracy(); } else { targetAgentUI.Reset(); }
+		if (toShow) { targetAgentUI.ShowAccuracy(accuracy); } else { targetAgentUI.Reset(); }
 	}
 
 	private void SetTargetedPoint(Targetable prevClosestTargetNearMouse)
@@ -127,7 +155,7 @@ public class AgentShooting : MonoBehaviour
 			if (prevClosestTargetNearMouse && targetLocked != prevClosestTargetNearMouse)
 			{
 				prevClosestTargetNearMouse.LockedOn = false;
-				ShowAccuracy(prevClosestTargetNearMouse, false);
+				ShowAccuracy(0, prevClosestTargetNearMouse, false);
 			}
 		}
 		else
