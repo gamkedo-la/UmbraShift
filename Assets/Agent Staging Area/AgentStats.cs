@@ -26,6 +26,18 @@ public class AgentStats : MonoBehaviour
 	public string CharacterName { get { return characterName; } }
 
 	public AgentActionManager actionManager;
+
+
+	public Stat Strength = new Stat();
+	public Stat Dexterity = new Stat();
+	public Stat Intellect = new Stat();
+	public Stat Hacking = new Stat();
+	public Stat Shooting = new Stat();
+	public Stat Investigation = new Stat();
+	public Stat Medicine = new Stat();
+	public Stat FastTalking = new Stat();
+
+
 	
 	
 	void Start()
@@ -34,6 +46,13 @@ public class AgentStats : MonoBehaviour
 		actionManager = GetComponent<AgentActionManager>();
 		currentActionPoints = maxActionPoints;
 		StartCoroutine("DelayedUpdate");
+		DetermineInitialStats();
+	}
+
+	private void DetermineInitialStats()
+	{
+		// fill stats from character generation, if applicable
+		
 	}
 
 	private IEnumerator DelayedUpdate()
