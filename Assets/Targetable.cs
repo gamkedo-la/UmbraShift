@@ -10,18 +10,28 @@ public class Targetable : MonoBehaviour
 	[SerializeField] public bool Interactable;
 	[SerializeField] public bool Hackable;
 	[SerializeField] public float height;
+	[SerializeField] public Image lockOnIndicator;
+	[SerializeField] public Text info;
+
+	private bool lockedOn = false;
+	public bool LockedOn { get { return lockedOn; } set { lockedOn = value; } }
 	private bool validTarget = true;
 	public bool ValidTarget { get { return validTarget; } }
 	private Vector3 targetPos;
 	public Vector3 TargetPos { get { return targetPos; } }
-	private Color defaultColor;
+	private Vector2 targetPositionInScreenCoord;
+	private Vector3 infoPos;
+	public Vector3 InfoPos { get { return infoPos; } }
 	public enum RangeCat { None, Optimum, Long, Exceeded }
 	public RangeCat rangeToTarget;
+	private Camera cam;
+	private Color defaultColor;
 
 	private void Start()
 	{
-		defaultColor = targetImage.color;
 		targetPos = UpdateTargetPos();
+		cam = Camera.main;
+		defaultColor = targetImage.color;
 	}
 
 	private Vector3 UpdateTargetPos()
@@ -33,24 +43,43 @@ public class Targetable : MonoBehaviour
 
 	private void Update()
 	{
-		targetPos = UpdateTargetPos();
+		bool posInfoUpdated = false;		
+		if (lockedOn && lockOnIndicator != null)
+		{
+			if (!posInfoUpdated) { UpdatePositionInfo(); posInfoUpdated = true; }
+			lockOnIndicator.enabled = true;
+			lockOnIndicator.rectTransform.position = targetPositionInScreenCoord;
+		}
+		else if (lockOnIndicator && lockOnIndicator.enabled) { lockOnIndicator.enabled = false; }
 		if (validTarget && targetImage)
 		{
-			Vector3 PositionOnScreen = Camera.main.WorldToScreenPoint(targetPos);
-			targetImage.rectTransform.position = PositionOnScreen;
+			if (!posInfoUpdated) { UpdatePositionInfo(); posInfoUpdated = true; }
+			targetImage.rectTransform.position = targetPositionInScreenCoord;
 		}
-		
+	}
+
+	private void UpdatePositionInfo()
+	{
+		targetPositionInScreenCoord = cam.WorldToScreenPoint(targetPos);
 	}
 
 	public Vector3 ShowTarget()
 	{
+			lockOnIndicator.enabled = false;
 			targetImage.enabled = true;
 			validTarget = true;
 			return transform.position;
 	}
 
+	public void LockOn()
+	{
+		lockedOn = true;
+	}
+
 	public void HideTarget()
 	{
+		lockedOn = false;
+		lockOnIndicator.enabled = false;
 		targetImage.color = defaultColor;
 		rangeToTarget = RangeCat.None;
 		targetImage.enabled = false;
