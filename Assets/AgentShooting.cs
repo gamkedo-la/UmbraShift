@@ -11,6 +11,8 @@ public class AgentShooting : MonoBehaviour
     public Animator animator;
 
 	private List<Targetable> targetList;
+	private Targetable closestTargetNearMouse;
+	private Targetable targetLocked;
 	private WeaponDesign weapon;
 	private enum ShootingMode { Aiming, Firing, None}
 	private ShootingMode shootingMode = ShootingMode.None;
@@ -22,11 +24,12 @@ public class AgentShooting : MonoBehaviour
 	private float longRange = 0;
 	private float maxRange = 0;
 	private Vector3 targetedPoint;
+	private Vector3 mousePoint;
 	private Camera cameraForRaycastingToMouse;
 	private LineRenderer mouseLine;
 	private enum EffectiveRange { Optimum, Long, Exceeded}
 	private EffectiveRange rangeCat;
-	private const float FIELD_OF_VIEW = 45f;
+	private const float FIELD_OF_VIEW = 5f;
 	private bool rotatingNow = false;
 
 
@@ -70,6 +73,12 @@ public class AgentShooting : MonoBehaviour
 		PopulateListOfPotentialTargets();
 		TargetedPointFollowsMouse();
 		DetermineRange();
+		Targetable prevClosestTargetNearMouse = closestTargetNearMouse;
+		closestTargetNearMouse = DetermineClosestTargetNearMouse();
+		if (closestTargetNearMouse) { targetLocked = DetermineIfClosestTargetIsLocked(); }
+		else { targetLocked = null; }
+		SetTargetedPoint(prevClosestTargetNearMouse);
+		if (targetLocked) { ShowAccuracy(targetLocked, true); }
 		DrawLineToTargetedPoint();
 		if (!rotatingNow) { RotateTowardTargetedPoint(); }
 		//snap targetedpoint to target if mouse is close to target
@@ -102,17 +111,89 @@ public class AgentShooting : MonoBehaviour
 		}
 	}
 
+	private void ShowAccuracy(Targetable target, bool toShow)
+	{
+		AgentLocalUI targetAgentUI = target.gameObject.GetComponent<AgentLocalUI>();
+		if (!targetAgentUI) { return; }
+		if (toShow) { targetAgentUI.ShowAccuracy(); } else { targetAgentUI.Reset(); }
+	}
+
+	private void SetTargetedPoint(Targetable prevClosestTargetNearMouse)
+	{
+		if (targetLocked)
+		{
+			targetedPoint = closestTargetNearMouse.TargetPos;
+			targetLocked.LockedOn = true;
+			if (prevClosestTargetNearMouse && targetLocked != prevClosestTargetNearMouse)
+			{
+				prevClosestTargetNearMouse.LockedOn = false;
+				ShowAccuracy(prevClosestTargetNearMouse, false);
+			}
+		}
+		else
+		{
+			targetedPoint = mousePoint;
+			if (prevClosestTargetNearMouse) 
+			{ 
+				prevClosestTargetNearMouse.LockedOn = false;
+				AgentLocalUI localUI = prevClosestTargetNearMouse.gameObject.GetComponent<AgentLocalUI>();
+				if (localUI) { localUI.Reset(); }
+			}
+			if (closestTargetNearMouse) 
+			{ 
+				closestTargetNearMouse.LockedOn = false;
+				AgentLocalUI localUI = closestTargetNearMouse.gameObject.GetComponent<AgentLocalUI>();
+				if (localUI) { localUI.Reset(); }
+			}
+		}
+	}
+
+	private Targetable DetermineClosestTargetNearMouse()
+	{
+		closestTargetNearMouse = null;
+		float closestDistanceFromMouse = Mathf.Infinity;
+		foreach (Targetable target in targetList)
+		{
+			float distFromMouse = Vector3.Distance(mousePoint, target.TargetPos);
+			if (distFromMouse < closestDistanceFromMouse) 
+			{ 
+				closestDistanceFromMouse = distFromMouse; 
+				closestTargetNearMouse = target; 
+			}
+		}
+		return closestTargetNearMouse;
+	}
+
+	private Targetable DetermineIfClosestTargetIsLocked()
+	{
+		//float DistTargetToPlayer = Vector3.Distance(closestTargetNearMouse.TargetPos, firePoint.position);
+		//float DistMouseToPlayer = Vector3.Distance(mousePoint, firePoint.position);
+		float distMouseToClosestTarget = Vector3.Distance(closestTargetNearMouse.TargetPos, mousePoint);
+		float stickiness = 1f;
+		if (targetLocked) { stickiness = stickiness * 1; }
+		bool notTooFar = distMouseToClosestTarget < (1f+stickiness);
+		bool farEnough = distMouseToClosestTarget > (1f-stickiness);
+		if (farEnough && notTooFar) 
+		{ 
+			//TODO: and play sound effect?
+			return closestTargetNearMouse; 
+		}	
+		else return null;
+	}
+
 	private void TargetedPointFollowsMouse()
 	{
 		Ray ray = cameraForRaycastingToMouse.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hitInfo;
 		Physics.Raycast(ray, out hitInfo, 1000f);
-		targetedPoint = hitInfo.point;
-		targetedPoint.y = firePoint.position.y;
+		mousePoint = hitInfo.point;
+		//mousePoint.y = firePoint.position.y;
+		if (!targetLocked) { targetedPoint = mousePoint; }
 	}
 
 	private void DrawLineToTargetedPoint()
 	{
+		mouseLine.enabled = true;
 		mouseLine.material = lineMaterial;
 		lineMaterial.color = Color.white;
 		Vector2 point = cameraForRaycastingToMouse.WorldToScreenPoint(targetedPoint);
@@ -179,6 +260,7 @@ public class AgentShooting : MonoBehaviour
 		longRange = 0f;
 		maxRange = 0f;
 		targetList.Clear();
+		ResetAllTargetsEverywhere();
 	}
 
 	private void PopulateListOfPotentialTargets()
@@ -192,6 +274,17 @@ public class AgentShooting : MonoBehaviour
 				targetList.Add(target);
 			}
 			else { target.HideTarget(); }
+		}
+	}
+
+	private void ResetAllTargetsEverywhere()
+	{
+		Targetable[] allTargets = FindObjectsOfType<Targetable>();
+		foreach (Targetable target in allTargets)
+		{
+			target.LockedOn = false;
+			target.SetColor();
+			target.HideTarget();
 		}
 	}
 
