@@ -6,6 +6,7 @@ public class AgentShooting : MonoBehaviour
 {
 	[SerializeField] Transform firePoint;
 	[SerializeField] Material lineMaterial;
+	[SerializeField] Material lineMaterialBlocked;
 	private bool shootingSystemInUse = false;
 	public bool ShootingSystemInUse { get { return shootingSystemInUse; } }
     public Animator animator;
@@ -26,23 +27,30 @@ public class AgentShooting : MonoBehaviour
 	private Vector3 targetedPoint;
 	private Vector3 mousePoint;
 	private Camera cameraForRaycastingToMouse;
-	private LineRenderer mouseLine;
+	private LineRenderer mouseLineFree;
+	private LineRenderer mouseLineBlocked;
 	private enum EffectiveRange { Optimum, Long, Exceeded}
 	private EffectiveRange rangeCat;
 	private const float FIELD_OF_VIEW = 5f;
 	private bool rotatingNow = false;
-
+	private Collider[] selfColliders;
 
 	private void Start()
     {
 		targetList = new List<Targetable>();
 		cameraForRaycastingToMouse = Camera.main;
+		selfColliders = this.gameObject.GetComponentsInChildren<Collider>();
 		GameObject mouseLineGO = new GameObject();
-		mouseLine = mouseLineGO.AddComponent(typeof(LineRenderer)) as LineRenderer;
-        mouseLine.GetComponent<LineRenderer>().enabled = false;
-        //animator = GetComponentInChildren<Animator>();
+		GameObject mouseLine2GO = new GameObject();
+		mouseLineFree = mouseLineGO.AddComponent(typeof(LineRenderer)) as LineRenderer;
+		mouseLineBlocked = mouseLine2GO.AddComponent(typeof(LineRenderer)) as LineRenderer;
+		mouseLineFree.material = lineMaterial;
+		mouseLineBlocked.material = lineMaterialBlocked;
+		mouseLineFree.enabled = false;
+		mouseLineBlocked.enabled = false;
+		//animator = GetComponentInChildren<Animator>();
 
-    }
+	}
 
     private void Update()
     {
@@ -70,6 +78,11 @@ public class AgentShooting : MonoBehaviour
 
 	private void AimingUpdate()
 	{
+		if (!targetLocked)
+		{
+			mouseLineFree.enabled = false;
+			mouseLineBlocked.enabled = false;
+		}
 		PopulateListOfPotentialTargets();
 		TargetedPointFollowsMouse();
 		DetermineRange();
@@ -78,10 +91,18 @@ public class AgentShooting : MonoBehaviour
 		if (closestTargetNearMouse) { targetLocked = DetermineIfClosestTargetIsLocked(); }
 		else { targetLocked = null; }
 		int accuracy = 0;
-		if (targetLocked) { accuracy = Mathf.Clamp(DetermineAccuracy(), 0, 99); }
-		if (targetLocked) { ShowAccuracy(accuracy, targetLocked, true); }
+		List<RaycastHit> colliderHitList = new List<RaycastHit>();
+		bool targetHasCover = false;
+		if (targetLocked)
+		{
+			//targetHasCover = DetermineIfTargetHasCover();
+			colliderHitList = DetermineIfTargetHasCover();
+			if (colliderHitList.Count > 0) { targetHasCover = true; }
+			accuracy = Mathf.Clamp(DetermineAccuracy(targetHasCover), 0, 98); 
+			ShowAccuracy(accuracy, targetLocked, true); 
+		}
 		SetTargetedPoint(prevClosestTargetNearMouse);
-		DrawLineToTargetedPoint();
+		DrawLineToTargetedPoint(colliderHitList);
 		if (!rotatingNow) { RotateTowardTargetedPoint(); }
 		//snap targetedpoint to target if mouse is close to target
 		//change color of mouse range based on range
@@ -113,29 +134,55 @@ public class AgentShooting : MonoBehaviour
 		}
 	}
 
-	private int DetermineAccuracy()
+	private List<RaycastHit> DetermineIfTargetHasCover()
 	{
-		int shootSkill = Mathf.Clamp(GetComponent<AgentStats>().Shooting.GetValue(),0,12);
-		int baseAcc = 10;
-		if (targetLocked.rangeToTarget == Targetable.RangeCat.Optimum) { baseAcc += 10; }
-		int acc = baseAcc;
-		if (shootSkill > 0) { acc += Mathf.Clamp(shootSkill - 0, 0, 2) * 10; }
-		if (shootSkill > 2) { acc += Mathf.Clamp(shootSkill - 2, 0, 4) * 5; }
-		if (shootSkill > 6) { acc += Mathf.Clamp(shootSkill - 6, 0, 4) * 4; }
-		if (shootSkill > 10) { acc += Mathf.Clamp(shootSkill - 10, 0, 2) * 0; }
-		int accModifier = (int)weapon.Accuracy;
-		bool longRangePenalty = (weapon.Type == ItemType.Pistol
-								 && targetLocked.rangeToTarget == Targetable.RangeCat.Long
-								 && accModifier < 0);
-		bool shortRangeBonus = (weapon.Type == ItemType.Pistol
-								 && targetLocked.rangeToTarget == Targetable.RangeCat.Optimum
-								 && accModifier > 0);
-		bool longRangeBonus = (weapon.Type == ItemType.Rifle
-								 && targetLocked.rangeToTarget == Targetable.RangeCat.Long
-								 && accModifier > 0);
-		if (longRangePenalty) { acc -= accModifier; }
-		else if (shortRangeBonus) { acc += accModifier; }
-		else if (longRangeBonus) { acc += accModifier; }
+		bool hasCover = false;
+		Vector3 origin = firePoint.position;
+		Vector3 direction = targetLocked.TargetPos - firePoint.position;
+		float maxDist = Vector3.Distance(firePoint.position, targetLocked.TargetPos);
+		float radius = 0.25f;
+		RaycastHit[] hitsArray;
+		hitsArray = Physics.SphereCastAll(origin, radius, direction, maxDist);
+		List<RaycastHit> hitList = new List<RaycastHit>();
+		List<Collider> collidersToIgnore = new List<Collider>();
+		Collider[] targetColliders = targetLocked.gameObject.GetComponentsInChildren<Collider>();
+		foreach (Collider collider in selfColliders) { collidersToIgnore.Add(collider); }
+		foreach (Collider collider in targetColliders) { collidersToIgnore.Add(collider); }
+		foreach (RaycastHit hit in hitsArray)
+		{
+			bool valid = true;
+			foreach (Collider collider in collidersToIgnore) 
+			{
+				if (hit.collider==collider) { valid = false; }
+			}
+			if (valid) { hitList.Add(hit); }
+		}
+		if (hitList.Count > 0) { hasCover = true; }
+		return hitList;
+	}
+
+	private int DetermineAccuracy(bool hasCover)
+	{
+		AgentStats stats = GetComponent<AgentStats>();
+		int accBonusPerSkillPoint = 10;
+		int coverBypassPerSkillPoint = 5;
+		int shootSkill = Mathf.Clamp(stats.Shooting.GetValue(),0,6);
+		int baseAcc = 40;
+		int rangeBonus = 0;
+		if (weapon.Type == ItemType.Rifle) { rangeBonus += 5; }
+		else if (weapon.Type == ItemType.Pistol
+				&& targetLocked.rangeToTarget == Targetable.RangeCat.Optimum) { rangeBonus += 10; }
+		int weaponAcc = (int)weapon.Accuracy;
+		int acc = baseAcc + rangeBonus + (shootSkill * accBonusPerSkillPoint);
+		if (hasCover) 
+		{
+			int maxCover = 40;
+			int coverPenalty = maxCover - (shootSkill * coverBypassPerSkillPoint) - weaponAcc;
+			coverPenalty = Mathf.Clamp(coverPenalty, 0, maxCover);
+			acc = acc - coverPenalty;
+			AgentLocalUI targetUI = targetLocked.gameObject.GetComponent<AgentLocalUI>();
+			if (targetUI) { targetUI.ShowCoverNotice(coverPenalty); }
+		}
 		return acc;
 	}
 
@@ -215,28 +262,47 @@ public class AgentShooting : MonoBehaviour
 		RaycastHit hitInfo;
 		Physics.Raycast(ray, out hitInfo, 1000f);
 		mousePoint = hitInfo.point;
-		//mousePoint.y = firePoint.position.y;
 		if (!targetLocked) { targetedPoint = mousePoint; }
 	}
 
-	private void DrawLineToTargetedPoint()
+	private void DrawLineToTargetedPoint(List<RaycastHit> hitList)
 	{
-		mouseLine.enabled = true;
-		mouseLine.material = lineMaterial;
-		lineMaterial.color = Color.white;
-		Vector2 point = cameraForRaycastingToMouse.WorldToScreenPoint(targetedPoint);
-		Ray ray = cameraForRaycastingToMouse.ScreenPointToRay(point);
-		RaycastHit hitInfo;
-		Physics.Raycast(ray, out hitInfo, 1000f);
-		mouseLine.startWidth = 0.05f;
-		mouseLine.endWidth = 0.05f;
-		mouseLine.positionCount = 2;
+		Vector3 shortestDistHit = targetedPoint;
+		float shortestDist = Vector3.Distance(firePoint.position, shortestDistHit);
+		foreach (RaycastHit hit in hitList)
+		{
+			float distToHit = Vector3.Distance(firePoint.position, hit.point);
+			if (distToHit < shortestDist)
+			{
+				shortestDistHit = hit.point;
+			}
+		}
+		Vector3 impactPoint = shortestDistHit;
+		DrawLine(mouseLineFree, firePoint.position, impactPoint);
+		if (Vector3.Distance(impactPoint, targetedPoint) > 0.1f)
+		{
+			DrawLine(mouseLineBlocked, impactPoint, targetedPoint);
+		}
+		else { mouseLineBlocked.enabled = false; }
+
+	}
+
+	private void DrawLine(LineRenderer rend, Vector3 start, Vector3 end)
+	{
+		rend.enabled = true;
+		Vector2 lineEndpointOnScreen = cameraForRaycastingToMouse.WorldToScreenPoint(end);
+		Ray ray = cameraForRaycastingToMouse.ScreenPointToRay(lineEndpointOnScreen);
+		RaycastHit lineHitInfo;
+		Physics.Raycast(ray, out lineHitInfo, 1000f);
+		rend.startWidth = 0.05f;
+		rend.endWidth = 0.05f;
+		rend.positionCount = 2;
 		Vector3[] positions = new Vector3[2];
-		positions[0] = firePoint.position;
-		positions[1] = targetedPoint;
-		mouseLine.SetPositions(positions);
-		mouseLine.useWorldSpace = true;
-		mouseLine.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+		positions[0] = start;
+		positions[1] = end;
+		rend.SetPositions(positions);
+		rend.useWorldSpace = true;
+		rend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
 	}
 
 	private void RotateTowardTargetedPoint()
