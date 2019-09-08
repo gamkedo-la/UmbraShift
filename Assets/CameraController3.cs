@@ -27,7 +27,7 @@ public class CameraController3 : MonoBehaviour
 		{
 			Vector3 pos = cam.ScreenToViewportPoint(Input.mousePosition);
 			Vector3 vec = Vector3.zero;
-			float speed = camSpeed;
+			/*float speed = camSpeed;
 			if (ScreenEdge(pos, Axis.x, 0.85f, 0.9f)) { vec = vec - Vector3.right; speed = camSpeed * 0.5f; }
 			if (ScreenEdge(pos, Axis.x, 0.9f, 0.95f)) { vec = vec - Vector3.right; speed = camSpeed * 1; }
 			if (ScreenEdge(pos, Axis.x, 0.95f, 1f)) { vec = vec - Vector3.right; speed = camSpeed * 2; }
@@ -42,6 +42,57 @@ public class CameraController3 : MonoBehaviour
 			if (ScreenEdge(pos, Axis.y, 0f, 0.05f)) { vec = vec + Vector3.forward; speed = camSpeed * 2; }
 			vec = vec.normalized * speed * Time.deltaTime;
 			cam.transform.localPosition = cam.transform.localPosition + vec;
+			*/
+			float percent = 0f;
+			Vector3 dir = Vector3.zero;
+			if (pos.x > 0.85f) 
+			{
+				float minToBreach = 0.85f;
+				float breach = pos.x - minToBreach;
+				float maxBreach = 0.15f;
+				float breachPercent = breach / maxBreach;
+				percent = breachPercent;
+				dir = Vector3.right; 
+			}
+			if (pos.x < 0.15f)
+			{
+				float maxToBreach = 0.15f;
+				float breach = maxToBreach - pos.x;
+				float maxBreach = 0.15f;
+				float breachPercent = breach / maxBreach;
+				percent = breachPercent;
+				dir = Vector3.left;
+			}
+			if (pos.y > 0.85f)
+			{
+				float minToBreach = 0.85f;
+				float breach = pos.y - minToBreach;
+				float maxBreach = 0.15f;
+				float breachPercent = breach / maxBreach;
+				percent = breachPercent;
+				dir = Vector3.forward;
+			}
+			if (pos.y < 0.15f)
+			{
+				float maxToBreach = 0.15f;
+				float breach = maxToBreach - pos.y;
+				float maxBreach = 0.15f;
+				float breachPercent = breach / maxBreach;
+				percent = breachPercent;
+				dir = Vector3.back;
+			}
+			float speed = (camSpeed * 2) * percent;
+			
+			/*
+			Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+			int layerMask = LayerMask.GetMask("UI");
+			bool hitUI = Physics.Raycast(ray, 100f, layerMask);
+			if (hitUI) { dir = Vector3.zero; speed = 0f; }
+			*/
+
+			vec = dir.normalized * speed * Time.deltaTime;
+			cam.transform.localPosition = cam.transform.localPosition - vec;
+			
 		}
 	}
 
