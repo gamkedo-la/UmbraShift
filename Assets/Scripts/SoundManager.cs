@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-	public static SoundManager instance;
+    [ObsoleteAttribute("Deprecated Use SoundConfiguration.instance instead.")]
+    public static SoundManager instance;
 
+
+   
     public string maleGrunt1 = "event:/Male_Grunt_1";
     public string maleGrunt2 = "event:/Male_Grunt_2";
     public string maleGrunt3 = "event:/Male_Grunt_3";

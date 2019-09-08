@@ -127,7 +127,7 @@ public class BaseCharacterClass : MonoBehaviour
     public void BeenShot(BaseCharacterClass target)
     {
         currentHealth -= 2;
-        FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.maleGruntMI, target.transform.position);
+        FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.maleGruntMI, target.transform.position);
         Debug.Log($"I was shot: {target.name} and now have {currentHealth}/{maxHealth}");
         if (currentHealth <= 0)
         {
@@ -147,11 +147,11 @@ public class BaseCharacterClass : MonoBehaviour
     {
       // if (playerCharacter)
         //{
-            FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.maleDeathMI);
+            FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.maleDeathMI);
         //}
         //else
        // {
-       //     FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.maleDeathMI);
+       //     FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.maleDeathMI);
         //}
     }
 

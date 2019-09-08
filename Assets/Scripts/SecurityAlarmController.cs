@@ -33,7 +33,7 @@ public class SecurityAlarmController : MonoBehaviour
 
         if (!securityAlarmEvent.IsPlaying())
         {
-            securityAlarmEvent = FMODUnity.RuntimeManager.CreateInstance(SoundManager.instance.securityAlarm);
+            securityAlarmEvent = FMODUnity.RuntimeManager.CreateInstance(SoundConfiguration.instance.securityAlarm);
             securityAlarmEvent.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(gameObject));
             securityAlarmEvent.start();
         }

@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 6554712227157904566}
   - component: {fileID: 3121602424654188166}
   - component: {fileID: 2393475907842617476}
-  - component: {fileID: 848051894166748084}
-  m_Layer: 0
+  - component: {fileID: 9105277680933687047}
+  m_Layer: 20
   m_Name: Hole
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -78,8 +78,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &848051894166748084
-MeshCollider:
+--- !u!65 &9105277680933687047
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -88,10 +88,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+  serializedVersion: 2
+  m_Size: {x: 10.000002, y: 6.2394534e-14, z: 10.000002}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3688519101033080618
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,7 +257,8 @@ GameObject:
   - component: {fileID: 6174767699033432330}
   - component: {fileID: 1210230589486130136}
   - component: {fileID: 1210230589486130137}
-  m_Layer: 0
+  - component: {fileID: 1169225611}
+  m_Layer: 20
   m_Name: Door simple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -313,3 +313,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd55b604c2387b943aa1a2dbfa46ad82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  exitToLevel: 5
+  doorOpen: 0
+--- !u!65 &1169225611
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7199698179127202585}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.94, z: 1}
+  m_Center: {x: 0.47, y: 0.99, z: -0.06}

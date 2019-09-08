@@ -117,7 +117,7 @@ public class PlayerController : MonoBehaviour
 
     public void FireWeapon()
     {
-        FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.gunshotPistol1);
+        FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.gunshotPistol1);
     } 
 
     public void MultiShot(int numberOfShots)
@@ -160,7 +160,7 @@ public class PlayerController : MonoBehaviour
     public void Hack()
     {
 
-        FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.playerObjectInteraction1);
+        FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.playerObjectInteraction1);
         if (hackableObject == null)
         {
             Debug.Log("Can't be hacked");
@@ -186,7 +186,7 @@ public class PlayerController : MonoBehaviour
 
     public void Investigate()
     {
-        FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.playerObjectInteraction1);
+        FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.playerObjectInteraction1);
         if (objectBeingInvestigated == null)
         {
             Debug.Log("Can't be investigated");
@@ -222,20 +222,20 @@ public class PlayerController : MonoBehaviour
         {
             case 2:
 
-                FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.gunshotPistol1_2shots);
+                FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.gunshotPistol1_2shots);
                 break;
             case 3:
 
-                FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.gunshotPistol1_3shots);
+                FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.gunshotPistol1_3shots);
                 break;
             case 4:
 
-                FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.gunshotPistol1_4shots);
+                FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.gunshotPistol1_4shots);
                 break;
 
             default:
            
-                FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.gunshotPistol1);
+                FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.gunshotPistol1);
                 break;
         }
 

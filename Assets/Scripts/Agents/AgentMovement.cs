@@ -26,7 +26,9 @@ public class AgentMovement : MonoBehaviour
 	private LineRenderer waypointLine;
 	private LineRenderer mouseLine;
 	private GridSelectionController selectionController;
+    private LayerMask movementLayerMask;
     public Animator animator;
+    
 
     private void Start()
 	{
@@ -45,7 +47,10 @@ public class AgentMovement : MonoBehaviour
 		waypointCosts = new List<float>();
 
         animator=GetComponentInChildren<Animator>();
-	}
+
+        movementLayerMask = LayerMask.GetMask("WalkableArea", "Floor", "Default");
+
+    }
 
 	private void Update()
 	{
@@ -244,7 +249,8 @@ public class AgentMovement : MonoBehaviour
 	{
 		Ray ray = cameraForRaycastingToMouse.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hitInfo;
-		Physics.Raycast(ray, out hitInfo, 1000f);
+        
+		Physics.Raycast(ray, out hitInfo, 1000f,movementLayerMask);
 		Vector3 mousePos = GridSpace.GetGridCoord(hitInfo.point);
 		Vector3 origin;
 		if (waypointsPlaced.Count > 0) { origin = waypointsPlaced[waypointsPlaced.Count - 1].position; }
@@ -291,7 +297,7 @@ public class AgentMovement : MonoBehaviour
 		startPosition.y = testPosition.y + 1;
 		testPosition.y = testPosition.y + 1;
 		Vector3 ray = testPosition - startPosition;
-		RaycastHit[] hitArray = Physics.SphereCastAll(startPosition, TESTING_WIDTH, ray, ray.magnitude);
+		RaycastHit[] hitArray = Physics.SphereCastAll(startPosition, TESTING_WIDTH, ray, ray.magnitude,movementLayerMask);
 		List<RaycastHit> hitList = new List<RaycastHit>();
 
 		foreach (RaycastHit hit in hitArray)

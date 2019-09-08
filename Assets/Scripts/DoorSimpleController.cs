@@ -14,17 +14,17 @@ public class DoorSimpleController : MonoBehaviour
 
    public void PlayOpeningSound()
     {
-        FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.doorSimpleOpening);
+        FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.doorSimpleOpening);
     }
 
     public void PlayClosingSound()
     {
-        FMODUnity.RuntimeManager.PlayOneShot(SoundManager.instance.doorSimpleClosing);
+        FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.doorSimpleClosing);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        PlayerController player = other.GetComponent<PlayerController>();
+        AgentMovement player = other.GetComponent<AgentMovement>();
 
 
         if (player != null)
@@ -37,7 +37,7 @@ public class DoorSimpleController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        PlayerController player = other.GetComponent<PlayerController>();
+        AgentMovement player = other.GetComponent<AgentMovement>();
 
 
         if (player != null)
