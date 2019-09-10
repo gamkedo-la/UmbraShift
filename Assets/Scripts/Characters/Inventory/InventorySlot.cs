@@ -22,18 +22,17 @@ public class InventorySlot : MonoBehaviour
 
     Item item;
 
-    [SerializeField]
-    private InventoryControlPanel inventoryControlPanel;
+    
 
-    private BaseCharacterClass baseCharacter;
+    [SerializeField]
+    private GameObject player;
 
     private void Awake()
     {
         //itemName.text = "Empty";
         //numberofItemsInSlotDisplay.text = numberOfItemsInStack.ToString();
-        inventory = baseCharacter.gameObject.GetComponent<Inventory>();
+        inventory = player.GetComponent<Inventory>();
 
-        inventoryControlPanel = GetComponentInParent<InventoryControlPanel>();
 
         int index = inventory.items.IndexOf(item);
     }
