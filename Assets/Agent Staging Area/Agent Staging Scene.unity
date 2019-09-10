@@ -4274,6 +4274,19 @@ MonoBehaviour:
   feedback: {fileID: 0}
   feedbackText: {fileID: 0}
   coverText: {fileID: 49415592}
+--- !u!65 &960096261
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 960096253}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.7, y: 1.57, z: 0.42}
+  m_Center: {x: 0.03, y: 0.95, z: 0.18}
 --- !u!1 &966278269
 GameObject:
   m_ObjectHideFlags: 0
@@ -4390,6 +4403,19 @@ MonoBehaviour:
   feedback: {fileID: 0}
   feedbackText: {fileID: 0}
   coverText: {fileID: 1415576174}
+--- !u!65 &977332564
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 977332556}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.7, y: 1.57, z: 0.42}
+  m_Center: {x: 0.03, y: 0.95, z: 0.18}
 --- !u!1 &997807547
 GameObject:
   m_ObjectHideFlags: 0
@@ -6029,6 +6055,19 @@ MonoBehaviour:
   feedback: {fileID: 0}
   feedbackText: {fileID: 1631285585}
   coverText: {fileID: 1116396255}
+--- !u!65 &1574442075
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1574442067}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.7, y: 1.57, z: 0.42}
+  m_Center: {x: 0.03, y: 0.95, z: 0.18}
 --- !u!1 &1591295775
 GameObject:
   m_ObjectHideFlags: 0
@@ -6056,8 +6095,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1591295775}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.14, y: 0, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 4}
+  m_LocalPosition: {x: 1.14, y: 0, z: -0.714}
+  m_LocalScale: {x: 0.8, y: 4, z: 4}
   m_Children: []
   m_Father: {fileID: 1751136499}
   m_RootOrder: 0
@@ -8105,3 +8144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5719e57994602ea4ab1583ad7b2a5f3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MinXConstraint: Infinity
+  MaxXConstraint: Infinity
+  MinZConstraint: Infinity
+  MaxZConstraint: Infinity

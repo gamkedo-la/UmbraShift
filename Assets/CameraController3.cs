@@ -8,11 +8,15 @@ public class CameraController3 : MonoBehaviour
 	private float camSpeed = 10f;
 	private float borderSizePercent = 10f;
 	private Camera cam;
-
+	public float MinXConstraint = Mathf.Infinity;
+	public float MaxXConstraint = Mathf.Infinity;
+	public float MinZConstraint = Mathf.Infinity;
+	public float MaxZConstraint = Mathf.Infinity;
 	private bool returning = false;
 	private float counter;
 	private Vector3 offset;
 	private enum Axis { x,y,z}
+	
 
 	private void Start()
 	{
@@ -91,8 +95,14 @@ public class CameraController3 : MonoBehaviour
 			*/
 
 			vec = dir.normalized * speed * Time.deltaTime;
+			Vector3 newPos = cam.transform.localPosition - vec;
+
+			if (newPos.x < MinXConstraint) { newPos.x = MinXConstraint; }
+			if (newPos.x > MaxXConstraint) { newPos.x = MaxXConstraint; }
+			if (newPos.z < MinZConstraint) { newPos.x = MinZConstraint; }
+			if (newPos.z > MaxZConstraint) { newPos.x = MaxZConstraint; }
 			cam.transform.localPosition = cam.transform.localPosition - vec;
-			
+		
 		}
 	}
 

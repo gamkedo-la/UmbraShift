@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
+
+public enum ItemType { General, Consumable, Pistol, Rifle }
+
 [CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item")]
 public class Item : ScriptableObject
 {
     new public string name = "New Item";
     public Sprite icon = null;
-    public bool isDefaultItem = false;
+	public ItemType itemType = ItemType.General;
+	public bool isDefaultItem = false;
 
     public bool stackable = false;
 

@@ -17,10 +17,10 @@ public class AgentShooting : MonoBehaviour
 	private WeaponDesign weapon;
 	private enum ShootingMode { Aiming, Firing, None}
 	private ShootingMode shootingMode = ShootingMode.None;
-	private Color outOfRangeColor = Color.yellow;
+	private Color partialLOSColor = Color.yellow;
 	private Color defaultColor = Color.white;
-	private Color validColor = Color.green;
-	private Color invalidColor = Color.red;
+	private Color clearLOSColor = Color.green;
+	private Color noLOSColor = Color.red;
 	private float optimumRange = 0;
 	private float longRange = 0;
 	private float maxRange = 0;
@@ -32,11 +32,16 @@ public class AgentShooting : MonoBehaviour
 	private enum EffectiveRange { Optimum, Long, Exceeded}
 	private EffectiveRange rangeCat;
 	private const float FIELD_OF_VIEW = 5f;
+	private const float MAX_ENCOUNTER_RANGE = 50f;
+	private const float MAX_AIMING_RADIUS = 0.25f;
 	private bool rotatingNow = false;
 	private Collider[] selfColliders;
+	Targetable selfTarget;
+
 
 	private void Start()
     {
+		selfTarget = gameObject.GetComponent<Targetable>();
 		targetList = new List<Targetable>();
 		cameraForRaycastingToMouse = Camera.main;
 		selfColliders = this.gameObject.GetComponentsInChildren<Collider>();
@@ -70,8 +75,8 @@ public class AgentShooting : MonoBehaviour
 	private void BeginAiming()
 	{
 		shootingMode = ShootingMode.Aiming;
-		DetermineRange();
-		ActivateTargetingIndicators();
+		UpdateTargetsWithWeaponRangeCategoryInfo();
+		UpdateColorOfTargetingIndicatorsBasedOnRangeAndLOS();
         animator.SetBool("isPistolDrawn", true);
        
 	}
@@ -84,8 +89,12 @@ public class AgentShooting : MonoBehaviour
 			mouseLineBlocked.enabled = false;
 		}
 		PopulateListOfPotentialTargets();
+		RestrictListOfTargetsToEncounterRange();
+		UpdateTargetsWithDistanceInfo();
+		RestrictListOfTargetsToLOS();
+		UpdateTargetsWithCoverStatus();
+		UpdateColorOfTargetingIndicatorsBasedOnRangeAndLOS();
 		TargetedPointFollowsMouse();
-		DetermineRange();
 		Targetable prevClosestTargetNearMouse = closestTargetNearMouse;
 		closestTargetNearMouse = DetermineClosestTargetNearMouse();
 		if (closestTargetNearMouse) { targetLocked = DetermineIfClosestTargetIsLocked(); }
@@ -104,9 +113,8 @@ public class AgentShooting : MonoBehaviour
 		SetTargetedPoint(prevClosestTargetNearMouse);
 		DrawLineToTargetedPoint(colliderHitList);
 		if (!rotatingNow) { RotateTowardTargetedPoint(); }
-		//snap targetedpoint to target if mouse is close to target
-		//change color of mouse range based on range
-		//snap mouse to target position if close enough
+		//prevent mouseLine from extending beyond the impact against an obstacle if its high enough to block LOS
+		//change the color of mouseLine after impact against an obstacle if it counts as cover but doesn't block LOS
 		//prevent mouse from flying off screen
 	}
 
@@ -118,7 +126,7 @@ public class AgentShooting : MonoBehaviour
         animator.SetBool("isPistolDrawn", false);
 	}
 
-	private void DetermineRange()
+	private void UpdateTargetsWithWeaponRangeCategoryInfo()
 	{
 		int shootingRange = (int)weapon.Range;
 		maxRange = (float)shootingRange;
@@ -169,8 +177,8 @@ public class AgentShooting : MonoBehaviour
 		int shootSkill = Mathf.Clamp(stats.Shooting.GetValue(),0,6);
 		int baseAcc = 40;
 		int rangeBonus = 0;
-		if (weapon.Type == ItemType.Rifle) { rangeBonus += 5; }
-		else if (weapon.Type == ItemType.Pistol
+		if (weapon.weaponType == ItemType.Rifle) { rangeBonus += 5; }
+		else if (weapon.weaponType == ItemType.Pistol
 				&& targetLocked.rangeToTarget == Targetable.RangeCat.Optimum) { rangeBonus += 10; }
 		int weaponAcc = (int)weapon.Accuracy;
 		int acc = baseAcc + rangeBonus + (shootSkill * accBonusPerSkillPoint);
@@ -262,7 +270,7 @@ public class AgentShooting : MonoBehaviour
 		RaycastHit hitInfo;
 		Physics.Raycast(ray, out hitInfo, 1000f);
 		mousePoint = hitInfo.point;
-		if (!targetLocked) { targetedPoint = mousePoint; }
+		if (!targetLocked) { targetedPoint = mousePoint; targetedPoint.y = selfTarget.TargetPos.y; }
 	}
 
 	private void DrawLineToTargetedPoint(List<RaycastHit> hitList)
@@ -371,6 +379,101 @@ public class AgentShooting : MonoBehaviour
 		}
 	}
 
+	private void RestrictListOfTargetsToEncounterRange()
+	{
+		List<Targetable> allShootableTargets = targetList;
+		foreach (Targetable target in allShootableTargets)
+		{
+			float range = Vector3.Distance(target.TargetPos, selfTarget.TargetPos);
+			target.distance = range;
+			if (range > MAX_ENCOUNTER_RANGE)
+			{
+				targetList.Remove(target);
+				target.HideTarget();
+			}
+		}
+	}
+
+	private void RestrictListOfTargetsToLOS()
+	{
+		List<Targetable> allShootableTargetsWithinEncounterRange = new List<Targetable>(); 
+		foreach (Targetable targetFromList in targetList)
+		{
+			allShootableTargetsWithinEncounterRange.Add(targetFromList);
+		}
+		Vector3 height = (Vector3.up * MAX_AIMING_RADIUS);
+		foreach (Targetable target in allShootableTargetsWithinEncounterRange)
+		{
+			Vector3 origin = selfTarget.TargetPos + height;
+			Vector3 dest = target.TargetPos + height;
+			Vector3 direction = (dest - origin).normalized;
+			float maxDist = target.distance;
+			RaycastHit hitInfo;
+			Ray ray = new Ray(origin, direction);
+			bool seeAnything = Physics.Raycast(ray, out hitInfo, maxDist);
+			bool LOStoTarget = false;
+			if (seeAnything)
+			{
+				Collider[] targetColliders = target.gameObject.GetComponentsInChildren<Collider>();
+				foreach (Collider targetCollider in targetColliders)
+				{
+					if (hitInfo.collider == targetCollider)
+					{
+						LOStoTarget = true;
+					}
+				}
+			}
+
+			if (!LOStoTarget || !seeAnything)
+			{
+				targetList.Remove(target);
+				target.HideTarget();
+				target.lineOfSight = Targetable.LOS.Blocked;
+			}
+			else { target.lineOfSight = Targetable.LOS.Clear; }
+		}
+	}
+
+	private void UpdateTargetsWithCoverStatus()
+	{
+		List<Targetable> allShootableUnblockedTargetsWithinEncounterRange = new List<Targetable>();
+		foreach (Targetable targetFromList in targetList)
+		{
+			allShootableUnblockedTargetsWithinEncounterRange.Add(targetFromList);
+		}
+		Vector3 height = (Vector3.up * MAX_AIMING_RADIUS);
+		foreach (Targetable target in allShootableUnblockedTargetsWithinEncounterRange)
+		{
+			Vector3 origin = selfTarget.TargetPos + (height * -1);
+			Vector3 dest = target.TargetPos + (height * -1);
+			Vector3 direction = (dest - origin).normalized;
+			float maxDist = target.distance;
+			RaycastHit hitInfo;
+			Ray ray = new Ray(origin, direction);
+			bool seeAnything = Physics.Raycast(ray, out hitInfo, maxDist);
+			bool LOStoTarget = false;
+			if (seeAnything)
+			{
+				Collider[] targetColliders = target.gameObject.GetComponentsInChildren<Collider>();
+				foreach (Collider targetCollider in targetColliders)
+				{
+					if (hitInfo.collider == targetCollider)
+					{
+						LOStoTarget = true;
+					}
+				}
+			}
+			if (!LOStoTarget || !seeAnything)
+			{
+				target.lineOfSight = Targetable.LOS.Cover;
+			}
+			else 
+			{
+				target.lineOfSight = Targetable.LOS.Clear; 
+			}
+		}
+	}
+
 	private void ResetAllTargetsEverywhere()
 	{
 		Targetable[] allTargets = FindObjectsOfType<Targetable>();
@@ -382,16 +485,32 @@ public class AgentShooting : MonoBehaviour
 		}
 	}
 
-	private void ActivateTargetingIndicators()
+	private void UpdateTargetsWithDistanceInfo()
+	{
+		foreach (Targetable target in targetList)
+		{
+			target.distance = Vector3.Distance(target.TargetPos, selfTarget.TargetPos);
+		}
+	}
+
+	private void UpdateColorOfTargetingIndicatorsBasedOnRangeAndLOS()
 	{
 		foreach (Targetable target in targetList)
 		{
 			Vector3 targetPos = target.TargetPos;
 			float distanceToTarget = Vector3.Distance(firePoint.position, targetPos);
 			target.ShowTarget();
-			if (target.rangeToTarget==Targetable.RangeCat.Optimum) { target.SetColor(validColor); }
-			else if (target.rangeToTarget==Targetable.RangeCat.Long) { target.SetColor(outOfRangeColor); }
-			else { target.SetColor(invalidColor); }
+			if (target.rangeToTarget==Targetable.RangeCat.Optimum
+				&& target.lineOfSight==Targetable.LOS.Clear) 
+			{ 
+				target.SetColor(clearLOSColor); 
+			}
+			else if (target.rangeToTarget==Targetable.RangeCat.Long
+					|| target.lineOfSight==Targetable.LOS.Cover) 
+			{ 
+				target.SetColor(partialLOSColor); 
+			}
+			else { target.SetColor(noLOSColor); }
 		}
 	}
 }

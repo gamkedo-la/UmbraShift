@@ -18,12 +18,13 @@ MonoBehaviour:
     and used by security guards and rent-a-cops throughout the world. Cheap and easy
     to get, this weapon is also favored by street gangs and consumer hobbyists.
   sprite: {fileID: 21300000, guid: 60f894ac2ac8762478942fbfc36612c1, type: 3}
-  Type: 0
-  Ammo: 0
+  weaponType: 2
+  ammo: 0
+  projectilePrefab: {fileID: 0}
   cost: 60
-  Damage: 1
+  Damage: -20
   Range: 12
-  Accuracy: 2
+  Accuracy: -10
   Targeting: 0
   firingMode: 0
   Recoil: 0

@@ -5,8 +5,7 @@ using UnityEngine;
 
 public enum Quality { None, Terrible=-20, Average=-10, Effective=10, Superior=20 }
 public enum Hinderance { None, Negligable, Average, Hindering, Severe}
-public enum MaxRange { Adjacent=2, Short=12, Medium=21, Long=30, Infinite=999}
-public enum ItemType { Pistol, Rifle}
+public enum MaxRange { Adjacent = 2, Short = 12, Medium = 21, Long = 30 }
 public enum AmmoType { Type_IV_Biogel_Rounds }
 public enum FiringMode { Single_Shot_Only, Burst_Fire}
 public enum TargetingMode { Direct_Fire_Only, Aimed_Shot, Smartlink_Equipped}
@@ -23,8 +22,9 @@ public class WeaponDesign : ScriptableObject
 										"weapon is also favored by street gangs and consumer hobbyists.";
 	public Sprite sprite;
 	[Space]
-	public ItemType Type = ItemType.Pistol;
-	public AmmoType Ammo = AmmoType.Type_IV_Biogel_Rounds;
+	public ItemType weaponType = ItemType.Pistol;
+	public AmmoType ammo = AmmoType.Type_IV_Biogel_Rounds;
+	public GameObject projectilePrefab;
 	[Space]
 	public int cost = 60;
 	[Space]

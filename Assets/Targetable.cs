@@ -17,13 +17,17 @@ public class Targetable : MonoBehaviour
 	public bool LockedOn { get { return lockedOn; } set { lockedOn = value; } }
 	private bool validTarget = true;
 	public bool ValidTarget { get { return validTarget; } }
+	public enum RangeCat { None, Optimum, Long, Exceeded }
+	public RangeCat rangeToTarget;
+	public enum LOS { Null, Clear, Cover, Blocked }
+	public LOS lineOfSight = LOS.Clear;
+	public float distance;
+
 	private Vector3 targetPos;
 	public Vector3 TargetPos { get { return targetPos; } }
 	private Vector2 targetPositionInScreenCoord;
 	private Vector3 infoPos;
 	public Vector3 InfoPos { get { return infoPos; } }
-	public enum RangeCat { None, Optimum, Long, Exceeded }
-	public RangeCat rangeToTarget;
 	private Camera cam;
 	private Color defaultColor;
 
@@ -82,8 +86,11 @@ public class Targetable : MonoBehaviour
 		lockOnIndicator.enabled = false;
 		targetImage.color = defaultColor;
 		rangeToTarget = RangeCat.None;
+		lineOfSight = LOS.Null;
+		distance = 0;
 		targetImage.enabled = false;
 		validTarget = false;
+		
 	}
 
 	public void SetColor()
