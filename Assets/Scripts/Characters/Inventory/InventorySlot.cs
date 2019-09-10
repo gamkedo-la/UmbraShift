@@ -16,6 +16,9 @@ public class InventorySlot : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI numberofItemsInSlotDisplay;
 
+    [SerializeField]
+    private TextMeshProUGUI itemDescription;
+
     public int numberOfItemsInStack = 0;
 
     private Inventory inventory;
@@ -43,6 +46,20 @@ public class InventorySlot : MonoBehaviour
         {
             numberofItemsInSlotDisplay.enabled = false;
         }
+    }
+
+    void OnMouseEnter()
+    {
+        Debug.Log("on mouse enter inventory slot");
+        if(item != null)
+        {
+            itemDescription.text = item.itemDescription;
+        }
+    }
+
+    public void OnMouseExit()
+    {
+        itemDescription.text = "";
     }
 
     public void AddItem(Item newItem)
