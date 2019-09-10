@@ -849,6 +849,8 @@ GameObject:
   - component: {fileID: 8763745042985732552}
   - component: {fileID: 7629084898544693019}
   - component: {fileID: 7878929400474279258}
+  - component: {fileID: 4666030326105618395}
+  - component: {fileID: 4887941949912200972}
   m_Layer: 0
   m_Name: Agent (base prefab)
   m_TagString: Untagged
@@ -908,6 +910,8 @@ MonoBehaviour:
   Interactable: 0
   Hackable: 0
   height: 0
+  lockOnIndicator: {fileID: 0}
+  info: {fileID: 0}
   rangeToTarget: 0
 --- !u!114 &1510621138018115810
 MonoBehaviour:
@@ -925,6 +929,30 @@ MonoBehaviour:
   characterName: DefaultName
   equippedWeapon: {fileID: 0}
   actionManager: {fileID: 0}
+  Strength:
+    baseValue: 0
+    modifiers: 
+  Dexterity:
+    baseValue: 0
+    modifiers: 
+  Intellect:
+    baseValue: 0
+    modifiers: 
+  Hacking:
+    baseValue: 0
+    modifiers: 
+  Shooting:
+    baseValue: 0
+    modifiers: 
+  Investigation:
+    baseValue: 0
+    modifiers: 
+  Medicine:
+    baseValue: 0
+    modifiers: 
+  FastTalking:
+    baseValue: 0
+    modifiers: 
 --- !u!114 &8763745042985732552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -970,7 +998,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firePoint: {fileID: 0}
   lineMaterial: {fileID: 0}
+  lineMaterialBlocked: {fileID: 0}
   animator: {fileID: 1987118594753236608}
+--- !u!114 &4666030326105618395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7629084898544693018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52500b33b46911a46ae5b66e2aa95bd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spaces: 8
+  items: []
+  itemsInSlot: 
+--- !u!114 &4887941949912200972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7629084898544693018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dccc79d1a21f02842846f674c1931726, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory: {fileID: 4666030326105618395}
+  equipmentUI: {fileID: 0}
 --- !u!1 &7629084898631342145
 GameObject:
   m_ObjectHideFlags: 0

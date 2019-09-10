@@ -30,7 +30,7 @@ public class InventorySlot : MonoBehaviour
     private void Awake()
     {
         //itemName.text = "Empty";
-        numberofItemsInSlotDisplay.text = numberOfItemsInStack.ToString();
+        //numberofItemsInSlotDisplay.text = numberOfItemsInStack.ToString();
         inventory = baseCharacter.gameObject.GetComponent<Inventory>();
 
         inventoryControlPanel = GetComponentInParent<InventoryControlPanel>();
