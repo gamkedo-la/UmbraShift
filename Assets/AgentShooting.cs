@@ -39,7 +39,7 @@ public class AgentShooting : MonoBehaviour
 	private bool rotatingNow = false;
 	private Collider[] selfColliders;
 	Targetable selfTarget;
-
+	private bool targetLockisHeld = false;
 
 	private void Start()
     {
@@ -85,43 +85,46 @@ public class AgentShooting : MonoBehaviour
 
 	private void AimingUpdate()
 	{
-		if (!targetLocked)
+		if (!targetLockisHeld)
 		{
-			mouseLineFree.enabled = false;
-			mouseLineBlocked.enabled = false;
+			if (!targetLocked)
+			{
+				mouseLineFree.enabled = false;
+				mouseLineBlocked.enabled = false;
+			}
+			PopulateListOfPotentialTargets();
+			RestrictListOfTargetsToEncounterRange();
+			UpdateTargetsWithDistanceInfo();
+			RestrictListOfTargetsToLOS();
+			UpdateTargetsWithCoverStatus();
+			UpdateColorOfTargetingIndicatorsBasedOnRangeAndLOS();
+			TargetedPointFollowsMouse();
+			Targetable prevClosestTargetNearMouse = closestTargetNearMouse;
+			closestTargetNearMouse = DetermineClosestTargetNearMouse();
+			if (closestTargetNearMouse)
+			{
+				targetLocked = DetermineIfClosestTargetIsLocked();
+				if (targetLocked) { targetLocked.LockOn(); }
+			}
+			else { targetLocked = null; }
+			int accuracy = 0;
+			bool targetHasCover = false;
+			List<RaycastHit> colliderHitList = new List<RaycastHit>();
+			if (targetLocked)
+			{
+				colliderHitList = DetermineIfTargetHasCover();
+				if (colliderHitList.Count > 0) { targetHasCover = true; }
+				accuracy = Mathf.Clamp(DetermineAccuracy(targetHasCover), 0, 98);
+				ShowAccuracy(accuracy, targetLocked, true);
+			}
+			SetTargetedPoint(prevClosestTargetNearMouse);
+			DetermineImpactPoint();
+			DetermineIfSightCanPenetrateImpactPoint();
 		}
-		PopulateListOfPotentialTargets();
-		RestrictListOfTargetsToEncounterRange();
-		UpdateTargetsWithDistanceInfo();
-		RestrictListOfTargetsToLOS();
-		UpdateTargetsWithCoverStatus();
-		UpdateColorOfTargetingIndicatorsBasedOnRangeAndLOS();
-		TargetedPointFollowsMouse();
-		Targetable prevClosestTargetNearMouse = closestTargetNearMouse;
-		closestTargetNearMouse = DetermineClosestTargetNearMouse();
-		if (closestTargetNearMouse) 
-		{ 
-			targetLocked = DetermineIfClosestTargetIsLocked();
-			if (targetLocked) { targetLocked.LockOn(); }
-		}
-		else { targetLocked = null; }
-		int accuracy = 0;
-		List<RaycastHit> colliderHitList = new List<RaycastHit>();
-		bool targetHasCover = false;
-		if (targetLocked)
-		{
-			colliderHitList = DetermineIfTargetHasCover();
-			if (colliderHitList.Count > 0) { targetHasCover = true; }
-			accuracy = Mathf.Clamp(DetermineAccuracy(targetHasCover), 0, 98); 
-			ShowAccuracy(accuracy, targetLocked, true); 
-		}
-		SetTargetedPoint(prevClosestTargetNearMouse);
-		DetermineImpactPoint();
-		DetermineIfSightCanPenetrateImpactPoint();
-		DrawLineToTargetedPoint(colliderHitList);
+		DrawLineToTargetedPoint();
 		if (!rotatingNow) { RotateTowardTargetedPoint(); }
-		//prevent mouseLine from extending beyond the impact against an obstacle if its high enough to block LOS
-		//change the color of mouseLine after impact against an obstacle if it counts as cover but doesn't block LOS
+		if (Input.GetMouseButtonDown(0) && targetLocked) { targetLockisHeld = true; }
+		if (Input.GetMouseButtonDown(1) && targetLockisHeld) { targetLockisHeld = false; }
 		//prevent mouse from flying off screen
 	}
 
@@ -345,7 +348,7 @@ public class AgentShooting : MonoBehaviour
 
 
 
-	private void DrawLineToTargetedPoint(List<RaycastHit> hitList)
+	private void DrawLineToTargetedPoint()
 	{
 		/*Vector3 shortestDistHit = targetedPoint;
 		float shortestDist = Vector3.Distance(firePoint.position, shortestDistHit);
@@ -429,6 +432,7 @@ public class AgentShooting : MonoBehaviour
 
 	public void ResetVariables()		////////////////////
 	{
+		targetLockisHeld = false;
 		mouseLineBlocked.enabled = false;
 		mouseLineFree.enabled = false;
 		mousePoint = Vector3.zero;
