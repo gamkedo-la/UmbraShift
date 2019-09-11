@@ -23,7 +23,7 @@ public class InventorySlot : MonoBehaviour
 
     private Inventory inventory;
 
-    Item item;
+    public Item item;
 
     
 
