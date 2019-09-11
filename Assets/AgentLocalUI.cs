@@ -12,6 +12,7 @@ public class AgentLocalUI : MonoBehaviour
 	[SerializeField] private Image feedback;
 	[SerializeField] private Text feedbackText;
 	[SerializeField] private Text coverText;
+	[SerializeField] private Image lockedOnIndicator;
 	private Camera cam;
 	private bool showName;
 	private bool showInfo;
@@ -44,6 +45,7 @@ public class AgentLocalUI : MonoBehaviour
 								Vector3 pos = transform.position + (Vector3.up * 4);
 								coverText.rectTransform.position = cam.WorldToScreenPoint(pos);
 								}
+
 	}
 
 	public void ShowAccuracy(int accuracy)

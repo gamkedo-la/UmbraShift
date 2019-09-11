@@ -26,6 +26,7 @@ public class AgentShooting : MonoBehaviour
 	private float maxRange = 0;
 	private Vector3 targetedPoint;
 	private Vector3 mousePoint;
+	private Vector3 impactPoint;
 	private Camera cameraForRaycastingToMouse;
 	private LineRenderer mouseLineFree;
 	private LineRenderer mouseLineBlocked;
@@ -34,6 +35,7 @@ public class AgentShooting : MonoBehaviour
 	private const float FIELD_OF_VIEW = 5f;
 	private const float MAX_ENCOUNTER_RANGE = 50f;
 	private const float MAX_AIMING_RADIUS = 0.25f;
+	private const float SNAPPING_DISTANCE = 1.5f;
 	private bool rotatingNow = false;
 	private Collider[] selfColliders;
 	Targetable selfTarget;
@@ -97,20 +99,25 @@ public class AgentShooting : MonoBehaviour
 		TargetedPointFollowsMouse();
 		Targetable prevClosestTargetNearMouse = closestTargetNearMouse;
 		closestTargetNearMouse = DetermineClosestTargetNearMouse();
-		if (closestTargetNearMouse) { targetLocked = DetermineIfClosestTargetIsLocked(); }
+		if (closestTargetNearMouse) 
+		{ 
+			targetLocked = DetermineIfClosestTargetIsLocked();
+			if (targetLocked) { targetLocked.LockOn(); }
+		}
 		else { targetLocked = null; }
 		int accuracy = 0;
 		List<RaycastHit> colliderHitList = new List<RaycastHit>();
 		bool targetHasCover = false;
 		if (targetLocked)
 		{
-			//targetHasCover = DetermineIfTargetHasCover();
 			colliderHitList = DetermineIfTargetHasCover();
 			if (colliderHitList.Count > 0) { targetHasCover = true; }
 			accuracy = Mathf.Clamp(DetermineAccuracy(targetHasCover), 0, 98); 
 			ShowAccuracy(accuracy, targetLocked, true); 
 		}
 		SetTargetedPoint(prevClosestTargetNearMouse);
+		DetermineImpactPoint();
+		DetermineIfSightCanPenetrateImpactPoint();
 		DrawLineToTargetedPoint(colliderHitList);
 		if (!rotatingNow) { RotateTowardTargetedPoint(); }
 		//prevent mouseLine from extending beyond the impact against an obstacle if its high enough to block LOS
@@ -198,7 +205,13 @@ public class AgentShooting : MonoBehaviour
 	{
 		AgentLocalUI targetAgentUI = target.gameObject.GetComponent<AgentLocalUI>();
 		if (!targetAgentUI) { return; }
-		if (toShow) { targetAgentUI.ShowAccuracy(accuracy); } else { targetAgentUI.Reset(); }
+		if (toShow) 
+		{ 
+			targetAgentUI.ShowAccuracy(accuracy); 
+		} else 
+		{ 
+			targetAgentUI.Reset(); 
+		}
 	}
 
 	private void SetTargetedPoint(Targetable prevClosestTargetNearMouse)
@@ -206,7 +219,7 @@ public class AgentShooting : MonoBehaviour
 		if (targetLocked)
 		{
 			targetedPoint = closestTargetNearMouse.TargetPos;
-			targetLocked.LockedOn = true;
+			targetLocked.LockOn();
 			if (prevClosestTargetNearMouse && targetLocked != prevClosestTargetNearMouse)
 			{
 				prevClosestTargetNearMouse.LockedOn = false;
@@ -252,7 +265,7 @@ public class AgentShooting : MonoBehaviour
 		//float DistTargetToPlayer = Vector3.Distance(closestTargetNearMouse.TargetPos, firePoint.position);
 		//float DistMouseToPlayer = Vector3.Distance(mousePoint, firePoint.position);
 		float distMouseToClosestTarget = Vector3.Distance(closestTargetNearMouse.TargetPos, mousePoint);
-		float stickiness = 1f;
+		float stickiness = SNAPPING_DISTANCE;
 		if (targetLocked) { stickiness = stickiness * 1; }
 		bool notTooFar = distMouseToClosestTarget < (1f+stickiness);
 		bool farEnough = distMouseToClosestTarget > (1f-stickiness);
@@ -266,16 +279,75 @@ public class AgentShooting : MonoBehaviour
 
 	private void TargetedPointFollowsMouse()
 	{
-		Ray ray = cameraForRaycastingToMouse.ScreenPointToRay(Input.mousePosition);
-		RaycastHit hitInfo;
-		Physics.Raycast(ray, out hitInfo, 1000f);
-		mousePoint = hitInfo.point;
-		if (!targetLocked) { targetedPoint = mousePoint; targetedPoint.y = selfTarget.TargetPos.y; }
+		Ray rayFromScreen = cameraForRaycastingToMouse.ScreenPointToRay(Input.mousePosition);
+		RaycastHit mouseInfo;
+		int layerMask = LayerMask.GetMask("Floor");
+		Physics.Raycast(rayFromScreen, out mouseInfo, 1000f, layerMask);
+		mousePoint = mouseInfo.point;
+
+		if (!targetLocked) 
+		{ 
+			targetedPoint = mousePoint; 
+			targetedPoint.y = selfTarget.TargetPos.y; 
+		}
 	}
+
+	
+	private void DetermineImpactPoint()
+	{
+		Vector3 origin = firePoint.position;
+		Vector3 dest = targetedPoint;
+		Vector3 dir = (dest - origin).normalized;
+		float maxDist = Vector3.Distance(origin, dest);
+		RaycastHit hitInfo;
+		bool impact = Physics.Raycast(origin, dir, out hitInfo, maxDist);
+		if (targetLocked) 
+		{
+			Collider[] targetColliders = targetLocked.gameObject.GetComponentsInChildren<Collider>();
+			foreach (Collider targetCollider in targetColliders)
+			{
+				if (hitInfo.collider == targetCollider)
+				{
+					impact = false;
+				}
+			}
+		}
+		if (impact) { impactPoint = hitInfo.point; }
+		else { impactPoint = targetedPoint; }
+	}
+
+	private void DetermineIfSightCanPenetrateImpactPoint()
+	{
+		Vector3 height = Vector2.up * MAX_AIMING_RADIUS;
+		Vector3 origin = firePoint.position + height;
+		Vector3 dest = targetedPoint + height;
+		Vector3 dir = (dest - origin).normalized;
+		float maxDist = Vector3.Distance(origin, dest);
+		RaycastHit hitInfo;
+		bool visionBlocked = Physics.Raycast(origin, dir, out hitInfo, maxDist);
+		if (targetLocked)
+		{
+			Collider[] targetColliders = targetLocked.gameObject.GetComponentsInChildren<Collider>();
+			foreach (Collider targetCollider in targetColliders)
+			{
+				if (hitInfo.collider == targetCollider)
+				{
+					visionBlocked = false;
+				}
+			}
+		}
+		if (visionBlocked) { targetedPoint = impactPoint; }
+	}
+
+
+
+
+
+
 
 	private void DrawLineToTargetedPoint(List<RaycastHit> hitList)
 	{
-		Vector3 shortestDistHit = targetedPoint;
+		/*Vector3 shortestDistHit = targetedPoint;
 		float shortestDist = Vector3.Distance(firePoint.position, shortestDistHit);
 		foreach (RaycastHit hit in hitList)
 		{
@@ -286,13 +358,13 @@ public class AgentShooting : MonoBehaviour
 			}
 		}
 		Vector3 impactPoint = shortestDistHit;
+		*/
 		DrawLine(mouseLineFree, firePoint.position, impactPoint);
 		if (Vector3.Distance(impactPoint, targetedPoint) > 0.1f)
 		{
 			DrawLine(mouseLineBlocked, impactPoint, targetedPoint);
 		}
 		else { mouseLineBlocked.enabled = false; }
-
 	}
 
 	private void DrawLine(LineRenderer rend, Vector3 start, Vector3 end)
@@ -357,6 +429,11 @@ public class AgentShooting : MonoBehaviour
 
 	public void ResetVariables()		////////////////////
 	{
+		mouseLineBlocked.enabled = false;
+		mouseLineFree.enabled = false;
+		mousePoint = Vector3.zero;
+		impactPoint = Vector3.zero;
+		targetedPoint = Vector3.zero;
 		shootingMode = ShootingMode.None;
 		optimumRange = 0f;
 		longRange = 0f;
@@ -474,6 +551,7 @@ public class AgentShooting : MonoBehaviour
 		}
 	}
 
+
 	private void ResetAllTargetsEverywhere()
 	{
 		Targetable[] allTargets = FindObjectsOfType<Targetable>();
@@ -492,6 +570,7 @@ public class AgentShooting : MonoBehaviour
 			target.distance = Vector3.Distance(target.TargetPos, selfTarget.TargetPos);
 		}
 	}
+	
 
 	private void UpdateColorOfTargetingIndicatorsBasedOnRangeAndLOS()
 	{

@@ -26,7 +26,7 @@ public class EquipmentManager : MonoBehaviour
 
         for (int i = 0; i < currentEquipment.Length; i++)
         {
-            equipmentUI.equipmentSlotDisplays[i].equipmentIcon.enabled = false;
+			if (equipmentUI) { equipmentUI.equipmentSlotDisplays[i].equipmentIcon.enabled = false; }
         }
     }
 

@@ -13,7 +13,7 @@ public class Targetable : MonoBehaviour
 	[SerializeField] public Image lockOnIndicator;
 	[SerializeField] public Text info;
 
-	private bool lockedOn = false;
+	public bool lockedOn = false;
 	public bool LockedOn { get { return lockedOn; } set { lockedOn = value; } }
 	private bool validTarget = true;
 	public bool ValidTarget { get { return validTarget; } }
@@ -54,7 +54,7 @@ public class Targetable : MonoBehaviour
 			lockOnIndicator.enabled = true;
 			lockOnIndicator.rectTransform.position = targetPositionInScreenCoord;
 		}
-		else if (lockOnIndicator && lockOnIndicator.enabled) { lockOnIndicator.enabled = false; }
+		else if (!lockedOn && lockOnIndicator && lockOnIndicator.enabled) { lockOnIndicator.enabled = false; }
 		if (validTarget && targetImage)
 		{
 			if (!posInfoUpdated) { UpdatePositionInfo(); posInfoUpdated = true; }
@@ -69,10 +69,10 @@ public class Targetable : MonoBehaviour
 
 	public Vector3 ShowTarget()
 	{
-			lockOnIndicator.enabled = false;
-			targetImage.enabled = true;
-			validTarget = true;
-			return transform.position;
+		if (!lockedOn) { lockOnIndicator.enabled = false; }
+		targetImage.enabled = true;
+		validTarget = true;
+		return transform.position;
 	}
 
 	public void LockOn()
