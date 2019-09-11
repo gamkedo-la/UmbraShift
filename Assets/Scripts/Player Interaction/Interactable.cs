@@ -7,6 +7,9 @@ public class Interactable : MonoBehaviour
     private Material defaultMat;
     private Renderer currentRenderer;
 
+    [SerializeField]
+    private AgentActionManager agentActionManager;
+
     // Chatbox trigger code
     private GameObject ChatboxGUI;
     private bool alreadyChatted = false;
@@ -16,6 +19,7 @@ public class Interactable : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        agentActionManager = FindObjectOfType<AgentActionManager>();
         currentRenderer = GetComponent<Renderer>();
         defaultMat = currentRenderer.sharedMaterial;  // might need to do individual, check later
         ChatboxGUI =  GameObject.Find("Chatbox"); // the GUI
@@ -37,7 +41,7 @@ public class Interactable : MonoBehaviour
     public virtual void ObjectSelected()
     {
 //        Debug.Log("Setting highlight material");
-        currentRenderer.material = InputManager.instance.highlightedMat;
+        currentRenderer.material = agentActionManager.highlightedMaterial;
 
         //Debug.Log("Testing NPC Chat Trigger...");
         // FIXME: only trigger when not targetting in combat?

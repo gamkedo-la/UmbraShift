@@ -10,6 +10,8 @@ public class AgentActionManager : MonoBehaviour
 	private AgentStats m_agentStats;
 	public Action actionInProgress = Action.None;
 
+    public Material highlightedMaterial;
+
 	//AP costs
 	private int transactionInProcessAP = 0;
 	private int moveCostAP = 0;                 //temporarily treating Move as costing 0 instead of 1. 

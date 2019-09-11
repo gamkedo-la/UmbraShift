@@ -1769,6 +1769,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1702306895}
     m_Modifications:
+    - target: {fileID: 2472767518615529366, guid: 45e425bfeb36d1245af47f490927ad90,
+        type: 3}
+      propertyPath: m_Name
+      value: Chatbox
+      objectReference: {fileID: 0}
+    - target: {fileID: 2472767518615529366, guid: 45e425bfeb36d1245af47f490927ad90,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6933082498431047943, guid: 45e425bfeb36d1245af47f490927ad90,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1873,16 +1883,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2472767518615529366, guid: 45e425bfeb36d1245af47f490927ad90,
-        type: 3}
-      propertyPath: m_Name
-      value: Chatbox
-      objectReference: {fileID: 0}
-    - target: {fileID: 2472767518615529366, guid: 45e425bfeb36d1245af47f490927ad90,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7957660037961914358, guid: 45e425bfeb36d1245af47f490927ad90,
         type: 3}
@@ -2847,6 +2847,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8c429bf753b9422484232bd0c68b870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agentActionManager: {fileID: 0}
   NPC_Chat: {fileID: 11400000, guid: 74674458c29155c44889be8d304990da, type: 2}
 --- !u!64 &531575224
 MeshCollider:
@@ -2862,6 +2863,29 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4493585093827132993, guid: 26ccd5a164f52304690915f7587aac64, type: 3}
+--- !u!114 &531575225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 531575222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afee1fcd0909ad84689d06f6df7e4d29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetImage: {fileID: 0}
+  Shootable: 0
+  Interactable: 1
+  Hackable: 0
+  height: 0
+  lockOnIndicator: {fileID: 0}
+  info: {fileID: 0}
+  lockedOn: 0
+  rangeToTarget: 0
+  lineOfSight: 1
+  distance: 0
 --- !u!4 &532173527 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 98eb26e76c3039044a5355ccee54c533,
