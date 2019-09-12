@@ -7,6 +7,7 @@ public class AgentActionManager : MonoBehaviour
 	private UIActionBarController m_uiActionBarController;
 	private AgentMovement m_agentMovement;
 	private AgentShooting m_agentShooting;
+	private AgentInteracting m_agentInteracting;
 	private AgentStats m_agentStats;
 	public Action actionInProgress = Action.None;
 
@@ -25,6 +26,7 @@ public class AgentActionManager : MonoBehaviour
 		m_agentStats = GetComponent<AgentStats>();
 		m_agentMovement = GetComponent<AgentMovement>();
 		m_agentShooting = GetComponent<AgentShooting>();
+		m_agentInteracting = GetComponent<AgentInteracting>();
 	}
 
 	public bool CanActionBePerformed(Action actionAttempted)
@@ -42,6 +44,8 @@ public class AgentActionManager : MonoBehaviour
 	public void ContinueAction ()
 	{
 		if (actionInProgress == Action.Move) { m_agentMovement.ActionContinue(); }
+		//if (actionInProgress == Action.Shoot) { m_agentShooting.ActionContinue(); }
+		if (actionInProgress == Action.Interact) { m_agentInteracting.ActionContinue(); }
 	}
 
 	public void CancelAction()
@@ -52,6 +56,18 @@ public class AgentActionManager : MonoBehaviour
 			transactionInProcessAP = 0;
 			ReportEndOfAction();
 		}
+
+		if (actionInProgress==Action.Shoot)
+		{
+		
+		}
+
+		if (actionInProgress==Action.Interact)
+		{
+			m_agentInteracting.ActionCancel();
+			transactionInProcessAP = 0;
+			ReportEndOfAction();
+		}
 	}
 
 	public void UndoAction()
@@ -59,6 +75,16 @@ public class AgentActionManager : MonoBehaviour
 		if (actionInProgress == Action.Move)
 		{
 			m_agentMovement.Undo();
+		}
+
+		if (actionInProgress == Action.Shoot)
+		{
+			//m_agentShooting.Undo();
+		}
+
+		if (actionInProgress == Action.Interact)
+		{
+			m_agentInteracting.Undo();
 		}
 	}
 
@@ -88,6 +114,17 @@ public class AgentActionManager : MonoBehaviour
 				transactionInProcessAP = shootCostAP;
 				m_agentShooting.ActionStarted();
 				actionInProgress = Action.Shoot;
+			}
+		}
+
+		if (action==Action.Interact)
+		{
+			if (interactCostAP > m_agentStats.CurrentActionPoints) { ReportActionCancelled(); }
+			else
+			{
+				transactionInProcessAP = interactCostAP;
+				m_agentInteracting.ActionStarted();
+				actionInProgress = Action.Interact;
 			}
 		}
 	}
