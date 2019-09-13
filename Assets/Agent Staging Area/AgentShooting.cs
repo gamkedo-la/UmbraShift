@@ -11,6 +11,7 @@ public class AgentShooting : MonoBehaviour
 	public bool ShootingSystemInUse { get { return shootingSystemInUse; } }
     public Animator animator;
 
+	private AgentTurnManager turnManager;
 	private List<Targetable> targetList;
 	private Targetable closestTargetNearMouse;
 	private Targetable targetLocked;
@@ -40,9 +41,11 @@ public class AgentShooting : MonoBehaviour
 	private Collider[] selfColliders;
 	Targetable selfTarget;
 	private bool targetLockisHeld = false;
+	private float shotsToResolve = Mathf.Infinity;
 
 	private void Start()
     {
+		turnManager = FindObjectOfType<AgentTurnManager>();
 		selfTarget = gameObject.GetComponent<Targetable>();
 		targetList = new List<Targetable>();
 		cameraForRaycastingToMouse = Camera.main;
@@ -74,13 +77,49 @@ public class AgentShooting : MonoBehaviour
 		BeginAiming();
 	}
 
+	public void ActionContinue()
+	{
+		if (targetLocked)
+		{
+			BeginFiring();
+		}
+	}
+
+	public void ActionCancel()
+	{
+		ResetVariables();
+		EndShooting();
+	}
+
+	public void Undo()
+	{
+		if (targetLockisHeld) { targetLockisHeld = false; }
+		else { ActionCancel(); }
+	}
+
+	private void EndShooting()
+	{
+		closestTargetNearMouse.LockedOn = false;
+		ShowAccuracy(0, closestTargetNearMouse, false);
+		shootingSystemInUse = false;
+		turnManager.ActiveCharacter.actionManager.ReportEndOfAction();
+	}
+
 	private void BeginAiming()
 	{
 		shootingMode = ShootingMode.Aiming;
 		UpdateTargetsWithWeaponRangeCategoryInfo();
 		UpdateColorOfTargetingIndicatorsBasedOnRangeAndLOS();
         animator.SetBool("isPistolDrawn", true);
-       
+	}
+
+	private void BeginFiring()
+	{
+		shootingMode = ShootingMode.Firing;
+		mouseLineFree.enabled = false;
+		mouseLineBlocked.enabled = false;
+		ShowAccuracy(0, targetLocked, false);
+		StartCoroutine("ShootProjectiles");
 	}
 
 	private void AimingUpdate()
@@ -123,10 +162,41 @@ public class AgentShooting : MonoBehaviour
 		}
 		DrawLineToTargetedPoint();
 		if (!rotatingNow) { RotateTowardTargetedPoint(); }
-		if (Input.GetMouseButtonDown(0) && targetLocked) { targetLockisHeld = true; }
-		if (Input.GetMouseButtonDown(1) && targetLockisHeld) { targetLockisHeld = false; }
-		//prevent mouse from flying off screen
+		TargetedPointFollowsMouse();
+		if (targetLocked && Vector3.Distance(mousePoint, targetLocked.TargetPos) < 2f)
+		{
+			if (shootingMode == ShootingMode.Aiming) { 
+				if (Input.GetMouseButtonDown(0) && targetLocked && !targetLockisHeld) { targetLockisHeld = true; }
+				else if (Input.GetMouseButtonDown(0) && targetLocked && targetLockisHeld) { BeginFiring(); }
+				if (Input.GetMouseButtonDown(1) && targetLockisHeld) { targetLockisHeld = false; }
+				else if (Input.GetMouseButtonDown(1)) { ActionCancel(); }
+			}
+		}
 	}
+
+	void ShootProjectile()
+	{
+		GameObject projectile = Instantiate(weapon.projectilePrefab, firePoint.position, Quaternion.LookRotation(transform.forward));
+		projectile.transform.LookAt(targetLocked.transform);		
+	}
+
+	IEnumerator ShootProjectiles()
+	{
+		int shots = Random.Range(2, 5);
+		shotsToResolve = shots;
+		float shooting_delay = Random.Range(0.2f,0.5f);
+		float counter = 0f;
+		for (int i = 0; i < shots; i++)
+		{
+			ShootProjectile();
+			while (counter < shooting_delay)
+			{
+				counter += Time.deltaTime;
+				yield return null;
+			}
+		}
+	}
+
 
 	private void FiringUpdate()
 	{
@@ -444,6 +514,7 @@ public class AgentShooting : MonoBehaviour
 		maxRange = 0f;
 		targetList.Clear();
 		ResetAllTargetsEverywhere();
+		shotsToResolve = Mathf.Infinity;
 	}
 
 	private void PopulateListOfPotentialTargets()

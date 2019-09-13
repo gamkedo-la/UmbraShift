@@ -44,8 +44,9 @@ public class AgentActionManager : MonoBehaviour
 	public void ContinueAction ()
 	{
 		if (actionInProgress == Action.Move) { m_agentMovement.ActionContinue(); }
-		//if (actionInProgress == Action.Shoot) { m_agentShooting.ActionContinue(); }
+		if (actionInProgress == Action.Shoot) { m_agentShooting.ActionContinue(); }
 		if (actionInProgress == Action.Interact) { m_agentInteracting.ActionContinue(); }
+		if (actionInProgress == Action.Shoot) { m_agentShooting.ActionContinue(); }
 	}
 
 	public void CancelAction()
@@ -59,7 +60,9 @@ public class AgentActionManager : MonoBehaviour
 
 		if (actionInProgress==Action.Shoot)
 		{
-		
+			m_agentShooting.ActionCancel();
+			transactionInProcessAP = 0;
+			ReportEndOfAction();
 		}
 
 		if (actionInProgress==Action.Interact)
@@ -79,7 +82,7 @@ public class AgentActionManager : MonoBehaviour
 
 		if (actionInProgress == Action.Shoot)
 		{
-			//m_agentShooting.Undo();
+			m_agentShooting.Undo();
 		}
 
 		if (actionInProgress == Action.Interact)
