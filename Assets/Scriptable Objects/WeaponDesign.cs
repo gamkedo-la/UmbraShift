@@ -4,7 +4,6 @@ using UnityEngine;
 
 
 public enum Quality { None, Terrible=-20, Average=-10, Effective=10, Superior=20 }
-public enum DamageLevel { None=0, Terrible=3, Average = 10, Effective = 20, Superior = 25 }
 public enum Hinderance { None, Negligable, Average, Hindering, Severe}
 public enum MaxRange { Adjacent = 2, Short = 12, Medium = 21, Long = 30 }
 public enum AmmoType { Type_IV_Biogel_Rounds }
@@ -29,7 +28,7 @@ public class WeaponDesign : ScriptableObject
 	[Space]
 	public int cost = 60;
 	[Space]
-	public DamageLevel Damage = DamageLevel.Terrible;
+	public Quality Damage = Quality.Terrible;
 	public MaxRange Range = MaxRange.Short;
 	public Quality Accuracy = Quality.Average;
 	public TargetingMode Targeting = TargetingMode.Direct_Fire_Only;

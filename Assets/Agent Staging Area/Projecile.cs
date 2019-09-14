@@ -8,8 +8,7 @@ public class Projecile : MonoBehaviour
 	[SerializeField] GameObject ExplosionPrefab;
 	GameObject explosionEffect;
 	float maxDistance = 50f;
-	[SerializeField] float distance = 0f;
-	[SerializeField] bool explosionGenerated = false;
+	float distance = 0f;
 
 	
 	void Update()
@@ -26,10 +25,9 @@ public class Projecile : MonoBehaviour
 			collision.gameObject.layer == LayerMask.NameToLayer("NPC") ||
 			collision.gameObject.layer == LayerMask.NameToLayer("Player"))
 		{
-			explosionGenerated = true;
 			explosionEffect = Instantiate(ExplosionPrefab, collision.contacts[0].point, Quaternion.identity);
 			Destroy(explosionEffect, 10f);
-			Destroy(this.gameObject,0.1f);
+			Destroy(this.gameObject,0.02f);
 		}
 	}		
 }
