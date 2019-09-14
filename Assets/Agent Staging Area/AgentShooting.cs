@@ -42,6 +42,9 @@ public class AgentShooting : MonoBehaviour
 	Targetable selfTarget;
 	private bool targetLockisHeld = false;
 	private float shotsToResolve = Mathf.Infinity;
+	private int accuracy = 0;
+	private bool attackDataResolved = false;
+	private bool attackAnimResolved = false;
 
 	private void Start()
     {
@@ -71,6 +74,8 @@ public class AgentShooting : MonoBehaviour
 	public void ActionStarted()
 	{
 		shootingSystemInUse = true;
+		attackDataResolved = false;
+		attackAnimResolved = false;
 		ResetVariables();
 		weapon = GetComponent<AgentStats>().EquippedWeapon;
 		PopulateListOfPotentialTargets();
@@ -103,6 +108,7 @@ public class AgentShooting : MonoBehaviour
 		ShowAccuracy(0, closestTargetNearMouse, false);
 		shootingSystemInUse = false;
 		turnManager.ActiveCharacter.actionManager.ReportEndOfAction();
+		animator.SetBool("isPistolDrawn", false);
 	}
 
 	private void BeginAiming()
@@ -120,6 +126,7 @@ public class AgentShooting : MonoBehaviour
 		mouseLineBlocked.enabled = false;
 		ShowAccuracy(0, targetLocked, false);
 		StartCoroutine("ShootProjectiles");
+		StartCoroutine("ResolveAttack");
 	}
 
 	private void AimingUpdate()
@@ -146,7 +153,7 @@ public class AgentShooting : MonoBehaviour
 				if (targetLocked) { targetLocked.LockOn(); }
 			}
 			else { targetLocked = null; }
-			int accuracy = 0;
+			accuracy = 0;
 			bool targetHasCover = false;
 			List<RaycastHit> colliderHitList = new List<RaycastHit>();
 			if (targetLocked)
@@ -180,11 +187,11 @@ public class AgentShooting : MonoBehaviour
 		projectile.transform.LookAt(targetLocked.transform);		
 	}
 
-	IEnumerator ShootProjectiles()
+	private IEnumerator ShootProjectiles()
 	{
 		int shots = Random.Range(2, 5);
 		shotsToResolve = shots;
-		float shooting_delay = Random.Range(0.2f,0.5f);
+		float shooting_delay = Random.Range(0.2f,0.35f);
 		float counter = 0f;
 		for (int i = 0; i < shots; i++)
 		{
@@ -197,13 +204,30 @@ public class AgentShooting : MonoBehaviour
 		}
 	}
 
+	private IEnumerator ResolveAttack()
+	{
+		float counter = 0f;
+		float delay = 1f;
+		while (counter < delay) 
+		{
+			counter += Time.deltaTime;
+			yield return null;
+		}
+		bool hit = false;
+		int randomDiceRoll = Random.Range(0, 100+1);
+		if (randomDiceRoll <= accuracy) { hit = true; }
+		AgentCombatReactions enemy = targetLocked.gameObject.GetComponent<AgentCombatReactions>();
+		if (hit)
+		{
+			enemy.AttackHit((int)weapon.Damage);
+		}
+		else { enemy.AttackMissed(); }
+	}
+
 
 	private void FiringUpdate()
 	{
 
-
-
-        animator.SetBool("isPistolDrawn", false);
 	}
 
 	private void UpdateTargetsWithWeaponRangeCategoryInfo()
@@ -512,6 +536,7 @@ public class AgentShooting : MonoBehaviour
 		optimumRange = 0f;
 		longRange = 0f;
 		maxRange = 0f;
+		accuracy = 0;
 		targetList.Clear();
 		ResetAllTargetsEverywhere();
 		shotsToResolve = Mathf.Infinity;

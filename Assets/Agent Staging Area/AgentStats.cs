@@ -27,6 +27,12 @@ public class AgentStats : MonoBehaviour
 
 	public AgentActionManager actionManager;
 
+	private bool isAlive = true;
+	private int maxHitpoints = 20;
+	public int currentHitpoints = 20;
+	public int CurrentHitpoints { get { return currentHitpoints; } }
+	public int MaxHitpoints { get { return MaxHitpoints; } }
+	public bool IsAlive { get{ return isAlive; } }
 
 	public Stat Strength = new Stat();
 	public Stat Dexterity = new Stat();
@@ -38,8 +44,6 @@ public class AgentStats : MonoBehaviour
 	public Stat FastTalking = new Stat();
 
 
-	
-	
 	void Start()
 	{
 		agentMovement = GetComponent<AgentMovement>();
@@ -52,7 +56,8 @@ public class AgentStats : MonoBehaviour
 	private void DetermineInitialStats()
 	{
 		// fill stats from character generation, if applicable
-		
+		maxHitpoints = maxHitpoints + (Strength.GetValue() * 6);
+		currentHitpoints = maxHitpoints;	
 	}
 
 	private IEnumerator DelayedUpdate()
@@ -76,6 +81,12 @@ public class AgentStats : MonoBehaviour
 	public void AdjustActionPoints (int amt)
 	{
 		currentActionPoints = currentActionPoints + amt;
+	}
+
+	public void AdjustHitPoints (int amt)
+	{
+		currentHitpoints = currentHitpoints + amt;
+		if (currentHitpoints < 0) { isAlive = false; }
 	}
 	
     
