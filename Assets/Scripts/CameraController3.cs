@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class CameraController3 : MonoBehaviour
@@ -26,7 +27,17 @@ public class CameraController3 : MonoBehaviour
 
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Space)) { CenterOn(GameObject.FindGameObjectWithTag("Player").transform); }
+        // https://forum.unity.com/threads/detect-when-mouse-leaves-the-screen-area.411252/
+
+
+#if UNITY_EDITOR
+        if (Input.mousePosition.x == 0 || Input.mousePosition.y == 0 || Input.mousePosition.x >= Handles.GetMainGameViewSize().x - 1 || Input.mousePosition.y >= Handles.GetMainGameViewSize().y - 1) return;
+#else
+    if (Input.mousePosition.x == 0 || Input.mousePosition.y == 0 || Input.mousePosition.x >= Screen.width - 1 || Input.mousePosition.y >= Screen.height - 1) return;
+#endif
+
+
+        if (Input.GetKeyDown(KeyCode.Space)) { CenterOn(GameObject.FindGameObjectWithTag("Player").transform); }
 		if (returning == false)
 		{
 			Vector3 pos = cam.ScreenToViewportPoint(Input.mousePosition);
