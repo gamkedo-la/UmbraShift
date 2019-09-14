@@ -17,7 +17,7 @@ public class AgentMovement : MonoBehaviour
 	private List<float> waypointCosts;
 	private AgentTurnManager turnManager;
 	private float movePointsAvailable = 0;
-	private float movementSpeed = 0;
+	private float movementSpeed = 0f;
 	private Vector3 originalPositionAtActionStart;
 	private Collider[] colliders;
 	private Camera cameraForRaycastingToMouse;
@@ -46,7 +46,7 @@ public class AgentMovement : MonoBehaviour
 		waypointsPlaced = new List<Transform>();
 		waypointCosts = new List<float>();
 
-        animator=GetComponentInChildren<Animator>();
+       
 
         movementLayerMask = LayerMask.GetMask("WalkableArea", "Floor", "Default");
 
@@ -197,9 +197,10 @@ public class AgentMovement : MonoBehaviour
 		{
 			float dist = DistanceOnPlane(transform.position, waypointsPlaced[0].position);
 			float moveDist = Mathf.Clamp(movementSpeed * Time.deltaTime, 0, dist);
-			Vector3 moveVector = (waypointsPlaced[0].position - transform.position) * moveDist;
-			Vector3 pos = transform.position + moveVector;
-			transform.position = pos;
+            Vector3 moveVector = (waypointsPlaced[0].position - transform.position) * moveDist;
+            Vector3 pos = transform.position + moveVector;
+            transform.position = pos;
+            //transform.position = Vector3.Lerp(transform.position, waypointsPlaced[0].position, 0.01f); ;
             if (!animator.GetBool("isWalking"))
             {
                 animator.SetBool("isWalking", true);
