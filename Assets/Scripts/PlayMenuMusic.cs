@@ -10,23 +10,46 @@ public class PlayMenuMusic : MonoBehaviour
 
     void Awake() 
     {
+        StartCoroutine(StartMusic());
 
-        
         //FMODUnity.RuntimeManager.GetBus("bus:/Music").setVolume(PlayerPrefs.GetFloat("MusicVolume", 75.0F));
 
-        randomLoop = Random.Range(0, 3);
-        menuMusicEvent = FMODUnity.RuntimeManager.CreateInstance("event:/Menu_remixes");
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        menuMusicEvent.setParameterByName("Random Menu Mix", randomLoop);
-        menuMusicEvent.start();
+
+
+
+
+       
     }
 
     private void OnDestroy()
     {
         menuMusicEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+    }
+
+    IEnumerator StartMusic()
+    {
+        yield return new WaitForSeconds(1);
+
+        if (FMODUnity.RuntimeManager.HasBankLoaded("Master"))
+        {
+            randomLoop = Random.Range(0, 3);
+            menuMusicEvent = FMODUnity.RuntimeManager.CreateInstance("event:/Menu_remixes");
+            menuMusicEvent.setParameterByName("Random Menu Mix", randomLoop);
+            menuMusicEvent.start();
+            menuMusicEvent.release();
+
+        }
+        else
+        {
+            StartCoroutine(StartMusic());
+        }
+
+
     }
 }
