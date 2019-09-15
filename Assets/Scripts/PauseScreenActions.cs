@@ -74,7 +74,7 @@ public class PauseScreenActions : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Backspace)){
+        if (Input.GetButtonDown("Pause")){
 
             if (pauseMenuPanel.activeInHierarchy)
             {
