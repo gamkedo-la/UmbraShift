@@ -14,6 +14,7 @@ public class GameMusicPlayer : MonoBehaviour
     {
         inGameMusicEvent = FMODUnity.RuntimeManager.CreateInstance(SoundConfiguration.instance.inGameMusic);
         inGameMusicEvent.start();
+        inGameMusicEvent.release();
     }
 
     // Update is called once per frame

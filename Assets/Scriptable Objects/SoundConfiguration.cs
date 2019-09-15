@@ -57,4 +57,18 @@ public class SoundConfiguration : ScriptableObject
             return _instance;
         }
     }
+
+    public void playSound(string soundName)
+    {
+        FMOD.Studio.EventInstance soundEvent = FMODUnity.RuntimeManager.CreateInstance($"event:/{soundName}");
+        soundEvent.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(Camera.main.gameObject));
+        soundEvent.start();
+        soundEvent.release();
+    }
+
+    public void PlayUISelectSound()
+    {
+        Debug.Log("Playing UI Select");
+        FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Select");
+    }
 }
