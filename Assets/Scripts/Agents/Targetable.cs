@@ -69,7 +69,7 @@ public class Targetable : MonoBehaviour
 
 	public Vector3 ShowTarget()
 	{
-		if (!lockedOn) { lockOnIndicator.enabled = false; }
+		if (!lockedOn && lockOnIndicator) { lockOnIndicator.enabled = false; }
 		targetImage.enabled = true;
 		validTarget = true;
 		return transform.position;

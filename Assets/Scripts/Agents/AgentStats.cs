@@ -10,6 +10,7 @@ public class AgentStats : MonoBehaviour
 	[SerializeField] private Sprite portraitImage;
 	[SerializeField] private string characterName = "DefaultName";
 	[SerializeField] private WeaponDesign equippedWeapon;
+	[SerializeField] private WeaponDesign defaultWeapon;
 	private AgentMovement agentMovement;
 	private int currentActionPoints = 0;
 	private int maxActionPoints = 2;
@@ -47,6 +48,7 @@ public class AgentStats : MonoBehaviour
 		currentActionPoints = maxActionPoints;
 		StartCoroutine("DelayedUpdate");
 		DetermineInitialStats();
+		if (defaultWeapon && !equippedWeapon) { equippedWeapon = defaultWeapon; }
 	}
 
 	private void DetermineInitialStats()
