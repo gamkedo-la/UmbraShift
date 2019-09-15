@@ -195,9 +195,9 @@ public class AgentMovement : MonoBehaviour
 	{
 		if (waypointsPlaced.Count > 0)
 		{
-			float dist = DistanceOnPlane(transform.position, waypointsPlaced[0].position);
-			float moveDist = Mathf.Clamp(movementSpeed * Time.deltaTime, 0, dist);
-            Vector3 moveVector = (waypointsPlaced[0].position - transform.position) * moveDist;
+			float maxDistToMove = DistanceOnPlane(transform.position, waypointsPlaced[0].position);
+			float distToMove = Mathf.Clamp(movementSpeed * Time.deltaTime, 0, maxDistToMove);
+            Vector3 moveVector = (waypointsPlaced[0].position - transform.position).normalized * distToMove;
             Vector3 pos = transform.position + moveVector;
             transform.position = pos;
             //transform.position = Vector3.Lerp(transform.position, waypointsPlaced[0].position, 0.01f); ;
