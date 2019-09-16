@@ -216,66 +216,24 @@
 	<object class="MixerBusEffectChain" id="{426e78bc-9ba3-474d-b1c5-26d0003349ea}">
 		<relationship name="effects">
 			<destination>{56a4af24-7afa-4242-ad29-f7f88904bb7d}</destination>
-			<destination>{8f2c54e5-1818-4165-aea2-4dd302b26169}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{6d99c5f6-250e-42df-ae3b-20381eff62bb}" />
 	<object class="MixerBusEffectChain" id="{574fb214-6369-4e0b-a523-ba8e08a7791a}">
 		<relationship name="effects">
 			<destination>{73168d60-937d-4125-ba08-e0bd53fd43c8}</destination>
-			<destination>{26a667d9-3b7b-47fd-9891-6d0db4e32e25}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{95292ec2-1c72-4742-b19c-f162787149bc}" />
 	<object class="MixerBusEffectChain" id="{f1a98070-44c4-4465-a33e-c6299d9fb734}">
 		<relationship name="effects">
 			<destination>{f8008a9c-1665-41f4-8867-17980e2a3e5a}</destination>
-			<destination>{f0704cfd-bbd5-4b07-8c29-c3d48bdec953}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{622aa1cf-628f-4b51-8a1e-79343b7b6620}" />
 	<object class="MixerBusFader" id="{e2ba0886-a671-462b-8279-1825b2188fa0}" />
 	<object class="SpatialiserEffect" id="{56ea0a08-d8a7-4676-8f09-6a9dc215e68d}" />
 	<object class="MixerBusFader" id="{56a4af24-7afa-4242-ad29-f7f88904bb7d}" />
-	<object class="PitchShifterEffect" id="{8f2c54e5-1818-4165-aea2-4dd302b26169}">
-		<relationship name="modulators">
-			<destination>{28eb7d2c-7f2c-4357-9059-f6f11bf1d62b}</destination>
-		</relationship>
-	</object>
 	<object class="MixerBusFader" id="{73168d60-937d-4125-ba08-e0bd53fd43c8}" />
-	<object class="PitchShifterEffect" id="{26a667d9-3b7b-47fd-9891-6d0db4e32e25}">
-		<relationship name="modulators">
-			<destination>{0cdf6bf8-bbd1-4f7b-a322-1fd9ad7afc4e}</destination>
-		</relationship>
-	</object>
 	<object class="MixerBusFader" id="{f8008a9c-1665-41f4-8867-17980e2a3e5a}" />
-	<object class="PitchShifterEffect" id="{f0704cfd-bbd5-4b07-8c29-c3d48bdec953}">
-		<relationship name="modulators">
-			<destination>{169b87c6-564d-42a6-be5e-31a62c934e21}</destination>
-		</relationship>
-	</object>
-	<object class="RandomizerModulator" id="{28eb7d2c-7f2c-4357-9059-f6f11bf1d62b}">
-		<property name="nameOfPropertyBeingModulated">
-			<value>pitch</value>
-		</property>
-		<property name="amount">
-			<value>5</value>
-		</property>
-	</object>
-	<object class="RandomizerModulator" id="{0cdf6bf8-bbd1-4f7b-a322-1fd9ad7afc4e}">
-		<property name="nameOfPropertyBeingModulated">
-			<value>pitch</value>
-		</property>
-		<property name="amount">
-			<value>5</value>
-		</property>
-	</object>
-	<object class="RandomizerModulator" id="{169b87c6-564d-42a6-be5e-31a62c934e21}">
-		<property name="nameOfPropertyBeingModulated">
-			<value>pitch</value>
-		</property>
-		<property name="amount">
-			<value>5</value>
-		</property>
-	</object>
 </objects>

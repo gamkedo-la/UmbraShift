@@ -21,7 +21,7 @@ public class MenuActions : MonoBehaviour
 
     private void Awake()
     {
-        FMODUnity.RuntimeManager.LoadBank("Master");
+        
         StartCoroutine(ConfigureAudio());
 
     }

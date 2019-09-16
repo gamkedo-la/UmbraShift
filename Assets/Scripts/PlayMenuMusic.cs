@@ -10,7 +10,7 @@ public class PlayMenuMusic : MonoBehaviour
 
     void Awake() 
     {
-        StartCoroutine(StartMusic());
+        
 
         //FMODUnity.RuntimeManager.GetBus("bus:/Music").setVolume(PlayerPrefs.GetFloat("MusicVolume", 75.0F));
 
@@ -20,11 +20,11 @@ public class PlayMenuMusic : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        StartCoroutine(StartMusic());
 
 
 
 
-       
     }
 
     private void OnDestroy()
@@ -38,6 +38,7 @@ public class PlayMenuMusic : MonoBehaviour
 
         if (FMODUnity.RuntimeManager.HasBankLoaded("Master"))
         {
+            Debug.Log("Master bank loaded");
             randomLoop = Random.Range(0, 3);
             menuMusicEvent = FMODUnity.RuntimeManager.CreateInstance("event:/Menu_remixes");
             menuMusicEvent.setParameterByName("Random Menu Mix", randomLoop);
@@ -47,6 +48,7 @@ public class PlayMenuMusic : MonoBehaviour
         }
         else
         {
+            Debug.Log("Master bank not loaded looping");
             StartCoroutine(StartMusic());
         }
 
