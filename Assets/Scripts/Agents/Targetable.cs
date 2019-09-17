@@ -83,7 +83,10 @@ public class Targetable : MonoBehaviour
 	public void HideTarget()
 	{
 		lockedOn = false;
-		lockOnIndicator.enabled = false;
+        if (lockOnIndicator != null)
+        {
+            lockOnIndicator.enabled = false;
+        }
 		targetImage.color = defaultColor;
 		rangeToTarget = RangeCat.None;
 		lineOfSight = LOS.Null;

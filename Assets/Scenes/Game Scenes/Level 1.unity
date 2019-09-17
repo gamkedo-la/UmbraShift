@@ -4265,6 +4265,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1046070184, guid: c240ae1cd76302848ac5736a12eef89a, type: 3}
+      propertyPath: targetImage
+      value: 
+      objectReference: {fileID: 1165814857}
+    - target: {fileID: 1046070184, guid: c240ae1cd76302848ac5736a12eef89a, type: 3}
+      propertyPath: lockOnIndicator
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c240ae1cd76302848ac5736a12eef89a, type: 3}
 --- !u!4 &788966163 stripped
@@ -5928,6 +5936,18 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0.004}
   m_TimeToStationary: 0.5
+--- !u!114 &1165814857 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6191052076115743596, guid: 3c0bd23966395474f9ae6181a70437ac,
+    type: 3}
+  m_PrefabInstance: {fileID: 208769861}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1169225610 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6174767699033432330, guid: c240ae1cd76302848ac5736a12eef89a,
@@ -8389,6 +8409,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1046070184, guid: c240ae1cd76302848ac5736a12eef89a, type: 3}
+      propertyPath: targetImage
+      value: 
+      objectReference: {fileID: 762425925}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c240ae1cd76302848ac5736a12eef89a, type: 3}
 --- !u!4 &1572291522 stripped

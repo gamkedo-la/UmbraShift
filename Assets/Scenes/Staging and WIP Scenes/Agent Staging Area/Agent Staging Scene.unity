@@ -3276,7 +3276,7 @@ GameObject:
   m_Layer: 0
   m_Name: Interaction Test Object
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -4405,11 +4405,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4251163319967169174, guid: 8e56afc9fa5248e439646fe195eb025b,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4251163319967169173, guid: 8e56afc9fa5248e439646fe195eb025b,
         type: 3}
       propertyPath: mainCameraTransform
@@ -4424,6 +4419,11 @@ PrefabInstance:
         type: 3}
       propertyPath: offsetZ
       value: -15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4251163319967169174, guid: 8e56afc9fa5248e439646fe195eb025b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e56afc9fa5248e439646fe195eb025b, type: 3}
@@ -5736,11 +5736,6 @@ PrefabInstance:
     - target: {fileID: 6325145473256817983, guid: 3c0bd23966395474f9ae6181a70437ac,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7967112360998591952, guid: 3c0bd23966395474f9ae6181a70437ac,
-        type: 3}
-      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
