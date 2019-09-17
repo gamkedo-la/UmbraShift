@@ -25,7 +25,11 @@ public class DemoLevelManager : MonoBehaviour
 	public void AdvanceLevel()
 	{
 		levelToPlay = levelToPlay + 1;
-		if (levelToPlay > sceneNames.Length - 1) { SceneManager.LoadScene(sceneNames[0]); }
+		if (levelToPlay > sceneNames.Length - 1) 
+		{
+			levelToPlay = 0;
+			SceneManager.LoadScene(sceneNames[0]);
+		}
 		else { SceneManager.LoadScene(sceneNames[levelToPlay]); }
 	}
 
