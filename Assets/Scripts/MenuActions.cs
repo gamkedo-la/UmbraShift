@@ -21,27 +21,51 @@ public class MenuActions : MonoBehaviour
 
     private void Awake()
     {
-        float masterVolume = PlayerPrefs.GetFloat("MasterVolume",1F);
-        float musicVolume = PlayerPrefs.GetFloat("MusicVolume", 1F);
-        float sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 1F);
-
-
-        musicBus = FMODUnity.RuntimeManager.GetBus("bus:/Master/Music");
-        sfxBus = FMODUnity.RuntimeManager.GetBus("bus:/Master/SoundFx");
-        masterBus = FMODUnity.RuntimeManager.GetBus("bus:/Master");
-
-
-        musicVolumeSlider.value = PlayerPrefs.GetFloat("MusicVolume", 0.8f);
-        masterVolumeSlider.value = PlayerPrefs.GetFloat("MasterVolume", 0.8f);
-        sfxVolumeSlider.value = PlayerPrefs.GetFloat("SFXVolume", 0.8f);
-
-
-
-        UpdateMasterVolume(masterVolume);
-         UpdateMusicVolume(musicVolume);
-         UpdateSoundFxVolume(sfxVolume);
+        
+        StartCoroutine(ConfigureAudio());
 
     }
+
+    IEnumerator ConfigureAudio()
+    {
+        yield return new WaitForSeconds(1);
+
+        if (FMODUnity.RuntimeManager.HasBankLoaded("Master"))
+        {
+            float masterVolume = PlayerPrefs.GetFloat("MasterVolume", 1F);
+            float musicVolume = PlayerPrefs.GetFloat("MusicVolume", 1F);
+            float sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 1F);
+
+
+            musicBus = FMODUnity.RuntimeManager.GetBus("bus:/Master/Music");
+            sfxBus = FMODUnity.RuntimeManager.GetBus("bus:/Master/SoundFx");
+            masterBus = FMODUnity.RuntimeManager.GetBus("bus:/Master");
+
+
+            musicVolumeSlider.value = PlayerPrefs.GetFloat("MusicVolume", 0.8f);
+            masterVolumeSlider.value = PlayerPrefs.GetFloat("MasterVolume", 0.8f);
+            sfxVolumeSlider.value = PlayerPrefs.GetFloat("SFXVolume", 0.8f);
+
+
+
+            UpdateMasterVolume(masterVolume);
+            UpdateMusicVolume(musicVolume);
+            UpdateSoundFxVolume(sfxVolume);
+
+        }
+        else
+        {
+            StartCoroutine(ConfigureAudio());
+        }
+
+
+    }
+
+
+
+   
+
+    
 
 
 

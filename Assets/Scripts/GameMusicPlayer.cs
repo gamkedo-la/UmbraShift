@@ -7,12 +7,13 @@ public class GameMusicPlayer : MonoBehaviour
 
 
     private FMOD.Studio.EventInstance inGameMusicEvent;
-
+    [FMODUnity.EventRef]
+    public string eventRef;
     
     // Start is called before the first frame update
     void Start()
     {
-        inGameMusicEvent = FMODUnity.RuntimeManager.CreateInstance(SoundConfiguration.instance.inGameMusic);
+        inGameMusicEvent = FMODUnity.RuntimeManager.CreateInstance(eventRef);
         inGameMusicEvent.start();
         inGameMusicEvent.release();
     }
