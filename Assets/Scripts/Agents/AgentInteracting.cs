@@ -124,7 +124,7 @@ public class AgentInteracting : MonoBehaviour
 			if (closestTargetNearMouse)
 			{
 				targetLocked = DetermineIfClosestTargetIsLocked();
-				if (targetLocked) { targetLocked.LockOn(); }
+				if (targetLocked) { targetLocked.Select(); }
 			}
 			else { targetLocked = null; }
 			SetTargetedPoint(prevClosestTargetNearMouse);
@@ -136,7 +136,11 @@ public class AgentInteracting : MonoBehaviour
 		TargetedPointFollowsMouse();
 		if (targetLocked && Vector3.Distance(mousePoint, targetLocked.TargetPos) < 1f)
 		{
-			if (Input.GetMouseButtonDown(0) && targetLocked && !targetLockisHeld) { targetLockisHeld = true; }
+			if (Input.GetMouseButtonDown(0) && targetLocked && !targetLockisHeld) 
+			{ 
+				targetLockisHeld = true;
+				targetLocked.HoldSelection();
+			}
 			else if (Input.GetMouseButtonDown(0) && targetLocked && targetLockisHeld) { Interact(); }
 		}
 		if (Input.GetMouseButtonDown(1) && targetLockisHeld) { targetLockisHeld = false; }
@@ -148,7 +152,7 @@ public class AgentInteracting : MonoBehaviour
 		if (targetLocked)
 		{
 			targetedPoint = closestTargetNearMouse.TargetPos;
-			targetLocked.LockOn();
+			targetLocked.Select();
 			if (prevClosestTargetNearMouse && targetLocked != prevClosestTargetNearMouse)
 			{
 				prevClosestTargetNearMouse.LockedOn = false;

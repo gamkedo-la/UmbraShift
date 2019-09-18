@@ -143,7 +143,7 @@ public class AgentShooting : MonoBehaviour
 			if (closestTargetNearMouse)
 			{
 				targetLocked = DetermineIfClosestTargetIsLocked();
-				if (targetLocked) { targetLocked.LockOn(); }
+				if (targetLocked) { targetLocked.Select(); }
 			}
 			else { targetLocked = null; }
 			int accuracy = 0;
@@ -292,7 +292,7 @@ public class AgentShooting : MonoBehaviour
 		if (targetLocked)
 		{
 			targetedPoint = closestTargetNearMouse.TargetPos;
-			targetLocked.LockOn();
+			targetLocked.Select();
 			if (prevClosestTargetNearMouse && targetLocked != prevClosestTargetNearMouse)
 			{
 				prevClosestTargetNearMouse.LockedOn = false;

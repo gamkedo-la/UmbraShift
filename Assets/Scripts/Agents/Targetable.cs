@@ -5,24 +5,24 @@ using UnityEngine.UI;
 
 public class Targetable : MonoBehaviour
 {
-	[SerializeField] private Image targetImage;
 	[SerializeField] public bool Shootable;
 	[SerializeField] public bool Interactable;
 	[SerializeField] public bool Hackable;
-	[SerializeField] public float height;
+	[SerializeField] private Image targetImage;
 	[SerializeField] public Image lockOnIndicator;
 	[SerializeField] public Text info;
 
-	public bool lockedOn = false;
-	public bool LockedOn { get { return lockedOn; } set { lockedOn = value; } }
+	private bool lockedOn = false;
+	[HideInInspector] public bool LockedOn { get { return lockedOn; } set { lockedOn = value; } }
 	private bool validTarget = true;
-	public bool ValidTarget { get { return validTarget; } }
-	public enum RangeCat { None, Optimum, Long, Exceeded }
-	public RangeCat rangeToTarget;
-	public enum LOS { Null, Clear, Cover, Blocked }
-	public LOS lineOfSight = LOS.Clear;
-	public float distance;
+	[HideInInspector] public float distance;
+	[HideInInspector] public bool ValidTarget { get { return validTarget; } }
+	[HideInInspector] public enum RangeCat { None, Optimum, Long, Exceeded }
+	[HideInInspector] public RangeCat rangeToTarget;
+	[HideInInspector] public enum LOS { Null, Clear, Cover, Blocked }
+	[HideInInspector] public LOS lineOfSight = LOS.Clear;
 
+	public float height = 1f;
 	private Vector3 targetPos;
 	public Vector3 TargetPos { get { return targetPos; } }
 	private Vector2 targetPositionInScreenCoord;
@@ -30,12 +30,16 @@ public class Targetable : MonoBehaviour
 	public Vector3 InfoPos { get { return infoPos; } }
 	private Camera cam;
 	private Color defaultColor;
+	private Color selectedColor;
+	private enum SelectionStatus { Clear, Selected, Held, Activated}
+	private SelectionStatus selected = SelectionStatus.Clear;
 
 	private void Start()
 	{
 		targetPos = UpdateTargetPos();
 		cam = Camera.main;
 		defaultColor = targetImage.color;
+		selectedColor = Color.green;
 	}
 
 	private Vector3 UpdateTargetPos()
@@ -47,25 +51,31 @@ public class Targetable : MonoBehaviour
 
 	private void Update()
 	{
-		bool posInfoUpdated = false;		
-		if (lockedOn && lockOnIndicator != null)
+		targetPos = UpdateTargetPos();
+		targetPositionInScreenCoord = cam.WorldToScreenPoint(targetPos);
+		if (validTarget && targetImage) 
+		{ 
+			targetImage.rectTransform.position = targetPositionInScreenCoord; 
+		}
+		if (selected == SelectionStatus.Selected && lockOnIndicator) 
 		{
-			if (!posInfoUpdated) { UpdatePositionInfo(); posInfoUpdated = true; }
 			lockOnIndicator.enabled = true;
 			lockOnIndicator.rectTransform.position = targetPositionInScreenCoord;
 		}
-		else if (!lockedOn && lockOnIndicator && lockOnIndicator.enabled) { lockOnIndicator.enabled = false; }
-		if (validTarget && targetImage)
+		if (selected==SelectionStatus.Clear && lockOnIndicator && lockOnIndicator.enabled) 
 		{
-			if (!posInfoUpdated) { UpdatePositionInfo(); posInfoUpdated = true; }
-			targetImage.rectTransform.position = targetPositionInScreenCoord;
+			lockOnIndicator.color = defaultColor;
+			lockOnIndicator.enabled = false; 
 		}
+		//if (lockedOn && lockOnIndicator && selected == SelectionStatus.Selected && 
+		//	Input.GetMouseButtonDown(0) && lockOnIndicator.enabled &&
+		//	Vector3.Distance(Input.mousePosition, cam.WorldToScreenPoint(targetPos)) < 1f) 
+		//{
+		//	selected = SelectionStatus.Held;
+		//	lockOnIndicator.color = Color.green;
+		//}
 	}
 
-	private void UpdatePositionInfo()
-	{
-		targetPositionInScreenCoord = cam.WorldToScreenPoint(targetPos);
-	}
 
 	public Vector3 ShowTarget()
 	{
@@ -75,24 +85,33 @@ public class Targetable : MonoBehaviour
 		return transform.position;
 	}
 
-	public void LockOn()
+	public void Select()
 	{
 		lockedOn = true;
+		selected = SelectionStatus.Selected;
+	}
+
+	public void HoldSelection()
+	{
+		selected = SelectionStatus.Held;
+		lockOnIndicator.color = Color.green;
 	}
 
 	public void HideTarget()
 	{
 		lockedOn = false;
-        if (lockOnIndicator != null)
+		if (lockOnIndicator != null)
         {
             lockOnIndicator.enabled = false;
         }
 		targetImage.color = defaultColor;
+		lockOnIndicator.color = defaultColor;
 		rangeToTarget = RangeCat.None;
 		lineOfSight = LOS.Null;
 		distance = 0;
 		targetImage.enabled = false;
 		validTarget = false;
+		
 		
 	}
 
@@ -105,6 +124,8 @@ public class Targetable : MonoBehaviour
 	{
 		targetImage.color = newColor;
 	}
+
+	
 	
 
 }
