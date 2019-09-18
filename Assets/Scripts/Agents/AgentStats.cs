@@ -17,7 +17,7 @@ public class AgentStats : MonoBehaviour
 
 	private int movementPointsPerAction = 20;
 	public int MovementPointsPerAction { get { return movementPointsPerAction; } }
-	private float movementSpeed = 7f;
+	[SerializeField] private float movementSpeed = 7f;
 	public float MovementSpeed { get { return movementSpeed; } }
 	public WeaponDesign EquippedWeapon { get{ return equippedWeapon; } }
 

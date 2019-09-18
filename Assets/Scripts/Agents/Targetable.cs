@@ -40,6 +40,7 @@ public class Targetable : MonoBehaviour
 		cam = Camera.main;
 		defaultColor = targetImage.color;
 		selectionHoldColor = Color.green;
+		if (!lockOnIndicator) { Debug.LogWarning("custom: The " + gameObject.name + " has no lock-on indicator!"); }
 	}
 
 	private Vector3 UpdateTargetPos()
@@ -101,8 +102,8 @@ public class Targetable : MonoBehaviour
 	{
 		lockedOn = false;
 		selected = SelectionStatus.Clear;
-		lockOnIndicator.color = defaultColor;
-		lockOnIndicator.enabled = false;
+		this.lockOnIndicator.color = defaultColor;
+		this.lockOnIndicator.enabled = false;
 	}
 
 	public void HideTarget()

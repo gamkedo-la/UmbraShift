@@ -137,7 +137,7 @@ public class AgentInteracting : MonoBehaviour
 		if (!rotatingNow) { RotateTowardTargetedPoint(); }
 		TargetedPointFollowsMouse();
 		
-		if (targetLocked && Vector3.Distance(mousePoint, targetLocked.TargetPos) < 1f)
+		if (targetLocked && Vector3.Distance(mousePoint, targetLocked.TargetPos) < 10f)
 		{
 			if (!interacting && Input.GetMouseButtonDown(0) && targetLocked && !targetLockisHeld) 
 			{ 
