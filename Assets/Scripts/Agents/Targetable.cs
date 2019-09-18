@@ -13,7 +13,7 @@ public class Targetable : MonoBehaviour
 	[SerializeField] public Text info;
 
 	private bool lockedOn = false;
-	[HideInInspector] public bool LockedOn { get { return lockedOn; } set { lockedOn = value; } }
+	[HideInInspector] public bool LockedOn { get { return lockedOn; } }
 	private bool validTarget = true;
 	[HideInInspector] public float distance;
 	[HideInInspector] public bool ValidTarget { get { return validTarget; } }
@@ -22,7 +22,7 @@ public class Targetable : MonoBehaviour
 	[HideInInspector] public enum LOS { Null, Clear, Cover, Blocked }
 	[HideInInspector] public LOS lineOfSight = LOS.Clear;
 
-	public float height = 1f;
+	[HideInInspector]public float height = 1f;
 	private Vector3 targetPos;
 	public Vector3 TargetPos { get { return targetPos; } }
 	private Vector2 targetPositionInScreenCoord;
@@ -30,16 +30,16 @@ public class Targetable : MonoBehaviour
 	public Vector3 InfoPos { get { return infoPos; } }
 	private Camera cam;
 	private Color defaultColor;
-	private Color selectedColor;
+	private Color selectionHoldColor;
 	private enum SelectionStatus { Clear, Selected, Held, Activated}
 	private SelectionStatus selected = SelectionStatus.Clear;
 
-	private void Start()
+	private void Awake()
 	{
 		targetPos = UpdateTargetPos();
 		cam = Camera.main;
 		defaultColor = targetImage.color;
-		selectedColor = Color.green;
+		selectionHoldColor = Color.green;
 	}
 
 	private Vector3 UpdateTargetPos()
@@ -94,7 +94,15 @@ public class Targetable : MonoBehaviour
 	public void HoldSelection()
 	{
 		selected = SelectionStatus.Held;
-		lockOnIndicator.color = Color.green;
+		lockOnIndicator.color = selectionHoldColor;
+	}
+
+	public void SelectionClear()
+	{
+		lockedOn = false;
+		selected = SelectionStatus.Clear;
+		lockOnIndicator.color = defaultColor;
+		lockOnIndicator.enabled = false;
 	}
 
 	public void HideTarget()
@@ -102,10 +110,10 @@ public class Targetable : MonoBehaviour
 		lockedOn = false;
 		if (lockOnIndicator != null)
         {
-            lockOnIndicator.enabled = false;
-        }
+			lockOnIndicator.color = defaultColor;
+			lockOnIndicator.enabled = false;
+		}
 		targetImage.color = defaultColor;
-		lockOnIndicator.color = defaultColor;
 		rangeToTarget = RangeCat.None;
 		lineOfSight = LOS.Null;
 		distance = 0;

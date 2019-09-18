@@ -99,7 +99,7 @@ public class AgentShooting : MonoBehaviour
 
 	private void EndShooting()
 	{
-		closestTargetNearMouse.LockedOn = false;
+		closestTargetNearMouse.SelectionClear();
 		ShowAccuracy(0, closestTargetNearMouse, false);
 		shootingSystemInUse = false;
 		turnManager.ActiveCharacter.actionManager.ReportEndOfAction();
@@ -295,7 +295,7 @@ public class AgentShooting : MonoBehaviour
 			targetLocked.Select();
 			if (prevClosestTargetNearMouse && targetLocked != prevClosestTargetNearMouse)
 			{
-				prevClosestTargetNearMouse.LockedOn = false;
+				prevClosestTargetNearMouse.SelectionClear();
 				ShowAccuracy(0, prevClosestTargetNearMouse, false);
 			}
 		}
@@ -304,13 +304,13 @@ public class AgentShooting : MonoBehaviour
 			targetedPoint = mousePoint;
 			if (prevClosestTargetNearMouse) 
 			{ 
-				prevClosestTargetNearMouse.LockedOn = false;
+				prevClosestTargetNearMouse.SelectionClear();
 				AgentLocalUI localUI = prevClosestTargetNearMouse.gameObject.GetComponent<AgentLocalUI>();
 				if (localUI) { localUI.Reset(); }
 			}
 			if (closestTargetNearMouse) 
 			{ 
-				closestTargetNearMouse.LockedOn = false;
+				closestTargetNearMouse.SelectionClear();
 				AgentLocalUI localUI = closestTargetNearMouse.gameObject.GetComponent<AgentLocalUI>();
 				if (localUI) { localUI.Reset(); }
 			}
@@ -632,7 +632,7 @@ public class AgentShooting : MonoBehaviour
 		Targetable[] allTargets = FindObjectsOfType<Targetable>();
 		foreach (Targetable target in allTargets)
 		{
-			target.LockedOn = false;
+			target.SelectionClear();
 			target.SetColor();
 			target.HideTarget();
 		}

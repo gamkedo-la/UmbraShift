@@ -27,6 +27,7 @@ public class AgentInteracting : MonoBehaviour
 	Targetable selfTarget;
 	private bool targetLockisHeld = false;
 	private float FIELD_OF_VIEW = 30f;
+	private bool interacting = false;
 
 	private void Start()
     {
@@ -85,12 +86,12 @@ public class AgentInteracting : MonoBehaviour
 
 	public void Interact()
 	{
+		ActionComplete();
 		if (targetLocked) 
 		{
 			IInteractable interactable = targetLocked.gameObject.GetComponentInChildren<IInteractable>();
 			interactable.Interact();
 		}
-		ActionComplete();
 	}
 
 	private void ActionComplete()
@@ -102,6 +103,7 @@ public class AgentInteracting : MonoBehaviour
 	public void ActionContinue()
 	{
 		Interact();
+		ActionComplete();
 	}
 
 
@@ -134,16 +136,26 @@ public class AgentInteracting : MonoBehaviour
 		DrawLineToTargetedPoint();
 		if (!rotatingNow) { RotateTowardTargetedPoint(); }
 		TargetedPointFollowsMouse();
+		
 		if (targetLocked && Vector3.Distance(mousePoint, targetLocked.TargetPos) < 1f)
 		{
-			if (Input.GetMouseButtonDown(0) && targetLocked && !targetLockisHeld) 
+			if (!interacting && Input.GetMouseButtonDown(0) && targetLocked && !targetLockisHeld) 
 			{ 
 				targetLockisHeld = true;
 				targetLocked.HoldSelection();
 			}
-			else if (Input.GetMouseButtonDown(0) && targetLocked && targetLockisHeld) { Interact(); }
+			else if (!interacting && Input.GetMouseButtonDown(0) && targetLocked && targetLockisHeld) 
+			{
+				interacting = true;
+				Interact(); 
+				targetLocked.SelectionClear(); 
+			}
 		}
-		if (Input.GetMouseButtonDown(1) && targetLockisHeld) { targetLockisHeld = false; }
+		if (Input.GetMouseButtonDown(1) && targetLockisHeld) 
+		{ 
+			targetLockisHeld = false;
+			targetLocked.Select();
+		}
 		
 	}
 
@@ -155,7 +167,7 @@ public class AgentInteracting : MonoBehaviour
 			targetLocked.Select();
 			if (prevClosestTargetNearMouse && targetLocked != prevClosestTargetNearMouse)
 			{
-				prevClosestTargetNearMouse.LockedOn = false;
+				prevClosestTargetNearMouse.SelectionClear();
 			}
 		}
 		else
@@ -163,13 +175,13 @@ public class AgentInteracting : MonoBehaviour
 			targetedPoint = mousePoint;
 			if (prevClosestTargetNearMouse) 
 			{ 
-				prevClosestTargetNearMouse.LockedOn = false;
+				prevClosestTargetNearMouse.SelectionClear();
 				AgentLocalUI localUI = prevClosestTargetNearMouse.gameObject.GetComponent<AgentLocalUI>();
 				if (localUI) { localUI.Reset(); }
 			}
 			if (closestTargetNearMouse) 
 			{ 
-				closestTargetNearMouse.LockedOn = false;
+				closestTargetNearMouse.SelectionClear();
 				AgentLocalUI localUI = closestTargetNearMouse.gameObject.GetComponent<AgentLocalUI>();
 				if (localUI) { localUI.Reset(); }
 			}
@@ -421,7 +433,7 @@ public class AgentInteracting : MonoBehaviour
 		Targetable[] allTargets = FindObjectsOfType<Targetable>();
 		foreach (Targetable target in allTargets)
 		{
-			target.LockedOn = false;
+			target.SelectionClear();
 			target.SetColor();
 			target.HideTarget();
 		}
