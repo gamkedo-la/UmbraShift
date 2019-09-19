@@ -28,6 +28,7 @@ public class AgentLocalUI : MonoBehaviour
 
 	private void Update()
 	{
+		if (Input.GetKey(KeyCode.J)) { ShowDamage(5); }
 		if (showName == true)
 								{
 								nameText.enabled = true;
@@ -72,6 +73,32 @@ public class AgentLocalUI : MonoBehaviour
 		obj.fontSize = size;
 		obj.text = content;
 		return showTheText;
+	}
+
+	public void ShowDamage (int damageNum)
+	{
+		StartCoroutine("ShowScrollingText", damageNum);
+	}
+
+	private IEnumerator ShowScrollingText(int damageNum)
+	{
+		feedbackText.color = Color.red;
+		feedbackText.fontSize = 12;
+		feedbackText.text = "-" + damageNum.ToString();
+		feedbackText.enabled = true;
+		float height = 0f;
+		float counter = 0f;
+		float speed = 3f;
+		float delay = 0.75f;
+		while (counter<delay)
+		{
+			counter += Time.deltaTime;
+			height = height + (Time.deltaTime * speed);
+			Vector3 pos = transform.position + (Vector3.up * (2f + height));
+			feedbackText.rectTransform.position = cam.WorldToScreenPoint(pos);
+			yield return null;
+		}
+		feedbackText.enabled = false;
 	}
 
 }
