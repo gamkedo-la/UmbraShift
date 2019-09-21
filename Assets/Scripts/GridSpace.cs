@@ -17,6 +17,9 @@ public class GridSpace : MonoBehaviour
 	private RaycastHit _hitInfo;
 	static private bool showingGridSquare = false;
 	public static float gridSize = .6f;
+	[SerializeField] bool showVirtualGrid = false;
+	private Vector3 TopLeft;
+	private Vector3 BottomRight;
 
 	void Start()
     {
@@ -24,10 +27,8 @@ public class GridSpace : MonoBehaviour
 		RectTransform rectTran = GetComponent<RectTransform>();
 		rectTran.sizeDelta *= gridSize;
 		squareImage = GetComponentInChildren<Image>();
-		//squareImage.transform.localScale = new Vector3(
-		//									squareImage.transform.localScale.x * gridSize,
-		//									squareImage.transform.localScale.y * gridSize,
-		//									squareImage.transform.localScale.z);
+
+		MeshRenderer rend = transform.parent.GetComponent<MeshRenderer>();
 		string[] validLayerNames = new string[] { "UI", "Floor" };
 		LayerMask validLayers = LayerMask.GetMask(validLayerNames);
 		Update();
@@ -44,6 +45,10 @@ public class GridSpace : MonoBehaviour
 
 	void Update()
 	{
+		if (Debug.isDebugBuild && Input.GetKeyDown(KeyCode.PageUp))
+		{ 
+			showVirtualGrid = !showVirtualGrid; 
+		}
 		if (showingGridSquare && CheckForValidGridSpace("Floor"))
 		{
 			squareImage.enabled = true;
@@ -70,7 +75,7 @@ public class GridSpace : MonoBehaviour
 
 	private void MoveSquareSpaceTo(Vector3 gridCoord)
 	{
-		gridCoord.y += 0.2f;
+		gridCoord.y += 0.02f;
 		this.gameObject.transform.position = gridCoord;
 	}
 
@@ -110,5 +115,41 @@ public class GridSpace : MonoBehaviour
 		}
 	}
 
+
+	public void OnDrawGizmos()
+	{
+		if (showVirtualGrid)
+		{
+			MeshRenderer mesh = transform.parent.GetComponent<MeshRenderer>();
+			Vector3 ext = mesh.bounds.extents;
+			Vector3 pos = mesh.transform.position;
+			pos.x = pos.x - (gridSize * 1.16f);
+			pos.z = pos.z - (gridSize * 1.84f);
+			Vector3 TopLeft = new Vector3(pos.x - ext.x, pos.y + ext.y, pos.z + ext.z);
+			Vector3 TopRight = new Vector3(pos.x + ext.x, pos.y + ext.y, pos.z + ext.z);
+			Vector3 BottomLeft = new Vector3(pos.x - ext.x, pos.y + ext.y, pos.z - ext.z);
+			Vector3 BottomRight = new Vector3(pos.x + ext.x, pos.y + ext.y, pos.z - ext.z);
+			Gizmos.color = Color.blue;
+			int columns = (int)(Vector3.Distance(TopLeft, TopRight) / gridSize);
+			int rows = (int)(Vector3.Distance(TopLeft, BottomLeft) / gridSize);
+			Vector3 start = TopLeft;
+			Vector3 end = TopRight;
+			for (int i = 0; i < rows; i++)
+			{
+				Gizmos.DrawLine(start, end);
+				start.z = start.z - gridSize;
+				end.z = end.z - gridSize;
+			}
+			start = TopLeft;
+			end = BottomLeft;
+			for (int j = 0; j < columns; j++)
+			{
+				Gizmos.DrawLine(start, end);
+				start.x = start.x + gridSize;
+				end.x = end.x + gridSize;
+			}
+
+		}
+	}
 
 }
