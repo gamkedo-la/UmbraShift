@@ -298,7 +298,7 @@ public class AgentMovement : MonoBehaviour
 		startPosition.y = testPosition.y + 1;
 		testPosition.y = testPosition.y + 1;
 		Vector3 ray = testPosition - startPosition;
-		RaycastHit[] hitArray = Physics.SphereCastAll(startPosition, TESTING_WIDTH, ray, ray.magnitude,movementLayerMask);
+		RaycastHit[] hitArray = Physics.SphereCastAll(startPosition, TESTING_WIDTH * GridSpace.gridSize, ray, ray.magnitude,movementLayerMask);
 		List<RaycastHit> hitList = new List<RaycastHit>();
 
 		foreach (RaycastHit hit in hitArray)
