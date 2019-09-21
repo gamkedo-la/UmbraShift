@@ -91,9 +91,29 @@ public class PauseScreenActions : MonoBehaviour
     }
     public void ExitToMainMenu()
     {
-        SceneManager.LoadScene(0);
-    }
 
+        FMODUnity.RuntimeManager.LoadBank("Master");
+        StartCoroutine(checkBankLoading());
+       
+    }
+    IEnumerator checkBankLoading()
+    {
+        yield return new WaitForSeconds(1);
+
+        if (FMODUnity.RuntimeManager.HasBankLoaded("Master"))
+        {
+            Debug.Log("Bank Loaded starting Scene");
+            SceneManager.LoadScene("MainMenu");
+
+        }
+        else
+        {
+            Debug.Log("Master bank not loaded looping");
+            StartCoroutine(checkBankLoading());
+        }
+
+
+    }
 
 
 
