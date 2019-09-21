@@ -22,21 +22,50 @@ public class LvlLoader : MonoBehaviour
 		}
 	}
 
-	public void LoadNextScene()
-	{
-		//Identifying the current scene and moving on to the scene that directly follows
-		SceneManager.LoadScene(currentSceneIndex + 1);
+
+
+    IEnumerator ChangeScene(int buildID)
+    {
+        yield return new WaitForSeconds(1);
+
+        if (FMODUnity.RuntimeManager.HasBankLoaded("Master"))
+        {
+            SceneManager.LoadScene(buildID);
+
+        }
+        else
+        {
+            Debug.Log("Master bank not loaded looping");
+            StartCoroutine(ChangeScene(buildID));
+        }
+
+
+    }
+
+
+
+
+
+    public void LoadNextScene()
+    {
+        
+        //Identifying the current scene and moving on to the scene that directly follows
+        SceneManager.LoadScene(currentSceneIndex + 1);
 	}
 
 	public void LoadCharGenScene()
-	{
-		SceneManager.LoadScene(charGeneration);
+    {
+        FMODUnity.RuntimeManager.LoadBank("Master");
+        //SceneManager.LoadScene(charGeneration);
+        StartCoroutine(ChangeScene(charGeneration));
 	}
 
 	public void LoadBarScene()
-	{
-		SceneManager.LoadScene(barScene);
-	}
+    {
+        FMODUnity.RuntimeManager.LoadBank("Master");
+        //SceneManager.LoadScene(barScene);
+        StartCoroutine(ChangeScene(barScene));
+    }
 
 	
 }

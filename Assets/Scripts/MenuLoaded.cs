@@ -14,7 +14,7 @@ public class MenuLoaded : MonoBehaviour
 
     void Start()
     {
-       
+        FMODUnity.RuntimeManager.LoadBank("Master");
         StartCoroutine(checkBankLoading());
     }
 
