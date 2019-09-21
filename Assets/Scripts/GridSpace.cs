@@ -16,12 +16,18 @@ public class GridSpace : MonoBehaviour
 	private Image squareImage;
 	private RaycastHit _hitInfo;
 	static private bool showingGridSquare = false;
-
+	public static float gridSize = .6f;
 
 	void Start()
     {
 		UpdateWorldCamera();
+		RectTransform rectTran = GetComponent<RectTransform>();
+		rectTran.sizeDelta *= gridSize;
 		squareImage = GetComponentInChildren<Image>();
+		//squareImage.transform.localScale = new Vector3(
+		//									squareImage.transform.localScale.x * gridSize,
+		//									squareImage.transform.localScale.y * gridSize,
+		//									squareImage.transform.localScale.z);
 		string[] validLayerNames = new string[] { "UI", "Floor" };
 		LayerMask validLayers = LayerMask.GetMask(validLayerNames);
 		Update();
@@ -70,12 +76,20 @@ public class GridSpace : MonoBehaviour
 
 	static public Vector3 GetGridCoord (Vector3 coord)
 	{
-		float x = Mathf.RoundToInt(coord.x);
-		float gridSize = 1f;
-		if ((x % gridSize) != 0) { x = x + 1; }
+		float x = coord.x / gridSize;
+		x = Mathf.Round(x);
+		x = x * gridSize;
 		float y = coord.y;
-		float z = Mathf.RoundToInt(coord.z);
-		if ((z % gridSize) != 0) { z = z + 1; }
+		float z = coord.z / gridSize;
+		z = Mathf.Round(z);
+		z = z * gridSize;
+
+		//float gridSize = 1f;
+		//float x = Mathf.RoundToInt(coord.x);
+		//if ((x % gridSize) != 0) { x = x + 1; }
+		//float y = coord.y;
+		//float z = Mathf.RoundToInt(coord.z);
+		//if ((z % gridSize) != 0) { z = z + 1; }
 		return new Vector3(x, y, z);
 	}
 
