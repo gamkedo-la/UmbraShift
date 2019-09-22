@@ -4,11 +4,12 @@ using UnityEngine;
 
 
 public enum Quality { None, Terrible=-20, Average=-10, Effective=10, Superior=20 }
-public enum Hinderance { None, Negligable, Average, Hindering, Severe}
+public enum Damage { None=0, Terrible=4, Average=8, Effective=12, Superior=16}
+//public enum Hinderance { None, Negligable, Average, Hindering, Severe}
 public enum MaxRange { Adjacent = 2, Short = 12, Medium = 21, Long = 30 }
 public enum AmmoType { Type_IV_Biogel_Rounds }
-public enum FiringMode { Single_Shot_Only, Burst_Fire}
-public enum TargetingMode { Direct_Fire_Only, Aimed_Shot, Smartlink_Equipped}
+//public enum FiringMode { Single_Shot_Only, Burst_Fire}
+//public enum TargetingMode { Direct_Fire_Only, Aimed_Shot, Smartlink_Equipped}
 public enum CorpName { Omegatech_Munitions, AHO_AeroSpace, Tsu_Mura_Technology_Multinational, Kura_Industrial, Evotech_Global,
 						NewLink_Research_and_Medical, MilDev_Unlimited, Ying_Integrated_Cybernetics, TNW_Entertainment,
 						ExaCorp_Technologies, Sabine_Corporation, Markell_Technology_Consolidated, Qiu_Armament, SDT_Corporation}
@@ -26,13 +27,13 @@ public class WeaponDesign : ScriptableObject
 	public AmmoType ammo = AmmoType.Type_IV_Biogel_Rounds;
 	public GameObject projectilePrefab;
 	[Space]
-	public int cost = 60;
+	public int cost = 0;
 	[Space]
-	public Quality Damage = Quality.Terrible;
-	public MaxRange Range = MaxRange.Short;
-	public Quality Accuracy = Quality.Average;
-	public TargetingMode Targeting = TargetingMode.Direct_Fire_Only;
-	[Space]
-	public FiringMode firingMode = FiringMode.Single_Shot_Only;
-	public Hinderance Recoil = Hinderance.Negligable;
+	public Damage damage = Damage.Terrible;
+	public MaxRange range = MaxRange.Short;
+	public Quality accuracy = Quality.Average;
+	//public TargetingMode targeting = TargetingMode.Direct_Fire_Only;
+
+	//public FiringMode firingMode = FiringMode.Single_Shot_Only;
+	//public Hinderance recoil = Hinderance.Negligable;
 }

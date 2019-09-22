@@ -102,8 +102,11 @@ public class Targetable : MonoBehaviour
 	{
 		lockedOn = false;
 		selected = SelectionStatus.Clear;
-		this.lockOnIndicator.color = defaultColor;
-		this.lockOnIndicator.enabled = false;
+		if (this.lockOnIndicator)
+		{
+			this.lockOnIndicator.color = defaultColor;
+			this.lockOnIndicator.enabled = false;
+		}
 	}
 
 	public void HideTarget()

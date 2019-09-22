@@ -27,6 +27,7 @@ public class AgentStats : MonoBehaviour
 	public string CharacterName { get { return characterName; } }
 
 	public AgentActionManager actionManager;
+	private AgentLocalUI localUI;
 
 
 	public Stat Strength = new Stat();
@@ -38,23 +39,37 @@ public class AgentStats : MonoBehaviour
 	public Stat Medicine = new Stat();
 	public Stat FastTalking = new Stat();
 
-
-	
+	[SerializeField] private int baseHitpoints = 15;
+	[SerializeField] private int bonusHitpointsPerStrStat = 5;
+	private int currentHitpoints = 50;
+	public int CurrentHitpoints { get { return currentHitpoints; } }
+	private int maxHitpoints = 50;
+	public int MaxHitpoints { get { return maxHitpoints; } }
+	private float hitpointPercentage = 1;
+	public float HitpointPercentage { get{ return hitpointPercentage; } }
 	
 	void Start()
 	{
 		agentMovement = GetComponent<AgentMovement>();
 		actionManager = GetComponent<AgentActionManager>();
-		currentActionPoints = maxActionPoints;
-		StartCoroutine("DelayedUpdate");
-		DetermineInitialStats();
+		localUI = GetComponent<AgentLocalUI>();
 		if (defaultWeapon && !equippedWeapon) { equippedWeapon = defaultWeapon; }
+		currentActionPoints = maxActionPoints;
+		DetermineInitialStats();
+		StartCoroutine("DelayedUpdate");
 	}
 
 	private void DetermineInitialStats()
 	{
+		CalculateHitpoints();
 		// fill stats from character generation, if applicable
-		
+	}
+
+	private void CalculateHitpoints()
+	{
+		maxHitpoints = baseHitpoints + (Strength.GetValue() * bonusHitpointsPerStrStat);
+		currentHitpoints = maxHitpoints;
+		hitpointPercentage = currentHitpoints / maxHitpoints;
 	}
 
 	private IEnumerator DelayedUpdate()
@@ -68,17 +83,20 @@ public class AgentStats : MonoBehaviour
 		}
 	}
 
-
 	public Sprite GetPortraitImage() { return portraitImage; }
 	public string GetCharacterName() { return characterName; }
 	public AgentMovement GetAgentMovement() { return agentMovement; }
 	public int GetCurrentActionPoints() { return currentActionPoints; }
-	public int GetMovementPointsPerAction()	{ return movementPointsPerAction; }
-	
+	public int GetMovementPointsPerAction() { return movementPointsPerAction; }
+
 	public void AdjustActionPoints (int amt)
 	{
 		currentActionPoints = currentActionPoints + amt;
 	}
 	
-    
+    public void TakeDamage (int dmg)
+	{
+		currentHitpoints = currentHitpoints - dmg;
+		hitpointPercentage = (float)currentHitpoints / (float)maxHitpoints;
+	}
 }

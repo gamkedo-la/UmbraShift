@@ -13,6 +13,7 @@ public class AgentLocalUI : MonoBehaviour
 	[SerializeField] private Text feedbackText;
 	[SerializeField] private Text coverText;
 	[SerializeField] private Image lockedOnIndicator;
+	[SerializeField] private Image healthBar;
 	private Camera cam;
 	private bool showName;
 	private bool showInfo;
@@ -24,11 +25,25 @@ public class AgentLocalUI : MonoBehaviour
 		coverText.text = "Cover Penalty";
 		coverText.color = Color.red;
 		coverText.enabled = false;
+		UpdateHealthBar(1f);
+		StartCoroutine("DelayedStart");
+	}
+
+	private IEnumerator DelayedStart()
+	{
+		yield return new WaitForSeconds(1f);
+		AgentStats agentStats = GetComponent<AgentStats>();
+		if (agentStats) { UpdateHealthBar(agentStats.HitpointPercentage);}
+		else { Debug.LogWarning(gameObject.name + " is missing an AgentStats component."); }
 	}
 
 	private void Update()
 	{
-		if (Input.GetKey(KeyCode.J)) { ShowDamage(5); }
+		if (healthBar)
+								{
+									Vector3 healthBarPos = transform.position + (Vector3.up * 1.5f);
+									healthBar.rectTransform.parent.position = cam.WorldToScreenPoint(healthBarPos);
+								}
 		if (showName == true)
 								{
 								nameText.enabled = true;
@@ -75,6 +90,16 @@ public class AgentLocalUI : MonoBehaviour
 		return showTheText;
 	}
 
+	public void UpdateHealthBar(float percentage)
+	{
+		percentage = Mathf.Clamp(percentage, 0f, 1f);
+		if (healthBar)
+		{
+			healthBar.fillAmount = percentage;
+		}
+		else { Debug.LogWarning(gameObject.name + " is missing a HealthBar property on its LocalUI component."); }
+	}
+
 	public void ShowDamage (int damageNum)
 	{
 		StartCoroutine("ShowScrollingText", damageNum);
@@ -83,7 +108,7 @@ public class AgentLocalUI : MonoBehaviour
 	private IEnumerator ShowScrollingText(int damageNum)
 	{
 		feedbackText.color = Color.red;
-		feedbackText.fontSize = 12;
+		feedbackText.fontSize = 16;
 		feedbackText.text = "-" + damageNum.ToString();
 		feedbackText.enabled = true;
 		float height = 0f;

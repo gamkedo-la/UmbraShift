@@ -42,6 +42,7 @@ public class AgentShooting : MonoBehaviour
 	Targetable selfTarget;
 	private bool targetLockisHeld = false;
 	private float shotsToResolve = Mathf.Infinity;
+	private int accuracy = 0;
 
 	private void Start()
     {
@@ -65,7 +66,6 @@ public class AgentShooting : MonoBehaviour
     private void Update()
     {
         if (shootingMode==ShootingMode.Aiming) { AimingUpdate(); }
-		else if (shootingMode==ShootingMode.Firing) { FiringUpdate(); }
     }
 
 	public void ActionStarted()
@@ -91,6 +91,12 @@ public class AgentShooting : MonoBehaviour
 		EndShooting();
 	}
 
+	public void ActionComplete()
+	{
+		ResetVariables();
+		EndShooting();
+	}
+
 	public void Undo()
 	{
 		if (targetLockisHeld) { targetLockisHeld = false; }
@@ -101,6 +107,7 @@ public class AgentShooting : MonoBehaviour
 	{
 		closestTargetNearMouse.SelectionClear();
 		ShowAccuracy(0, closestTargetNearMouse, false);
+		animator.SetBool("isPistolDrawn", false);
 		shootingSystemInUse = false;
 		turnManager.ActiveCharacter.actionManager.ReportEndOfAction();
 	}
@@ -120,7 +127,10 @@ public class AgentShooting : MonoBehaviour
 		mouseLineBlocked.enabled = false;
 		ShowAccuracy(0, targetLocked, false);
 		StartCoroutine("ShootProjectiles");
+		StartCoroutine("DelayedFinish");
 	}
+
+
 
 	private void AimingUpdate()
 	{
@@ -146,7 +156,7 @@ public class AgentShooting : MonoBehaviour
 				if (targetLocked) { targetLocked.Select(); }
 			}
 			else { targetLocked = null; }
-			int accuracy = 0;
+			accuracy = 0;
 			bool targetHasCover = false;
 			List<RaycastHit> colliderHitList = new List<RaycastHit>();
 			if (targetLocked)
@@ -176,17 +186,29 @@ public class AgentShooting : MonoBehaviour
 
 	void ShootProjectile()
 	{
-		GameObject projectile = Instantiate(weapon.projectilePrefab, firePoint.position, Quaternion.LookRotation(transform.forward));
-		projectile.transform.LookAt(targetLocked.transform);		
+		GameObject projectileGO = Instantiate(weapon.projectilePrefab, firePoint.position, Quaternion.LookRotation(transform.forward));
+		projectileGO.transform.LookAt(targetLocked.transform);
+		Projectile projectile = projectileGO.GetComponent<Projectile>();
+		projectile.SetShooter(selfColliders);
+		projectile.SetTarget(targetLocked);
+		projectile.SetWeapon(weapon);
+		projectile.HitTarget(DetermineHit());
+	}
+
+	private bool DetermineHit()
+	{
+		int rollToHit = Random.Range(1, 100);
+		bool hit = false;
+		if (rollToHit<=accuracy) { hit = true; }
+		return hit;
 	}
 
 	IEnumerator ShootProjectiles()
 	{
-		int shots = Random.Range(2, 5);
-		shotsToResolve = shots;
+		shotsToResolve = 1;
 		float shooting_delay = Random.Range(0.2f,0.5f);
 		float counter = 0f;
-		for (int i = 0; i < shots; i++)
+		for (int i = 0; i < shotsToResolve; i++)
 		{
 			ShootProjectile();
 			while (counter < shooting_delay)
@@ -197,18 +219,23 @@ public class AgentShooting : MonoBehaviour
 		}
 	}
 
-
-	private void FiringUpdate()
+	IEnumerator DelayedFinish()
 	{
-
-
-
-        animator.SetBool("isPistolDrawn", false);
+		float delay = 1f;
+		float counter = 0f;
+		while (counter<delay)
+		{
+			counter += Time.deltaTime;
+			yield return null;
+		}
+		ActionComplete();
 	}
+
+
 
 	private void UpdateTargetsWithWeaponRangeCategoryInfo()
 	{
-		int shootingRange = (int)weapon.Range;
+		int shootingRange = (int)weapon.range;
 		maxRange = (float)shootingRange;
 		optimumRange = maxRange / 2f;
 		longRange = maxRange - optimumRange;
@@ -260,7 +287,7 @@ public class AgentShooting : MonoBehaviour
 		if (weapon.weaponType == ItemType.Rifle) { rangeBonus += 5; }
 		else if (weapon.weaponType == ItemType.Pistol
 				&& targetLocked.rangeToTarget == Targetable.RangeCat.Optimum) { rangeBonus += 10; }
-		int weaponAcc = (int)weapon.Accuracy;
+		int weaponAcc = (int)weapon.accuracy;
 		int acc = baseAcc + rangeBonus + (shootSkill * accBonusPerSkillPoint);
 		if (hasCover) 
 		{
@@ -512,6 +539,7 @@ public class AgentShooting : MonoBehaviour
 		optimumRange = 0f;
 		longRange = 0f;
 		maxRange = 0f;
+		accuracy = 0;
 		targetList.Clear();
 		ResetAllTargetsEverywhere();
 		shotsToResolve = Mathf.Infinity;
