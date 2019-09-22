@@ -942,6 +942,51 @@ PrefabInstance:
       propertyPath: movementSpeed
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 8139885390256450445, guid: 3c0bd23966395474f9ae6181a70437ac,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8139885390256450445, guid: 3c0bd23966395474f9ae6181a70437ac,
+        type: 3}
+      propertyPath: m_Name
+      value: player overhead light
+      objectReference: {fileID: 0}
+    - target: {fileID: 733378664043201880, guid: 3c0bd23966395474f9ae6181a70437ac,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 733378664043201880, guid: 3c0bd23966395474f9ae6181a70437ac,
+        type: 3}
+      propertyPath: m_Name
+      value: player vanity lighting
+      objectReference: {fileID: 0}
+    - target: {fileID: 2786695828757982037, guid: 3c0bd23966395474f9ae6181a70437ac,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2786695828757982037, guid: 3c0bd23966395474f9ae6181a70437ac,
+        type: 3}
+      propertyPath: m_Name
+      value: player vanity lighting
+      objectReference: {fileID: 0}
+    - target: {fileID: 4271999983461711964, guid: 3c0bd23966395474f9ae6181a70437ac,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4271999983461711964, guid: 3c0bd23966395474f9ae6181a70437ac,
+        type: 3}
+      propertyPath: m_Name
+      value: player vanity lighting
+      objectReference: {fileID: 0}
+    - target: {fileID: 3930601191249209515, guid: 3c0bd23966395474f9ae6181a70437ac,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c0bd23966395474f9ae6181a70437ac, type: 3}
 --- !u!1 &209169873
@@ -1201,12 +1246,12 @@ GameObject:
   - component: {fileID: 270381602}
   - component: {fileID: 270381603}
   m_Layer: 10
-  m_Name: Point Light (2)
+  m_Name: orange light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &270381602
 Transform:
   m_ObjectHideFlags: 0
@@ -3800,7 +3845,7 @@ GameObject:
   - component: {fileID: 677739421}
   - component: {fileID: 677739422}
   m_Layer: 0
-  m_Name: Directional Light (2)
+  m_Name: southeast ceiling light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4097,7 +4142,7 @@ GameObject:
   - component: {fileID: 749779109}
   - component: {fileID: 749779110}
   m_Layer: 0
-  m_Name: Directional Light
+  m_Name: overhead big light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6672,12 +6717,12 @@ GameObject:
   - component: {fileID: 1215535134}
   - component: {fileID: 1215535135}
   m_Layer: 10
-  m_Name: Point Light (1)
+  m_Name: orange light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1215535134
 Transform:
   m_ObjectHideFlags: 0
@@ -8973,7 +9018,7 @@ GameObject:
   - component: {fileID: 1565439971}
   - component: {fileID: 1565439972}
   m_Layer: 0
-  m_Name: Directional Light (3)
+  m_Name: southwest ceiling light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12344,7 +12389,7 @@ GameObject:
   - component: {fileID: 2055853702}
   - component: {fileID: 2055853703}
   m_Layer: 0
-  m_Name: Directional Light (1)
+  m_Name: south ceiling light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12760,12 +12805,12 @@ GameObject:
   - component: {fileID: 2139569766}
   - component: {fileID: 2139569767}
   m_Layer: 10
-  m_Name: Point Light
+  m_Name: orange light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2139569766
 Transform:
   m_ObjectHideFlags: 0
