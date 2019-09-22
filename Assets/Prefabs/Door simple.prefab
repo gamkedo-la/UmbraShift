@@ -258,7 +258,6 @@ GameObject:
   - component: {fileID: 1210230589486130136}
   - component: {fileID: 1210230589486130137}
   - component: {fileID: 1169225611}
-  - component: {fileID: 1046070184}
   m_Layer: 20
   m_Name: Door simple
   m_TagString: Untagged
@@ -314,7 +313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd55b604c2387b943aa1a2dbfa46ad82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  exitToLevel: 5
+  exitToLevel: 3
   doorOpen: 0
 --- !u!65 &1169225611
 BoxCollider:
@@ -329,26 +328,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.94, z: 1}
   m_Center: {x: 0.47, y: 0.99, z: -0.06}
---- !u!114 &1046070184
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7199698179127202585}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afee1fcd0909ad84689d06f6df7e4d29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetImage: {fileID: 0}
-  Shootable: 0
-  Interactable: 1
-  Hackable: 0
-  height: 0
-  lockOnIndicator: {fileID: 0}
-  info: {fileID: 0}
-  lockedOn: 0
-  rangeToTarget: 0
-  lineOfSight: 1
-  distance: 0

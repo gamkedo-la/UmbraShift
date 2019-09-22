@@ -117,7 +117,7 @@ public class PlayerController : MonoBehaviour
 
     public void FireWeapon()
     {
-        FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.gunshotPistol1);
+        FMODUnity.RuntimeManager.PlayOneShotAttached(SoundConfiguration.instance.gunshotPistol1,gameObject);
     } 
 
     public void MultiShot(int numberOfShots)
@@ -222,20 +222,20 @@ public class PlayerController : MonoBehaviour
         {
             case 2:
 
-                FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.gunshotPistol1_2shots);
+                FMODUnity.RuntimeManager.PlayOneShotAttached(SoundConfiguration.instance.gunshotPistol1_2shots,gameObject);
                 break;
             case 3:
 
-                FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.gunshotPistol1_3shots);
+                FMODUnity.RuntimeManager.PlayOneShotAttached(SoundConfiguration.instance.gunshotPistol1_3shots, gameObject);
                 break;
             case 4:
 
-                FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.gunshotPistol1_4shots);
+                FMODUnity.RuntimeManager.PlayOneShotAttached(SoundConfiguration.instance.gunshotPistol1_4shots, gameObject);
                 break;
 
             default:
            
-                FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.gunshotPistol1);
+                FMODUnity.RuntimeManager.PlayOneShotAttached(SoundConfiguration.instance.gunshotPistol1, gameObject);
                 break;
         }
 

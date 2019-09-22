@@ -6,6 +6,6 @@ public class PlayerSounds : MonoBehaviour
 {
     public void PlayWalkingSound()
     {
-        FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.footSteps4);
+        FMODUnity.RuntimeManager.PlayOneShotAttached(SoundConfiguration.instance.footSteps4,gameObject);
     }
 }

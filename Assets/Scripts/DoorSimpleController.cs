@@ -14,12 +14,12 @@ public class DoorSimpleController : MonoBehaviour
 
    public void PlayOpeningSound()
     {
-        FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.doorSimpleOpening);
+        FMODUnity.RuntimeManager.PlayOneShotAttached(SoundConfiguration.instance.doorSimpleOpening,gameObject);
     }
 
     public void PlayClosingSound()
     {
-        FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.doorSimpleClosing);
+        FMODUnity.RuntimeManager.PlayOneShotAttached(SoundConfiguration.instance.doorSimpleClosing,gameObject);
     }
 
     private void OnTriggerEnter(Collider other)
