@@ -226,6 +226,12 @@ public class AgentInteracting : MonoBehaviour
 		int layerMask = LayerMask.GetMask("Floor");
 		Physics.Raycast(rayFromScreen, out mouseInfo, 1000f, layerMask);
 		mousePoint = mouseInfo.point;
+		mousePoint.y = selfTarget.TargetPos.y;
+		float distanceToMouse = Vector3.Distance(mousePoint, selfTarget.TargetPos);
+		float clampedDistance = Mathf.Clamp(distanceToMouse, 0f, INTERACTION_RANGE);
+		Vector3 vecTowardMouse = (mousePoint - selfTarget.TargetPos).normalized * clampedDistance;
+		mousePoint = selfTarget.TargetPos + vecTowardMouse;
+
 
 		if (!targetLocked) 
 		{ 
