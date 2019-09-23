@@ -12,27 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 187776a4a162deb47987162e1d8d03dc, type: 3}
   m_Name: UmbraMainSoundConfiguration
   m_EditorClassIdentifier: 
-  maleGrunt1: event:/Male_Grunt_1
-  maleGrunt2: event:/Male_Grunt_2
-  maleGrunt3: event:/Male_Grunt_3
-  maleGruntMI: event:/HumanMaleGruntMI
-  maleDeath1: event:/Male_Death_1
-  maleDeath2: event:/Male_Death_2
-  maleDeath3: event:/Male_Death_3
-  maleDeathMI: event:/Male_Death_MI
-  footSteps1: event:/HumanFootSteps_1
-  footSteps2: event:/HumanFootSteps_2
-  footSteps4: event:/HumanFootSteps_4
-  footSteps5: event:/HumanFootSteps_5
-  gunshotPistol1: event:/Gun_Shot_Pistol_1
-  gunshotPistol1_2shots: event:/Gun_Shot_Pistol_1-burst2
-  gunshotPistol1_3shots: event:/Gun_Shot_Pistol_1-burst3
-  gunshotPistol1_4shots: event:/Gun_Shot_Pistol_1-burst4
-  enemyAlerted1: event:/Alerted_Guard_1
-  enemyAlerted2: event:/Alerted_Guard_2
-  enemyAlerted3: event:/Alerted_Guard_3
-  securityAlarm: event:/Security Alarm
-  playerObjectInteraction1: event:/Player_Interaction_1
+  maleGrunt1: event:/Agents/Male_Grunt_1
+  maleGrunt2: event:/Agents/Male_Grunt_2
+  maleGrunt3: event:/Agents/Male_Grunt_3
+  maleGruntMI: event:/Agents/Male_Grunt_3
+  maleDeath1: event:/Agents/Male_Death_1
+  maleDeath2: event:/Agents/Male_Death_2
+  maleDeath3: event:/Agents/Male_Death_3
+  maleDeathMI: event:/Agents/Male_Death_MI
+  footSteps1: event:/Agents/HumanFootSteps_1
+  footSteps2: event:/Agents/HumanFootSteps_2
+  footSteps4: event:/Agents/HumanFootSteps_4
+  footSteps5: event:/Agents/HumanFootSteps_5
+  gunshotPistol1: event:/Weapons/Gun_Shot_Pistol_1
+  gunshotPistol1_2shots: event:/Weapons/Gun_Shot_Pistol_1-burst2
+  gunshotPistol1_3shots: event:/Weapons/Gun_Shot_Pistol_1-burst3
+  gunshotPistol1_4shots: event:/Weapons/Gun_Shot_Pistol_1-burst4
+  enemyAlerted1: event:/Agents/Alerted_Guard_1
+  enemyAlerted2: event:/Agents/Alerted_Guard_2
+  enemyAlerted3: event:/Agents/Alerted_Guard_3
+  securityAlarm: event:/Objects/Security Alarm
+  playerObjectInteraction1: event:/Agents/Player_Interaction_1
   doorSimpleOpening: event:/Objects/DoorSimpleOpening
   doorSimpleClosing: event:/Objects/DoorSimpleClosing
-  inGameMusic: event:/InGameMusic
+  inGameMusic: event:/Music/InGameMusic

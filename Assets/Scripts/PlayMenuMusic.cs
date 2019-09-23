@@ -40,7 +40,7 @@ public class PlayMenuMusic : MonoBehaviour
         {
             Debug.Log("Master bank loaded");
             randomLoop = Random.Range(0, 3);
-            menuMusicEvent = FMODUnity.RuntimeManager.CreateInstance("event:/Menu_remixes");
+            menuMusicEvent = FMODUnity.RuntimeManager.CreateInstance("event:/Music/Menu_remixes");
             menuMusicEvent.setParameterByName("Random Menu Mix", randomLoop);
             menuMusicEvent.start();
             menuMusicEvent.release();

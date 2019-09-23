@@ -58,7 +58,7 @@ public class UIController : MonoBehaviour
                 tempButton.onClick.AddListener(() =>
                 {
                     TurnManager.instance.SetActiveCharacter(tempPC.gameObject);
-					SoundManager.instance.playSound( "mousedown" );
+					SoundConfiguration.instance.playSound( "UI/mousedown" );
                 });
                 characterButtons.Add(tempButton);
             }
@@ -70,7 +70,7 @@ public class UIController : MonoBehaviour
         endTurnButton.onClick.AddListener(() =>
         {
             TurnManager.instance.SwitchTurn();
-			SoundManager.instance.playSound( "mousedown" );
+			SoundConfiguration.instance.playSound( "UI/mousedown" );
 		} );
     }
 }

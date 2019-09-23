@@ -93,7 +93,6 @@ GameObject:
   - component: {fileID: 2271865240472961439}
   - component: {fileID: 2271865240472961438}
   - component: {fileID: 2271865240472961437}
-  - component: {fileID: 2271865240472961436}
   - component: {fileID: 2271865240472961435}
   m_Layer: 0
   m_Name: WorldManagerObjects
@@ -178,38 +177,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debugText: {fileID: 0}
   debugPanel: {fileID: 0}
---- !u!114 &2271865240472961436
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2271865240472961426}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad293283d5eca8f458ea4e500947c162, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maleGrunt1: event:/Male_Grunt_1
-  maleGrunt2: event:/Male_Grunt_2
-  maleGrunt3: event:/Male_Grunt_3
-  maleGruntMI: event:/HumanMaleGruntMI
-  footSteps1: event:/HumanFootSteps_1
-  footSteps2: event:/HumanFootSteps_2
-  footSteps4: event:/HumanFootSteps_4
-  footSteps5: event:/HumanFootSteps_5
-  gunshotPistol1: event:/Gun_Shot_Pistol_1
-  gunshotPistol1_2shots: event:/Gun_Shot_Pistol_1-burst2
-  gunshotPistol1_3shots: event:/Gun_Shot_Pistol_1-burst3
-  gunshotPistol1_4shots: event:/Gun_Shot_Pistol_1-burst4
-  enemyAlerted1: event:/Alerted_Guard_1
-  enemyAlerted2: event:/Alerted_Guard_2
-  enemyAlerted3: event:/Alerted_Guard_3
-  securityAlarm: event:/Security Alarm
-  playerObjectInteraction1: event:/Player_Interaction_1
-  doorSimpleOpening: event:/Objects/DoorSimpleOpening
-  doorSimpleClosing: event:/Objects/DoorSimpleClosing
-  inGameMusic: event:/InGameMusic
 --- !u!114 &2271865240472961435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,6 +189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c4d9a58cc280e44dbf09867fc6db79d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventRef: 
 --- !u!1 &2271865240700626599
 GameObject:
   m_ObjectHideFlags: 0
