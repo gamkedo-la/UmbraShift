@@ -97,7 +97,7 @@ LightmapSettings:
     m_ShowResolutionOverlay: 1
     m_ExportTrainingData: 0
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1101,66 +1101,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7967112360998591952, guid: 3c0bd23966395474f9ae6181a70437ac,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 299959335411228353, guid: 3c0bd23966395474f9ae6181a70437ac,
-        type: 3}
-      propertyPath: Interactable
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3093506661766990532, guid: 3c0bd23966395474f9ae6181a70437ac,
-        type: 3}
-      propertyPath: movementSpeed
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8139885390256450445, guid: 3c0bd23966395474f9ae6181a70437ac,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8139885390256450445, guid: 3c0bd23966395474f9ae6181a70437ac,
-        type: 3}
-      propertyPath: m_Name
-      value: player overhead light
-      objectReference: {fileID: 0}
-    - target: {fileID: 733378664043201880, guid: 3c0bd23966395474f9ae6181a70437ac,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 733378664043201880, guid: 3c0bd23966395474f9ae6181a70437ac,
-        type: 3}
-      propertyPath: m_Name
-      value: player vanity lighting
-      objectReference: {fileID: 0}
-    - target: {fileID: 2786695828757982037, guid: 3c0bd23966395474f9ae6181a70437ac,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2786695828757982037, guid: 3c0bd23966395474f9ae6181a70437ac,
-        type: 3}
-      propertyPath: m_Name
-      value: player vanity lighting
-      objectReference: {fileID: 0}
-    - target: {fileID: 4271999983461711964, guid: 3c0bd23966395474f9ae6181a70437ac,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4271999983461711964, guid: 3c0bd23966395474f9ae6181a70437ac,
-        type: 3}
-      propertyPath: m_Name
-      value: player vanity lighting
-      objectReference: {fileID: 0}
-    - target: {fileID: 3930601191249209515, guid: 3c0bd23966395474f9ae6181a70437ac,
-        type: 3}
-      propertyPath: m_Intensity
-      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c0bd23966395474f9ae6181a70437ac, type: 3}

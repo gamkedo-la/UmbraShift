@@ -28,6 +28,18 @@ public class InitialStatManager : MonoBehaviour
 
     private ChangeScene sceneChangeButton;
 
+	/*  ELEMENT ID
+	 *  0 Strength
+	 *  1 Dex
+	 *  2 Int
+	 *  3 Hack
+	 *  4 Shoot
+	 *  5 Investigate
+	 *  6 Medicine
+	 *  7 Fast Talking
+	*/
+
+
     public void NameCharacter()
     {
         playerName = inputField.text;
@@ -104,4 +116,10 @@ public class InitialStatManager : MonoBehaviour
             errorMessage.enabled = false;
         }
     }
+
+	public void CharacterComplete()
+	{
+		FindObjectOfType<PlayerCharacterData>().WriteInitialStatsToCharacterData(InitialStats, playerPortrait, playerName);
+		sceneChangeButton.LoadScene();
+	}
 }

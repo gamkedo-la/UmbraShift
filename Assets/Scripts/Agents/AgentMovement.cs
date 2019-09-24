@@ -65,7 +65,7 @@ public class AgentMovement : MonoBehaviour
 
 	private float DetermineSpeed()
 	{
-		return turnManager.ActiveCharacter.MovementSpeed;
+		return turnManager.ActiveCharacter.MovementAnimSpeed;
 	}
 
 	private void ResetVariables()	///////////////////////////////

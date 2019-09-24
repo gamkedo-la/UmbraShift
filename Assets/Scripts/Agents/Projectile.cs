@@ -16,7 +16,7 @@ public class Projectile : MonoBehaviour
 	private WeaponDesign weapon;
 	private Targetable target;
 	private Collider[] shooterColliders;
-
+	private int damageBonus;
 	
 	void Update()
     {
@@ -60,6 +60,11 @@ public class Projectile : MonoBehaviour
 		weapon = _weapon;
 	}
 
+	public void SetDamageBonus (int bonus)
+	{
+		damageBonus = bonus;
+	}
+
 	public void HitTarget(bool targetIsHit)
 	{
 		if (targetIsHit == true) { hit = HitStatus.Hit; }
@@ -67,6 +72,7 @@ public class Projectile : MonoBehaviour
 		if (hit == HitStatus.Hit) 
 		{
 			damage = (int)weapon.damage;
+			damage = damage + damageBonus;
 			damage = Mathf.RoundToInt(damage * Random.Range(0.5f, 1.5f));
 		}
 	}

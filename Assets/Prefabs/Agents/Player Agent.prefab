@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 2421176092689872933}
   - component: {fileID: 9177738717044514899}
   m_Layer: 0
-  m_Name: Spot Light (2)
+  m_Name: player vanity lighting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2421176092689872933
 Transform:
   m_ObjectHideFlags: 0
@@ -206,7 +206,7 @@ GameObject:
   - component: {fileID: 3044429812863025535}
   - component: {fileID: 3930601191249209515}
   m_Layer: 0
-  m_Name: Spot Light
+  m_Name: player vanity lighting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -237,7 +237,7 @@ Light:
   serializedVersion: 9
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 6
+  m_Intensity: 50
   m_Range: 4
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -297,12 +297,12 @@ GameObject:
   - component: {fileID: 6340639668394739298}
   - component: {fileID: 5249369460565068296}
   m_Layer: 0
-  m_Name: Spot Light (3)
+  m_Name: player vanity lighting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6340639668394739298
 Transform:
   m_ObjectHideFlags: 0
@@ -904,7 +904,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6325145473256817983}
-  - component: {fileID: 7335014350438969021}
   - component: {fileID: 299959335411228353}
   - component: {fileID: 3093506661766990532}
   - component: {fileID: 5154239687428695022}
@@ -914,6 +913,7 @@ GameObject:
   - component: {fileID: 9065164745435651370}
   - component: {fileID: 6501623475582808990}
   - component: {fileID: 960127545054217066}
+  - component: {fileID: 2526781217212000302}
   m_Layer: 0
   m_Name: Player Agent
   m_TagString: Player
@@ -939,25 +939,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &7335014350438969021
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6325145473256817980}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ca018be236072b24cb8ce8dcadfc1634, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &299959335411228353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -970,17 +951,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afee1fcd0909ad84689d06f6df7e4d29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetImage: {fileID: 6191052076115743596}
   Shootable: 1
-  Interactable: 0
+  Interactable: 1
   Hackable: 0
-  height: 0
+  targetImage: {fileID: 6191052076115743596}
   lockOnIndicator: {fileID: 2301161156300731418}
   info: {fileID: 0}
-  lockedOn: 0
+  distance: 0
   rangeToTarget: 0
   lineOfSight: 1
-  distance: 0
+  height: 0
 --- !u!114 &3093506661766990532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -997,6 +977,7 @@ MonoBehaviour:
   characterName: DefaultName
   equippedWeapon: {fileID: 11400000, guid: df30c36dd659c9c458c019e31647819d, type: 2}
   defaultWeapon: {fileID: 11400000, guid: df30c36dd659c9c458c019e31647819d, type: 2}
+  movementSpeed: 3
   actionManager: {fileID: 0}
   Strength:
     baseValue: 0
@@ -1022,6 +1003,8 @@ MonoBehaviour:
   FastTalking:
     baseValue: 0
     modifiers: 
+  baseHitpoints: 15
+  bonusHitpointsPerStrStat: 5
 --- !u!114 &5154239687428695022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1125,6 +1108,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e1186c4582ce47849bd207ecfe45b6a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2526781217212000302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6325145473256817980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8ee1f926803f3f4896e0f75c3000812, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6325145473295544408
@@ -1443,7 +1438,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1317974911425810015}
   m_Layer: 0
-  m_Name: Lighting
+  m_Name: player overhead light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

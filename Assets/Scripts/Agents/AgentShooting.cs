@@ -25,6 +25,7 @@ public class AgentShooting : MonoBehaviour
 	private float optimumRange = 0;
 	private float longRange = 0;
 	private float maxRange = 0;
+	private Stat damageBonus;
 	private Vector3 targetedPoint;
 	private Vector3 mousePoint;
 	private Vector3 impactPoint;
@@ -59,7 +60,6 @@ public class AgentShooting : MonoBehaviour
 		mouseLineBlocked.material = lineMaterialBlocked;
 		mouseLineFree.enabled = false;
 		mouseLineBlocked.enabled = false;
-		//animator = GetComponentInChildren<Animator>();
 
 	}
 
@@ -72,7 +72,12 @@ public class AgentShooting : MonoBehaviour
 	{
 		shootingSystemInUse = true;
 		ResetVariables();
-		weapon = GetComponent<AgentStats>().EquippedWeapon;
+		AgentStats stats = GetComponent<AgentStats>();
+		if (stats)
+		{
+			weapon = stats.EquippedWeapon;
+			damageBonus = stats.damageBonus;
+		}
 		PopulateListOfPotentialTargets();
 		BeginAiming();
 	}
@@ -87,6 +92,7 @@ public class AgentShooting : MonoBehaviour
 
 	public void ActionCancel()
 	{
+		animator.SetBool("isPistolDrawn", false);
 		ResetVariables();
 		EndShooting();
 	}
@@ -193,6 +199,7 @@ public class AgentShooting : MonoBehaviour
 		projectile.SetTarget(targetLocked);
 		projectile.SetWeapon(weapon);
 		projectile.HitTarget(DetermineHit());
+		projectile.SetDamageBonus(damageBonus.GetValue());
 	}
 
 	private bool DetermineHit()
@@ -279,8 +286,7 @@ public class AgentShooting : MonoBehaviour
 	private int DetermineAccuracy(bool hasCover)
 	{
 		AgentStats stats = GetComponent<AgentStats>();
-		int accBonusPerSkillPoint = 10;
-		int coverBypassPerSkillPoint = 5;
+		AgentStats enemyStats = targetLocked.gameObject.GetComponent<AgentStats>();
 		int shootSkill = Mathf.Clamp(stats.Shooting.GetValue(),0,6);
 		int baseAcc = 40;
 		int rangeBonus = 0;
@@ -288,11 +294,12 @@ public class AgentShooting : MonoBehaviour
 		else if (weapon.weaponType == ItemType.Pistol
 				&& targetLocked.rangeToTarget == Targetable.RangeCat.Optimum) { rangeBonus += 10; }
 		int weaponAcc = (int)weapon.accuracy;
-		int acc = baseAcc + rangeBonus + (shootSkill * accBonusPerSkillPoint);
+		int acc = baseAcc + rangeBonus + stats.accuracyBonus.GetValue();
 		if (hasCover) 
 		{
-			int maxCover = 40;
-			int coverPenalty = maxCover - (shootSkill * coverBypassPerSkillPoint) - weaponAcc;
+			int maxCover = 40 + enemyStats.coverBonus.GetValue(); 
+			int coverPenalty = maxCover - stats.coverBypass.GetValue() - weaponAcc;
+			if (enemyStats) { coverPenalty = coverPenalty + enemyStats.coverBonus.GetValue(); }
 			coverPenalty = Mathf.Clamp(coverPenalty, 0, maxCover);
 			acc = acc - coverPenalty;
 			AgentLocalUI targetUI = targetLocked.gameObject.GetComponent<AgentLocalUI>();

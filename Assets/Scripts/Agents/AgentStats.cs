@@ -4,32 +4,32 @@ using UnityEngine;
 
 public class AgentStats : MonoBehaviour
 {
-
-	// float movementPoints;
-	// float actionPoints;
+	[Header("Character Info")]
 	[SerializeField] private Sprite portraitImage;
-	[SerializeField] private string characterName = "DefaultName";
-	[SerializeField] private WeaponDesign equippedWeapon;
-	[SerializeField] private WeaponDesign defaultWeapon;
-	private AgentMovement agentMovement;
-	private int currentActionPoints = 0;
-	private int maxActionPoints = 2;
-
-	private int movementPointsPerAction = 20;
-	public int MovementPointsPerAction { get { return movementPointsPerAction; } }
-	[SerializeField] private float movementSpeed = 7f;
-	public float MovementSpeed { get { return movementSpeed; } }
-	public WeaponDesign EquippedWeapon { get{ return equippedWeapon; } }
-
-	public AgentMovement AgentMovement { get { return agentMovement; } }
-	public int CurrentActionPoints { get { return currentActionPoints; } }
 	public Sprite PortraitImage { get { return portraitImage; } }
+	[SerializeField] private string characterName = "DefaultName";
 	public string CharacterName { get { return characterName; } }
 
+	[Header("Equipment")]
+	[SerializeField] private WeaponDesign equippedWeapon;
+	[SerializeField] private WeaponDesign defaultWeapon;
+	public WeaponDesign EquippedWeapon { get { return equippedWeapon; } }
+
+	[Header("Actions")]
+	private int currentActionPoints = 0;
+	public int CurrentActionPoints { get { return currentActionPoints; } }
+	private int maxActionPoints = 2;
 	public AgentActionManager actionManager;
-	private AgentLocalUI localUI;
 
+	[Header("Movement")]
+	private AgentMovement agentMovement;
+	public AgentMovement AgentMovement { get { return agentMovement; } }
+	[SerializeField] private float movementAnimSpeed = 7f;
+	public float MovementAnimSpeed { get { return movementAnimSpeed; } }
+	private int movementPointsPerAction = 6;
+	public int MovementPointsPerAction { get { return movementPointsPerAction; } }
 
+	[Header("Stats")]
 	public Stat Strength = new Stat();
 	public Stat Dexterity = new Stat();
 	public Stat Intellect = new Stat();
@@ -39,14 +39,28 @@ public class AgentStats : MonoBehaviour
 	public Stat Medicine = new Stat();
 	public Stat FastTalking = new Stat();
 
-	[SerializeField] private int baseHitpoints = 15;
-	[SerializeField] private int bonusHitpointsPerStrStat = 5;
-	private int currentHitpoints = 50;
-	public int CurrentHitpoints { get { return currentHitpoints; } }
-	private int maxHitpoints = 50;
-	public int MaxHitpoints { get { return maxHitpoints; } }
+	[Header("Derived Values")]
+	
+	public Stat coverBonus = new Stat();
+	public Stat coverBypass = new Stat();
+	public Stat accuracyBonus = new Stat();
+	public Stat damageBonus = new Stat();
+	public Stat healingBonus = new Stat();
+	public Stat initiativeBonus = new Stat();
+	public Stat movementSpeedBonus = new Stat();
+	public Stat hitpoints = new Stat();
+	public Stat maxHitpoints = new Stat();
 	private float hitpointPercentage = 1;
-	public float HitpointPercentage { get{ return hitpointPercentage; } }
+	public float HitpointPercentage { get { return hitpointPercentage; } }
+	public int CurrentHitpoints { get { return hitpoints.GetValue(); } }
+	public int MaxHitpoints { get { return maxHitpoints.GetValue(); } }
+	public int MoveSpeedBonus { get { return movementSpeedBonus.GetValue(); } }
+
+	[Header("Graphics and Animation")]
+	private AgentLocalUI localUI;
+	
+
+
 	
 	void Start()
 	{
@@ -55,31 +69,39 @@ public class AgentStats : MonoBehaviour
 		localUI = GetComponent<AgentLocalUI>();
 		if (defaultWeapon && !equippedWeapon) { equippedWeapon = defaultWeapon; }
 		currentActionPoints = maxActionPoints;
-		DetermineInitialStats();
 		StartCoroutine("DelayedUpdate");
 	}
 
-	private void DetermineInitialStats()
+	public void CalculateDerivedValuesFromBaseStats()
 	{
-		CalculateHitpoints();
-		// fill stats from character generation, if applicable
+		//STR = hitpoints, DEX = movement, INT = cover bonus
+		coverBonus.WriteBaseValue(2 * Intellect.GetValue());
+		coverBypass.WriteBaseValue(5 * Shooting.GetValue());
+		accuracyBonus.WriteBaseValue(10 * Shooting.GetValue());
+		//healingBonus.WriteBaseValue(3 * Intellect.GetValue());
+		//initiativeBonus.WriteBaseValue(1 * Dexterity.GetValue());
+		damageBonus.WriteBaseValue((int)(0.5 * (float)Medicine.GetValue()));
+		movementSpeedBonus.WriteBaseValue(2 * Dexterity.GetValue());
+		maxHitpoints.WriteBaseValue(15);
+		maxHitpoints.AddModifier(5 * Strength.GetValue());
+		
+		hitpoints.WriteBaseValue(maxHitpoints.GetValue());
+		hitpointPercentage = (float)hitpoints.GetValue() / (float)maxHitpoints.GetValue();
+
+		movementPointsPerAction += movementSpeedBonus.GetValue();
+
 	}
 
-	private void CalculateHitpoints()
-	{
-		maxHitpoints = baseHitpoints + (Strength.GetValue() * bonusHitpointsPerStrStat);
-		currentHitpoints = maxHitpoints;
-		hitpointPercentage = currentHitpoints / maxHitpoints;
-	}
+
 
 	private IEnumerator DelayedUpdate()
 	{
 		yield return new WaitForSeconds(0.5f);
-		InitialStatManager initialStatManager = FindObjectOfType<InitialStatManager>();
-		if (initialStatManager)
+		PlayerCharacterData playerCharacterData = FindObjectOfType<PlayerCharacterData>();
+		if (playerCharacterData)
 		{
-			characterName = initialStatManager.playerName;
-			portraitImage = initialStatManager.playerPortrait.sprite;
+			characterName = playerCharacterData.playerName;
+			portraitImage = playerCharacterData.playerPortrait.sprite;
 		}
 	}
 
@@ -96,7 +118,7 @@ public class AgentStats : MonoBehaviour
 	
     public void TakeDamage (int dmg)
 	{
-		currentHitpoints = currentHitpoints - dmg;
-		hitpointPercentage = (float)currentHitpoints / (float)maxHitpoints;
+		hitpoints.AddModifier(-dmg);
+		hitpointPercentage = (float)hitpoints.GetValue() / (float)maxHitpoints.GetValue();
 	}
 }

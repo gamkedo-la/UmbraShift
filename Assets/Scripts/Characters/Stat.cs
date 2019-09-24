@@ -17,7 +17,13 @@ public class Stat
         return baseValue;
     }
 
-    public int GetValue()
+	public int WriteBaseValue(int _baseValue)
+	{
+		baseValue = _baseValue;
+		return baseValue;
+	}
+
+	public int GetValue()
     {
         int finalValue = baseValue;
         modifiers.ForEach(x => finalValue += x);
