@@ -40,13 +40,13 @@ public class InventorySlot : MonoBehaviour
         int index = inventory.items.IndexOf(item);
     }
 
-    private void Update()
+   /* private void Update()
     {
         if(item == null)
         {
             numberofItemsInSlotDisplay.enabled = false;
         }
-    }
+    }*/
 
     void OnMouseEnter()
     {

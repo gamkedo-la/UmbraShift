@@ -6,9 +6,7 @@ using UnityEngine.EventSystems;
 using TMPro;
 
 public class ItemDescription : MonoBehaviour, IPointerEnterHandler
-{
-
-  
+{  
     public TextMeshProUGUI itemDescription;
     public InventorySlot inventorySlot;
  
@@ -20,7 +18,7 @@ public class ItemDescription : MonoBehaviour, IPointerEnterHandler
         }
         else
         {
-            itemDescription.text = "";
+           itemDescription.text = "";
         }
     }
 
