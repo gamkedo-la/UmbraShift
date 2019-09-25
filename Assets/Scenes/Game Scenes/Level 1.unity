@@ -97,7 +97,7 @@ LightmapSettings:
     m_ShowResolutionOverlay: 1
     m_ExportTrainingData: 0
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1100,6 +1100,11 @@ PrefabInstance:
     - target: {fileID: 6325145473256817983, guid: 3c0bd23966395474f9ae6181a70437ac,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7967112360998591952, guid: 3c0bd23966395474f9ae6181a70437ac,
+        type: 3}
+      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2449,7 +2454,7 @@ PrefabInstance:
     - target: {fileID: 8072157871061869526, guid: 9b6e79df344cc644691dfe897ca93521,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -704
+      value: -99
       objectReference: {fileID: 0}
     - target: {fileID: 8072157871061869526, guid: 9b6e79df344cc644691dfe897ca93521,
         type: 3}
@@ -2654,22 +2659,22 @@ PrefabInstance:
     - target: {fileID: 8850547220827478523, guid: 9b6e79df344cc644691dfe897ca93521,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8850547220827478523, guid: 9b6e79df344cc644691dfe897ca93521,
         type: 3}
       propertyPath: m_textInfo.wordCount
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8850547220827478523, guid: 9b6e79df344cc644691dfe897ca93521,
         type: 3}
       propertyPath: m_textInfo.lineCount
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8850547220827478523, guid: 9b6e79df344cc644691dfe897ca93521,
         type: 3}
       propertyPath: m_textInfo.pageCount
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7361595981387184882, guid: 9b6e79df344cc644691dfe897ca93521,
         type: 3}
@@ -2689,27 +2694,27 @@ PrefabInstance:
     - target: {fileID: 3731103627639577232, guid: 9b6e79df344cc644691dfe897ca93521,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3731103627639577232, guid: 9b6e79df344cc644691dfe897ca93521,
         type: 3}
       propertyPath: m_textInfo.spaceCount
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3731103627639577232, guid: 9b6e79df344cc644691dfe897ca93521,
         type: 3}
       propertyPath: m_textInfo.wordCount
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3731103627639577232, guid: 9b6e79df344cc644691dfe897ca93521,
         type: 3}
       propertyPath: m_textInfo.lineCount
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3731103627639577232, guid: 9b6e79df344cc644691dfe897ca93521,
         type: 3}
       propertyPath: m_textInfo.pageCount
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6885340993599416645, guid: 9b6e79df344cc644691dfe897ca93521,
         type: 3}
@@ -9905,14 +9910,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1046070184, guid: c240ae1cd76302848ac5736a12eef89a, type: 3}
-      propertyPath: targetImage
-      value: 
-      objectReference: {fileID: 762425925}
-    - target: {fileID: 1046070184, guid: c240ae1cd76302848ac5736a12eef89a, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1210230589486130137, guid: c240ae1cd76302848ac5736a12eef89a,
         type: 3}
       propertyPath: exitToLevel
@@ -9920,6 +9917,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9105277680933687047, guid: c240ae1cd76302848ac5736a12eef89a,
         type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1046070184, guid: c240ae1cd76302848ac5736a12eef89a, type: 3}
+      propertyPath: targetImage
+      value: 
+      objectReference: {fileID: 762425925}
+    - target: {fileID: 1046070184, guid: c240ae1cd76302848ac5736a12eef89a, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
