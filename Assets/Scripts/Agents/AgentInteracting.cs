@@ -354,6 +354,7 @@ public class AgentInteracting : MonoBehaviour
 	public void ResetVariables()		////////////////////
 	{
 		targetLockisHeld = false;
+		interacting = false;
 		mouseLine.enabled = false;
 		mousePoint = Vector3.zero;
 		impactPoint = Vector3.zero;

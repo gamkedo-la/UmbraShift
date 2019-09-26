@@ -10,17 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: edb2b2b67986080488b20bf5d981747f, type: 3}
-  m_Name: Bartender 02 (Acquire Key Card)
+  m_Name: Bartender C01
   m_EditorClassIdentifier: 
-  portrait: {fileID: 1212751222745378164, guid: 07c78817e05c17449935d5520c4c971d,
-    type: 3}
+  portrait: {fileID: 21300000, guid: b7c22fbadaeb26d4a9a8448d049129d3, type: 3}
   handle: 
-  description: This should get you to where you're going...
-  color: {r: 0, g: 0, b: 0, a: 0}
+  description: I'm here on a job. I was told to ask for someone named Street Justice.
+  color: {r: 0, g: 1, b: 0, a: 0}
   options:
-  - optionText: Acquire Key Card
-    optionLeadsTo: {fileID: 0}
-    lastInteraction: 1
+  - optionText: CONTINUE
+    optionLeadsTo: {fileID: 11400000, guid: 3f564aadbfea65c48a849a5e3ec0a11a, type: 2}
+    lastInteraction: 0
     id: 0
   inventory: {fileID: 0}
-  itemToReceive: {fileID: 11400000, guid: 77295ebb7fb80c34da0093216df3e4c5, type: 2}
+  itemToReceive: {fileID: 0}
