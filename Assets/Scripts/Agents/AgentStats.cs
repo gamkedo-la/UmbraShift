@@ -96,7 +96,7 @@ public class AgentStats : MonoBehaviour
 
 	private IEnumerator DelayedUpdate()
 	{
-		yield return new WaitForSeconds(0.5f);
+		yield return new WaitForSeconds(0.2f);
 		PlayerCharacterData playerCharacterData = FindObjectOfType<PlayerCharacterData>();
 		if (playerCharacterData)
 		{
