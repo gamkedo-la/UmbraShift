@@ -22,7 +22,7 @@ public class Inventory : MonoBehaviour
 
     public bool Add(Item item)
     {
-        if(item != item.isDefaultItem)
+        if(item!=null&&item != item.isDefaultItem)
         {
             if(items.Count >= spaces)
             {

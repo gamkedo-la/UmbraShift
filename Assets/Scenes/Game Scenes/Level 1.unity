@@ -97,7 +97,7 @@ LightmapSettings:
     m_ShowResolutionOverlay: 1
     m_ExportTrainingData: 0
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -13987,84 +13987,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 44c40e8bc1e300c46b90e91f9d4c3c0d, type: 3}
---- !u!1001 &5322730499730165774
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 6295539277355839949, guid: 484c65d99039afe4da50f3fdf1c03f4f,
-        type: 3}
-      propertyPath: m_Name
-      value: BarAudioSource
-      objectReference: {fileID: 0}
-    - target: {fileID: 6295539277355839939, guid: 484c65d99039afe4da50f3fdf1c03f4f,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 2.68
-      objectReference: {fileID: 0}
-    - target: {fileID: 6295539277355839939, guid: 484c65d99039afe4da50f3fdf1c03f4f,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.49
-      objectReference: {fileID: 0}
-    - target: {fileID: 6295539277355839939, guid: 484c65d99039afe4da50f3fdf1c03f4f,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 6295539277355839939, guid: 484c65d99039afe4da50f3fdf1c03f4f,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6295539277355839939, guid: 484c65d99039afe4da50f3fdf1c03f4f,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6295539277355839939, guid: 484c65d99039afe4da50f3fdf1c03f4f,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6295539277355839939, guid: 484c65d99039afe4da50f3fdf1c03f4f,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6295539277355839939, guid: 484c65d99039afe4da50f3fdf1c03f4f,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 6295539277355839939, guid: 484c65d99039afe4da50f3fdf1c03f4f,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6295539277355839939, guid: 484c65d99039afe4da50f3fdf1c03f4f,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6295539277355839939, guid: 484c65d99039afe4da50f3fdf1c03f4f,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 837541236, guid: 484c65d99039afe4da50f3fdf1c03f4f, type: 3}
-      propertyPath: Params.Array.data[1].Value
-      value: 0.005
-      objectReference: {fileID: 0}
-    - target: {fileID: 837541236, guid: 484c65d99039afe4da50f3fdf1c03f4f, type: 3}
-      propertyPath: Params.Array.data[0].Value
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 837541236, guid: 484c65d99039afe4da50f3fdf1c03f4f, type: 3}
-      propertyPath: Params.Array.data[2].Value
-      value: 0.132
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 484c65d99039afe4da50f3fdf1c03f4f, type: 3}

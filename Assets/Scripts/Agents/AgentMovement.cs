@@ -40,6 +40,7 @@ public class AgentMovement : MonoBehaviour
 		waypointLine = waypointLineGO.AddComponent(typeof(LineRenderer)) as LineRenderer;
         waypointLine.GetComponent<LineRenderer>().enabled = false;
 		mouseLine = mouseLineGO.AddComponent(typeof(LineRenderer)) as LineRenderer;
+        mouseLine.material =  m_validPathMaterial;
         mouseLine.GetComponent<LineRenderer>().enabled = false;
         selectionController = FindObjectOfType<GridSelectionController>();
 		selectionController.selectedSquare += SquareSelected;
@@ -263,7 +264,7 @@ public class AgentMovement : MonoBehaviour
 			lineColor = m_blockedPathMaterial;
 		}
 		if (DistanceOnPlane(origin, mousePos) > movePointsAvailable) { lineColor = m_farPathMaterial; }
-		mouseLine.material = lineColor;
+		
 		mouseLine.startWidth = 0.05f;
 		mouseLine.endWidth = 0.05f;
 		mouseLine.positionCount = 2;
