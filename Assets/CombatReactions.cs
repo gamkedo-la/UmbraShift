@@ -21,6 +21,7 @@ public class CombatReactions : MonoBehaviour
 	{
 		if (hitStatus==HitStatus.Hit) 
 		{
+            FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.maleGruntMI, transform.position);
 			agentStats.TakeDamage(damage);
 			localUI.ShowDamage(damage);
 			localUI.UpdateHealthBar(agentStats.HitpointPercentage);
@@ -36,7 +37,8 @@ public class CombatReactions : MonoBehaviour
 			{
 				StartCoroutine("DelayDeath");
 				dying = true;
-			}
+               
+            }
 		}
 	}
 
@@ -54,7 +56,8 @@ public class CombatReactions : MonoBehaviour
 
 	private void Die()
 	{
-		Destroy(self);
+        FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.maleDeathMI, transform.position);
+        Destroy(self);
 	}
 
 
