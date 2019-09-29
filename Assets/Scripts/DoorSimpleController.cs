@@ -14,7 +14,7 @@ public class DoorSimpleController : MonoBehaviour
 
    public void PlayOpeningSound()
     {
-        FMODUnity.RuntimeManager.PlayOneShotAttached(SoundConfiguration.instance.doorSimpleOpening,gameObject);
+        FMODUnity.RuntimeManager.PlayOneShotAttached(SoundConfiguration.instance.doorSimpleOpeningWithKeyPad,gameObject);
     }
 
     public void PlayClosingSound()
