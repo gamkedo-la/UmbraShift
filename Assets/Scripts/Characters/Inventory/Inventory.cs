@@ -15,8 +15,16 @@ public class Inventory : MonoBehaviour
 
     private EquipmentManager equipmentManager;
 
+    public static Inventory instance;
+
     private void Start()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+
+
         equipmentManager = GetComponent<EquipmentManager>();
     }
 
@@ -70,7 +78,7 @@ public class Inventory : MonoBehaviour
         onItemChangedCallback.Invoke();
     }
 
-    private bool HasItem(Item item)
+    public bool HasItem(Item item)
     {
         return items.Exists(i => i == item);
     }
