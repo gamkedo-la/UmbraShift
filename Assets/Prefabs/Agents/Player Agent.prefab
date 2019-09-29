@@ -974,11 +974,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   portraitImage: {fileID: 0}
-  characterName: DefaultName
+  characterName: Shadow
   equippedWeapon: {fileID: 11400000, guid: df30c36dd659c9c458c019e31647819d, type: 2}
   defaultWeapon: {fileID: 11400000, guid: df30c36dd659c9c458c019e31647819d, type: 2}
-  movementSpeed: 3
   actionManager: {fileID: 0}
+  movementAnimSpeed: 2
   Strength:
     baseValue: 0
     modifiers: 
@@ -1003,8 +1003,33 @@ MonoBehaviour:
   FastTalking:
     baseValue: 0
     modifiers: 
-  baseHitpoints: 15
-  bonusHitpointsPerStrStat: 5
+  coverBonus:
+    baseValue: 0
+    modifiers: 
+  coverBypass:
+    baseValue: 0
+    modifiers: 
+  accuracyBonus:
+    baseValue: 0
+    modifiers: 
+  damageBonus:
+    baseValue: 0
+    modifiers: 
+  healingBonus:
+    baseValue: 0
+    modifiers: 
+  initiativeBonus:
+    baseValue: 0
+    modifiers: 
+  movementSpeedBonus:
+    baseValue: 0
+    modifiers: 
+  hitpoints:
+    baseValue: 0
+    modifiers: 
+  maxHitpoints:
+    baseValue: 0
+    modifiers: 
 --- !u!114 &5154239687428695022
 MonoBehaviour:
   m_ObjectHideFlags: 0

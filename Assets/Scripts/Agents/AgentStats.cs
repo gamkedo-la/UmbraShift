@@ -7,7 +7,7 @@ public class AgentStats : MonoBehaviour
 	[Header("Character Info")]
 	[SerializeField] private Sprite portraitImage;
 	public Sprite PortraitImage { get { return portraitImage; } }
-	[SerializeField] private string characterName = "DefaultName";
+	[SerializeField] private string characterName = "Shadow";
 	public string CharacterName { get { return characterName; } }
 
 	[Header("Equipment")]
@@ -100,7 +100,7 @@ public class AgentStats : MonoBehaviour
 		PlayerCharacterData playerCharacterData = FindObjectOfType<PlayerCharacterData>();
 		if (playerCharacterData)
 		{
-			characterName = playerCharacterData.playerName;
+			if (playerCharacterData.playerName != "") { characterName = playerCharacterData.playerName; }
 			portraitImage = playerCharacterData.playerPortrait.sprite;
 		}
 	}
