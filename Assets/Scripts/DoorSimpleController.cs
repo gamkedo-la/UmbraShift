@@ -14,7 +14,7 @@ public class DoorSimpleController : MonoBehaviour
 
    public void PlayOpeningSound()
     {
-        FMODUnity.RuntimeManager.PlayOneShotAttached(SoundConfiguration.instance.doorSimpleOpening,gameObject);
+        FMODUnity.RuntimeManager.PlayOneShotAttached(SoundConfiguration.instance.doorSimpleOpeningWithKeyPad,gameObject);
     }
 
     public void PlayClosingSound()
@@ -29,8 +29,7 @@ public class DoorSimpleController : MonoBehaviour
 
         if (player != null)
         {
-            GetComponent<Animator>().SetBool("isOpen", true);
-            doorOpen = true;
+            OpenDoor();
         }
     }
 
@@ -42,8 +41,7 @@ public class DoorSimpleController : MonoBehaviour
 
         if (player != null)
         {
-            GetComponent<Animator>().SetBool("isOpen", false);
-            doorOpen = false;
+           
         }
     }
 
@@ -55,8 +53,17 @@ public class DoorSimpleController : MonoBehaviour
         }
     }
 
+    public void OpenDoor()
+    {
+        GetComponent<Animator>().SetBool("isOpen", true);
+        doorOpen = true;
+    }
 
-
+    public void CloseDoor()
+    {
+        GetComponent<Animator>().SetBool("isOpen", false);
+        doorOpen = false;
+    }
 
 
 }

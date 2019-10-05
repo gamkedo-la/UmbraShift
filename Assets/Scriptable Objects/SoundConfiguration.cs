@@ -43,6 +43,9 @@ public class SoundConfiguration : ScriptableObject
     public string enemyAlerted3;
     [FMODUnity.EventRef]
     public string playerObjectInteraction1;
+    [FMODUnity.EventRef]
+    public string playerPickUpObject;
+
 
 
     [Header("Weapons")]
@@ -63,6 +66,8 @@ public class SoundConfiguration : ScriptableObject
     public string doorSimpleOpening;
     [FMODUnity.EventRef]
     public string doorSimpleClosing;
+    [FMODUnity.EventRef]
+    public string doorSimpleOpeningWithKeyPad;
 
     [Header("Music")]
     [FMODUnity.EventRef]

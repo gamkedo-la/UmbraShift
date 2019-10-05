@@ -171,10 +171,16 @@ public class Chatbox : MonoBehaviour
 
                 //Inventory test
                 currentScreen.inventory = FindObjectOfType<Inventory>(); //Inventory test
+
+                
                 if (currentScreen.inventory != null)
                 {
                     Debug.Log("Inventory called");
-                    currentScreen.inventory.Add(currentScreen.itemToReceive);                    
+                    if (currentScreen.itemToReceive != null)
+                    {
+                        FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.playerPickUpObject);
+                        currentScreen.inventory.Add(currentScreen.itemToReceive);
+                    }
                 }
                 //end Inventory test
 			}
