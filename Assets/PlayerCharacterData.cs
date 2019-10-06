@@ -9,6 +9,7 @@ public class PlayerCharacterData : MonoBehaviour
 	public Dictionary<CharStat, int> stats = new Dictionary<CharStat, int>();
 	public string playerName;
 	public Image playerPortrait;
+	public int story = 0;
 
 	public void WriteInitialStatsToCharacterData(List<int> initialStats, Image portrait, string name)
 	{
@@ -27,6 +28,11 @@ public class PlayerCharacterData : MonoBehaviour
 	public Dictionary<CharStat,int> ReadStatsFromCharacterData()
 	{
 		return stats;
+	}
+
+	public void AdvanceStory()
+	{
+		story = story + 1;
 	}
 
 }

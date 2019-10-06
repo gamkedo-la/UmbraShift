@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edb2b2b67986080488b20bf5d981747f, type: 3}
+  m_Name: Intro-D2
+  m_EditorClassIdentifier: 
+  portrait: {fileID: 21300000, guid: 154ebf36e20654120a4c52750f4dd6d8, type: 3}
+  handle: Arbiter
+  description: 'Transport is waiting outside. Once you leave, you won''t be able to
+    come back unless Transport verifies you have the package. '
+  color: {r: 0, g: 0.87080383, b: 1, a: 0}
+  options:
+  - optionText: I understand.
+    optionLeadsTo: {fileID: 0}
+    lastInteraction: 1
+    id: 0
+  - optionText: Let's get to the action.
+    optionLeadsTo: {fileID: 0}
+    lastInteraction: 1
+    id: 0
+  - optionText: I'm glad to help.
+    optionLeadsTo: {fileID: 0}
+    lastInteraction: 1
+    id: 0
+  inventory: {fileID: 0}
+  itemToReceive: {fileID: 0}

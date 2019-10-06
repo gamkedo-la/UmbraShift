@@ -11,7 +11,7 @@ public class DoorToNextLevel : MonoBehaviour, IInteractable
     private Animator animator;
 
     public Item ObjectRequiredToOpen;
-
+	public float delay = 0f;
 
 
 
@@ -25,11 +25,17 @@ public class DoorToNextLevel : MonoBehaviour, IInteractable
         //TODO: if not keycard, give option to hack the door?
 
 
-        if (Inventory.instance.HasItem(ObjectRequiredToOpen))
+        if (ObjectRequiredToOpen && Inventory.instance.HasItem(ObjectRequiredToOpen))
         {
-            GetComponentInChildren<DoorSimpleController>().OpenDoor();
+			if (GetComponentInChildren<DoorSimpleController>()) { GetComponentInChildren<DoorSimpleController>().OpenDoor(); }
+			delay = 2f;
             StartCoroutine(MoveToNextLevel());
         }
+		else if (!ObjectRequiredToOpen)
+		{
+			delay = 0f;
+			StartCoroutine(MoveToNextLevel());
+		}
 
 
       
@@ -37,7 +43,7 @@ public class DoorToNextLevel : MonoBehaviour, IInteractable
 
     IEnumerator MoveToNextLevel()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(delay);
       
            SceneManager.LoadScene(levelToGo);
     }
