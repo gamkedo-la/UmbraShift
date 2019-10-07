@@ -97,7 +97,7 @@ LightmapSettings:
     m_ShowResolutionOverlay: 1
     m_ExportTrainingData: 0
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -3410,7 +3410,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 8827d8b625f032f4db4f34ef700d8854, type: 2}
+      objectReference: {fileID: 2100000, guid: 286a4cdc7e9a55f4cbce4334ff5150c5, type: 2}
     - target: {fileID: 920115905139950969, guid: 76373b681e23b51489490affc904d3f6,
         type: 3}
       propertyPath: m_Enabled
@@ -4075,7 +4075,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 0f82bcccdc553fb44a114526fc2c597e,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.211
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 0f82bcccdc553fb44a114526fc2c597e,
         type: 3}
@@ -4234,7 +4234,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 0f82bcccdc553fb44a114526fc2c597e,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.111
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 0f82bcccdc553fb44a114526fc2c597e,
         type: 3}
@@ -4702,7 +4702,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.0025024414, y: 0.010009766}
+  m_AnchoredPosition: {x: -0.0024414062, y: 0.010009766}
   m_SizeDelta: {x: -1, y: 0.019989014}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &949089123
