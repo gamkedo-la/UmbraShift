@@ -310,6 +310,8 @@ public class AgentShooting : MonoBehaviour
 
 	private void ShowAccuracy(int accuracy, Targetable target, bool toShow)
 	{
+
+        if (target == null) { return; }
 		AgentLocalUI targetAgentUI = target.gameObject.GetComponent<AgentLocalUI>();
 		if (!targetAgentUI) { return; }
 		if (toShow) 
@@ -569,16 +571,23 @@ public class AgentShooting : MonoBehaviour
 	private void RestrictListOfTargetsToEncounterRange()
 	{
 		List<Targetable> allShootableTargets = targetList;
+        List<Targetable> toRemove = new List<Targetable>();
 		foreach (Targetable target in allShootableTargets)
 		{
 			float range = Vector3.Distance(target.TargetPos, selfTarget.TargetPos);
 			target.distance = range;
 			if (range > MAX_ENCOUNTER_RANGE)
 			{
-				targetList.Remove(target);
+                //targetList.Remove(target);
+                toRemove.Add(target);
 				target.HideTarget();
 			}
 		}
+
+        foreach (Targetable target in toRemove)
+        {
+            allShootableTargets.Remove(target);
+        }
 	}
 
 	private void RestrictListOfTargetsToLOS()

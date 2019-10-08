@@ -97,7 +97,7 @@ LightmapSettings:
     m_ShowResolutionOverlay: 1
     m_ExportTrainingData: 0
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -36658,6 +36658,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 599646f9d94b6a7439b25b4e8fd2c184, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &645000581 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6325145473256817983, guid: 3c0bd23966395474f9ae6181a70437ac,
+    type: 3}
+  m_PrefabInstance: {fileID: 1469090054}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &646245127
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -57459,7 +57465,7 @@ GameObject:
   - component: {fileID: 1053113518}
   m_Layer: 0
   m_Name: Main Camera
-  m_TagString: MainCamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -57471,7 +57477,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1053113517}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &1053113519
 Camera:
   m_ObjectHideFlags: 0
@@ -72476,7 +72482,7 @@ PrefabInstance:
         type: 3}
       propertyPath: mainCameraTransform
       value: 
-      objectReference: {fileID: 590847514}
+      objectReference: {fileID: 645000581}
     - target: {fileID: 4251163319967169173, guid: 8e56afc9fa5248e439646fe195eb025b,
         type: 3}
       propertyPath: offsetX
@@ -72490,7 +72496,7 @@ PrefabInstance:
     - target: {fileID: 4251163319967169173, guid: 8e56afc9fa5248e439646fe195eb025b,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e56afc9fa5248e439646fe195eb025b, type: 3}

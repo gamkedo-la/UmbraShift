@@ -4168,6 +4168,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 084213245aa01df49bafa72ec6a11ddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1555472689 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6325145473256817983, guid: 3c0bd23966395474f9ae6181a70437ac,
+    type: 3}
+  m_PrefabInstance: {fileID: 5451891896690718150}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1591295775
 GameObject:
   m_ObjectHideFlags: 0
@@ -4421,7 +4427,7 @@ PrefabInstance:
         type: 3}
       propertyPath: mainCameraTransform
       value: 
-      objectReference: {fileID: 2130323385}
+      objectReference: {fileID: 1555472689}
     - target: {fileID: 4251163319967169173, guid: 8e56afc9fa5248e439646fe195eb025b,
         type: 3}
       propertyPath: offsetX

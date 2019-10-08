@@ -10,7 +10,10 @@ public class AudioListenerBoomMover : MonoBehaviour
     public float offsetZ = 0f;
     private void Start()
     {
-        mainCameraTransform = Camera.main.transform;
+        if (mainCameraTransform == null)
+        {
+            mainCameraTransform = Camera.main.transform;
+        }
     }
 
 
@@ -19,7 +22,7 @@ public class AudioListenerBoomMover : MonoBehaviour
     {
         if (mainCameraTransform != null)
         {
-            transform.position = new Vector3(mainCameraTransform.position.x + offsetX, offsetY, mainCameraTransform.position.z + offsetZ);
+            transform.position = new Vector3(mainCameraTransform.position.x + offsetX, mainCameraTransform.position.y+offsetY, mainCameraTransform.position.z + offsetZ);
         }
     }
 }
