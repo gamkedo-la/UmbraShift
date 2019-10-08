@@ -97,7 +97,7 @@ LightmapSettings:
     m_ShowResolutionOverlay: 1
     m_ExportTrainingData: 0
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1100,6 +1100,11 @@ PrefabInstance:
     - target: {fileID: 6325145473256817983, guid: 3c0bd23966395474f9ae6181a70437ac,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7967112360998591952, guid: 3c0bd23966395474f9ae6181a70437ac,
+        type: 3}
+      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2382,6 +2387,37 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -3.4100037
       objectReference: {fileID: 0}
+    - target: {fileID: 5268802414770219433, guid: 45e425bfeb36d1245af47f490927ad90,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 0f3b8a55c05509c44bfb8da41fd38d5a,
+        type: 3}
+    - target: {fileID: 3886830676487056691, guid: 45e425bfeb36d1245af47f490927ad90,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.41999817
+      objectReference: {fileID: 0}
+    - target: {fileID: 3886830676487056691, guid: 45e425bfeb36d1245af47f490927ad90,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.029999733
+      objectReference: {fileID: 0}
+    - target: {fileID: 4755931924505379169, guid: 45e425bfeb36d1245af47f490927ad90,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.12000084
+      objectReference: {fileID: 0}
+    - target: {fileID: 4755931924505379169, guid: 45e425bfeb36d1245af47f490927ad90,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -7.2800064
+      objectReference: {fileID: 0}
+    - target: {fileID: 6033271289535852060, guid: 45e425bfeb36d1245af47f490927ad90,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -7.5000076
+      objectReference: {fileID: 0}
     - target: {fileID: 6061144252656017601, guid: 45e425bfeb36d1245af47f490927ad90,
         type: 3}
       propertyPath: m_Color.r
@@ -2398,12 +2434,6 @@ PrefabInstance:
       value: 0.6792453
       objectReference: {fileID: 0}
     - target: {fileID: 7869630894214259686, guid: 45e425bfeb36d1245af47f490927ad90,
-        type: 3}
-      propertyPath: m_FontData.m_Font
-      value: 
-      objectReference: {fileID: 12800000, guid: 0f3b8a55c05509c44bfb8da41fd38d5a,
-        type: 3}
-    - target: {fileID: 5268802414770219433, guid: 45e425bfeb36d1245af47f490927ad90,
         type: 3}
       propertyPath: m_FontData.m_Font
       value: 
@@ -2427,31 +2457,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 12800000, guid: 0f3b8a55c05509c44bfb8da41fd38d5a,
         type: 3}
-    - target: {fileID: 6033271289535852060, guid: 45e425bfeb36d1245af47f490927ad90,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -7.5000076
-      objectReference: {fileID: 0}
-    - target: {fileID: 4755931924505379169, guid: 45e425bfeb36d1245af47f490927ad90,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.12000084
-      objectReference: {fileID: 0}
-    - target: {fileID: 4755931924505379169, guid: 45e425bfeb36d1245af47f490927ad90,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -7.2800064
-      objectReference: {fileID: 0}
-    - target: {fileID: 3886830676487056691, guid: 45e425bfeb36d1245af47f490927ad90,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -0.41999817
-      objectReference: {fileID: 0}
-    - target: {fileID: 3886830676487056691, guid: 45e425bfeb36d1245af47f490927ad90,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0.029999733
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45e425bfeb36d1245af47f490927ad90, type: 3}
 --- !u!1001 &417262603
@@ -8456,7 +8461,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecaaecb74c6a6594a87f9fb3a118bf81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelToGo: MainMenu
+  levelToGo: Warehouse
+  ObjectRequiredToOpen: {fileID: 0}
+  delay: 0
 --- !u!4 &1382761694 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: a7e75507494f55046bc98fec28b16dd2,
@@ -9534,6 +9541,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelToGo: Level 1B
+  ObjectRequiredToOpen: {fileID: 0}
+  delay: 0
 --- !u!4 &1490241529 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9056972840487981768, guid: 66cb52a43dec691439c69dc62c069021,

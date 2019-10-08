@@ -68,6 +68,8 @@ public class SoundConfiguration : ScriptableObject
     public string doorSimpleClosing;
     [FMODUnity.EventRef]
     public string doorSimpleOpeningWithKeyPad;
+    [FMODUnity.EventRef]
+    public string cameraMoving;
 
     [Header("Music")]
     [FMODUnity.EventRef]

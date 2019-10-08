@@ -33,8 +33,9 @@ public class DoorToNextLevel : MonoBehaviour, IInteractable
         }
 		else if (!ObjectRequiredToOpen)
 		{
-			delay = 0f;
-			StartCoroutine(MoveToNextLevel());
+            if (GetComponentInChildren<DoorSimpleController>()) { GetComponentInChildren<DoorSimpleController>().OpenDoor(); }
+            delay = 2f;
+            StartCoroutine(MoveToNextLevel());
 		}
 
 

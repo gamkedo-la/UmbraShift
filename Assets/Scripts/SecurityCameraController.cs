@@ -7,6 +7,7 @@ public class SecurityCameraController : MonoBehaviour
 
     public void PlayCameraMovementAudio()
     {
-        FMODUnity.RuntimeManager.PlayOneShot("event:/Camera_Moving");
+        Debug.Log("Playing Camera Audio");
+        FMODUnity.RuntimeManager.PlayOneShotAttached(SoundConfiguration.instance.cameraMoving,gameObject);
     }
 }
