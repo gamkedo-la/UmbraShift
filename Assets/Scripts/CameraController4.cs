@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class CameraController4 : MonoBehaviour
 {
+	[Header("Controls")]
+	[SerializeField] bool invertHorizontal = false;
+	[SerializeField] bool invertVertical = false;
+	[SerializeField] private float camScrollSpeed = 5f;
+
 	[Header("Max Move Allowance")]
 	[SerializeField] float north = 0f;
 	[SerializeField] float east = 0f;
@@ -14,7 +19,7 @@ public class CameraController4 : MonoBehaviour
 	private Vector3 origin;
 	private Camera cam;
 	private Vector3 offset;
-	private float camScrollSpeed = 5f;
+	
 	private const float SCREEN_BORDER_THRESHOLD = 0.04f;
 
 	private void Start()
@@ -34,6 +39,8 @@ public class CameraController4 : MonoBehaviour
 		if (mousePos.x < 0+SCREEN_BORDER_THRESHOLD) { move = move - Vector3.right; }
 		if (mousePos.y > 1-SCREEN_BORDER_THRESHOLD) { move = move + Vector3.forward; }
 		if (mousePos.y < 0+SCREEN_BORDER_THRESHOLD) { move = move - Vector3.forward; }
+		if (invertHorizontal) { move.x = move.x * -1f; }
+		if (invertVertical) { move.z = move.z * -1f; }
 		if (move != Vector3.zero) { move = move * camScrollSpeed * Time.deltaTime; }
 		Vector3 dest = focus.position + move;
 		if (move.x > 0f) { dest.x = Mathf.Clamp(dest.x, origin.x-west, origin.x+east); }
