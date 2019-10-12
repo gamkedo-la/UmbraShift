@@ -839,6 +839,7 @@ GameObject:
   - component: {fileID: 164646587704310460}
   - component: {fileID: 255834677102503232}
   - component: {fileID: 5398563587414703721}
+  - component: {fileID: 8820825560745978502}
   m_Layer: 17
   m_Name: Enemy - Dog
   m_TagString: Untagged
@@ -916,6 +917,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 599646f9d94b6a7439b25b4e8fd2c184, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isNPC: 1
   portraitImage: {fileID: 0}
   characterName: Steve
   equippedWeapon: {fileID: 0}
@@ -1096,6 +1098,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.74, y: 1.15, z: 2.03}
   m_Center: {x: 0, y: -0.19, z: -0.12}
+--- !u!114 &8820825560745978502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5398563587414703723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8ee1f926803f3f4896e0f75c3000812, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7915722942996156634
 GameObject:
   m_ObjectHideFlags: 0

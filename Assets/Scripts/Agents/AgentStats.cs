@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class AgentStats : MonoBehaviour
+public class AgentStats : MonoBehaviour, IComparable<AgentStats>
 {
 	[Header("Character Info")]
+	[SerializeField] public bool isNPC = true;
 	[SerializeField] private Sprite portraitImage;
 	public Sprite PortraitImage { get { return portraitImage; } }
 	[SerializeField] private string characterName = "Shadow";
@@ -79,7 +81,7 @@ public class AgentStats : MonoBehaviour
 		coverBypass.WriteBaseValue(5 * Shooting.GetValue());
 		accuracyBonus.WriteBaseValue(10 * Shooting.GetValue());
 		//healingBonus.WriteBaseValue(3 * Intellect.GetValue());
-		//initiativeBonus.WriteBaseValue(1 * Dexterity.GetValue());
+		initiativeBonus.WriteBaseValue(1 * Dexterity.GetValue());
 		damageBonus.WriteBaseValue((int)(0.5 * (float)Medicine.GetValue()));
 		movementSpeedBonus.WriteBaseValue(2 * Dexterity.GetValue());
 		maxHitpoints.WriteBaseValue(15);
@@ -92,16 +94,24 @@ public class AgentStats : MonoBehaviour
 
 	}
 
-
+	public int CompareTo (AgentStats otherAgent)
+	{
+		//this method is called by AgentTurnManager to compare the speed of different agents to this agent
+		if (!otherAgent) { return 1; }
+		return initiativeBonus.GetValue() - otherAgent.initiativeBonus.GetValue();
+	}
 
 	private IEnumerator DelayedUpdate()
 	{
 		yield return new WaitForSeconds(0.2f);
-		PlayerCharacterData playerCharacterData = FindObjectOfType<PlayerCharacterData>();
-		if (playerCharacterData)
+		if (isNPC == false)
 		{
-			if (playerCharacterData.playerName != "") { characterName = playerCharacterData.playerName; }
-			portraitImage = playerCharacterData.playerPortrait.sprite;
+			PlayerCharacterData playerCharacterData = FindObjectOfType<PlayerCharacterData>();
+			if (playerCharacterData)
+			{
+				if (playerCharacterData.playerName != "") { characterName = playerCharacterData.playerName; }
+				portraitImage = playerCharacterData.playerPortrait.sprite;
+			}
 		}
 	}
 

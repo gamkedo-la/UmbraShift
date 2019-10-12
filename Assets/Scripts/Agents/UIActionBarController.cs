@@ -191,6 +191,7 @@ public class UIActionBarController : MonoBehaviour
 
 	private void AttemptAction(Action action, bool hideActionSet, bool hideActionControlsSet)
 	{
+		if (turnManager.ActiveCharacter==null) { return; }
 		playerHasIconControl = false;
 		float actionDelay = 0f;
 		foreach (UIIcon icon in allIcons)
