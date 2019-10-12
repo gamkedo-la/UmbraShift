@@ -39,7 +39,7 @@ RectTransform:
   - {fileID: 8131582258216523317}
   - {fileID: 8131582258614057670}
   m_Father: {fileID: 5398563587414703720}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -563,9 +563,9 @@ GameObject:
   - component: {fileID: 5648618092236704811}
   - component: {fileID: 7202779098412885674}
   - component: {fileID: 6980876290043979389}
+  - component: {fileID: 5398563587414703721}
   - component: {fileID: 164646587704310460}
   - component: {fileID: 255834677102503232}
-  - component: {fileID: 5398563587414703721}
   - component: {fileID: 8820825560745978502}
   m_Layer: 17
   m_Name: Enemy - Dog
@@ -586,6 +586,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5398563587223325234}
+  - {fileID: 1109716760274875656}
   - {fileID: 164646586351404352}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -778,6 +779,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventory: {fileID: 7202779098412885674}
   equipmentUI: {fileID: 0}
+--- !u!65 &5398563587414703721
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5398563587414703723}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.74, y: 1.15, z: 2.03}
+  m_Center: {x: 0, y: -0.19, z: -0.12}
 --- !u!114 &164646587704310460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -811,19 +825,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 084213245aa01df49bafa72ec6a11ddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &5398563587414703721
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5398563587414703723}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.74, y: 1.15, z: 2.03}
-  m_Center: {x: 0, y: -0.19, z: -0.12}
 --- !u!114 &8820825560745978502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -862,10 +863,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 3968549203837057576}
-  - {fileID: 4374504203739988850}
-  - {fileID: 5391539509504113973}
+  m_Children: []
   m_Father: {fileID: 5398563587414703720}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
