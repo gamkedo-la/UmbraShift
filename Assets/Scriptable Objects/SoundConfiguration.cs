@@ -46,6 +46,12 @@ public class SoundConfiguration : ScriptableObject
     [FMODUnity.EventRef]
     public string playerPickUpObject;
 
+    [FMODUnity.EventRef]
+    public string mechDamaged;
+
+    [FMODUnity.EventRef]
+    public string mechDestroyed;
+
 
 
     [Header("Weapons")]

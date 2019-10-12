@@ -7,7 +7,8 @@ public class AgentStats : MonoBehaviour, IComparable<AgentStats>
 {
 	[Header("Character Info")]
 	[SerializeField] public bool isNPC = true;
-	[SerializeField] private Sprite portraitImage;
+    [SerializeField] public bool isHuman = true;
+    [SerializeField] private Sprite portraitImage;
 	public Sprite PortraitImage { get { return portraitImage; } }
 	[SerializeField] private string characterName = "Shadow";
 	public string CharacterName { get { return characterName; } }

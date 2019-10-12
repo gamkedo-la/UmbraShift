@@ -58,11 +58,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Dog.|Idle
-      takeName: Dog.|Idle
+      name: Dog.|Walking (1)
+      takeName: Dog.|Walking
       internalID: -8945691123924629249
       firstFrame: 0
-      lastFrame: 1
+      lastFrame: 10
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -81,7 +81,15 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.8131104
+        functionName: PlaySound
+        data: event:/Mechs/MechWalking-CH
+        objectReferenceParameter: {fileID: 2261415016225364383, guid: fb1968873335c094586d9e3e6b8ca196,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -164,7 +172,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.0075
+    globalScale: 0.75
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

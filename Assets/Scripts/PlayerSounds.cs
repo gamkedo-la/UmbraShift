@@ -8,4 +8,9 @@ public class PlayerSounds : MonoBehaviour
     {
         FMODUnity.RuntimeManager.PlayOneShotAttached(SoundConfiguration.instance.footSteps4,gameObject);
     }
+
+    public void PlaySound(string path)
+    {
+        FMODUnity.RuntimeManager.PlayOneShotAttached(path, gameObject);
+    }
 }

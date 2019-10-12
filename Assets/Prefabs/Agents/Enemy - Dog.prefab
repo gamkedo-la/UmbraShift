@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 164646586351404355}
   - component: {fileID: 164646586351404354}
   - component: {fileID: 164646586351404353}
-  m_Layer: 17
+  m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 164646586390887591}
   - component: {fileID: 164646586390887590}
   - component: {fileID: 164646586390887589}
-  m_Layer: 17
+  m_Layer: 5
   m_Name: TargetCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: 164646586475249890}
   - component: {fileID: 164646586475249889}
   - component: {fileID: 164646586475249888}
-  m_Layer: 17
+  m_Layer: 5
   m_Name: InfoText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -271,7 +271,7 @@ GameObject:
   - component: {fileID: 164646586493685984}
   - component: {fileID: 164646586493685985}
   - component: {fileID: 164646586493685997}
-  m_Layer: 17
+  m_Layer: 5
   m_Name: NameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -373,7 +373,7 @@ GameObject:
   - component: {fileID: 164646586777048850}
   - component: {fileID: 164646586777048849}
   - component: {fileID: 164646586777048848}
-  m_Layer: 17
+  m_Layer: 5
   m_Name: CoverText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -452,7 +452,7 @@ GameObject:
   - component: {fileID: 164646587170165552}
   - component: {fileID: 164646587170165567}
   - component: {fileID: 164646587170165566}
-  m_Layer: 17
+  m_Layer: 5
   m_Name: TargetImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -581,7 +581,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5398563587414703723}
-  m_LocalRotation: {x: -0, y: 0.012653317, z: -0, w: 0.99991995}
+  m_LocalRotation: {x: 0, y: 0.012653317, z: 0, w: 0.99991995}
   m_LocalPosition: {x: -7.64, y: 20.27, z: 39.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -645,6 +645,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isNPC: 1
+  isHuman: 0
   portraitImage: {fileID: 0}
   characterName: Steve
   equippedWeapon: {fileID: 0}
@@ -790,8 +791,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.74, y: 1.15, z: 2.03}
-  m_Center: {x: 0, y: -0.19, z: -0.12}
+  m_Size: {x: 1, y: 1.57, z: 2}
+  m_Center: {x: 0.03, y: 0.95, z: 0.09}
 --- !u!114 &164646587704310460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -878,7 +879,7 @@ GameObject:
   - component: {fileID: 8131582258083280166}
   - component: {fileID: 8131582258083280164}
   - component: {fileID: 8131582258083280165}
-  m_Layer: 17
+  m_Layer: 5
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -952,7 +953,7 @@ GameObject:
   - component: {fileID: 8131582258216523317}
   - component: {fileID: 8131582258216523316}
   - component: {fileID: 8131582258216523315}
-  m_Layer: 17
+  m_Layer: 5
   m_Name: FeedbackText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1031,7 +1032,7 @@ GameObject:
   - component: {fileID: 8131582258614057670}
   - component: {fileID: 8131582258614057668}
   - component: {fileID: 8131582258614057669}
-  m_Layer: 17
+  m_Layer: 5
   m_Name: FeedbackText (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1110,7 +1111,7 @@ GameObject:
   - component: {fileID: 8131582259023591373}
   - component: {fileID: 8131582259023591371}
   - component: {fileID: 8131582259023591372}
-  m_Layer: 17
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1173,6 +1174,18 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &1699557024532549913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8475916664828425927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c595b77bf2cbd9c4b84dfbacd947f84c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9025417334316680620
 GameObject:
   m_ObjectHideFlags: 0
@@ -1182,7 +1195,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2895006850936881747}
-  m_Layer: 17
+  m_Layer: 5
   m_Name: Health Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1277,11 +1290,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6057140222963153312, guid: 7fac839cfe75ee8449e9a28010529dfc,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: cc4ea627af22ec0458cd1aea7c1818a4, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7fac839cfe75ee8449e9a28010529dfc, type: 3}
 --- !u!4 &4898747151196062932 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 7fac839cfe75ee8449e9a28010529dfc,
+    type: 3}
+  m_PrefabInstance: {fileID: 468774973497290702}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8475916664828425927 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 7fac839cfe75ee8449e9a28010529dfc,
     type: 3}
   m_PrefabInstance: {fileID: 468774973497290702}
   m_PrefabAsset: {fileID: 0}

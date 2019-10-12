@@ -21,7 +21,14 @@ public class CombatReactions : MonoBehaviour
 	{
 		if (hitStatus==HitStatus.Hit) 
 		{
-            FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.maleGruntMI, transform.position);
+            if (agentStats.isHuman)
+            {
+                FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.maleGruntMI, transform.position);
+            }
+            else
+            {
+                FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.mechDamaged, transform.position);
+            }
 			agentStats.TakeDamage(damage);
 			localUI.ShowDamage(damage);
 			localUI.UpdateHealthBar(agentStats.HitpointPercentage);
@@ -56,8 +63,16 @@ public class CombatReactions : MonoBehaviour
 
 	private void Die()
 	{
-        FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.maleDeathMI, transform.position);
-        Destroy(self);
+
+        if (agentStats.isHuman)
+        {
+            FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.maleDeathMI, transform.position);
+        }
+        else
+        {
+            FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.mechDestroyed, transform.position);
+        }
+            Destroy(self);
 	}
 
 
