@@ -343,7 +343,11 @@ public class AgentMovement : MonoBehaviour
 
 	private void PayMovePoints(float cost)
 	{
-		movePointsAvailable -= cost;
+
+        if (AgentTurnManager.instance.turnManagerActiveInScene)
+        {
+            movePointsAvailable -= cost;
+        }
 	}
 
 	private Vector3 GetLatestWaypointPos()

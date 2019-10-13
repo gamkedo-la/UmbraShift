@@ -31,6 +31,12 @@ public class AgentActionManager : MonoBehaviour
 
 	public bool CanActionBePerformed(Action actionAttempted)
 	{
+        if (!AgentTurnManager.instance.turnManagerActiveInScene)
+        {
+            return true;
+        }
+
+
 		if (actionAttempted == Action.Continue) { return true; }
 		if (actionAttempted == Action.Undo) { return true; }
 		if (actionAttempted == Action.Cancel) { return true; }

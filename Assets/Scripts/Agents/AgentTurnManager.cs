@@ -7,13 +7,14 @@ public class AgentTurnManager : MonoBehaviour
 {
 	[Header("Scene Setup")]
 	[SerializeField] private AgentStats mainPlayerCharacter = null;
-	[SerializeField] private bool turnManagerActiveInScene = false;
+	[SerializeField] public bool turnManagerActiveInScene = false;
 	[SerializeField] private TurnManagerUI turnUI;
 	private AgentStats activeCharacter = null;
 	public AgentStats ActiveCharacter { get { return activeCharacter; } }
 	private List<AgentStats> agents;
 	private int turnIndex = 0;
 	private const float ENDTURN_DELAY = 0.35f;
+    public static AgentTurnManager instance;
 
 	public AgentStats GetActiveCharacter()
 	{
@@ -22,7 +23,16 @@ public class AgentTurnManager : MonoBehaviour
 
     void Start()
     {
-		turnUI.DeActivateEndTurnButton();
+
+        if (instance == null)
+        {
+            instance = this;
+        }
+
+        if (turnUI != null)
+        {
+            turnUI.DeActivateEndTurnButton();
+        }
 		if (turnManagerActiveInScene == false) 
 		{ 
 			activeCharacter = mainPlayerCharacter; 

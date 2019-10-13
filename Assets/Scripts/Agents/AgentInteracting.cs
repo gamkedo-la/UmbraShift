@@ -70,6 +70,10 @@ public class AgentInteracting : MonoBehaviour
 		if (torus) { Destroy(torus); }
 		interactingSystemInUse = false;
 		turnManager.ActiveCharacter.actionManager.ReportEndOfAction();
+        if (!AgentTurnManager.instance.turnManagerActiveInScene)
+        {
+            End
+        }
 	}
 
 	public void Undo()
