@@ -15,10 +15,10 @@ public class AgentActionManager : MonoBehaviour
 
 	//AP costs
 	private int transactionInProcessAP = 0;
-	private int moveCostAP = 0;                 //temporarily treating Move as costing 0 instead of 1. 
-	private int shootCostAP = 0;
-	private int hackCostAP = 0;
-	private int	interactCostAP = 0;
+	private int moveCostAP = 1;
+	private int shootCostAP = 1;
+	private int hackCostAP = 1;
+	private int	interactCostAP = 1;
 
 	void Start()
     {
@@ -145,5 +145,14 @@ public class AgentActionManager : MonoBehaviour
 		m_uiActionBarController.ReadyForNextAction();
 	}
 
+	public void Move_AI()
+	{
+	
+	}
+
+	public void Shoot_AI()
+	{
+	
+	}
 
 }

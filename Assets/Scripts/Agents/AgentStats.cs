@@ -126,6 +126,11 @@ public class AgentStats : MonoBehaviour, IComparable<AgentStats>
 	{
 		currentActionPoints = currentActionPoints + amt;
 	}
+
+	public void ResetActionPoints()
+	{
+		currentActionPoints = maxActionPoints;
+	}
 	
     public void TakeDamage (int dmg)
 	{
