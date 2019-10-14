@@ -20,7 +20,7 @@ public class PlayerMusicSenser : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, senserRadius);
+        Collider[] hitColliders = Physics.OverlapSphere(playerTransform.position, senserRadius);
        
         foreach (Collider c in hitColliders)
         {
