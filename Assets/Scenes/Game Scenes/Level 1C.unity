@@ -2387,37 +2387,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -3.4100037
       objectReference: {fileID: 0}
-    - target: {fileID: 5268802414770219433, guid: 45e425bfeb36d1245af47f490927ad90,
-        type: 3}
-      propertyPath: m_FontData.m_Font
-      value: 
-      objectReference: {fileID: 12800000, guid: 0f3b8a55c05509c44bfb8da41fd38d5a,
-        type: 3}
-    - target: {fileID: 3886830676487056691, guid: 45e425bfeb36d1245af47f490927ad90,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -0.41999817
-      objectReference: {fileID: 0}
-    - target: {fileID: 3886830676487056691, guid: 45e425bfeb36d1245af47f490927ad90,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0.029999733
-      objectReference: {fileID: 0}
-    - target: {fileID: 4755931924505379169, guid: 45e425bfeb36d1245af47f490927ad90,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.12000084
-      objectReference: {fileID: 0}
-    - target: {fileID: 4755931924505379169, guid: 45e425bfeb36d1245af47f490927ad90,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -7.2800064
-      objectReference: {fileID: 0}
-    - target: {fileID: 6033271289535852060, guid: 45e425bfeb36d1245af47f490927ad90,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -7.5000076
-      objectReference: {fileID: 0}
     - target: {fileID: 6061144252656017601, guid: 45e425bfeb36d1245af47f490927ad90,
         type: 3}
       propertyPath: m_Color.r
@@ -2434,6 +2403,12 @@ PrefabInstance:
       value: 0.6792453
       objectReference: {fileID: 0}
     - target: {fileID: 7869630894214259686, guid: 45e425bfeb36d1245af47f490927ad90,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 0f3b8a55c05509c44bfb8da41fd38d5a,
+        type: 3}
+    - target: {fileID: 5268802414770219433, guid: 45e425bfeb36d1245af47f490927ad90,
         type: 3}
       propertyPath: m_FontData.m_Font
       value: 
@@ -2457,6 +2432,31 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 12800000, guid: 0f3b8a55c05509c44bfb8da41fd38d5a,
         type: 3}
+    - target: {fileID: 6033271289535852060, guid: 45e425bfeb36d1245af47f490927ad90,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -7.5000076
+      objectReference: {fileID: 0}
+    - target: {fileID: 4755931924505379169, guid: 45e425bfeb36d1245af47f490927ad90,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.12000084
+      objectReference: {fileID: 0}
+    - target: {fileID: 4755931924505379169, guid: 45e425bfeb36d1245af47f490927ad90,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -7.2800064
+      objectReference: {fileID: 0}
+    - target: {fileID: 3886830676487056691, guid: 45e425bfeb36d1245af47f490927ad90,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.41999817
+      objectReference: {fileID: 0}
+    - target: {fileID: 3886830676487056691, guid: 45e425bfeb36d1245af47f490927ad90,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.029999733
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45e425bfeb36d1245af47f490927ad90, type: 3}
 --- !u!1001 &417262603
@@ -4619,7 +4619,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -113, y: -104.2}
+  m_AnchoredPosition: {x: -32, y: -104.2}
   m_SizeDelta: {x: 87.08, y: 88.44}
   m_Pivot: {x: 0.49999988, y: 0.5538128}
 --- !u!1 &759757918
@@ -5821,7 +5821,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &940863289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9043,7 +9043,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainPlayerCharacter: {fileID: 1855634482}
-  altPlayerCharacter: {fileID: 0}
+  turnManagerActiveInScene: 0
+  turnUI: {fileID: 0}
 --- !u!1 &1424237680 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 6ea131830a11712449d16baa4b6ccfd2,
@@ -10782,7 +10783,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -32, y: -104.2}
+  m_AnchoredPosition: {x: -113, y: -104.2}
   m_SizeDelta: {x: 87.08, y: 88.44}
   m_Pivot: {x: 0.49999988, y: 0.5538128}
 --- !u!1 &1707650761 stripped
@@ -13712,7 +13713,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2088597353
 MonoBehaviour:
   m_ObjectHideFlags: 0
