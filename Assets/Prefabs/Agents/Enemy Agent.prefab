@@ -3297,7 +3297,7 @@ GameObject:
   - component: {fileID: 8465257375225806603}
   m_Layer: 17
   m_Name: Enemy Agent
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3372,6 +3372,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 599646f9d94b6a7439b25b4e8fd2c184, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isNPC: 1
+  isHuman: 1
   portraitImage: {fileID: 0}
   characterName: DefaultName
   equippedWeapon: {fileID: 0}

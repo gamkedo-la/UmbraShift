@@ -54,7 +54,7 @@ GameObject:
   - component: {fileID: 5698298220335204003}
   m_Layer: 17
   m_Name: Enemy Boss
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -130,6 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isNPC: 1
+  isHuman: 1
   portraitImage: {fileID: 0}
   characterName: Dodge
   equippedWeapon: {fileID: 0}
