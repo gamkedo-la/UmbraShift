@@ -696,19 +696,22 @@ public class AgentShooting : MonoBehaviour
 		foreach (Targetable target in targetList)
 		{
 			Vector3 targetPos = target.TargetPos;
-			float distanceToTarget = Vector3.Distance(firePoint.position, targetPos);
-			target.ShowTarget();
-			if (target.rangeToTarget==Targetable.RangeCat.Optimum
-				&& target.lineOfSight==Targetable.LOS.Clear) 
-			{ 
-				target.SetColor(clearLOSColor); 
-			}
-			else if (target.rangeToTarget==Targetable.RangeCat.Long
-					|| target.lineOfSight==Targetable.LOS.Cover) 
-			{ 
-				target.SetColor(partialLOSColor); 
-			}
-			else { target.SetColor(noLOSColor); }
+            if (targetPos != null)
+            {
+                float distanceToTarget = Vector3.Distance(firePoint.position, targetPos);
+                target.ShowTarget();
+                if (target.rangeToTarget == Targetable.RangeCat.Optimum
+                    && target.lineOfSight == Targetable.LOS.Clear)
+                {
+                    target.SetColor(clearLOSColor);
+                }
+                else if (target.rangeToTarget == Targetable.RangeCat.Long
+                        || target.lineOfSight == Targetable.LOS.Cover)
+                {
+                    target.SetColor(partialLOSColor);
+                }
+                else { target.SetColor(noLOSColor); }
+            }
 		}
 	}
 }

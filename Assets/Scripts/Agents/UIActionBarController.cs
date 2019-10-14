@@ -198,6 +198,7 @@ public class UIActionBarController : MonoBehaviour
 		{
 			if (icon.ActionWhenPressed == action)
 			{
+                FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.UISelected);
 				actionDelay = icon.GetFlashDelay();
 				if (turnManager.ActiveCharacter.actionManager.CanActionBePerformed(action))
 				{
