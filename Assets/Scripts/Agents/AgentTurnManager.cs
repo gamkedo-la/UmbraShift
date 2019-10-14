@@ -21,13 +21,15 @@ public class AgentTurnManager : MonoBehaviour
 		return activeCharacter;
 	}
 
-    void Start()
+	private void Awake()
+	{
+		if (instance == null)
+		{
+			instance = this;
+		}
+	}
+	void Start()
     {
-
-        if (instance == null)
-        {
-            instance = this;
-        }
 
         if (turnUI != null)
         {

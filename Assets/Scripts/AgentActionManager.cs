@@ -10,6 +10,7 @@ public class AgentActionManager : MonoBehaviour
 	private AgentInteracting m_agentInteracting;
 	private AgentStats m_agentStats;
 	public Action actionInProgress = Action.None;
+	private bool infiniteActionsInScene = false;
 
     public Material highlightedMaterial;
 
@@ -27,11 +28,12 @@ public class AgentActionManager : MonoBehaviour
 		m_agentMovement = GetComponent<AgentMovement>();
 		m_agentShooting = GetComponent<AgentShooting>();
 		m_agentInteracting = GetComponent<AgentInteracting>();
+		if (!AgentTurnManager.instance.turnManagerActiveInScene) { infiniteActionsInScene = true; }
 	}
 
 	public bool CanActionBePerformed(Action actionAttempted)
 	{
-        if (!AgentTurnManager.instance.turnManagerActiveInScene)
+        if (infiniteActionsInScene)
         {
             return true;
         }
@@ -136,6 +138,7 @@ public class AgentActionManager : MonoBehaviour
 				actionInProgress = Action.Interact;
 			}
 		}
+		if (infiniteActionsInScene) { transactionInProcessAP = 0; }
 	}
 	   	  
 
