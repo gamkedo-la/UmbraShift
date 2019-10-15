@@ -27,9 +27,9 @@ public class PlayMenuMusic : MonoBehaviour
 
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
-        menuMusicEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        menuMusicEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
     }
 
     IEnumerator StartMusic()
