@@ -7,9 +7,10 @@ public class DoorSimpleController : MonoBehaviour
 
        
 {
-    public int exitToLevel;
+    // public int exitToLevel;
 
 
+    
     public bool doorOpen=false;
 
    public void PlayOpeningSound()
@@ -27,7 +28,8 @@ public class DoorSimpleController : MonoBehaviour
         AgentMovement player = other.GetComponent<AgentMovement>();
 
 
-        if (player != null)
+        if (player != null )
+            
         {
             OpenDoor();
         }
@@ -36,21 +38,21 @@ public class DoorSimpleController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        AgentMovement player = other.GetComponent<AgentMovement>();
+        //AgentMovement player = other.GetComponent<AgentMovement>();
 
 
-        if (player != null)
-        {
+        //if (player != null)
+        //{
            
-        }
+        //}
     }
 
     private void Update()
     {
-        if (GetComponent<Animator>().GetBool("isOpen")&& Input.GetKeyDown(KeyCode.Space))
-        {
-            SceneManager.LoadScene(exitToLevel);
-        }
+        //if (GetComponent<Animator>().GetBool("isOpen")&& Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    SceneManager.LoadScene(exitToLevel);
+        //}
     }
 
     public void OpenDoor()
