@@ -17,7 +17,8 @@ public class BarController : MonoBehaviour, IInteractable
 			chatBox.Open(chatter); 
 		}
 		else if (chatBox && chats == 0) 
-		{ 
+		{
+			chats = chats + 1;
 			chatBox.Open(introduction); 
 		}
 	}
