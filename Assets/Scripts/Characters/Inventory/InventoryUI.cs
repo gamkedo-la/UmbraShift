@@ -34,10 +34,15 @@ public class InventoryUI : MonoBehaviour
     {
         if (Input.GetButtonDown(inventoryMenuInput))
         {
-            inventoryUI.SetActive(!inventoryUI.activeSelf);
+			ToggleInventoryUI();
 
         }
     }
+
+	public void ToggleInventoryUI()
+	{
+		inventoryUI.SetActive(!inventoryUI.activeSelf);
+	}
 
     void UpdateUI()
     {
