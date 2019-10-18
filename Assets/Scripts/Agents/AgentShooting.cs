@@ -249,10 +249,13 @@ public class AgentShooting : MonoBehaviour
 		foreach (Targetable target in targetList)
 		{
 			Vector3 targetPos = target.TargetPos;
-			float distanceToTarget = Vector3.Distance(firePoint.position, targetPos);
-			if (distanceToTarget < optimumRange) { target.rangeToTarget = Targetable.RangeCat.Optimum; }
-			else if (distanceToTarget < maxRange) { target.rangeToTarget = Targetable.RangeCat.Long; }
-			else { target.rangeToTarget = Targetable.RangeCat.Exceeded; }
+            if (firePoint != null)
+            {
+                float distanceToTarget = Vector3.Distance(firePoint.position, targetPos);
+                if (distanceToTarget < optimumRange) { target.rangeToTarget = Targetable.RangeCat.Optimum; }
+                else if (distanceToTarget < maxRange) { target.rangeToTarget = Targetable.RangeCat.Long; }
+                else { target.rangeToTarget = Targetable.RangeCat.Exceeded; }
+            }
 		}
 	}
 
@@ -404,6 +407,14 @@ public class AgentShooting : MonoBehaviour
 	
 	private void DetermineImpactPoint()
 	{
+
+        if (firePoint == null)
+        {
+            return;
+        }
+
+
+
 		Vector3 origin = firePoint.position;
 		Vector3 dest = targetedPoint;
 		Vector3 dir = (dest - origin).normalized;
@@ -696,7 +707,7 @@ public class AgentShooting : MonoBehaviour
 		foreach (Targetable target in targetList)
 		{
 			Vector3 targetPos = target.TargetPos;
-            if (targetPos != null)
+            if (targetPos != null&&firePoint!=null)
             {
                 float distanceToTarget = Vector3.Distance(firePoint.position, targetPos);
                 target.ShowTarget();

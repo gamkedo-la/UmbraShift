@@ -37,8 +37,8 @@ public class Inventory : MonoBehaviour
                 Debug.Log("Inventory full");
                 return false;
             }
-
-            if(item.stackable == false)
+            FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.playerPickUpObject);
+            if (item.stackable == false)
             {
                 items.Add(item);
                 itemsInSlot.Add(1);

@@ -9,6 +9,8 @@ public class CombatReactions : MonoBehaviour
 	private AgentStats agentStats;
 	private bool dying = false;
 	private GameObject self;
+    public bool givePlayerMissionItemOnDeath=false;
+    public Item missionItem;
 
 	private void Start()
 	{
@@ -63,6 +65,22 @@ public class CombatReactions : MonoBehaviour
 
 	private void Die()
 	{
+        if (givePlayerMissionItemOnDeath&&missionItem!=null)
+        {
+            Debug.Log("Giving Player mission Item");
+            
+
+            GameObject playerObject=GameObject.FindGameObjectWithTag("Player");
+
+            Inventory playerInventory=playerObject.GetComponent<Inventory>();
+            playerInventory.Add(missionItem);
+
+
+            //FindObjectOfType<InventoryUI>().gameObject.SetActive(true);
+
+
+        }
+
 
         if (agentStats.isHuman)
         {

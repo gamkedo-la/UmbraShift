@@ -64,21 +64,29 @@ public class AgentTurnManager : MonoBehaviour
 	public void ProcessTurn(AgentStats character)
 	{
 		turnUI.ActivateTurnIndicator(turnIndex);
-		activeCharacter = character;
-		if (character.isNPC==false) 
-		{
-			character.ResetActionPoints();	
-		}
-		else 
-		{
-			AgentActionManager actionManager = character.gameObject.GetComponent<AgentActionManager>();	
-			if (actionManager)
-			{
-				actionManager.Move_AI();
-				actionManager.Shoot_AI();
-				StartCoroutine("BeginEndingTurn");
-			}
-		}
+        if (character != null)
+        {
+            activeCharacter = character;
+            if (character.isNPC == false)
+            {
+                character.ResetActionPoints();
+            }
+            else
+            {
+
+                AgentActionManager actionManager = character.gameObject.GetComponent<AgentActionManager>();
+                if (actionManager)
+                {
+                    actionManager.Move_AI();
+                    actionManager.Shoot_AI();
+                    StartCoroutine("BeginEndingTurn");
+                }
+            }
+        }
+        else
+        {
+            StartCoroutine("BeginEndingTurn");
+        }
 	}
 
 	private IEnumerator BeginEndingTurn()

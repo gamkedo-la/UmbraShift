@@ -179,7 +179,7 @@ public class Chatbox : MonoBehaviour
                     Debug.Log("Inventory called");
                     if (currentScreen.itemToReceive != null)
                     {
-                        FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.playerPickUpObject);
+                        
                         currentScreen.inventory.Add(currentScreen.itemToReceive);
                     }
                 }
