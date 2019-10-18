@@ -157,7 +157,8 @@ public class Chatbox : MonoBehaviour
 	{
 		if (interactable)
 		{
-			if (optionNumber==1) { lastOptionChosen = currentScreen.options[0]; }
+            FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.UISelected);
+            if (optionNumber==1) { lastOptionChosen = currentScreen.options[0]; }
 			else if (optionNumber == 2) { lastOptionChosen = currentScreen.options[1]; }
 			else if (optionNumber == 3) { lastOptionChosen = currentScreen.options[2]; }
 			if (lastOptionChosen.lastInteraction)

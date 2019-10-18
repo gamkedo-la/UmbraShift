@@ -12,6 +12,13 @@ public class ItemDescription : MonoBehaviour, IPointerEnterHandler
  
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (itemDescription == null)
+        {
+            return;
+        }
+
+
+
         if(inventorySlot.item != null)
         {
             itemDescription.text = inventorySlot.item.itemDescription;

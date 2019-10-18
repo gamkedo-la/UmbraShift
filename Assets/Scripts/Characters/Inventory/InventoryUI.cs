@@ -41,7 +41,8 @@ public class InventoryUI : MonoBehaviour
 
 	public void ToggleInventoryUI()
 	{
-		inventoryUI.SetActive(!inventoryUI.activeSelf);
+        FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.UISelected);
+        inventoryUI.SetActive(!inventoryUI.activeSelf);
 	}
 
     void UpdateUI()

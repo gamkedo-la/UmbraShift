@@ -109,13 +109,15 @@ public class UIActionBarController : MonoBehaviour
 	private void HideActionIcon(UIIcon icon, bool tryingToHide)
 	{
 		if (tryingToHide && !icon.hidden) 
-		{ 
+		{
+            FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.UISwish);
 			movingIcons = MoveIcon(icon, icon.homePosition, icon.hidePosition);
 			icon.hidden = true;
 		}
 		else if (!tryingToHide && icon.hidden) 
-		{ 
-			movingIcons = MoveIcon(icon, icon.hidePosition, icon.homePosition);
+		{
+            FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.UISwish);
+            movingIcons = MoveIcon(icon, icon.hidePosition, icon.homePosition);
 			icon.hidden = false;
 		}
 		else return;

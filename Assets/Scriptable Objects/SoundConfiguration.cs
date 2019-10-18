@@ -57,6 +57,10 @@ public class SoundConfiguration : ScriptableObject
     [FMODUnity.EventRef]
     public string UISelected;
 
+    [FMODUnity.EventRef]
+    public string UISwish;
+
+
 
 
     [Header("Weapons")]
