@@ -21,8 +21,10 @@ public class Item : ScriptableObject
     public virtual void Use()
     {
         Debug.Log("Using" + name);
-
-        equipmentManager.inventory.Remove(this);
+        if (this.itemType == ItemType.Consumable) {
+            equipmentManager.inventory.Remove(this);
+        }
+        
     }    
 
 }
