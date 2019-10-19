@@ -71,7 +71,12 @@ public class InteractiveDoorController : MonoBehaviour,IInteractable
 
     public void Interact()
     {
-        if (ObjectRequiredToOpen && Inventory.instance.HasItem(ObjectRequiredToOpen))
+
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+
+        Inventory playerInventory = playerObject.GetComponent<Inventory>();
+
+        if (ObjectRequiredToOpen && playerInventory.HasItem(ObjectRequiredToOpen))
         {
             delay = 2f;
             OpenDoor();
