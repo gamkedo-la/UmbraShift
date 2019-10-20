@@ -252,9 +252,9 @@ public class AgentShooting : MonoBehaviour
             if (firePoint != null)
             {
                 float distanceToTarget = Vector3.Distance(firePoint.position, targetPos);
-                if (distanceToTarget < optimumRange) { target.rangeToTarget = Targetable.RangeCat.Optimum; }
-                else if (distanceToTarget < maxRange) { target.rangeToTarget = Targetable.RangeCat.Long; }
-                else { target.rangeToTarget = Targetable.RangeCat.Exceeded; }
+                if (distanceToTarget < optimumRange) { target.rangeToTarget = RangeCategory.Optimum; }
+                else if (distanceToTarget < maxRange) { target.rangeToTarget = RangeCategory.Long; }
+                else { target.rangeToTarget = RangeCategory.Exceeded; }
             }
 		}
 	}
@@ -295,7 +295,7 @@ public class AgentShooting : MonoBehaviour
 		int rangeBonus = 0;
 		if (weapon.weaponType == ItemType.Rifle) { rangeBonus += 5; }
 		else if (weapon.weaponType == ItemType.Pistol
-				&& targetLocked.rangeToTarget == Targetable.RangeCat.Optimum) { rangeBonus += 10; }
+				&& targetLocked.rangeToTarget == RangeCategory.Optimum) { rangeBonus += 10; }
 		int weaponAcc = (int)weapon.accuracy;
 		int acc = baseAcc + rangeBonus + stats.accuracyBonus.GetValue();
 		if (hasCover) 
@@ -711,12 +711,12 @@ public class AgentShooting : MonoBehaviour
             {
                 float distanceToTarget = Vector3.Distance(firePoint.position, targetPos);
                 target.ShowTarget();
-                if (target.rangeToTarget == Targetable.RangeCat.Optimum
+                if (target.rangeToTarget == RangeCategory.Optimum
                     && target.lineOfSight == Targetable.LOS.Clear)
                 {
                     target.SetColor(clearLOSColor);
                 }
-                else if (target.rangeToTarget == Targetable.RangeCat.Long
+                else if (target.rangeToTarget == RangeCategory.Long
                         || target.lineOfSight == Targetable.LOS.Cover)
                 {
                     target.SetColor(partialLOSColor);

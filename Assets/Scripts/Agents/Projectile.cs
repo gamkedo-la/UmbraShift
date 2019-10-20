@@ -5,6 +5,7 @@ using UnityEngine;
 public enum HitStatus { None, Hit, Miss}
 public class Projectile : MonoBehaviour
 {
+	[Header("Config")]
 	[SerializeField] private float speed = 5f;
 	[SerializeField] private GameObject ExplosionPrefab;
 	private GameObject explosionEffect;
@@ -17,14 +18,20 @@ public class Projectile : MonoBehaviour
 	private Targetable target;
 	private Collider[] shooterColliders;
 	private int damageBonus;
-	
+	private Shooting_AI shooting_AI = null;
+	private bool endTurnReported=false;
+	private const float ARRIVAL_THRESHOLD = 0.1f;
+
 	void Update()
     {
 		distance = distance + (speed * Time.deltaTime);
 		Vector3 vec = direction * (speed * Time.deltaTime);
 		transform.position = transform.position + vec;
 		if (distance >= maxDistance) { Destroy(this.gameObject); }
-    }
+
+		float distanceToTarget = Vector3.Distance(transform.position, target.TargetPos);
+		if (shooting_AI && !endTurnReported && distanceToTarget<ARRIVAL_THRESHOLD) { ReportEndTurn(); }
+	}
 
 	private void OnTriggerEnter(Collider collision)
 	{
@@ -65,6 +72,11 @@ public class Projectile : MonoBehaviour
 		damageBonus = bonus;
 	}
 
+	public void SetShooting_AI (Shooting_AI shootingAI)
+	{
+		this.shooting_AI = shootingAI;	
+	}
+
 	public void HitTarget(bool targetIsHit)
 	{
 		if (targetIsHit == true) { hit = HitStatus.Hit; }
@@ -81,4 +93,22 @@ public class Projectile : MonoBehaviour
 	{
 		shooterColliders = _shooter;
 	}
+
+	private void OnDestroy()
+	{
+		if (shooting_AI && !endTurnReported)
+		{
+			ReportEndTurn();
+		}
+	}
+
+	private void ReportEndTurn()
+	{
+		if (!endTurnReported && shooting_AI)
+		{
+			endTurnReported = true;
+			shooting_AI.ReportEndTurn();
+		}
+	}
+
 }

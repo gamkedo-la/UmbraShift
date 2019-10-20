@@ -90,7 +90,9 @@ public class CombatReactions : MonoBehaviour
         {
             FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.mechDestroyed, transform.position);
         }
-            Destroy(self);
+		agentStats.Die();
+        gameObject.SetActive(false);
+		
 	}
 
 

@@ -12,7 +12,7 @@ public class Senses_AI : MonoBehaviour
 	private Targetable agent;
 	[Header("For feedback only - do not modify in Unity")]
 	[SerializeField] private AlertStatus alertStatus = AlertStatus.OnPatrol;
-	private const float DETECTION_RANGE = 30f;
+	private float detectionRange = 25f;
 	[SerializeField] private float distanceToPlayer;
 	[SerializeField] private bool playerInSight;
 	[SerializeField] private bool playerInRange;
@@ -28,13 +28,15 @@ public class Senses_AI : MonoBehaviour
 		cooldownTimer = COOLDOWN_TIMER_MAX;
 		player = FindObjectOfType<PlayerHotkeyInput>().gameObject.GetComponent<Targetable>();
 		selfColliders = GetComponentsInChildren<Collider>();
+		AgentStats agentStats = GetComponent<AgentStats>();
+		if (!agentStats.isHuman) { detectionRange = detectionRange * 2f; }
 	}
 
 	void Update()
 	{
 		playerInSight = RaycastTowardPlayer();
 		distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
-		playerInRange = (distanceToPlayer < DETECTION_RANGE);
+		playerInRange = (distanceToPlayer < detectionRange);
 		
 		if (playerInSight && playerInRange) 
 		{

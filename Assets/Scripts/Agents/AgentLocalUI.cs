@@ -84,9 +84,12 @@ public class AgentLocalUI : MonoBehaviour
 
 	private bool ShowText(bool showTheText, Text obj, Color color, int size, string content)
 	{
-		obj.color = color;
-		obj.fontSize = size;
-		obj.text = content;
+		if (obj)
+		{
+			obj.color = color;
+			obj.fontSize = size;
+			obj.text = content;
+		}
 		return showTheText;
 	}
 

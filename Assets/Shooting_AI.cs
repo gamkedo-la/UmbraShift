@@ -1,0 +1,254 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Shooting_AI : MonoBehaviour
+{
+	[Header("Config")]
+	[SerializeField] private Animator animator;
+	private AgentActionManager actionManager;
+	private Targetable player;
+	private Targetable selfTarget;
+	private Collider[] selfColliders;
+	private AgentStats self;
+	private Transform firePoint;
+	private Senses_AI senses;
+	private const float FIELD_OF_VIEW = 5f;
+	private const float ROTATION_THRESHOLD = 1f;
+	private const float WEAPON_DRAW_THRESHOLD = 35f;
+	private const float MAX_AIMING_RADIUS = 0.25f;
+	private const float END_TURN_DELAY = 0.75f;
+	private bool rotatingNow = false;
+	bool shootingSystemInUse = false;
+	bool projectileHasBeenShot = false;
+
+	private void Start()
+	{
+		self = GetComponent<AgentStats>();
+		selfTarget = GetComponent<Targetable>();
+		selfColliders = GetComponentsInChildren<Collider>();
+		actionManager = GetComponent<AgentActionManager>();
+		firePoint = GetComponentInChildren<FirePoint>().transform;
+		senses = GetComponent<Senses_AI>();
+		player = FindObjectOfType<PlayerHotkeyInput>().gameObject.GetComponent<Targetable>();
+	}
+
+	private void Update()
+	{
+		if (!shootingSystemInUse) { return; }
+		if (senses.GetAlertStatus() == AlertStatus.OnPatrol) { ActionComplete(); return; }
+		if (projectileHasBeenShot) { return; }
+		float angleTowardPlayer = Vector3.Angle(transform.forward, player.transform.position - transform.position);
+		if (!rotatingNow) { RotateTowardPlayer(); }
+				
+		if (angleTowardPlayer < WEAPON_DRAW_THRESHOLD)
+		{
+			//DrawWeapon(true);
+		}
+
+		if (angleTowardPlayer < FIELD_OF_VIEW)
+		{
+			RangeCategory rangeToPlayer = DetermineRangeToPlayer();
+			if (rangeToPlayer == RangeCategory.Optimum || rangeToPlayer == RangeCategory.Long)
+			{
+				bool playerIsInLOS = DetermineIfPlayerIsInLOS();
+				bool playerHasCover = DetermineIfPlayerHasCover();
+				float accuracy = DetermineAccuracy(playerHasCover, rangeToPlayer);
+				ShootAtPlayer(accuracy);
+				projectileHasBeenShot = true;
+			}
+			else { ActionComplete(); }
+			
+		}
+	}
+
+	public void ActionStarted()
+	{
+		shootingSystemInUse = true;
+		projectileHasBeenShot = false;
+	}
+
+	public void ActionComplete()
+	{
+		DrawWeapon(false);
+		shootingSystemInUse = false;
+		projectileHasBeenShot = false;
+		actionManager.ReportEndOfShooting_AI();
+	}
+
+	private void DrawWeapon(bool toDraw)
+	{
+		if (self.isHuman && animator)
+		{
+			//animator.SetBool("isPistolDrawn", toDraw);
+		}
+		
+	}
+	
+	private void RotateTowardPlayer()
+	{
+		Vector3 forward = transform.forward;
+		Vector3 target = player.TargetPos - selfTarget.TargetPos;
+		forward.y = 0;
+		target.y = 0;
+		if (Vector3.Angle(forward, target) > ROTATION_THRESHOLD)
+		{
+			rotatingNow = true;
+			StartCoroutine(BeginRotatingTowardTargetedPoint(transform));
+		}
+	}
+
+	private IEnumerator BeginRotatingTowardTargetedPoint(Transform character)
+	{
+		float angSpeed = 220f;
+		float counter = 0f;
+		Vector3 end = player.TargetPos - selfTarget.TargetPos;
+		Vector3 start = transform.forward;
+		end.y = 0f;
+		start.y = 0f;
+		float arcDist = Vector3.Angle(start, end);
+		float duration = arcDist / angSpeed;
+		float look = 0f;
+		while (counter <= duration)
+		{
+			float dot = Vector3.Dot(end, transform.right);
+			if (dot < 0) { dot = -1f; }
+			else { dot = 1f; }
+			look = 0f;
+			counter = counter + Time.deltaTime;
+			look += angSpeed * Time.deltaTime * dot;
+			Vector3 rot = character.rotation.eulerAngles + new Vector3(0f, look, 0f);
+			character.rotation = Quaternion.Euler(rot);
+			yield return null;
+		}
+		rotatingNow = false;
+	}
+
+	
+	private bool DetermineIfPlayerHasCover()
+	{
+		Vector3 origin = firePoint.position;
+		Vector3 direction = player.TargetPos - firePoint.position;
+		float maxDist = Vector3.Distance(firePoint.position, player.TargetPos);
+		float radius = MAX_AIMING_RADIUS;
+		RaycastHit[] hitsArray;
+		hitsArray = Physics.SphereCastAll(origin, radius, direction, maxDist);
+		List<RaycastHit> hitList = new List<RaycastHit>();
+		List<Collider> collidersToIgnore = new List<Collider>();
+		Collider[] playerColliders = player.gameObject.GetComponentsInChildren<Collider>();
+		foreach (Collider collider in selfColliders) { collidersToIgnore.Add(collider); }
+		foreach (Collider collider in playerColliders) { collidersToIgnore.Add(collider); }
+		foreach (RaycastHit hit in hitsArray)
+		{
+			bool valid = true;
+			foreach (Collider collider in collidersToIgnore)
+			{
+				if (hit.collider == collider) { valid = false; }
+			}
+			if (valid) { hitList.Add(hit); }
+		}
+		if (hitList.Count > 0) { return true; }
+		else { return false; }
+	}
+
+	private bool DetermineIfPlayerIsInLOS()
+	{
+		Vector3 height = (Vector3.up * MAX_AIMING_RADIUS);
+
+		Vector3 origin = selfTarget.TargetPos + height;
+		Vector3 dest = player.TargetPos + height;
+		Vector3 direction = (dest - origin).normalized;
+		float maxDist = Vector3.Distance(player.TargetPos, selfTarget.TargetPos); ;
+		RaycastHit hitInfo;
+		Ray ray = new Ray(origin, direction);
+		bool seeAnything = Physics.Raycast(ray, out hitInfo, maxDist);
+		bool LOStoTarget = false;
+		if (seeAnything)
+		{
+			Collider[] playerColliders = player.gameObject.GetComponentsInChildren<Collider>();
+			foreach (Collider playerCollider in playerColliders)
+			{
+					if (hitInfo.collider == playerCollider)
+					{
+						LOStoTarget = true;
+					}
+				}
+			}
+
+			if (!LOStoTarget || !seeAnything)
+			{
+				return false;
+			}
+			else { return true; }
+		}
+
+		private RangeCategory DetermineRangeToPlayer()
+		{
+			int maxWeaponRange = (int)self.EquippedWeapon.range;
+			float maxRange = (float)maxWeaponRange;
+			float optimumRange = maxRange / 2f;
+			float longRange = maxRange - optimumRange;
+			RangeCategory playerRange = RangeCategory.Exceeded;
+			if (firePoint != null)
+			{
+				float distanceToTarget = Vector3.Distance(firePoint.position, player.TargetPos);
+				if (distanceToTarget < optimumRange) { playerRange = RangeCategory.Optimum; }
+				else if (distanceToTarget < maxRange) { playerRange = RangeCategory.Long; }
+				else { playerRange = RangeCategory.Exceeded; }
+			}
+			return playerRange;
+		}
+
+	private float DetermineAccuracy(bool hasCover, RangeCategory rangeToPlayer)
+	{
+		AgentStats playerStats = player.gameObject.GetComponent<AgentStats>();
+		int shootSkill = Mathf.Clamp(self.Shooting.GetValue(), 0, 6);
+		int baseAcc = 25;
+		int rangeBonus = 0;
+		if (self.EquippedWeapon.weaponType == ItemType.Rifle) { rangeBonus += 5; }
+		else if (self.EquippedWeapon.weaponType == ItemType.Pistol
+				&& rangeToPlayer == RangeCategory.Optimum) { rangeBonus += 10; }
+		int weaponAccModifier = (int)self.EquippedWeapon.accuracy;
+		int acc = baseAcc + rangeBonus + self.accuracyBonus.GetValue();
+		if (hasCover)
+		{
+			int maxCover = 40 + playerStats.coverBonus.GetValue();
+			int coverPenalty = maxCover - self.coverBypass.GetValue() - weaponAccModifier;
+			if (playerStats) { coverPenalty = coverPenalty + playerStats.coverBonus.GetValue(); }
+			coverPenalty = Mathf.Clamp(coverPenalty, 0, maxCover);
+			acc = acc - coverPenalty;
+		}
+		return acc;
+	}
+
+
+	private void ShootAtPlayer(float acc)
+	{
+		GameObject projectileGO = Instantiate(self.EquippedWeapon.projectilePrefab, firePoint.position, Quaternion.LookRotation(transform.forward));
+		projectileGO.transform.LookAt(player.transform);
+		Projectile projectile = projectileGO.GetComponent<Projectile>();
+		projectile.SetShooter(selfColliders);
+		projectile.SetTarget(player);
+		projectile.SetWeapon(self.EquippedWeapon);
+		projectile.HitTarget(DetermineHit(acc));
+		projectile.SetDamageBonus(self.damageBonus.GetValue());
+		projectile.SetShooting_AI(this);
+	}
+
+	private bool DetermineHit(float accuracy)
+	{
+		int rollToHit = Random.Range(1, 100);
+		return (rollToHit <= accuracy);
+	}
+
+	public void ReportEndTurn()
+	{
+		StartCoroutine("EndTurn");
+	}
+
+	private IEnumerator EndTurn()
+	{
+		yield return new WaitForSeconds(END_TURN_DELAY);
+		ActionComplete();
+	}
+}

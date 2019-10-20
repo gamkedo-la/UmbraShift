@@ -5,13 +5,14 @@ using UnityEngine;
 
 public class AgentTurnManager : MonoBehaviour
 {
-	[Header("Scene Setup")]
+	[Header("Config")]
 	[SerializeField] private AgentStats mainPlayerCharacter = null;
 	[SerializeField] public bool turnManagerActiveInScene = false;
 	[SerializeField] private TurnManagerUI turnUI;
+	[Header("Reference Only - Do Not Modify in Unity")]
+	[SerializeField] private List<AgentStats> agents;
 	private AgentStats activeCharacter = null;
 	public AgentStats ActiveCharacter { get { return activeCharacter; } }
-	private List<AgentStats> agents;
 	private int turnIndex = 0;
 	private const float ENDTURN_DELAY = 0.35f;
     public static AgentTurnManager instance;
@@ -78,8 +79,7 @@ public class AgentTurnManager : MonoBehaviour
                 if (actionManager)
                 {
                     actionManager.Move_AI();
-                    actionManager.Shoot_AI();
-                    StartCoroutine("BeginEndingTurn");
+					ReportEndOfMovement(actionManager);
                 }
             }
         }
@@ -87,6 +87,16 @@ public class AgentTurnManager : MonoBehaviour
         {
             StartCoroutine("BeginEndingTurn");
         }
+	}
+
+	public void ReportEndOfMovement(AgentActionManager actionManager)
+	{
+		actionManager.Shoot_AI();
+	}
+
+	public void ReportEndOfShooting(AgentActionManager actionManager)
+	{
+		StartCoroutine("BeginEndingTurn");
 	}
 
 	private IEnumerator BeginEndingTurn()
@@ -99,6 +109,8 @@ public class AgentTurnManager : MonoBehaviour
 	{
 		turnUI.DeActivateEndTurnButton();
 		turnIndex = turnIndex + 1;
+		agents = GenerateAgentList();
+		turnUI.RegisterCharacters(agents);
 		if (turnIndex >= agents.Count) { turnIndex = 0; }
 		ProcessTurn(agents[turnIndex]);
 	}

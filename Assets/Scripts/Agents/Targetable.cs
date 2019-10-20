@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum RangeCategory { None, Optimum, Long, Exceeded }
+
 public class Targetable : MonoBehaviour
 {
 	[SerializeField] public bool Shootable;
@@ -16,12 +18,10 @@ public class Targetable : MonoBehaviour
 	[HideInInspector] public bool LockedOn { get { return lockedOn; } }
 	private bool validTarget = true;
 	[HideInInspector] public float distance;
-	[HideInInspector] public bool ValidTarget { get { return validTarget; } }
-	[HideInInspector] public enum RangeCat { None, Optimum, Long, Exceeded }
-	[HideInInspector] public RangeCat rangeToTarget;
+	[HideInInspector] public RangeCategory rangeToTarget;
 	[HideInInspector] public enum LOS { Null, Clear, Cover, Blocked }
 	[HideInInspector] public LOS lineOfSight = LOS.Clear;
-
+	[HideInInspector] public bool ValidTarget {get { return validTarget; } }
 	[HideInInspector]public float height = 1f;
 	private Vector3 targetPos;
 	public Vector3 TargetPos { get { return targetPos; } }
@@ -118,7 +118,7 @@ public class Targetable : MonoBehaviour
 			lockOnIndicator.enabled = false;
 		}
 		targetImage.color = defaultColor;
-		rangeToTarget = RangeCat.None;
+		rangeToTarget = RangeCategory.None;
 		lineOfSight = LOS.Null;
 		distance = 0;
 		targetImage.enabled = false;

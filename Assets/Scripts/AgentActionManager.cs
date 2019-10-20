@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class AgentActionManager : MonoBehaviour
 {
+	[Header("Do not modify in Unity")]
+	public Material highlightedMaterial;
+	public Action actionInProgress = Action.None;
+
 	private UIActionBarController m_uiActionBarController;
 	private AgentMovement m_agentMovement;
 	private AgentShooting m_agentShooting;
 	private AgentInteracting m_agentInteracting;
 	private AgentStats m_agentStats;
-	public Action actionInProgress = Action.None;
 	private bool infiniteActionsInScene = false;
-
-    public Material highlightedMaterial;
+	private Shooting_AI shooting_AI;
+	//private Movement_AI movement_AI;
 
 	//AP costs
 	private int transactionInProcessAP = 0;
@@ -23,6 +26,8 @@ public class AgentActionManager : MonoBehaviour
 
 	void Start()
     {
+		//movement_AI = GetComponent<Movement_AI>();
+		shooting_AI = GetComponent<Shooting_AI>();
 		m_uiActionBarController = FindObjectOfType<UIActionBarController>();
 		m_agentStats = GetComponent<AgentStats>();
 		m_agentMovement = GetComponent<AgentMovement>();
@@ -156,12 +161,22 @@ public class AgentActionManager : MonoBehaviour
 
 	public void Move_AI()
 	{
-	
+		//movement_AI.ActionStarted();
 	}
 
 	public void Shoot_AI()
 	{
-	
+		shooting_AI.ActionStarted();
+	}
+
+	public void ReportEndOfMoving_AI()
+	{
+		AgentTurnManager.instance.ReportEndOfMovement(this);
+	}
+
+	public void ReportEndOfShooting_AI()
+	{
+		AgentTurnManager.instance.ReportEndOfShooting(this);
 	}
 
 }

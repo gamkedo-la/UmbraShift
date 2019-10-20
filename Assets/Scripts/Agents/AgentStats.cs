@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System;
 
 public class AgentStats : MonoBehaviour, IComparable<AgentStats>
@@ -12,6 +13,7 @@ public class AgentStats : MonoBehaviour, IComparable<AgentStats>
 	public Sprite PortraitImage { get { return portraitImage; } }
 	[SerializeField] private string characterName = "Shadow";
 	public string CharacterName { get { return characterName; } }
+	public bool isAlive = true;
 
 	[Header("Equipment")]
 	[SerializeField] private WeaponDesign equippedWeapon;
@@ -111,7 +113,10 @@ public class AgentStats : MonoBehaviour, IComparable<AgentStats>
 			if (playerCharacterData)
 			{
 				if (playerCharacterData.playerName != "") { characterName = playerCharacterData.playerName; }
-				portraitImage = playerCharacterData.playerPortrait.sprite;
+				if (portraitImage && playerCharacterData.playerPortrait && playerCharacterData.playerPortrait.sprite)
+				{
+					portraitImage = playerCharacterData.playerPortrait.sprite;
+				}
 			}
 		}
 	}
@@ -136,5 +141,14 @@ public class AgentStats : MonoBehaviour, IComparable<AgentStats>
 	{
 		hitpoints.AddModifier(-dmg);
 		hitpointPercentage = (float)hitpoints.GetValue() / (float)maxHitpoints.GetValue();
+	}
+
+	public void Die()
+	{
+		isAlive = false;
+		if (isNPC==false)
+		{
+			SceneManager.LoadScene("Player Death");
+		}
 	}
 }

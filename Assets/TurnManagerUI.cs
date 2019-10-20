@@ -44,6 +44,10 @@ public class TurnManagerUI : MonoBehaviour
 
 	public void RegisterCharacters(List<AgentStats> agents)
 	{
+		charactersInTurnOrder.Clear();
+		indicators.Clear();
+		IndicatorUI[] existingIndicators = FindObjectsOfType<IndicatorUI>();
+		foreach (IndicatorUI existingIndicator in existingIndicators) { Destroy(existingIndicator.gameObject); }
 		foreach (AgentStats agent in agents)
 		{
 			index = index + 1;

@@ -67,5 +67,9 @@ public class LvlLoader : MonoBehaviour
         StartCoroutine(ChangeScene(barScene));
     }
 
-	
+	public void PlayAgain()
+	{
+		StartCoroutine(ChangeScene(charGeneration));
+	}
+
 }

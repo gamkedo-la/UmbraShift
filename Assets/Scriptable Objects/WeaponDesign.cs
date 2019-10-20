@@ -7,7 +7,7 @@ public enum Quality { None, Terrible=-20, Average=-10, Effective=10, Superior=20
 public enum Damage { None=0, Terrible=4, Average=8, Effective=12, Superior=16}
 //public enum Hinderance { None, Negligable, Average, Hindering, Severe}
 public enum MaxRange { Adjacent = 2, Short = 12, Medium = 21, Long = 30 }
-public enum AmmoType { Type_IV_Biogel_Rounds }
+public enum AmmoType { Type_IV_Biogel_Rounds, Biohazard_Gas_X3 }
 //public enum FiringMode { Single_Shot_Only, Burst_Fire}
 //public enum TargetingMode { Direct_Fire_Only, Aimed_Shot, Smartlink_Equipped}
 public enum CorpName { Omegatech_Munitions, AHO_AeroSpace, Tsu_Mura_Technology_Multinational, Kura_Industrial, Evotech_Global,

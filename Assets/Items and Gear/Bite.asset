@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd5617ba79c856c4b9ded4ebbb85f5f4, type: 3}
+  m_Name: Bite
+  m_EditorClassIdentifier: 
+  officialName: Incinerating Bite
+  manufacturer: 7
+  description: 'The S8 model has gotten a lot of bad publicity for being overly viscious,
+    but one can''t argue with the security statistics.  It may be brutal and somewhat
+    overkill, but that''s what makes it worth every cost-effective cent. '
+  sprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  weaponType: 4
+  ammo: 1
+  projectilePrefab: {fileID: 5014225723386896872, guid: 2d72de9b7ac1ae14b9abd9eaa76ed7a0,
+    type: 3}
+  cost: 1000
+  damage: 12
+  range: 2
+  accuracy: 10
