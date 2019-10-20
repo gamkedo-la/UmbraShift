@@ -36,6 +36,10 @@ public class AgentTurnManager : MonoBehaviour
         {
             turnUI.DeActivateEndTurnButton();
         }
+        else
+        {
+            Debug.Log("turnUI is null");
+        }
 		if (turnManagerActiveInScene == false) 
 		{ 
 			activeCharacter = mainPlayerCharacter; 
@@ -44,8 +48,17 @@ public class AgentTurnManager : MonoBehaviour
 		agents = GenerateAgentList();
 		turnUI.RegisterCharacters(agents);
 		turnIndex = 0;
-		ProcessTurn(agents[turnIndex]);
+        //ProcessTurn(agents[turnIndex]);
+        StartCoroutine(DelayedStart());
 	}
+
+    IEnumerator DelayedStart()
+    {
+        yield return new WaitForSeconds(2f);
+        ProcessTurn(agents[0]);
+
+
+    }
 
 	private void Update()
 	{
@@ -85,6 +98,7 @@ public class AgentTurnManager : MonoBehaviour
         }
         else
         {
+            Debug.Log("character is null calling BeginEndingTurn");
             StartCoroutine("BeginEndingTurn");
         }
 	}
