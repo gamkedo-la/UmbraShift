@@ -119,7 +119,13 @@ public class InitialStatManager : MonoBehaviour
 
 	public void CharacterComplete()
 	{
-		FindObjectOfType<PlayerCharacterData>().WriteInitialStatsToCharacterData(InitialStats, playerPortrait, playerName);
-		sceneChangeButton.LoadScene();
+		PlayerCharacterData playerCharacterData = FindObjectOfType<PlayerCharacterData>();
+		if (!playerCharacterData) { playerCharacterData = new PlayerCharacterData(); }
+		if (playerCharacterData)
+		{
+			playerCharacterData.WriteInitialStatsToCharacterData(InitialStats, playerPortrait, playerName);
+			sceneChangeButton.LoadScene();
+		}
+		
 	}
 }
