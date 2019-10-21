@@ -9,6 +9,7 @@ public struct UIoption
 	public string optionText;
 	public InteractionScreen optionLeadsTo;
 	public bool lastInteraction;
+	public string goesToLevel;
 	[HideInInspector]public int id;
 	public static int totalOptions=0;
 
@@ -19,6 +20,16 @@ public struct UIoption
 		optionText = _optionText;
 		optionLeadsTo = _optionLeadsTo;
 		lastInteraction = _lastInteraction;
+		goesToLevel = "";
+	}
+	public UIoption(string _optionText, InteractionScreen _optionLeadsTo, bool _lastInteraction, string _goesToLevel)
+	{
+		id = totalOptions;
+		totalOptions = totalOptions + 1;
+		optionText = _optionText;
+		optionLeadsTo = _optionLeadsTo;
+		lastInteraction = _lastInteraction;
+		goesToLevel = _goesToLevel;
 	}
 }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public struct UIPos
 {
@@ -107,6 +108,10 @@ public class Chatbox : MonoBehaviour
 		SetChatBoxStatus(MoveStatus.Open);
 		status = MoveStatus.Closing;
 		interactable = false;
+		if (lastOptionChosen.goesToLevel != "") 
+		{
+			StartCoroutine("MoveToLevel");
+		}
 	}
 
 	private void Move(Vector2 direction, float speed, Vector2 origin)
@@ -124,6 +129,14 @@ public class Chatbox : MonoBehaviour
 			if (status == MoveStatus.Opening) 	{ SetChatBoxStatus(MoveStatus.Open);   }
 			else if (status == MoveStatus.Closing) 	{ SetChatBoxStatus(MoveStatus.Closed); }
 		}
+	}
+
+	IEnumerator MoveToLevel()
+	{
+		float delay = 2f;
+		yield return new WaitForSeconds(delay);
+		LoadingCanvas.ShowLoadingCanvas();
+		SceneManager.LoadScene(lastOptionChosen.goesToLevel);
 	}
 
 	private void UpdateScreen()
