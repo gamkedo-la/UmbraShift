@@ -91,6 +91,13 @@ public class CombatReactions : MonoBehaviour
             FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.mechDestroyed, transform.position);
         }
 		agentStats.Die();
+		//Boss boss = GetComponent<Boss>();
+		//if (boss) 
+		//{ 
+		//	FindObjectOfType<DeadBoss>().gameObject.SetActive(true);
+		//	FindObjectOfType<DeadBoss>().transform.position = this.transform.position;
+		//}
+
         gameObject.SetActive(false);
 		
 	}

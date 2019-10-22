@@ -43,7 +43,7 @@ public class AgentActionManager : MonoBehaviour
             return true;
         }
 
-
+		if (AgentTurnManager.instance.ActiveCharacter != m_agentStats) { return false; }
 		if (actionAttempted == Action.Continue) { return true; }
 		if (actionAttempted == Action.Undo) { return true; }
 		if (actionAttempted == Action.Cancel) { return true; }
@@ -66,22 +66,22 @@ public class AgentActionManager : MonoBehaviour
 	{
 		if (actionInProgress==Action.Move)
 		{
-			m_agentMovement.ActionCancel();
 			transactionInProcessAP = 0;
+			m_agentMovement.ActionCancel();
 			ReportEndOfAction();
 		}
 
 		if (actionInProgress==Action.Shoot)
 		{
+			transactionInProcessAP = 0; 
 			m_agentShooting.ActionCancel();
-			transactionInProcessAP = 0;
 			ReportEndOfAction();
 		}
 
 		if (actionInProgress==Action.Interact)
 		{
+			transactionInProcessAP = 0; 
 			m_agentInteracting.ActionCancel();
-			transactionInProcessAP = 0;
 			ReportEndOfAction();
 		}
 	}
@@ -128,8 +128,8 @@ public class AgentActionManager : MonoBehaviour
 			else
 			{
 				transactionInProcessAP = shootCostAP;
-				m_agentShooting.ActionStarted();
 				actionInProgress = Action.Shoot;
+				m_agentShooting.ActionStarted();
 			}
 		}
 
