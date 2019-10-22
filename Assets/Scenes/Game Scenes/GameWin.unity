@@ -3652,10 +3652,10 @@ RectTransform:
   m_Father: {fileID: 1277695897}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4, y: -24.5}
-  m_SizeDelta: {x: 720.6, y: 279.1}
+  m_AnchorMin: {x: 0.058196176, y: 0.13831918}
+  m_AnchorMax: {x: 0.9307655, y: 0.75100005}
+  m_AnchoredPosition: {x: 0.5, y: 1.5}
+  m_SizeDelta: {x: -8.400024, y: -8.899994}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1850838116
 MonoBehaviour:
@@ -3930,6 +3930,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: LvlLoader
       objectReference: {fileID: 0}
+    - target: {fileID: 1278118095217140948, guid: 9a9c9849a329e874a9e0035d22c1e333,
+        type: 3}
+      propertyPath: charGeneration.m_Handle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1278118095217140948, guid: 9a9c9849a329e874a9e0035d22c1e333,
+        type: 3}
+      propertyPath: barScene.m_Handle
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1278118095217140948, guid: 9a9c9849a329e874a9e0035d22c1e333,
+        type: 3}
+      propertyPath: charGeneration
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1278118095217140948, guid: 9a9c9849a329e874a9e0035d22c1e333,
+        type: 3}
+      propertyPath: barScene
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1278118095217140948, guid: 9a9c9849a329e874a9e0035d22c1e333,
+        type: 3}
+      propertyPath: mainMenu
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1278118095217140949, guid: 9a9c9849a329e874a9e0035d22c1e333,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3984,31 +4009,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1278118095217140948, guid: 9a9c9849a329e874a9e0035d22c1e333,
-        type: 3}
-      propertyPath: charGeneration.m_Handle
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1278118095217140948, guid: 9a9c9849a329e874a9e0035d22c1e333,
-        type: 3}
-      propertyPath: barScene.m_Handle
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1278118095217140948, guid: 9a9c9849a329e874a9e0035d22c1e333,
-        type: 3}
-      propertyPath: charGeneration
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1278118095217140948, guid: 9a9c9849a329e874a9e0035d22c1e333,
-        type: 3}
-      propertyPath: barScene
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1278118095217140948, guid: 9a9c9849a329e874a9e0035d22c1e333,
-        type: 3}
-      propertyPath: mainMenu
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a9c9849a329e874a9e0035d22c1e333, type: 3}
