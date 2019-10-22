@@ -259,12 +259,12 @@ public class AgentMovement : MonoBehaviour
 		else { origin = GridSpace.GetGridCoord(transform.position); }
 		bool pathIsClear = TestWaypoint(origin, mousePos);
 		Material lineColor = m_validPathMaterial;
+		if (DistanceOnPlane(origin, mousePos) > movePointsAvailable) { lineColor = m_farPathMaterial; }
 		if (!pathIsClear)
 		{
 			lineColor = m_blockedPathMaterial;
 		}
-		if (DistanceOnPlane(origin, mousePos) > movePointsAvailable) { lineColor = m_farPathMaterial; }
-		
+		mouseLine.material = lineColor;
 		mouseLine.startWidth = 0.05f;
 		mouseLine.endWidth = 0.05f;
 		mouseLine.positionCount = 2;
