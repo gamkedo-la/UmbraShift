@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class InteractiveDoorController : MonoBehaviour,IInteractable
 
-       
+	       
 {
     // public int exitToLevel;
 
@@ -14,6 +14,7 @@ public class InteractiveDoorController : MonoBehaviour,IInteractable
     public bool doorOpen=false;
     public Item ObjectRequiredToOpen;
     public float delay = 0f;
+	private List<Collider> openedColliders = new List<Collider>();
 
     public void PlayOpeningSound()
     {
@@ -61,13 +62,28 @@ public class InteractiveDoorController : MonoBehaviour,IInteractable
     {
         GetComponent<Animator>().SetBool("isOpen", true);
         doorOpen = true;
+		Collider[] doorColliders = GetComponentsInChildren<Collider>();
+		openedColliders.Clear();
+		foreach (Collider collider in doorColliders)
+		{
+			if (!collider.isTrigger) 
+			{
+				openedColliders.Add(collider);
+				collider.enabled = false; 
+			}
+		}
     }
 
     public void CloseDoor()
     {
         GetComponent<Animator>().SetBool("isOpen", false);
         doorOpen = false;
-    }
+		foreach (Collider collider in openedColliders)
+		{
+			collider.enabled = true;
+			openedColliders.Remove(collider);
+		}
+	}
 
     public void Interact()
     {
