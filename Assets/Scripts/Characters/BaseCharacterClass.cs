@@ -68,14 +68,14 @@ public class BaseCharacterClass : MonoBehaviour
 
             avatar = initialStatManager.playerPortraitOptions[initialStatManager.currentPortraitElementID];
             //Initialize Base Stat Values from Character Creation
-            strength.GetBaseValueFromCharacterCreation(initialStatManager.InitialStats[0]);
-            dexterity.GetBaseValueFromCharacterCreation(initialStatManager.InitialStats[1]);
-            intellect.GetBaseValueFromCharacterCreation(initialStatManager.InitialStats[2]);
-            hacking.GetBaseValueFromCharacterCreation(initialStatManager.InitialStats[3]);
-            shooting.GetBaseValueFromCharacterCreation(initialStatManager.InitialStats[4]);
-            investigation.GetBaseValueFromCharacterCreation(initialStatManager.InitialStats[5]);
-            medicine.GetBaseValueFromCharacterCreation(initialStatManager.InitialStats[6]);
-            fastTalking.GetBaseValueFromCharacterCreation(initialStatManager.InitialStats[7]);
+            strength.GetBaseValueFromCharacterCreation(initialStatManager.initialStats[0]);
+            dexterity.GetBaseValueFromCharacterCreation(initialStatManager.initialStats[1]);
+            intellect.GetBaseValueFromCharacterCreation(initialStatManager.initialStats[2]);
+            hacking.GetBaseValueFromCharacterCreation(initialStatManager.initialStats[3]);
+            shooting.GetBaseValueFromCharacterCreation(initialStatManager.initialStats[4]);
+            investigation.GetBaseValueFromCharacterCreation(initialStatManager.initialStats[5]);
+            medicine.GetBaseValueFromCharacterCreation(initialStatManager.initialStats[6]);
+            fastTalking.GetBaseValueFromCharacterCreation(initialStatManager.initialStats[7]);
         }
         else return;        
     }
