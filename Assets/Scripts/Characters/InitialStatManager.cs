@@ -26,6 +26,8 @@ public class InitialStatManager : MonoBehaviour
 
 	public TMP_Text errorMessage;
 
+	public TMP_Text hintMessage;
+
 	public TMP_Text statTotalNumber;
 
 	public TMP_Text statMaxNumber;
@@ -35,6 +37,10 @@ public class InitialStatManager : MonoBehaviour
 	private string errMessage = "";
 
 	public Button characterComplete;
+
+	private bool hintTimerIsOn = false;
+	private float hintTimer = 0f;
+	private float maxHintTimerValue = 4f;
 
 	/*  ELEMENT ID
 	 *  0 Strength
@@ -63,6 +69,7 @@ public class InitialStatManager : MonoBehaviour
 		Debug.Log("triggered set base stat");
 		initialStats[currentElementID] = baseStat;
 		Debug.Log(initialStats[currentElementID]);
+		SetHelpText(currentElementID);
 	}
 
 	void Awake()
@@ -84,6 +91,9 @@ public class InitialStatManager : MonoBehaviour
 
 	void Update()
 	{
+		if (hintTimerIsOn && hintTimer > 0f) { hintTimer = hintTimer - Time.deltaTime; }
+		if (hintTimerIsOn && hintTimer <= 0f) { hintTimerIsOn = false; ClearHintMsg(); }
+
 		playerPortrait.sprite = playerPortraitOptions[currentPortraitElementID];
 
 		int statTotal = 0;
@@ -206,4 +216,24 @@ public class InitialStatManager : MonoBehaviour
 		int statTotal = 0;
 		statTotalNumber.text = statTotal.ToString();
 	}
+
+	private void SetHelpText(int skillNum)
+	{
+		string txt = "";
+		if (skillNum==0) { txt = "Body is a measure of your toughness and resistance to physical trauma."; }
+		if (skillNum == 1) { txt = "Speed gives you additional movement during stressful situations."; }
+		if (skillNum == 2) { txt = "Quick wits allow you to make better use of cover when shot at."; }
+		if (skillNum == 3) { txt = "Knowledge of human anatomy is useful for targeting vital organs."; }
+		if (skillNum == 4) { txt = "Improved firearms accuracy helps you hit the things you shoot at."; }
+		hintMessage.text = txt;
+		hintTimerIsOn = true;
+		hintTimer = maxHintTimerValue;
+	}
+
+	private void ClearHintMsg()
+	{
+		hintMessage.text = "";
+	}
+
+	
 }
