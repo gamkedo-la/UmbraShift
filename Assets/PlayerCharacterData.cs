@@ -18,9 +18,9 @@ public class PlayerCharacterData : MonoBehaviour
 		stats[CharStat.Int] = initialStats[2];
 		stats[CharStat.Medicine] = initialStats[3];
 		stats[CharStat.Shoot] = initialStats[4];
-		stats[CharStat.Investigate] = initialStats[5];
-		stats[CharStat.Hack] = initialStats[6];
-		stats[CharStat.FastTalking] = initialStats[7];
+		//stats[CharStat.Investigate] = initialStats[5];
+		//stats[CharStat.Hack] = initialStats[6];
+		//stats[CharStat.FastTalking] = initialStats[7];
 		playerName = name;
 		playerPortrait = portrait;
 	}

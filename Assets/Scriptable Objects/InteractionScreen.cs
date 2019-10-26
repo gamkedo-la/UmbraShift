@@ -10,6 +10,7 @@ public struct UIoption
 	public InteractionScreen optionLeadsTo;
 	public bool lastInteraction;
 	public string goesToLevel;
+	public bool triggerLevelChange;
 	[HideInInspector]public int id;
 	public static int totalOptions=0;
 
@@ -20,9 +21,10 @@ public struct UIoption
 		optionText = _optionText;
 		optionLeadsTo = _optionLeadsTo;
 		lastInteraction = _lastInteraction;
-		goesToLevel = "";
+		goesToLevel = string.Empty;
+		triggerLevelChange = false;
 	}
-	public UIoption(string _optionText, InteractionScreen _optionLeadsTo, bool _lastInteraction, string _goesToLevel)
+	public UIoption(string _optionText, InteractionScreen _optionLeadsTo, bool _lastInteraction, string _goesToLevel, bool _triggerLevelChange)
 	{
 		id = totalOptions;
 		totalOptions = totalOptions + 1;
@@ -30,6 +32,7 @@ public struct UIoption
 		optionLeadsTo = _optionLeadsTo;
 		lastInteraction = _lastInteraction;
 		goesToLevel = _goesToLevel;
+		triggerLevelChange = _triggerLevelChange;
 	}
 }
 

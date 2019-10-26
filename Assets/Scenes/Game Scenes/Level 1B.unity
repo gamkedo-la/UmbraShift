@@ -4357,6 +4357,11 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1136951475}
+    - target: {fileID: 920115904651557257, guid: 76373b681e23b51489490affc904d3f6,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 920115904651557258, guid: 76373b681e23b51489490affc904d3f6,
         type: 3}
       propertyPath: showVirtualGrid
@@ -6863,7 +6868,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 59191
+    m_Bits: 7071543
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

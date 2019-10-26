@@ -108,7 +108,7 @@ public class Chatbox : MonoBehaviour
 		SetChatBoxStatus(MoveStatus.Open);
 		status = MoveStatus.Closing;
 		interactable = false;
-		if (lastOptionChosen.goesToLevel != "") 
+		if (lastOptionChosen.triggerLevelChange && lastOptionChosen.goesToLevel != string.Empty) 
 		{
 			StartCoroutine("MoveToLevel");
 		}
@@ -131,12 +131,15 @@ public class Chatbox : MonoBehaviour
 		}
 	}
 
-	IEnumerator MoveToLevel()
+	private IEnumerator MoveToLevel()
 	{
 		float delay = 2f;
 		yield return new WaitForSeconds(delay);
-		LoadingCanvas.ShowLoadingCanvas();
-		SceneManager.LoadScene(lastOptionChosen.goesToLevel);
+		if (lastOptionChosen.triggerLevelChange && lastOptionChosen.goesToLevel != string.Empty)
+		{
+			LoadingCanvas.ShowLoadingCanvas();
+			SceneManager.LoadScene(lastOptionChosen.goesToLevel);
+		}
 	}
 
 	private void UpdateScreen()
