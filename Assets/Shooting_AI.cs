@@ -54,6 +54,7 @@ public class Shooting_AI : MonoBehaviour
 				bool playerIsInLOS = DetermineIfPlayerIsInLOS();
 				bool playerHasCover = DetermineIfPlayerHasCover();
 				float accuracy = DetermineAccuracy(playerHasCover, rangeToPlayer);
+                UmbraEventManager.instance.ActivateAlarm();
 				ShootAtPlayer(accuracy);
 				projectileHasBeenShot = true;
 			}
