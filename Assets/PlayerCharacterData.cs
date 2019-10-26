@@ -33,6 +33,14 @@ public class PlayerCharacterData : MonoBehaviour
 	public void AdvanceStory()
 	{
 		story = story + 1;
+
+		// 0  Game Start
+		// 1  After talking to Bartender for first time in Bar, get key
+		// 2  After talking to Tanya for first time in Base
+		// 3  After talking to Transport for first time in Warehouse
+		// 4  After talking to Boss for first time in Warehouse
+		// 5  After accessing crate, get Project Data
+		// 6  After talking to Transport with Project Data
 	}
 
 }

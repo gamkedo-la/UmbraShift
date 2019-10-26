@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edb2b2b67986080488b20bf5d981747f, type: 3}
   m_Name: NoProjectData 3
   m_EditorClassIdentifier: 
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: 18980eabd67c9c745972f603adc68e14, type: 3}
   handle: Transport
   description: 'With gangers like these, the boss won''t leave the keycard out of
     his possession and the boss will be the biggest, toughest of the gangers. He''ll
@@ -22,10 +22,14 @@ MonoBehaviour:
   - optionText: Got it!  I'll return with the Project Data
     optionLeadsTo: {fileID: 0}
     lastInteraction: 1
+    goesToLevel: 
+    triggerLevelChange: 0
     id: 0
   - optionText: 'Where do I find the Project Data again? '
     optionLeadsTo: {fileID: 11400000, guid: 775d51ddaf72751488782f42a0df24dd, type: 2}
     lastInteraction: 0
+    goesToLevel: 
+    triggerLevelChange: 0
     id: 0
   inventory: {fileID: 0}
   itemToReceive: {fileID: 0}

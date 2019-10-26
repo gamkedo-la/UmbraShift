@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edb2b2b67986080488b20bf5d981747f, type: 3}
   m_Name: NoProjectData 2
   m_EditorClassIdentifier: 
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: 18980eabd67c9c745972f603adc68e14, type: 3}
   handle: Transport
   description: They've boxed it all up for shipping to a secure facility. The most
     sensitive data will be in a crate behind a security door.  You'll need to find
@@ -22,10 +22,14 @@ MonoBehaviour:
   - optionText: Got it!  I'll return with the Project Data
     optionLeadsTo: {fileID: 0}
     lastInteraction: 1
+    goesToLevel: 
+    triggerLevelChange: 0
     id: 0
   - optionText: Where do I get a keycard?
     optionLeadsTo: {fileID: 11400000, guid: 358378c61f90a7c4f99d1d901320bf63, type: 2}
     lastInteraction: 0
+    goesToLevel: 
+    triggerLevelChange: 0
     id: 0
   inventory: {fileID: 0}
   itemToReceive: {fileID: 0}

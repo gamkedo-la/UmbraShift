@@ -18,4 +18,10 @@ public class Boss : MonoBehaviour
 		deadBoss.transform.position = this.transform.position;
 	}
 
+	public void OnDestroy()
+	{
+		deadBoss.SetActive(true);
+		deadBoss.transform.position = this.transform.position;
+	}
+
 }
