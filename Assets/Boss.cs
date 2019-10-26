@@ -14,14 +14,20 @@ public class Boss : MonoBehaviour
 
 	public void OnDisable()
 	{
-		deadBoss.SetActive(true);
-		deadBoss.transform.position = this.transform.position;
+		if (deadBoss)
+		{
+			deadBoss.SetActive(true);
+			deadBoss.transform.position = this.transform.position;
+		}
 	}
 
 	public void OnDestroy()
 	{
-		deadBoss.SetActive(true);
-		deadBoss.transform.position = this.transform.position;
+		if (deadBoss)
+		{
+			deadBoss.SetActive(true);
+			deadBoss.transform.position = this.transform.position;
+		}
 	}
 
 }

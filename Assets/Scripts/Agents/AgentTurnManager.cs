@@ -6,6 +6,7 @@ using UnityEngine;
 public class AgentTurnManager : MonoBehaviour
 {
 	[Header("Config")]
+	[SerializeField] private UIActionBarController actionBarController;
 	[SerializeField] private AgentStats mainPlayerCharacter = null;
 	[SerializeField] public bool turnManagerActiveInScene = false;
 	[SerializeField] private TurnManagerUI turnUI;
@@ -84,10 +85,11 @@ public class AgentTurnManager : MonoBehaviour
             if (character.isNPC == false)
             {
                 character.ResetActionPoints();
+				actionBarController.ResetIconControl();
             }
             else
             {
-
+				actionBarController.LockIconControl();
                 AgentActionManager actionManager = character.gameObject.GetComponent<AgentActionManager>();
                 if (actionManager)
                 {

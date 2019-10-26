@@ -16,6 +16,7 @@ public class UIActionBarController : MonoBehaviour
 	[SerializeField] private UIIcon shootActionIcon;
 	[SerializeField] private UIIcon interactActionIcon;
 	[SerializeField] private UIIcon hackActionIcon;
+	[SerializeField] private Button endTurnButton;
 
 	[SerializeField] private Transform hidingSpot;
 	[SerializeField] private Transform[] homeSpot;
@@ -180,6 +181,7 @@ public class UIActionBarController : MonoBehaviour
 
 	public void ReadyForNextAction()
 	{
+		if (endTurnButton) { endTurnButton.interactable = true; }
 		inputManager.InputLocked = false;
 		playerHasIconControl = true;
 		HideActionIcon(cancelActionIcon, true);
@@ -237,6 +239,7 @@ public class UIActionBarController : MonoBehaviour
 	{
 		yield return new WaitForSeconds(delay*2);
 		playerHasIconControl = true;
+		if (endTurnButton) { endTurnButton.interactable = false; }
 		turnManager.ActiveCharacter.actionManager.PerformAction(action);
 	}
 
