@@ -41,6 +41,7 @@ public class Senses_AI : MonoBehaviour
 		if (playerInSight && playerInRange) 
 		{
 			Alert(true);
+            UmbraEventManager.instance.ActivateAlarm();
 		}
 		else 
 		{

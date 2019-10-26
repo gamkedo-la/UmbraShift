@@ -129,7 +129,10 @@ public class AgentActionManager : MonoBehaviour
 			{
 				transactionInProcessAP = shootCostAP;
 				actionInProgress = Action.Shoot;
-				m_agentShooting.ActionStarted();
+                if (m_agentShooting != null)
+                {
+                    m_agentShooting.ActionStarted();
+                }
 			}
 		}
 
