@@ -52,7 +52,7 @@ public class Chatbox : MonoBehaviour
 	private MoveStatus status;
 	private RectTransform rect;
 	private UIPos chatboxPos;
-	private float distOpenToClose=Screen.width/4;
+	private float distOpenToClose=Screen.width/2;
 	private const float DIST_THRESHOLD = 0.1f;
 	
 

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edb2b2b67986080488b20bf5d981747f, type: 3}
   m_Name: Intro-A1
   m_EditorClassIdentifier: 
-  portrait: {fileID: 21300000, guid: 154ebf36e20654120a4c52750f4dd6d8, type: 3}
+  portrait: {fileID: 21300000, guid: 3a30672291a641e428fc640bafb4f5a6, type: 3}
   handle: ???
   description: Hi, you must be the new specialist we hired. It's good to finally meet
     you in person. You can call me Arbiter.
@@ -21,10 +21,14 @@ MonoBehaviour:
   - optionText: 'My name is... '
     optionLeadsTo: {fileID: 11400000, guid: c948350fa89bfe34dac2b1216c46e41a, type: 2}
     lastInteraction: 0
+    goesToLevel: 
+    triggerLevelChange: 0
     id: 0
   - optionText: Are you Tanya?
     optionLeadsTo: {fileID: 11400000, guid: 607a3e5f7bc7a0445818804812bdeb40, type: 2}
     lastInteraction: 0
+    goesToLevel: 
+    triggerLevelChange: 0
     id: 0
   inventory: {fileID: 0}
   itemToReceive: {fileID: 0}

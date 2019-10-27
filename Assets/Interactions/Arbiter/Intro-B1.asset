@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edb2b2b67986080488b20bf5d981747f, type: 3}
   m_Name: Intro-B1
   m_EditorClassIdentifier: 
-  portrait: {fileID: 21300000, guid: 154ebf36e20654120a4c52750f4dd6d8, type: 3}
+  portrait: {fileID: 21300000, guid: 3a30672291a641e428fc640bafb4f5a6, type: 3}
   handle: Arbiter
   description: 'Please, no names. We all use codenames here. In case one of us gets
     caught, yadda yadda. Paranoia is survival here. '
@@ -21,6 +21,8 @@ MonoBehaviour:
   - optionText: 'I understand. '
     optionLeadsTo: {fileID: 11400000, guid: 83ebda085ef303140863a228d21a34ba, type: 2}
     lastInteraction: 0
+    goesToLevel: 
+    triggerLevelChange: 0
     id: 0
   inventory: {fileID: 0}
   itemToReceive: {fileID: 0}

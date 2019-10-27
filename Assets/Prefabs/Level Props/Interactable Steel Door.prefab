@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4012595165080057183}
   - component: {fileID: 4012595165080057182}
   - component: {fileID: 8734184110743548255}
+  - component: {fileID: 2765244279091813205}
   m_Layer: 0
   m_Name: Interactable Steel Door
   m_TagString: Untagged
@@ -72,6 +73,18 @@ MonoBehaviour:
   ObjectRequiredToOpen: {fileID: 0}
   ConvIfNoRequiredObj: {fileID: 0}
   delay: 0
+--- !u!114 &2765244279091813205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4012595165080057180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 051c238b1add16c4ea7e76ff088e9154, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4012595166392077111
 GameObject:
   m_ObjectHideFlags: 0
