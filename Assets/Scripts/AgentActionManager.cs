@@ -154,7 +154,7 @@ public class AgentActionManager : MonoBehaviour
 
 	public void ReportActionCancelled()
 	{
-
+		m_uiActionBarController.ShowEndTurnButton();
 	}
 
 	public void ReportEndOfAction()

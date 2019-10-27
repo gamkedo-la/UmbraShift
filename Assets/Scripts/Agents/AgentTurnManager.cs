@@ -90,7 +90,7 @@ public class AgentTurnManager : MonoBehaviour
             else
             {
 				actionBarController.LockIconControl();
-                AgentActionManager actionManager = character.gameObject.GetComponent<AgentActionManager>();
+				AgentActionManager actionManager = character.gameObject.GetComponent<AgentActionManager>();
                 if (actionManager)
                 {
                     actionManager.Move_AI();

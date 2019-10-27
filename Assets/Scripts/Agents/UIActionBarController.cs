@@ -243,6 +243,16 @@ public class UIActionBarController : MonoBehaviour
 		turnManager.ActiveCharacter.actionManager.PerformAction(action);
 	}
 
+	public void HideEndTurnButton()
+	{
+		if (endTurnButton) { endTurnButton.interactable = false; }
+	}
+
+	public void ShowEndTurnButton()
+	{
+		if (endTurnButton) { endTurnButton.interactable = true; }
+	}
+
 
 	
 }
