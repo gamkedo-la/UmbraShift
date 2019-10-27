@@ -80,7 +80,14 @@ public class Inventory : MonoBehaviour
 
     public bool HasItem(Item item)
     {
-        return items.Exists(i => i == item);
+		//return items.Exists(i => i == item);		//I removed this because I've run into errors and I don't
+													//know what this line of code does. I've added the below loop instead.
+		bool hasItem = false;
+		foreach (Item itemInList in items)
+		{
+			if (itemInList.Equals(item)) { hasItem = true; }
+		}
+		return hasItem;
     }
 
     public void Remove(Item item)
