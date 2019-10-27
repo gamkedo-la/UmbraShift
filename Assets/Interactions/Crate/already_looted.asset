@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edb2b2b67986080488b20bf5d981747f, type: 3}
+  m_Name: already_looted
+  m_EditorClassIdentifier: 
+  portrait: {fileID: 9041682994077213965, guid: 07c78817e05c17449935d5520c4c971d,
+    type: 3}
+  handle: 
+  description: You already have the Project Data. Transport is waiting for you in
+    the blue truck outside.
+  color: {r: 0, g: 0, b: 0, a: 0}
+  options:
+  - optionText: CONTINUE
+    optionLeadsTo: {fileID: 0}
+    lastInteraction: 1
+    goesToLevel: 
+    triggerLevelChange: 0
+    id: 0
+  inventory: {fileID: 0}
+  itemToReceive: {fileID: 0}

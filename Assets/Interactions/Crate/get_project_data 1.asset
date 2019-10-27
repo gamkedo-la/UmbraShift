@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edb2b2b67986080488b20bf5d981747f, type: 3}
+  m_Name: get_project_data 1
+  m_EditorClassIdentifier: 
+  portrait: {fileID: 9041682994077213965, guid: 07c78817e05c17449935d5520c4c971d,
+    type: 3}
+  handle: 
+  description: 'There''s a lot of info here. There wasn''t just one test group. And
+    there wasn''t just one testing facility. This was happening all over the country.
+    For months. '
+  color: {r: 0, g: 0, b: 0, a: 0}
+  options:
+  - optionText: CONTINUE
+    optionLeadsTo: {fileID: 11400000, guid: ae382bf56ea83244ea0fd1f849ff58a2, type: 2}
+    lastInteraction: 0
+    goesToLevel: 
+    triggerLevelChange: 0
+    id: 0
+  - optionText: KEEP SCANNING
+    optionLeadsTo: {fileID: 11400000, guid: 63d5ea8bce408f446bb4f060cfce05ec, type: 2}
+    lastInteraction: 0
+    goesToLevel: 
+    triggerLevelChange: 0
+    id: 0
+  inventory: {fileID: 0}
+  itemToReceive: {fileID: 0}
