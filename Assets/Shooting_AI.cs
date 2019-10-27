@@ -54,7 +54,7 @@ public class Shooting_AI : MonoBehaviour
 				bool playerIsInLOS = DetermineIfPlayerIsInLOS();
 				bool playerHasCover = DetermineIfPlayerHasCover();
 				float accuracy = DetermineAccuracy(playerHasCover, rangeToPlayer);
-                UmbraEventManager.instance.ActivateAlarm();
+               
 				ShootAtPlayer(accuracy);
 				projectileHasBeenShot = true;
 			}
@@ -225,7 +225,8 @@ public class Shooting_AI : MonoBehaviour
 
 	private void ShootAtPlayer(float acc)
 	{
-		GameObject projectileGO = Instantiate(self.EquippedWeapon.projectilePrefab, firePoint.position, Quaternion.LookRotation(transform.forward));
+        UmbraEventManager.instance.ActivateAlarm();
+        GameObject projectileGO = Instantiate(self.EquippedWeapon.projectilePrefab, firePoint.position, Quaternion.LookRotation(transform.forward));
 		projectileGO.transform.LookAt(player.transform);
 		Projectile projectile = projectileGO.GetComponent<Projectile>();
 		projectile.SetShooter(selfColliders);
