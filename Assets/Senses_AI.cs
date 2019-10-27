@@ -12,7 +12,7 @@ public class Senses_AI : MonoBehaviour
 	private Targetable agent;
 	[Header("For feedback only - do not modify in Unity")]
 	[SerializeField] private AlertStatus alertStatus = AlertStatus.OnPatrol;
-	private float detectionRange = 25f;
+	private float detectionRange = 15f;
 	[SerializeField] private float distanceToPlayer;
 	[SerializeField] private bool playerInSight;
 	[SerializeField] private bool playerInRange;

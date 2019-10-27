@@ -15,6 +15,7 @@ public class AgentActionManager : MonoBehaviour
 	private AgentStats m_agentStats;
 	private bool infiniteActionsInScene = false;
 	private Shooting_AI shooting_AI;
+	private Movement_AI movement_AI;
 	//private Movement_AI movement_AI;
 
 	//AP costs
@@ -28,6 +29,7 @@ public class AgentActionManager : MonoBehaviour
     {
 		//movement_AI = GetComponent<Movement_AI>();
 		shooting_AI = GetComponent<Shooting_AI>();
+		movement_AI = GetComponent<Movement_AI>();
 		m_uiActionBarController = FindObjectOfType<UIActionBarController>();
 		m_agentStats = GetComponent<AgentStats>();
 		m_agentMovement = GetComponent<AgentMovement>();
@@ -164,7 +166,7 @@ public class AgentActionManager : MonoBehaviour
 
 	public void Move_AI()
 	{
-		//movement_AI.ActionStarted();
+		if (movement_AI) { movement_AI.ActionStarted(); }
 	}
 
 	public void Shoot_AI()
