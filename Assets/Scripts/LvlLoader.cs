@@ -70,6 +70,11 @@ public class LvlLoader : MonoBehaviour
 	public void PlayAgain()
 	{
 		StartCoroutine(ChangeScene(charGeneration));
+
 	}
+    public void ExitToMainMenu()
+    {
+        SceneManager.LoadScene(0);
+            }
 
 }

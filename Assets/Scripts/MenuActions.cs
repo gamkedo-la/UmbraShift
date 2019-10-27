@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MenuActions : MonoBehaviour
@@ -126,6 +127,11 @@ public class MenuActions : MonoBehaviour
         masterBus.setVolume(value);
         PlayerPrefs.SetFloat("Master Volume", value);
 
+    }
+
+    public void ExitToMainMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 
 }

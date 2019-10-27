@@ -103,7 +103,7 @@ public class PauseScreenActions : MonoBehaviour
         if (FMODUnity.RuntimeManager.HasBankLoaded("Master"))
         {
             Debug.Log("Bank Loaded starting Scene");
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene("LoadingScene");
 
         }
         else
@@ -115,7 +115,11 @@ public class PauseScreenActions : MonoBehaviour
 
     }
 
-
+    public void Continue()
+    {
+        pauseMenuPanel.SetActive(false);
+        Time.timeScale = 1f;
+    }
 
 
 }
