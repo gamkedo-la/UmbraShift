@@ -71,10 +71,17 @@ public class UIActionBarController : MonoBehaviour
 		{ 
 			ActionBarPortrait.sprite = turnManager.ActiveCharacter.PortraitImage;			
 		}
-
-		if (activeCharacterName && turnManager && turnManager.ActiveCharacter)
+        Debug.Log("Testing Character Name");
+        if (activeCharacterName && turnManager && turnManager.mainPlayerCharacter)
 		{
-			 activeCharacterName.text = turnManager.ActiveCharacter.CharacterName;
+            
+
+
+
+           
+                
+                activeCharacterName.text = turnManager.mainPlayerCharacter.CharacterName;
+            
 		}
 	}
 

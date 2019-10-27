@@ -7,7 +7,7 @@ public class AgentTurnManager : MonoBehaviour
 {
 	[Header("Config")]
 	[SerializeField] private UIActionBarController actionBarController;
-	[SerializeField] private AgentStats mainPlayerCharacter = null;
+	[SerializeField] public AgentStats mainPlayerCharacter = null;
 	[SerializeField] public bool turnManagerActiveInScene = false;
 	[SerializeField] private TurnManagerUI turnUI;
 	[Header("Reference Only - Do Not Modify in Unity")]

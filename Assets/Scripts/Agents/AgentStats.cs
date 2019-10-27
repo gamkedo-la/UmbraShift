@@ -69,6 +69,9 @@ public class AgentStats : MonoBehaviour, IComparable<AgentStats>
 	
 	void Start()
 	{
+
+
+
 		agentMovement = GetComponent<AgentMovement>();
 		actionManager = GetComponent<AgentActionManager>();
 		localUI = GetComponent<AgentLocalUI>();
@@ -112,7 +115,11 @@ public class AgentStats : MonoBehaviour, IComparable<AgentStats>
 			PlayerCharacterData playerCharacterData = FindObjectOfType<PlayerCharacterData>();
 			if (playerCharacterData)
 			{
-				if (playerCharacterData.playerName != "") { characterName = playerCharacterData.playerName; }
+				if (playerCharacterData.playerName != "")
+                {
+                    characterName = playerCharacterData.playerName;
+
+                }
 				if (portraitImage && playerCharacterData.playerPortrait && playerCharacterData.playerPortrait.sprite)
 				{
 					portraitImage = playerCharacterData.playerPortrait.sprite;
