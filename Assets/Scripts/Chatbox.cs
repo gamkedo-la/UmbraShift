@@ -177,6 +177,22 @@ public class Chatbox : MonoBehaviour
             if (optionNumber==1) { lastOptionChosen = currentScreen.options[0]; }
 			else if (optionNumber == 2) { lastOptionChosen = currentScreen.options[1]; }
 			else if (optionNumber == 3) { lastOptionChosen = currentScreen.options[2]; }
+			currentScreen.inventory = FindObjectOfType<Inventory>(); //Inventory test
+
+			if (currentScreen.inventory == null)
+			{
+				PlayerHotkeyInput playerInput = FindObjectOfType<PlayerHotkeyInput>();
+				if (playerInput) { currentScreen.inventory = playerInput.gameObject.GetComponent<Inventory>(); }
+			}
+			if (currentScreen.inventory != null)
+			{
+				Debug.Log("Inventory called");
+				if (currentScreen.itemToReceive != null)
+				{
+
+					currentScreen.inventory.Add(currentScreen.itemToReceive);
+				}
+			}
 			if (lastOptionChosen.lastInteraction)
 			{
 				Close();
@@ -186,6 +202,7 @@ public class Chatbox : MonoBehaviour
 				currentScreen = lastOptionChosen.optionLeadsTo;
 				UpdateScreen();
 
+				
                 //Inventory test
                 currentScreen.inventory = FindObjectOfType<Inventory>(); //Inventory test
 
@@ -200,6 +217,7 @@ public class Chatbox : MonoBehaviour
                     }
                 }
                 //end Inventory test
+				
 			}
 		}
 	}

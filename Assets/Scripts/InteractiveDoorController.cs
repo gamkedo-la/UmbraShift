@@ -13,6 +13,7 @@ public class InteractiveDoorController : MonoBehaviour,IInteractable
     
     public bool doorOpen=false;
     public Item ObjectRequiredToOpen;
+	public InteractionScreen ConvIfNoRequiredObj;
     public float delay = 0f;
 	private List<Collider> openedColliders = new List<Collider>();
 
@@ -60,7 +61,7 @@ public class InteractiveDoorController : MonoBehaviour,IInteractable
 
     public void OpenDoor()
     {
-        GetComponent<Animator>().SetBool("isOpen", true);
+        GetComponentInChildren<Animator>().SetBool("isOpen", true);
         doorOpen = true;
 		Collider[] doorColliders = GetComponentsInChildren<Collider>();
 		openedColliders.Clear();
@@ -97,6 +98,19 @@ public class InteractiveDoorController : MonoBehaviour,IInteractable
             delay = 2f;
             OpenDoor();
         }
+		else if (ObjectRequiredToOpen && !playerInventory.HasItem(ObjectRequiredToOpen))
+		{
+			Chatbox chatbox = FindObjectOfType<Chatbox>();
+			if (ConvIfNoRequiredObj && chatbox)
+			{
+				chatbox.Open(ConvIfNoRequiredObj);
+			}
+		}
+		else if (!ObjectRequiredToOpen)
+		{
+			delay = 1f;
+			OpenDoor();
+		}
         
     }
 }

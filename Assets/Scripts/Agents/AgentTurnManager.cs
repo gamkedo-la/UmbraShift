@@ -63,7 +63,7 @@ public class AgentTurnManager : MonoBehaviour
 
 	private void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.End)) { EndTurn(); }
+		
 	}
 
 	private List<AgentStats> GenerateAgentList()

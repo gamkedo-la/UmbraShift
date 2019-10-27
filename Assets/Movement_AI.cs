@@ -15,6 +15,8 @@ public class Movement_AI : MonoBehaviour
 	bool isMoving=false;
 	float movementLimit;
 	const float ARRIVAL_THRESHOLD = 0.2f;
+	private enum Activity { Patrol, Alert, None }
+	private Activity activity = Activity.None;
 
     private void Start()
     {
@@ -30,11 +32,8 @@ public class Movement_AI : MonoBehaviour
 
     private void Update()
     {
-		if (movementSystemActive && senses)
-		{
-			if (senses.GetAlertStatus() == AlertStatus.OnAlert) { AlertUpdate(); }
-			if (senses.GetAlertStatus() == AlertStatus.OnPatrol) { PatrolUpdate(); }
-		}
+		if (activity ==Activity.Alert) {AlertUpdate(); }
+		else if (activity==Activity.Patrol) { PatrolUpdate(); }
     }
 
 	private float CalcDistanceToPlayer()
@@ -91,10 +90,16 @@ public class Movement_AI : MonoBehaviour
 	public void ActionStarted()
 	{
 		movementSystemActive = true;
+		if (movementSystemActive && senses)
+		{
+			if (senses.GetAlertStatus() == AlertStatus.OnAlert) { activity = Activity.Alert; }
+			if (senses.GetAlertStatus() == AlertStatus.OnPatrol) { activity = Activity.Patrol; }
+		}
 	}
 
 	private void ActionEnded()
 	{
+		activity = Activity.None;
 		movementSystemActive = false;
 		actionManager.ReportEndOfMoving_AI();
 	}
