@@ -11,6 +11,7 @@ public class DoorToNextLevel : MonoBehaviour, IInteractable
     private Animator animator;
 
     public Item ObjectRequiredToOpen;
+	public InteractionScreen screenIfNoReqObj;
 	public float delay = 0f;
 
 
@@ -31,6 +32,14 @@ public class DoorToNextLevel : MonoBehaviour, IInteractable
 			delay = 2f;
 			StartCoroutine(MoveToNextLevel());
         }
+		else if (ObjectRequiredToOpen && !Inventory.instance.HasItem(ObjectRequiredToOpen))
+		{
+			Chatbox chatbox = FindObjectOfType<Chatbox>();
+			if (chatbox && screenIfNoReqObj)
+			{
+				chatbox.Open(screenIfNoReqObj);
+			}
+		}
 		else if (!ObjectRequiredToOpen)
 		{
             if (GetComponentInChildren<DoorSimpleController>()) { GetComponentInChildren<DoorSimpleController>().OpenDoor(); }
