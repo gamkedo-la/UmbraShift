@@ -21,6 +21,8 @@ public class Shooting_AI : MonoBehaviour
 	private bool rotatingNow = false;
 	bool shootingSystemInUse = false;
 	bool projectileHasBeenShot = false;
+	private enum Activity { HoldingFire, Shooting, None}
+	private Activity activity = Activity.None;
 
 	private void Start()
 	{
@@ -35,15 +37,17 @@ public class Shooting_AI : MonoBehaviour
 
 	private void Update()
 	{
-		if (!shootingSystemInUse) { return; }
-		if (senses.GetAlertStatus() == AlertStatus.OnPatrol) { ActionComplete(); return; }
-		if (projectileHasBeenShot) { return; }
+		if (shootingSystemInUse && !projectileHasBeenShot) { ShootUpdate(); }
+	}
+
+	private void ShootUpdate()
+	{
 		float angleTowardPlayer = Vector3.Angle(transform.forward, player.transform.position - transform.position);
 		if (!rotatingNow) { RotateTowardPlayer(); }
 				
 		if (angleTowardPlayer < WEAPON_DRAW_THRESHOLD)
 		{
-			//DrawWeapon(true);
+			//DrawWeapon(true);		Disable while bug fixing. Should try re-enabling when bugs have been fixed.
 		}
 
 		if (angleTowardPlayer < FIELD_OF_VIEW)
@@ -52,6 +56,7 @@ public class Shooting_AI : MonoBehaviour
 			if (rangeToPlayer == RangeCategory.Optimum || rangeToPlayer == RangeCategory.Long)
 			{
 				bool playerIsInLOS = DetermineIfPlayerIsInLOS();
+				if (!playerIsInLOS) { ActionComplete(); return; }
 				bool playerHasCover = DetermineIfPlayerHasCover();
 				float accuracy = DetermineAccuracy(playerHasCover, rangeToPlayer);
                
@@ -67,10 +72,13 @@ public class Shooting_AI : MonoBehaviour
 	{
 		shootingSystemInUse = true;
 		projectileHasBeenShot = false;
+		if (senses.GetAlertStatus() == AlertStatus.OnAlert) { activity = Activity.Shooting; }
+		else { ActionComplete(); }
 	}
 
 	public void ActionComplete()
 	{
+		activity = Activity.None;
 		DrawWeapon(false);
 		shootingSystemInUse = false;
 		projectileHasBeenShot = false;
@@ -81,7 +89,14 @@ public class Shooting_AI : MonoBehaviour
 	{
 		if (self.isHuman && animator)
 		{
-			//animator.SetBool("isPistolDrawn", toDraw);
+			AnimatorControllerParameter[] parameters = animator.parameters;
+			foreach (AnimatorControllerParameter parameter in parameters)
+			{
+				if (parameter.name == "isPistolDrawn")
+				{
+					animator.SetBool("isPistolDrawn", toDraw);
+				}
+			}
 		}
 		
 	}
@@ -176,29 +191,29 @@ public class Shooting_AI : MonoBehaviour
 				}
 			}
 
-			if (!LOStoTarget || !seeAnything)
-			{
-				return false;
-			}
-			else { return true; }
-		}
-
-		private RangeCategory DetermineRangeToPlayer()
+		if (!LOStoTarget || !seeAnything)
 		{
-			int maxWeaponRange = (int)self.EquippedWeapon.range;
-			float maxRange = (float)maxWeaponRange;
-			float optimumRange = maxRange / 2f;
-			float longRange = maxRange - optimumRange;
-			RangeCategory playerRange = RangeCategory.Exceeded;
-			if (firePoint != null)
-			{
-				float distanceToTarget = Vector3.Distance(firePoint.position, player.TargetPos);
-				if (distanceToTarget < optimumRange) { playerRange = RangeCategory.Optimum; }
-				else if (distanceToTarget < maxRange) { playerRange = RangeCategory.Long; }
-				else { playerRange = RangeCategory.Exceeded; }
-			}
-			return playerRange;
+			return false;
 		}
+		else { return true; }
+	}
+
+	private RangeCategory DetermineRangeToPlayer()
+	{
+		int maxWeaponRange = (int)self.EquippedWeapon.range;
+		float maxRange = (float)maxWeaponRange;
+		float optimumRange = maxRange / 2f;
+		float longRange = maxRange - optimumRange;
+		RangeCategory playerRange = RangeCategory.Exceeded;
+		if (firePoint != null)
+		{
+			float distanceToTarget = Vector3.Distance(firePoint.position, player.TargetPos);
+			if (distanceToTarget < optimumRange) { playerRange = RangeCategory.Optimum; }
+			else if (distanceToTarget < maxRange) { playerRange = RangeCategory.Long; }
+			else { playerRange = RangeCategory.Exceeded; }
+		}
+		return playerRange;
+	}
 
 	private float DetermineAccuracy(bool hasCover, RangeCategory rangeToPlayer)
 	{

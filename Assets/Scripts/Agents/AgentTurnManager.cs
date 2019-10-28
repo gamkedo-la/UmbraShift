@@ -55,10 +55,8 @@ public class AgentTurnManager : MonoBehaviour
 
     IEnumerator DelayedStart()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         ProcessTurn(agents[0]);
-
-
     }
 
 	private void Update()
@@ -94,8 +92,9 @@ public class AgentTurnManager : MonoBehaviour
                 if (actionManager)
                 {
                     actionManager.Move_AI();
-					ReportEndOfMovement(actionManager);
+					//ReportEndOfMovement(actionManager);
                 }
+				else { EndTurn(); }
             }
         }
         else

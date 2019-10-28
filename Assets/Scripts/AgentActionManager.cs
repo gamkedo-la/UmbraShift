@@ -167,11 +167,13 @@ public class AgentActionManager : MonoBehaviour
 	public void Move_AI()
 	{
 		if (movement_AI) { movement_AI.ActionStarted(); }
+		else { ReportEndOfMoving_AI(); }
 	}
 
 	public void Shoot_AI()
 	{
-		shooting_AI.ActionStarted();
+		if (shooting_AI) { shooting_AI.ActionStarted(); }
+		else { ReportEndOfShooting_AI(); }
 	}
 
 	public void ReportEndOfMoving_AI()

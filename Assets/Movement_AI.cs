@@ -84,7 +84,7 @@ public class Movement_AI : MonoBehaviour
 
 	private void PatrolUpdate()
 	{
-		
+		ActionEnded();
 	}
 
 	public void ActionStarted()
@@ -95,11 +95,17 @@ public class Movement_AI : MonoBehaviour
 			if (senses.GetAlertStatus() == AlertStatus.OnAlert) { activity = Activity.Alert; }
 			if (senses.GetAlertStatus() == AlertStatus.OnPatrol) { activity = Activity.Patrol; }
 		}
+		else 
+		{
+			activity = Activity.Patrol;
+		}
 	}
 
 	private void ActionEnded()
 	{
+		isMoving = false;
 		activity = Activity.None;
+		navMesh.destination = transform.position;
 		movementSystemActive = false;
 		actionManager.ReportEndOfMoving_AI();
 	}
