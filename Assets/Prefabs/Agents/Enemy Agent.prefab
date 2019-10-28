@@ -1211,6 +1211,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1251497568195869440}
   - component: {fileID: 9211046142064776826}
+  - component: {fileID: 6233200319133187989}
   m_Layer: 0
   m_Name: LowPolyCharacter_StreetPunk
   m_TagString: Untagged
@@ -1254,6 +1255,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6233200319133187989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2811776347188398355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c595b77bf2cbd9c4b84dfbacd947f84c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3049134111747451158
 GameObject:
   m_ObjectHideFlags: 0
@@ -1493,6 +1506,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1068714486433359721}
   - component: {fileID: 6944222869676624403}
+  - component: {fileID: 6028987557002602195}
   m_Layer: 17
   m_Name: LowPolyCharacter_Guard
   m_TagString: Untagged
@@ -1536,6 +1550,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6028987557002602195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4075634453810664826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c595b77bf2cbd9c4b84dfbacd947f84c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4193592331250803810
 GameObject:
   m_ObjectHideFlags: 0
@@ -1863,7 +1889,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc9793e07d88166469a43cff66b63e5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  animator: {fileID: 9211046142064776826}
 --- !u!114 &5715535783249435596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1876,6 +1902,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc5456d496bc2ae4c9d82429c4d6760e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 9211046142064776826}
 --- !u!195 &4316177832402588530
 NavMeshAgent:
   m_ObjectHideFlags: 0

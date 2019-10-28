@@ -32,7 +32,7 @@ public class UmbraEventManager : MonoBehaviour
 
     public void DeactivateAlarm()
     {
-        if (AlarmActivated != null)
+        if (AlarmDeactivated != null)
         {
             AlarmDeactivated();
             alertState = false;

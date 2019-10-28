@@ -17,6 +17,7 @@ public class Movement_AI : MonoBehaviour
 	const float ARRIVAL_THRESHOLD = 0.2f;
 	private enum Activity { Patrol, Alert, None }
 	private Activity activity = Activity.None;
+    public Animator animator;
 
     private void Start()
     {
@@ -34,6 +35,17 @@ public class Movement_AI : MonoBehaviour
     {
 		if (activity ==Activity.Alert) {AlertUpdate(); }
 		else if (activity==Activity.Patrol) { PatrolUpdate(); }
+
+       if (navMesh.velocity.sqrMagnitude > 0.1f && !animator.GetBool("isWalking"))
+        {
+            animator.SetBool("isWalking", true);
+        }
+        else if(animator.GetBool("isWalking"))
+        {
+            animator.SetBool("isWalking", false);
+        }
+           
+       
     }
 
 	private float CalcDistanceToPlayer()
