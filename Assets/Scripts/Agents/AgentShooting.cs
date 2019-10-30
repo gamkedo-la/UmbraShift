@@ -608,11 +608,14 @@ public class AgentShooting : MonoBehaviour
 		{
 			allShootableTargetsWithinEncounterRange.Add(targetFromList);
 		}
-		Vector3 height = (Vector3.up * MAX_AIMING_RADIUS);
+		float height = firePoint.position.y;
+		float allowanceForHighShot = 0.2f;
 		foreach (Targetable target in allShootableTargetsWithinEncounterRange)
 		{
-			Vector3 origin = selfTarget.TargetPos + height;
-			Vector3 dest = target.TargetPos + height;
+			Vector3 origin = selfTarget.TargetPos;
+			origin.y = 0f + height;
+			Vector3 dest = target.TargetPos;
+			dest.y = 0f + height + allowanceForHighShot;
 			Vector3 direction = (dest - origin).normalized;
 			float maxDist = target.distance;
 			RaycastHit hitInfo;
@@ -649,11 +652,12 @@ public class AgentShooting : MonoBehaviour
 		{
 			allShootableUnblockedTargetsWithinEncounterRange.Add(targetFromList);
 		}
-		Vector3 height = (Vector3.up * MAX_AIMING_RADIUS);
+		//Vector3 height = (Vector3.up * MAX_AIMING_RADIUS);
+		float height = firePoint.position.y;
 		foreach (Targetable target in allShootableUnblockedTargetsWithinEncounterRange)
 		{
-			Vector3 origin = selfTarget.TargetPos + (height * -1);
-			Vector3 dest = target.TargetPos + (height * -1);
+			Vector3 origin = firePoint.position;
+			Vector3 dest = target.TargetPos;
 			Vector3 direction = (dest - origin).normalized;
 			float maxDist = target.distance;
 			RaycastHit hitInfo;

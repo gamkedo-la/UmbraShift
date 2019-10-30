@@ -43,7 +43,7 @@ public class GetDataOnSceneStart : MonoBehaviour
 
 	private void RandomizeInitialStat(Stat stat)
 	{
-		if (stat.GetValue() == 0) { stat.WriteBaseValue(Random.Range(1, 5)); }
+		if (stat.GetValue() == 0) { stat.WriteBaseValue(Random.Range(1, 6)); }
 	}
 	
 

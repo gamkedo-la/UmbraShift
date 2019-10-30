@@ -169,10 +169,13 @@ public class Shooting_AI : MonoBehaviour
 
 	private bool DetermineIfPlayerIsInLOS()
 	{
-		Vector3 height = (Vector3.up * MAX_AIMING_RADIUS);
-
-		Vector3 origin = selfTarget.TargetPos + height;
-		Vector3 dest = player.TargetPos + height;
+		//Vector3 height = (Vector3.up * MAX_AIMING_RADIUS);
+		float height = firePoint.position.y;
+		float allowanceForHighShot = 0.2f;
+		Vector3 origin = selfTarget.TargetPos;
+		origin.y = 0f + height;
+		Vector3 dest = player.TargetPos;
+		dest.y = 0f + height + allowanceForHighShot;
 		Vector3 direction = (dest - origin).normalized;
 		float maxDist = Vector3.Distance(player.TargetPos, selfTarget.TargetPos); ;
 		RaycastHit hitInfo;
@@ -219,7 +222,7 @@ public class Shooting_AI : MonoBehaviour
 	{
 		AgentStats playerStats = player.gameObject.GetComponent<AgentStats>();
 		int shootSkill = Mathf.Clamp(self.Shooting.GetValue(), 0, 6);
-		int baseAcc = 25;
+		int baseAcc = 30;
 		int rangeBonus = 0;
 		if (self.EquippedWeapon.weaponType == ItemType.Rifle) { rangeBonus += 5; }
 		else if (self.EquippedWeapon.weaponType == ItemType.Pistol
@@ -240,9 +243,10 @@ public class Shooting_AI : MonoBehaviour
 
 	private void ShootAtPlayer(float acc)
 	{
+		float height = 1f;
         UmbraEventManager.instance.ActivateAlarm();
         GameObject projectileGO = Instantiate(self.EquippedWeapon.projectilePrefab, firePoint.position, Quaternion.LookRotation(transform.forward));
-		projectileGO.transform.LookAt(player.transform);
+		projectileGO.transform.LookAt(player.transform.position + (Vector3.up * height));
 		Projectile projectile = projectileGO.GetComponent<Projectile>();
 		projectile.SetShooter(selfColliders);
 		projectile.SetTarget(player);
