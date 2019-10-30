@@ -412,7 +412,8 @@ public class AgentInteracting : MonoBehaviour
 			float maxDist = target.distance;
 			RaycastHit hitInfo;
 			Ray ray = new Ray(origin, direction);
-			bool seeAnything = Physics.Raycast(ray, out hitInfo, maxDist);
+			LayerMask layer = LayerMask.GetMask("Player");
+			bool seeAnything = Physics.Raycast(ray, out hitInfo, maxDist, ~layer);
 			bool LOStoTarget = false;
 			if (seeAnything)
 			{

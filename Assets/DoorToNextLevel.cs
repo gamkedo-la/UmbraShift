@@ -43,7 +43,7 @@ public class DoorToNextLevel : MonoBehaviour, IInteractable
 		else if (!ObjectRequiredToOpen)
 		{
             if (GetComponentInChildren<DoorSimpleController>()) { GetComponentInChildren<DoorSimpleController>().OpenDoor(); }
-            delay = 2f;
+            delay = 1f;
             StartCoroutine(MoveToNextLevel());
 		}
 
@@ -53,9 +53,9 @@ public class DoorToNextLevel : MonoBehaviour, IInteractable
 
     IEnumerator MoveToNextLevel()
     {
+		yield return new WaitForSeconds(delay);
 		LoadingCanvas.ShowLoadingCanvas();
 		yield return new WaitForSeconds(delay);
-      
-           SceneManager.LoadScene(levelToGo);
+		SceneManager.LoadScene(levelToGo);
     }
 }
