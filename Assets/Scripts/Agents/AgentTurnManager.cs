@@ -70,6 +70,7 @@ public class AgentTurnManager : MonoBehaviour
 		List<AgentStats> agentList = new List<AgentStats>();
 		foreach (AgentStats agent in agentArray) { agentList.Add(agent); }
 		agentList.Sort();
+		agentList.Reverse();
 		foreach (AgentStats agent in agentList) { Debug.Log(agent.name + ", Speed: " + agent.initiativeBonus.GetValue()); }
 		return agentList;
 	}
@@ -92,7 +93,6 @@ public class AgentTurnManager : MonoBehaviour
                 if (actionManager)
                 {
                     actionManager.Move_AI();
-					//ReportEndOfMovement(actionManager);
                 }
 				else { EndTurn(); }
             }

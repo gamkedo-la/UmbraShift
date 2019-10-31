@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class Movement_AI : MonoBehaviour
 {
+	[SerializeField] private bool STATIC_MOVE = false;
 	AgentStats player;
 	AgentStats agentStats;
 	AgentActionManager actionManager;
@@ -33,7 +34,7 @@ public class Movement_AI : MonoBehaviour
 
     private void Update()
     {
-		if (activity ==Activity.Alert) {AlertUpdate(); }
+		if (activity == Activity.Alert) {AlertUpdate(); }
 		else if (activity==Activity.Patrol) { PatrolUpdate(); }
 
        if (navMesh.velocity.sqrMagnitude > 0.1f && !animator.GetBool("isWalking"))
@@ -59,20 +60,24 @@ public class Movement_AI : MonoBehaviour
 
 	private void AlertUpdate()
 	{
-		if (!isMoving)
+		if (navMesh.destination==transform.position) { isMoving = false; }
+		if (isMoving==false)
 		{
 			Vector3 targetPoint = transform.position;
-			if (CalcDistanceToPlayer() > (float)agentStats.EquippedWeapon.range / 2f)
+			int rangeAsInt = (int)agentStats.EquippedWeapon.range;
+			float rangeAsFloat = (float)rangeAsInt;
+			if (CalcDistanceToPlayer() > (rangeAsFloat / 2f))
 			{
-				Vector3 vecTotargetPoint = (transform.position - player.transform.position).normalized * (float)agentStats.EquippedWeapon.range / 2f;
-				targetPoint = player.transform.position + vecTotargetPoint;
+				Vector3 vecFromPlayerToTargetPoint = (transform.position - player.transform.position).normalized * (rangeAsFloat / 2f);
+				targetPoint = player.transform.position + vecFromPlayerToTargetPoint;
 			}
 			if (Vector3.Distance(transform.position, targetPoint) > movementLimit)
 			{
-				targetPoint = (targetPoint - transform.position).normalized * movementLimit;
+				Vector3 vecTotargetPoint = (targetPoint - transform.position).normalized * movementLimit;
+				targetPoint = transform.position + vecTotargetPoint;
 			}
 			LayerMask floorLayer = LayerMask.GetMask("Floor");
-			bool isPathToTargetPointClear = Physics.CheckSphere(targetPoint, 0.1f, -floorLayer);
+			bool isPathToTargetPointClear = !(Physics.CheckSphere(targetPoint, 0.05f, ~floorLayer));
 			if (isPathToTargetPointClear && Vector3.Distance(transform.position, targetPoint) > ARRIVAL_THRESHOLD)
 			{
 				navMesh.SetDestination(targetPoint);
@@ -80,10 +85,11 @@ public class Movement_AI : MonoBehaviour
 			else
 			{
 				navMesh.SetDestination(transform.position);
+				isMoving = false;
 				ActionEnded();
 			}
 		}
-		else 
+		else if (isMoving)
 		{ 
 			if (Vector3.Distance(transform.position, navMesh.destination) <= ARRIVAL_THRESHOLD)
 			{
@@ -101,16 +107,21 @@ public class Movement_AI : MonoBehaviour
 
 	public void ActionStarted()
 	{
-		movementSystemActive = true;
-		if (movementSystemActive && senses)
+		if (STATIC_MOVE == false)
 		{
-			if (senses.GetAlertStatus() == AlertStatus.OnAlert) { activity = Activity.Alert; }
-			if (senses.GetAlertStatus() == AlertStatus.OnPatrol) { activity = Activity.Patrol; }
+			isMoving = false;
+			movementSystemActive = true;
+			if (movementSystemActive && senses)
+			{
+				if (senses.GetAlertStatus() == AlertStatus.OnAlert) { activity = Activity.Alert; }
+				if (senses.GetAlertStatus() == AlertStatus.OnPatrol) { activity = Activity.Patrol; }
+			}
+			else
+			{
+				activity = Activity.Patrol;
+			}
 		}
-		else 
-		{
-			activity = Activity.Patrol;
-		}
+		else { ActionEnded(); }
 	}
 
 	private void ActionEnded()
