@@ -15,9 +15,15 @@ public class InteractableTruck : MonoBehaviour, IInteractable
 
 	public void Start()
 	{
-		chatbox.Open(enterScene);
 		playerCharacterData = FindObjectOfType<PlayerCharacterData>();
 		if (playerCharacterData) { playerCharacterData.AdvanceStory(); }
+		StartCoroutine("InitialChat");
+	}
+
+	private IEnumerator InitialChat()
+	{
+		yield return new WaitForSeconds(0.2f);
+		if (chatbox) { chatbox.Open(enterScene); }
 	}
 	
 	public void Interact()
