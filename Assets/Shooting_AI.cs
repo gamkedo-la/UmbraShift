@@ -232,7 +232,7 @@ public class Shooting_AI : MonoBehaviour
 		if (hasCover)
 		{
 			int maxCover = 40 + playerStats.coverBonus.GetValue();
-			int coverPenalty = maxCover - self.coverBypass.GetValue() - weaponAccModifier;
+			int coverPenalty = maxCover - (self.coverBypass.GetValue() - weaponAccModifier);
 			if (playerStats) { coverPenalty = coverPenalty + playerStats.coverBonus.GetValue(); }
 			coverPenalty = Mathf.Clamp(coverPenalty, 0, maxCover);
 			acc = acc - coverPenalty;
@@ -259,7 +259,10 @@ public class Shooting_AI : MonoBehaviour
 	private bool DetermineHit(float accuracy)
 	{
 		int rollToHit = Random.Range(1, 100);
-		return (rollToHit <= accuracy);
+		float rollToHitAsFloat = (float)rollToHit;
+		bool hit = false;
+		if (accuracy==rollToHitAsFloat || rollToHitAsFloat < accuracy) { hit = true; }
+		return (hit);
 	}
 
 	public void ReportEndTurn()

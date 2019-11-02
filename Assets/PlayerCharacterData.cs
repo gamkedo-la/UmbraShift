@@ -13,6 +13,7 @@ public class PlayerCharacterData : MonoBehaviour
 
 	public void WriteInitialStatsToCharacterData(List<int> initialStats, Image portrait, string name)
 	{
+		stats.Clear();
 		stats[CharStat.Str] = initialStats[0];
 		stats[CharStat.Dex] = initialStats[1];
 		stats[CharStat.Int] = initialStats[2];
@@ -41,6 +42,14 @@ public class PlayerCharacterData : MonoBehaviour
 		// 4  After talking to Boss for first time in Warehouse
 		// 5  After accessing crate, get Project Data
 		// 6  After talking to Transport with Project Data
+	}
+
+	public void ClearData()
+	{
+		stats.Clear();
+		playerName = "";
+		playerPortrait = null;
+		story = 0;
 	}
 
 }

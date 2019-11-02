@@ -14,7 +14,7 @@ public class DemoLevelManager : MonoBehaviour
 
 	private void Awake()
 	{
-		if (DemoLevelManagerAlreadyExists) { Destroy(this.gameObject); }
+		if (DemoLevelManagerAlreadyExists) { this.gameObject.SetActive(false); Destroy(this.gameObject); }
 		else
 		{
 			DemoLevelManagerAlreadyExists = true;

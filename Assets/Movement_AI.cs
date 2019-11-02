@@ -64,11 +64,18 @@ public class Movement_AI : MonoBehaviour
 		if (isMoving==false)
 		{
 			Vector3 targetPoint = transform.position;
+			Vector3 offset = Vector3.zero;
+			FirePoint firePoint = GetComponentInChildren<FirePoint>();
+			if (firePoint) 
+			{ 
+				Vector3 temp = new Vector3 (firePoint.transform.position.x, transform.position.y, firePoint.transform.position.z);
+				offset = (transform.position - temp);
+			}
 			int rangeAsInt = (int)agentStats.EquippedWeapon.range;
 			float rangeAsFloat = (float)rangeAsInt;
 			if (CalcDistanceToPlayer() > (rangeAsFloat / 2f))
 			{
-				Vector3 vecFromPlayerToTargetPoint = (transform.position - player.transform.position).normalized * (rangeAsFloat / 2f);
+				Vector3 vecFromPlayerToTargetPoint = (transform.position - player.transform.position).normalized * ((rangeAsFloat / 2f) + offset.magnitude);
 				targetPoint = player.transform.position + vecFromPlayerToTargetPoint;
 			}
 			if (Vector3.Distance(transform.position, targetPoint) > movementLimit)

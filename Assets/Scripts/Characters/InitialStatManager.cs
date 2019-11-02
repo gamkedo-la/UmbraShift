@@ -6,37 +6,24 @@ using TMPro;
 
 public class InitialStatManager : MonoBehaviour
 {
-	public TMP_InputField inputField;
-
-	public int numberOfStats = 5;
-
 	public string playerName;
-
+	public int numberOfStats = 5;
+	public int maxStatTotal = 13;
 	public Sprite[] playerPortraitOptions;
-
 	public Image playerPortrait;
 
-	public List<int> initialStats = new List<int>() { 0, 0, 0, 0, 0 };
-
-	public int currentElementID = 0;
-
-	public int currentPortraitElementID = 0;
-
-	public int maxStatTotal = 13;
-
+	public TMP_InputField inputField;
 	public TMP_Text errorMessage;
-
 	public TMP_Text hintMessage;
-
 	public TMP_Text statTotalNumber;
-
 	public TMP_Text statMaxNumber;
-
-	private ChangeScene sceneChangeButton;
-
 	private string errMessage = "";
-
 	public Button characterComplete;
+
+	public List<int> initialStats = new List<int>() { 0, 0, 0, 0, 0 };
+	public int currentElementID = 0;
+	public int currentPortraitElementID = 0;
+	private ChangeScene sceneChangeButton;
 
 	private bool hintTimerIsOn = false;
 	private float hintTimer = 0f;
@@ -75,12 +62,12 @@ public class InitialStatManager : MonoBehaviour
 	void Awake()
 	{
 		initialStats = new List<int>() { 0, 0, 0, 0, 0 };
-		Debug.Log("Stats in InitialStats list: " + initialStats.Count);
 		errorMessage.enabled = false;
 		playerPortrait.sprite = playerPortraitOptions[currentPortraitElementID];
 		sceneChangeButton = FindObjectOfType<ChangeScene>();
 	}
 
+	
 	private void Start()
 	{
 		characterComplete.gameObject.SetActive(true);
@@ -188,8 +175,16 @@ public class InitialStatManager : MonoBehaviour
 	public void CharacterComplete()
 	{
 		PlayerCharacterData playerCharacterData = FindObjectOfType<PlayerCharacterData>();
-		if (!playerCharacterData) { playerCharacterData = new PlayerCharacterData(); }
-		if (playerCharacterData)
+		if (!playerCharacterData) 
+		{
+			GameObject playerCharacterDataGO = new GameObject();
+			playerCharacterDataGO.name = "PlayerCharacterData";
+			playerCharacterData = playerCharacterDataGO.AddComponent<PlayerCharacterData>();
+			playerCharacterData.WriteInitialStatsToCharacterData(initialStats, playerPortrait, playerName);
+			LoadingCanvas.ShowLoadingCanvas();
+			sceneChangeButton.LoadScene();
+		}
+		else if (playerCharacterData)
 		{
 			playerCharacterData.WriteInitialStatsToCharacterData(initialStats, playerPortrait, playerName);
 			LoadingCanvas.ShowLoadingCanvas();
@@ -207,7 +202,10 @@ public class InitialStatManager : MonoBehaviour
 			toggle.isOn = false;
 		}
 		PlayerCharacterData playerCharacterData = FindObjectOfType<PlayerCharacterData>();
-		if (playerCharacterData) { Destroy(playerCharacterData); }
+		if (playerCharacterData) 
+		{
+			playerCharacterData.ClearData();
+		}
 		playerName = "";
 		inputField.SetTextWithoutNotify("[Name]");
 		initialStats.Clear();

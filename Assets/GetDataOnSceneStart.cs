@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class GetDataOnSceneStart : MonoBehaviour
 {
-	PlayerCharacterData playerCharacterData;
-	AgentStats agentStats;
-	Dictionary<CharStat, int> stat;
+	private PlayerCharacterData playerCharacterData;
+	private AgentStats agentStats;
+	private Dictionary<CharStat, int> stat;
     
 	private void Start()
     {
-		agentStats = GetComponent<AgentStats>();
+		agentStats = gameObject.GetComponent<AgentStats>();
+		//if (agentStats) { Debug.Log("Loading AgentStats upon GetDataSceneStart for " + gameObject.name); }
+		//if (!agentStats) { Debug.LogError("No AgentStats upon GetDataSceneStart for " + gameObject.name); }
 		playerCharacterData = FindObjectOfType<PlayerCharacterData>();
-		if (playerCharacterData) { stat = playerCharacterData.ReadStatsFromCharacterData(); }
+		if (!playerCharacterData) { Debug.LogError("No AgentStats upon GetDataSceneStart."); }
+		
+		if (playerCharacterData) 
+		{ 
+			stat = playerCharacterData.ReadStatsFromCharacterData(); 
+		}
 
 		if (agentStats && agentStats.isNPC==false && playerCharacterData) 
 		{
@@ -43,7 +50,15 @@ public class GetDataOnSceneStart : MonoBehaviour
 
 	private void RandomizeInitialStat(Stat stat)
 	{
-		if (stat.GetValue() == 0) { stat.WriteBaseValue(Random.Range(1, 6)); }
+		int maxNPCSkill = 5;
+		int minNPCSkill = 1;
+		if (stat == agentStats.Shooting) { minNPCSkill = minNPCSkill + 2; }
+		if (agentStats.isBoss==true) 
+		{ 
+			minNPCSkill = minNPCSkill + 1;
+			maxNPCSkill = maxNPCSkill + 1;
+		}
+		if (stat.GetValue() == 0) { stat.WriteBaseValue(Random.Range(minNPCSkill, maxNPCSkill+1)); }
 	}
 	
 

@@ -20,6 +20,7 @@ public class Projectile : MonoBehaviour
 	private int damageBonus;
 	private Shooting_AI shooting_AI = null;
 	private bool endTurnReported=false;
+	private bool hitIsBeingResolved = false;
 	private const float ARRIVAL_THRESHOLD = 0.1f;
 
 	void Update()
@@ -30,10 +31,32 @@ public class Projectile : MonoBehaviour
 		if (distance >= maxDistance) { Destroy(this.gameObject); }
 
 		float distanceToTarget = Vector3.Distance(transform.position, target.TargetPos);
+		
+		if (distanceToTarget<ARRIVAL_THRESHOLD && !hitIsBeingResolved)
+		{
+			hitIsBeingResolved = true;
+			ResolveHit();
+		}
 		if (shooting_AI && !endTurnReported && distanceToTarget<ARRIVAL_THRESHOLD) { ReportEndTurn(); }
 	}
 
-	private void OnTriggerEnter(Collider collision)
+	private void ResolveHit()
+	{
+		CombatReactions react = target.gameObject.GetComponent<CombatReactions>();
+		if (react) { react.TakeHit(hit, damage); }
+		if (hit == HitStatus.Hit)
+		{
+			float x = (transform.position.x + target.TargetPos.x) / 2f;
+			float y = (transform.position.y + target.TargetPos.y) / 2f;
+			float z = (transform.position.z + target.TargetPos.z) / 2f;
+			Vector3 midpoint = new Vector3(x, y, z);
+			explosionEffect = Instantiate(ExplosionPrefab, midpoint, Quaternion.identity);
+			Destroy(explosionEffect, 1f);
+		}
+		Destroy(this.gameObject, 0.01f);
+	}
+
+	/*private void OnTriggerEnter(Collider collision)
 	{
 		bool selfHit = false;
 		foreach (Collider shooterCollider in shooterColliders)
@@ -55,7 +78,7 @@ public class Projectile : MonoBehaviour
 			}
 			Destroy(this.gameObject,0.01f);
 		}
-	}
+	}*/
 
 	public void SetTarget (Targetable _target)
 	{
@@ -87,6 +110,7 @@ public class Projectile : MonoBehaviour
 			damage = damage + damageBonus;
 			damage = Mathf.RoundToInt(damage * Random.Range(0.5f, 1.5f));
 		}
+		else { damage = 0; }
 	}
 
 	public void SetShooter (Collider[] _shooter)

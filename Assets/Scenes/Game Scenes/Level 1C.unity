@@ -97,7 +97,7 @@ LightmapSettings:
     m_ShowResolutionOverlay: 1
     m_ExportTrainingData: 0
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -3981,7 +3981,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1019213903}
-  - {fileID: 1211980298}
   - {fileID: 1358202202}
   m_Father: {fileID: 0}
   m_RootOrder: 10
@@ -6637,7 +6636,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ActionBarPortrait: {fileID: 595798347}
   ActionBarPortraitFrame: {fileID: 1740957945}
-  activeCharacterName: {fileID: 759757920}
+  playerNameDisplay: {fileID: 759757920}
   actionIconSet:
   - {fileID: 588239780}
   - {fileID: 2088597353}
@@ -7653,36 +7652,6 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 79c1f3c1f5d08e746a786e5a26008022, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 909febe3a651c4b428e5969b06740332, type: 3}
---- !u!1 &1211980297
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1211980298}
-  m_Layer: 0
-  m_Name: UI Character Selector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1211980298
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1211980297}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 564250116}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1215535133
 GameObject:
   m_ObjectHideFlags: 0
@@ -8876,7 +8845,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 564250116}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1358202203
 MonoBehaviour:

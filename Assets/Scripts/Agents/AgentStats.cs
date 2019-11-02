@@ -9,6 +9,7 @@ public class AgentStats : MonoBehaviour, IComparable<AgentStats>
 	[Header("Character Info")]
 	[SerializeField] public bool isNPC = true;
     [SerializeField] public bool isHuman = true;
+	[HideInInspector] public bool isBoss = false;
     [SerializeField] private Sprite portraitImage;
 	public Sprite PortraitImage { get { return portraitImage; } }
 	[SerializeField] private string characterName = "Shadow";
@@ -65,19 +66,21 @@ public class AgentStats : MonoBehaviour, IComparable<AgentStats>
 	private AgentLocalUI localUI;
 	
 
-
 	
-	void Start()
+	private void Start()
 	{
-
-
-
 		agentMovement = GetComponent<AgentMovement>();
 		actionManager = GetComponent<AgentActionManager>();
 		localUI = GetComponent<AgentLocalUI>();
 		if (defaultWeapon && !equippedWeapon) { equippedWeapon = defaultWeapon; }
 		currentActionPoints = maxActionPoints;
-		StartCoroutine("DelayedUpdate");
+		PlayerCharacterData playerCharacterData = FindObjectOfType<PlayerCharacterData>();
+		if (isNPC==false && playerCharacterData)
+		{
+			if (playerCharacterData.playerName != "") { characterName = playerCharacterData.playerName; }
+			if (playerCharacterData.playerPortrait) { portraitImage = playerCharacterData.playerPortrait.sprite; }
+		}
+		if (GetComponent<Boss>()) { isBoss = true; }
 	}
 
 	public void CalculateDerivedValuesFromBaseStats()
@@ -107,25 +110,24 @@ public class AgentStats : MonoBehaviour, IComparable<AgentStats>
 		return initiativeBonus.GetValue() - otherAgent.initiativeBonus.GetValue();
 	}
 
-	private IEnumerator DelayedUpdate()
+	public Sprite RequestPortraitImage()
 	{
-		yield return new WaitForSeconds(0.2f);
-		if (isNPC == false)
+		PlayerCharacterData playerCharacterData = FindObjectOfType<PlayerCharacterData>();
+		if (isNPC == false && playerCharacterData && playerCharacterData.playerPortrait)
 		{
-			PlayerCharacterData playerCharacterData = FindObjectOfType<PlayerCharacterData>();
-			if (playerCharacterData)
-			{
-				if (playerCharacterData.playerName != "")
-                {
-                    characterName = playerCharacterData.playerName;
-
-                }
-				if (portraitImage && playerCharacterData.playerPortrait && playerCharacterData.playerPortrait.sprite)
-				{
-					portraitImage = playerCharacterData.playerPortrait.sprite;
-				}
-			}
+			portraitImage = playerCharacterData.playerPortrait.sprite;
 		}
+		return portraitImage;
+	}
+
+	public string RequestCharacterName()
+	{
+		PlayerCharacterData playerCharacterData = FindObjectOfType<PlayerCharacterData>();
+		if (isNPC == false && playerCharacterData && playerCharacterData.playerName != "")
+		{
+			characterName = playerCharacterData.playerName;
+		}
+		return characterName;
 	}
 
 	public Sprite GetPortraitImage() { return portraitImage; }

@@ -111,8 +111,11 @@ public class AgentShooting : MonoBehaviour
 
 	private void EndShooting()
 	{
-		closestTargetNearMouse.SelectionClear();
-		ShowAccuracy(0, closestTargetNearMouse, false);
+		if (closestTargetNearMouse) 
+		{ 
+			closestTargetNearMouse.SelectionClear();
+			ShowAccuracy(0, closestTargetNearMouse, false);
+		}
 		animator.SetBool("isPistolDrawn", false);
 		shootingSystemInUse = false;
 		turnManager.ActiveCharacter.actionManager.ReportEndOfAction();
@@ -170,6 +173,7 @@ public class AgentShooting : MonoBehaviour
 				colliderHitList = DetermineIfTargetHasCover();
 				if (colliderHitList.Count > 0) { targetHasCover = true; }
 				accuracy = Mathf.Clamp(DetermineAccuracy(targetHasCover), 0, 98);
+				if (targetLocked.rangeToTarget == RangeCategory.Exceeded) { accuracy = 0; }
 				ShowAccuracy(accuracy, targetLocked, true);
 			}
 			SetTargetedPoint(prevClosestTargetNearMouse);

@@ -1538,6 +1538,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNPC: 0
   isHuman: 1
+  isBoss: 0
   portraitImage: {fileID: 0}
   characterName: Shadow
   isAlive: 1
@@ -1788,7 +1789,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.56, y: 1.66, z: 0.07781011}
+  m_Size: {x: 0.56, y: 1.66, z: 0.12}
   m_Center: {x: 8.574145e-10, y: 0.96, z: 0.13529675}
 --- !u!1 &6325145473295544408
 GameObject:

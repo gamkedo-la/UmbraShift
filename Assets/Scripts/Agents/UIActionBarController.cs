@@ -7,7 +7,7 @@ public class UIActionBarController : MonoBehaviour
 {
 	[SerializeField] private Image ActionBarPortrait;
 	[SerializeField] private Image ActionBarPortraitFrame;
-	[SerializeField] private Text activeCharacterName;
+	[SerializeField] private Text playerNameDisplay;
 	[SerializeField] private UIIcon[] actionIconSet;
 	[SerializeField] private UIIcon undoActionIcon;
 	[SerializeField] private UIIcon continueActionIcon;
@@ -67,21 +67,14 @@ public class UIActionBarController : MonoBehaviour
 	
     public void UpdatePortraitInfo()
     {
-		if (ActionBarPortrait && turnManager && turnManager.ActiveCharacter && turnManager.ActiveCharacter.PortraitImage) 
+		if (ActionBarPortrait && turnManager && turnManager.mainPlayerCharacter && turnManager.mainPlayerCharacter.PortraitImage) 
 		{ 
-			ActionBarPortrait.sprite = turnManager.ActiveCharacter.PortraitImage;			
+			ActionBarPortrait.sprite = turnManager.mainPlayerCharacter.RequestPortraitImage();
 		}
-        Debug.Log("Testing Character Name");
-        if (activeCharacterName && turnManager && turnManager.mainPlayerCharacter)
+        
+        if (playerNameDisplay && turnManager && turnManager.mainPlayerCharacter)
 		{
-            
-
-
-
-           
-                
-                activeCharacterName.text = turnManager.mainPlayerCharacter.CharacterName;
-            
+                playerNameDisplay.text = turnManager.mainPlayerCharacter.RequestCharacterName();   
 		}
 	}
 
