@@ -52,6 +52,9 @@ public class SoundConfiguration : ScriptableObject
     [FMODUnity.EventRef]
     public string mechDestroyed;
 
+    [FMODUnity.EventRef]
+    public string mechAttack;
+
 
     [Header("UI")]
     [FMODUnity.EventRef]

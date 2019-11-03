@@ -23,7 +23,10 @@ public class Projectile : MonoBehaviour
 	private bool hitIsBeingResolved = false;
 	private const float ARRIVAL_THRESHOLD = 0.1f;
 
-	void Update()
+
+
+
+    void Update()
     {
 		distance = distance + (speed * Time.deltaTime);
 		Vector3 vec = direction * (speed * Time.deltaTime);

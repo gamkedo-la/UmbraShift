@@ -246,6 +246,15 @@ public class Shooting_AI : MonoBehaviour
 		float height = 1f;
         UmbraEventManager.instance.ActivateAlarm();
         GameObject projectileGO = Instantiate(self.EquippedWeapon.projectilePrefab, firePoint.position, Quaternion.LookRotation(transform.forward));
+
+        if (self.isHuman) {
+
+            FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.gunshotPistol1,firePoint.position);
+                }
+        else
+        {
+            FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.mechAttack, firePoint.position);
+        }
 		projectileGO.transform.LookAt(player.transform.position + (Vector3.up * height));
 		Projectile projectile = projectileGO.GetComponent<Projectile>();
 		projectile.SetShooter(selfColliders);

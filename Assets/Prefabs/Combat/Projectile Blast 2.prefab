@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5014225723386896874}
   - component: {fileID: 5014225723386896873}
-  - component: {fileID: -5887150562150209056}
   - component: {fileID: 6869189019319514350}
   - component: {fileID: 5004579238716791664}
   m_Layer: 21
@@ -53,29 +52,6 @@ MonoBehaviour:
   speed: 20
   ExplosionPrefab: {fileID: 4860379259597903396, guid: 7519642682f17c64f946f7809b108169,
     type: 3}
---- !u!114 &-5887150562150209056
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5014225723386896872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  Event: event:/Weapons/Gun_Shot_Pistol_1
-  PlayEvent: 1
-  StopEvent: 2
-  AllowFadeout: 1
-  TriggerOnce: 1
-  Preload: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
 --- !u!136 &6869189019319514350
 CapsuleCollider:
   m_ObjectHideFlags: 0
