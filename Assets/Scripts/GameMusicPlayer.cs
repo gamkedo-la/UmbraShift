@@ -9,7 +9,8 @@ public class GameMusicPlayer : MonoBehaviour
     private FMOD.Studio.EventInstance inGameMusicEvent;
     [FMODUnity.EventRef]
     public string eventRef;
-    
+    float currentAlertValue;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,21 +44,28 @@ public class GameMusicPlayer : MonoBehaviour
 
     public void ActivateAlarm()
     {
-        
+        inGameMusicEvent.getParameterByName("AlertState", out currentAlertValue);
 
+
+        if (1f != currentAlertValue)
+        {
             inGameMusicEvent.setParameterByName("AlertState", 1f);
-
+        }
 
         
     }
 
     public void DeactivateAlarm()
     {
-        
 
+        inGameMusicEvent.getParameterByName("AlertState", out currentAlertValue);
+
+
+        if (0f != currentAlertValue)
+        {
 
             inGameMusicEvent.setParameterByName("AlertState", 0f);
-
+        }
        
     }
 }

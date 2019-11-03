@@ -68,7 +68,11 @@
 			<destination>{0d7be655-9071-4528-b984-b288229914a7}</destination>
 		</relationship>
 	</object>
-	<object class="EventAutomatableProperties" id="{d1e59eda-dfe6-4a63-b3cc-ae0b8fba5b1c}" />
+	<object class="EventAutomatableProperties" id="{d1e59eda-dfe6-4a63-b3cc-ae0b8fba5b1c}">
+		<property name="maxVoices">
+			<value>1</value>
+		</property>
+	</object>
 	<object class="MarkerTrack" id="{8a7bd0b8-b9b2-496d-b3bb-8438e6398ab3}" />
 	<object class="MarkerTrack" id="{4af42d64-d76d-49bf-ba22-95659b85cab8}" />
 	<object class="MarkerTrack" id="{51efa893-e0ca-4a4b-9853-622974e0dc0f}" />
@@ -326,6 +330,9 @@
 		<property name="length">
 			<value>45.918536060279862</value>
 		</property>
+		<property name="quantizationInterval">
+			<value>2</value>
+		</property>
 		<relationship name="timeline">
 			<destination>{5ac0b0b6-8a93-42a7-a91a-73667adfc0fd}</destination>
 		</relationship>
@@ -345,6 +352,9 @@
 		</property>
 		<property name="length">
 			<value>109.08734693877551</value>
+		</property>
+		<property name="quantizationInterval">
+			<value>2</value>
 		</property>
 		<relationship name="timeline">
 			<destination>{5ac0b0b6-8a93-42a7-a91a-73667adfc0fd}</destination>
@@ -380,6 +390,9 @@
 		<property name="length">
 			<value>109.08734693877551</value>
 		</property>
+		<property name="quantizationInterval">
+			<value>2</value>
+		</property>
 		<relationship name="timeline">
 			<destination>{5ac0b0b6-8a93-42a7-a91a-73667adfc0fd}</destination>
 		</relationship>
@@ -399,6 +412,9 @@
 		</property>
 		<property name="length">
 			<value>73.65341007447114</value>
+		</property>
+		<property name="quantizationInterval">
+			<value>2</value>
 		</property>
 		<relationship name="timeline">
 			<destination>{5ac0b0b6-8a93-42a7-a91a-73667adfc0fd}</destination>
@@ -433,6 +449,9 @@
 		</property>
 		<property name="length">
 			<value>73.65341007447114</value>
+		</property>
+		<property name="quantizationInterval">
+			<value>2</value>
 		</property>
 		<relationship name="timeline">
 			<destination>{5ac0b0b6-8a93-42a7-a91a-73667adfc0fd}</destination>
