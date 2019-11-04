@@ -196,9 +196,10 @@ public class AgentShooting : MonoBehaviour
 
 	void ShootProjectile()
 	{
+		float aimHeight = 1f;
 		GameObject projectileGO = Instantiate(weapon.projectilePrefab, firePoint.position, Quaternion.LookRotation(transform.forward));
         FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.gunshotPistol1, firePoint.position);
-		projectileGO.transform.LookAt(targetLocked.transform);
+		projectileGO.transform.LookAt(targetLocked.transform.position + (Vector3.up * aimHeight));
 		Projectile projectile = projectileGO.GetComponent<Projectile>();
 		projectile.SetShooter(selfColliders);
 		projectile.SetTarget(targetLocked);

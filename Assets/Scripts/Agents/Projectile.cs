@@ -21,7 +21,7 @@ public class Projectile : MonoBehaviour
 	private Shooting_AI shooting_AI = null;
 	private bool endTurnReported=false;
 	private bool hitIsBeingResolved = false;
-	private const float ARRIVAL_THRESHOLD = 0.1f;
+	private const float ARRIVAL_THRESHOLD = 0.2f;
 
 
 
