@@ -14,22 +14,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   portrait: {fileID: 21300000, guid: 5cdd589300de6304ca6d0526c539651a, type: 3}
   handle: Flatline
-  description: All the testing labs have been shutdown, the test subjects eliminated.
-    Except William here. The last of the records and equipment is being stored in
-    a warehouse until it can be setup in a new secure location to begin mass production.
+  description: The lab was shutdown and the test subjects were eliminated. Except
+    William here. The records and equipment are being stored in a warehouse until
+    they can be setup in a secure location to begin mass production.
   color: {r: 0.98222387, g: 0.126157, b: 0.990566, a: 0}
   options:
   - optionText: So you want the goods from the warehouse.
     optionLeadsTo: {fileID: 11400000, guid: d9a69b3a0187ed54c809d7488dbbcacc, type: 2}
     lastInteraction: 0
+    goesToLevel: 
+    triggerLevelChange: 0
     id: 0
   - optionText: 'I can get you the evidence you need. '
     optionLeadsTo: {fileID: 11400000, guid: d9a69b3a0187ed54c809d7488dbbcacc, type: 2}
     lastInteraction: 0
+    goesToLevel: 
+    triggerLevelChange: 0
     id: 0
   - optionText: 'I prefer to just shoot stuff. '
     optionLeadsTo: {fileID: 11400000, guid: d9a69b3a0187ed54c809d7488dbbcacc, type: 2}
     lastInteraction: 0
+    goesToLevel: 
+    triggerLevelChange: 0
     id: 0
   inventory: {fileID: 0}
   itemToReceive: {fileID: 0}

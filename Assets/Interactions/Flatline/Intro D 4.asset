@@ -14,12 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   portrait: {fileID: 21300000, guid: 5cdd589300de6304ca6d0526c539651a, type: 3}
   handle: Flatline
-  description: '...and save William. '
+  description: '...and save William, of course.'
   color: {r: 0.98222387, g: 0.126157, b: 0.990566, a: 0}
   options:
   - optionText: CONTINUE
     optionLeadsTo: {fileID: 0}
     lastInteraction: 1
+    goesToLevel: 
+    triggerLevelChange: 0
     id: 0
   inventory: {fileID: 0}
   itemToReceive: {fileID: 0}

@@ -14,22 +14,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   portrait: {fileID: 21300000, guid: 5cdd589300de6304ca6d0526c539651a, type: 3}
   handle: ???
-  description: So you're going to get my records, huh?  I'm glad you made it okay.
-    With the local gang trouble, we've been a little worried something happened to
-    you.
+  description: I'm glad you made it. With all the local gang trouble, we've been a
+    little worried something happened to you.
   color: {r: 0.98222387, g: 0.126157, b: 0.990566, a: 0}
   options:
   - optionText: Who are you?
     optionLeadsTo: {fileID: 11400000, guid: ba04828c26ad9c9459b491cfb17c89b9, type: 2}
     lastInteraction: 0
+    goesToLevel: 
+    triggerLevelChange: 0
     id: 0
   - optionText: Gang trouble...?
     optionLeadsTo: {fileID: 11400000, guid: d887e54ea46c0874c847b6765e805226, type: 2}
     lastInteraction: 0
+    goesToLevel: 
+    triggerLevelChange: 0
     id: 0
   - optionText: Who's on the bed?
     optionLeadsTo: {fileID: 11400000, guid: eeffc0d1f07596b458cb4c7ebea3fe86, type: 2}
     lastInteraction: 0
+    goesToLevel: 
+    triggerLevelChange: 0
     id: 0
   inventory: {fileID: 0}
   itemToReceive: {fileID: 0}

@@ -15,12 +15,14 @@ MonoBehaviour:
   portrait: {fileID: 1212751222745378164, guid: 07c78817e05c17449935d5520c4c971d,
     type: 3}
   handle: 
-  description: An item has been added to your inventory
+  description: An item has been added to your inventory.
   color: {r: 0, g: 0, b: 0, a: 0}
   options:
   - optionText: CONTINUE
     optionLeadsTo: {fileID: 0}
     lastInteraction: 1
+    goesToLevel: 
+    triggerLevelChange: 0
     id: 0
   inventory: {fileID: 0}
   itemToReceive: {fileID: 11400000, guid: 77295ebb7fb80c34da0093216df3e4c5, type: 2}
