@@ -243,27 +243,59 @@ public class Shooting_AI : MonoBehaviour
 
 	private void ShootAtPlayer(float acc)
 	{
-		float height = 1f;
-        UmbraEventManager.instance.ActivateAlarm();
-        GameObject projectileGO = Instantiate(self.EquippedWeapon.projectilePrefab, firePoint.position, Quaternion.LookRotation(transform.forward));
+		float aimHeight = 1f;
+		UmbraEventManager.instance.ActivateAlarm();
+		GameObject projectileGO = Instantiate(self.EquippedWeapon.projectilePrefab, firePoint.position, Quaternion.LookRotation(transform.forward));
 
-        if (self.isHuman) {
+		if (self.isHuman) {
 
-            FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.gunshotPistol1,firePoint.position);
-                }
-        else
-        {
-            FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.mechAttack, firePoint.position);
-        }
-		projectileGO.transform.LookAt(player.transform.position + (Vector3.up * height));
+			FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.gunshotPistol1, firePoint.position);
+		}
+		else
+		{
+			FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.mechAttack, firePoint.position);
+		}
+		projectileGO.transform.LookAt(player.transform.position + (Vector3.up * aimHeight));
 		Projectile projectile = projectileGO.GetComponent<Projectile>();
-		projectile.SetShooter(selfColliders);
+		float distanceToTarget = Vector3.Distance(firePoint.position, player.TargetPos);
+		float projectileFlightTime = distanceToTarget / projectile.Speed;
 		projectile.SetTarget(player);
-		projectile.SetWeapon(self.EquippedWeapon);
-		projectile.HitTarget(DetermineHit(acc));
-		projectile.SetDamageBonus(self.damageBonus.GetValue());
-		projectile.SetShooting_AI(this);
+		projectile.SetTimer(projectileFlightTime);
+		object[] objectArray = new object[2];
+		objectArray[0] = projectileFlightTime;
+		objectArray[1] = acc;
+		StartCoroutine("ResolveHitAfterShootingProjectile", objectArray);
 	}
+
+	private IEnumerator ResolveHitAfterShootingProjectile(object[] objects)
+	{
+		float delay = (float)objects[0];
+		float acc = (float)objects[1];
+		bool endTurnReported = false;
+		yield return new WaitForSeconds(delay);
+		CombatReactions react = player.gameObject.GetComponent<CombatReactions>();
+		HitStatus hitStatus = HitStatus.None;
+		bool attackHit = DetermineHit(acc);
+		if (attackHit) { hitStatus = HitStatus.Hit; }
+		else { hitStatus = HitStatus.Miss; }
+		int damage = (int)self.EquippedWeapon.damage + self.damageBonus.GetValue();
+		int rndDmgSpread = 3;
+		damage = Random.Range(damage - rndDmgSpread, damage + rndDmgSpread + 1);
+		if (react) { react.TakeHit(hitStatus, damage); }
+		if (hitStatus == HitStatus.Hit)
+		{
+			GameObject explosionEffect = Instantiate(self.EquippedWeapon.projectilePrefab.GetComponent<Projectile>().Explosion, player.TargetPos, Quaternion.identity);
+			Destroy(explosionEffect, 1f);
+		}
+		Shooting_AI shooting_AI = GetComponent<Shooting_AI>();
+		if (shooting_AI && !endTurnReported)
+		{
+			endTurnReported = true;
+			shooting_AI.ReportEndTurn();
+		}
+	}
+
+
 
 	private bool DetermineHit(float accuracy)
 	{

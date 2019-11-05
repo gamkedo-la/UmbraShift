@@ -201,12 +201,39 @@ public class AgentShooting : MonoBehaviour
         FMODUnity.RuntimeManager.PlayOneShot(SoundConfiguration.instance.gunshotPistol1, firePoint.position);
 		projectileGO.transform.LookAt(targetLocked.transform.position + (Vector3.up * aimHeight));
 		Projectile projectile = projectileGO.GetComponent<Projectile>();
-		projectile.SetShooter(selfColliders);
+		float distanceToTarget = Vector3.Distance(firePoint.position, targetLocked.TargetPos);
+		float projectileFlightTime = distanceToTarget / projectile.Speed;
 		projectile.SetTarget(targetLocked);
-		projectile.SetWeapon(weapon);
-		projectile.HitTarget(DetermineHit());
-		projectile.SetDamageBonus(damageBonus.GetValue());
+		projectile.SetTimer(projectileFlightTime);
+		StartCoroutine("ResolveHitAfterShootingProjectile", projectileFlightTime);
 	}
+
+	private IEnumerator ResolveHitAfterShootingProjectile(float delay)
+	{
+		bool endTurnReported = false;
+		yield return new WaitForSeconds(delay);
+		CombatReactions react = targetLocked.gameObject.GetComponent<CombatReactions>();
+		HitStatus hitStatus = HitStatus.None;
+		bool attackHit = DetermineHit();
+		if (attackHit) { hitStatus = HitStatus.Hit; }
+		else { hitStatus = HitStatus.Miss; }
+		int damage = (int)weapon.damage + damageBonus.GetValue();
+		int rndDmgSpread = 3;
+		damage = Random.Range(damage - rndDmgSpread, damage + rndDmgSpread + 1);
+		if (react) { react.TakeHit(hitStatus, damage); }
+		if (hitStatus == HitStatus.Hit)
+		{
+			GameObject explosionEffect = Instantiate(weapon.projectilePrefab.GetComponent<Projectile>().Explosion, targetLocked.TargetPos, Quaternion.identity);
+			Destroy(explosionEffect, 1f);
+		}
+		Shooting_AI shooting_AI = GetComponent<Shooting_AI>();
+		if (shooting_AI && !endTurnReported)
+		{
+			endTurnReported = true;
+			shooting_AI.ReportEndTurn();
+		}
+	}
+
 
 	private bool DetermineHit()
 	{

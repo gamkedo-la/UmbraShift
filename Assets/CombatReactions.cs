@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum HitStatus { None, Hit, Miss }
 public class CombatReactions : MonoBehaviour
 {
 
@@ -101,6 +102,8 @@ public class CombatReactions : MonoBehaviour
         gameObject.SetActive(false);
 		
 	}
+
+	
 
 
 }
