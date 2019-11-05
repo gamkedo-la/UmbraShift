@@ -15,6 +15,7 @@ public class AgentStats : MonoBehaviour, IComparable<AgentStats>
 	[SerializeField] private string characterName = "Shadow";
 	public string CharacterName { get { return characterName; } }
 	public bool isAlive = true;
+	private int difficulty;
 
 	[Header("Equipment")]
 	[SerializeField] private WeaponDesign equippedWeapon;
@@ -61,14 +62,24 @@ public class AgentStats : MonoBehaviour, IComparable<AgentStats>
 	public int CurrentHitpoints { get { return hitpoints.GetValue(); } }
 	public int MaxHitpoints { get { return maxHitpoints.GetValue(); } }
 	public int MoveSpeedBonus { get { return movementSpeedBonus.GetValue(); } }
+	private int baseAccuracy; 
+	private int BaseAccuracy { get { return baseAccuracy; } }
 
 	[Header("Graphics and Animation")]
 	private AgentLocalUI localUI;
 	
 
-	
+	public int GetBaseAccuracy()
+	{
+		return baseAccuracy; 
+	}
 	private void Start()
 	{
+		difficulty = (int)PlayerPrefs.GetFloat("Difficulty");
+		if (difficulty==0) { difficulty = 4; }
+		if (isNPC) { baseAccuracy = 0 + (difficulty * 5); }
+		else { baseAccuracy = 60 - (difficulty * 5); }
+
 		agentMovement = GetComponent<AgentMovement>();
 		actionManager = GetComponent<AgentActionManager>();
 		localUI = GetComponent<AgentLocalUI>();
@@ -95,7 +106,7 @@ public class AgentStats : MonoBehaviour, IComparable<AgentStats>
 		movementSpeedBonus.WriteBaseValue(2 * Dexterity.GetValue());
 		maxHitpoints.WriteBaseValue(15);
 		maxHitpoints.AddModifier(5 * Strength.GetValue());
-		
+		if (!isNPC) { maxHitpoints.AddModifier(16-(2*difficulty)); }
 		hitpoints.WriteBaseValue(maxHitpoints.GetValue());
 		hitpointPercentage = (float)hitpoints.GetValue() / (float)maxHitpoints.GetValue();
 

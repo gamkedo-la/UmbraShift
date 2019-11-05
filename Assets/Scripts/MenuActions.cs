@@ -14,7 +14,10 @@ public class MenuActions : MonoBehaviour
     public Slider masterVolumeSlider;
     public Slider musicVolumeSlider;
     public Slider sfxVolumeSlider;
+	public Slider difficultySlider;
 
+	private const float MIN_DIFFICULTY = 1;
+	private const float MAX_DIFFICULTY = 7;
 
     FMOD.Studio.Bus musicBus;
     FMOD.Studio.Bus sfxBus;
@@ -62,18 +65,7 @@ public class MenuActions : MonoBehaviour
 
     }
 
-
-
-   
-
-    
-
-
-
-
-
-
-    public void ShowMainMenu()
+	public void ShowMainMenu()
     {
         mainMenu.SetActive(true);
         configMenu.SetActive(false);
@@ -106,15 +98,18 @@ public class MenuActions : MonoBehaviour
 
     }
 
+	public void UpdateDifficulty(float diff)
+	{
+		Debug.Log("Setting Game Difficulty to " + diff);
+		diff = Mathf.Clamp(diff, MIN_DIFFICULTY, MAX_DIFFICULTY);
+		PlayerPrefs.SetFloat("Difficulty", diff);
+	}
 
     public void UpdateSoundFxVolume(float value)
     {
         Debug.Log("Setting SFX Volume");
 
         sfxBus.setVolume(value);
-       
-
-
     }
 
 

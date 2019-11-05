@@ -324,7 +324,7 @@ public class AgentShooting : MonoBehaviour
 		AgentStats stats = GetComponent<AgentStats>();
 		AgentStats enemyStats = targetLocked.gameObject.GetComponent<AgentStats>();
 		int shootSkill = Mathf.Clamp(stats.Shooting.GetValue(),0,6);
-		int baseAcc = 40;
+		int baseAcc = stats.GetBaseAccuracy();
 		int rangeBonus = 0;
 		if (weapon.weaponType == ItemType.Rifle) { rangeBonus += 5; }
 		else if (weapon.weaponType == ItemType.Pistol

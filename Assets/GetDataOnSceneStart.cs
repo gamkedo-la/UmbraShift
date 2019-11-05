@@ -50,9 +50,14 @@ public class GetDataOnSceneStart : MonoBehaviour
 
 	private void RandomizeInitialStat(Stat stat)
 	{
-		int maxNPCSkill = 5;
+		int difficulty = (int)PlayerPrefs.GetFloat("Difficulty");
+		if (difficulty == 0) { difficulty = 4; }
+		int maxNPCSkill = 3 + (difficulty/2);
 		int minNPCSkill = 1;
-		if (stat == agentStats.Shooting) { minNPCSkill = minNPCSkill + 2; }
+		if (difficulty == 1) { minNPCSkill = 0; }
+		else if (difficulty == 7) { minNPCSkill = 2; }
+		int minShootingSkill = (difficulty / 2);
+		if (stat == agentStats.Shooting) { minNPCSkill = minShootingSkill; }
 		if (agentStats.isBoss==true) 
 		{ 
 			minNPCSkill = minNPCSkill + 1;

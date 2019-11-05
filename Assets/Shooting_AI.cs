@@ -222,7 +222,7 @@ public class Shooting_AI : MonoBehaviour
 	{
 		AgentStats playerStats = player.gameObject.GetComponent<AgentStats>();
 		int shootSkill = Mathf.Clamp(self.Shooting.GetValue(), 0, 6);
-		int baseAcc = 30;
+		int baseAcc = self.GetBaseAccuracy();
 		int rangeBonus = 0;
 		if (self.EquippedWeapon.weaponType == ItemType.Rifle) { rangeBonus += 5; }
 		else if (self.EquippedWeapon.weaponType == ItemType.Pistol
