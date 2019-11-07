@@ -74,7 +74,7 @@ public class InitialStatManager : MonoBehaviour
 		characterComplete.enabled = true;
 		characterComplete.interactable = false;
 		int difficulty = (int)PlayerPrefs.GetFloat("Difficulty");
-		if (difficulty==0) { difficulty = 4; }
+		if (difficulty==0) { difficulty = 3; }
 		maxStatTotal = 15 - (difficulty / 2);
 		statMaxNumber.text = "/" + maxStatTotal.ToString();
 	}

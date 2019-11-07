@@ -51,7 +51,7 @@ public class GetDataOnSceneStart : MonoBehaviour
 	private void RandomizeInitialStat(Stat stat)
 	{
 		int difficulty = (int)PlayerPrefs.GetFloat("Difficulty");
-		if (difficulty == 0) { difficulty = 4; }
+		if (difficulty == 0) { difficulty = 3; }
 		int maxNPCSkill = 3 + (difficulty/2);
 		int minNPCSkill = 1;
 		if (difficulty == 1) { minNPCSkill = 0; }

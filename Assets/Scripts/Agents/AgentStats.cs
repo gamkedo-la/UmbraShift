@@ -16,6 +16,7 @@ public class AgentStats : MonoBehaviour, IComparable<AgentStats>
 	public string CharacterName { get { return characterName; } }
 	public bool isAlive = true;
 	private int difficulty;
+	[SerializeField] private int minDifficultyToAppear = 0;
 
 	[Header("Equipment")]
 	[SerializeField] private WeaponDesign equippedWeapon;
@@ -76,9 +77,10 @@ public class AgentStats : MonoBehaviour, IComparable<AgentStats>
 	private void Start()
 	{
 		difficulty = (int)PlayerPrefs.GetFloat("Difficulty");
-		if (difficulty==0) { difficulty = 4; }
+		if (difficulty==0) { difficulty = 3; }
+		if (minDifficultyToAppear > difficulty) { this.gameObject.SetActive(false); return; }
 		if (isNPC) { baseAccuracy = 0 + (difficulty * 5); }
-		else { baseAccuracy = 60 - (difficulty * 5); }
+		else { baseAccuracy = 51 - (difficulty * 3); }
 
 		agentMovement = GetComponent<AgentMovement>();
 		actionManager = GetComponent<AgentActionManager>();
