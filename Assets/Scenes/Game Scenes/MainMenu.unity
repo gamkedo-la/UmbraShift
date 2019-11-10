@@ -612,8 +612,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -5, y: 0}
-  m_SizeDelta: {x: -20, y: 0}
+  m_AnchoredPosition: {x: -5, y: 0.14}
+  m_SizeDelta: {x: -20, y: 3.24}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &223281705
 GameObject:
@@ -649,8 +649,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.14000988}
+  m_SizeDelta: {x: 0, y: 3.24}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &223281707
 MonoBehaviour:
@@ -5169,6 +5169,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Background Juice
+      objectReference: {fileID: 0}
+    - target: {fileID: 5281404498742550716, guid: dde2976a0d5f3c945ad35199a530d747,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2450747787842158859, guid: dde2976a0d5f3c945ad35199a530d747,
         type: 3}
