@@ -785,6 +785,7 @@ MonoBehaviour:
   portraitImage: {fileID: 0}
   characterName: Steve
   isAlive: 1
+  minDifficultyToAppear: 0
   equippedWeapon: {fileID: 11400000, guid: a3ae60e751d05df4185b3b6f36c5f9d6, type: 2}
   defaultWeapon: {fileID: 11400000, guid: df30c36dd659c9c458c019e31647819d, type: 2}
   actionManager: {fileID: 0}
@@ -852,6 +853,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65e1ea34f7fef714c8c9b2dbe3ecab63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sleepDelay: 1
   highlightedMaterial: {fileID: 0}
   actionInProgress: 0
 --- !u!114 &7202779098412885674

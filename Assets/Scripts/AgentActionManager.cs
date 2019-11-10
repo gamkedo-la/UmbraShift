@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AgentActionManager : MonoBehaviour
 {
+	public int sleepDelay = 0;
 	[Header("Do not modify in Unity")]
 	public Material highlightedMaterial;
 	public Action actionInProgress = Action.None;
@@ -166,8 +167,16 @@ public class AgentActionManager : MonoBehaviour
 
 	public void Move_AI()
 	{
-		if (movement_AI) { movement_AI.ActionStarted(); }
-		else { ReportEndOfMoving_AI(); }
+		if (sleepDelay > 0)
+		{
+			if (movement_AI) { movement_AI.ActionStarted(); }
+			else { ReportEndOfMoving_AI(); }
+		}
+		else 
+		{
+			sleepDelay = sleepDelay - 1;
+			ReportEndOfMoving_AI();
+		}
 	}
 
 	public void Shoot_AI()
