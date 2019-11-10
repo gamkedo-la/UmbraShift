@@ -16,16 +16,16 @@ public class Senses_AI : MonoBehaviour
 	[SerializeField] private float distanceToPlayer;
 	[SerializeField] private bool playerInSight;
 	[SerializeField] private bool playerInRange;
-	private const float COOLDOWN_TIMER_MAX = 5f;
-	private float cooldownTimer;
-	private bool cooldownTimerOn = false;
+	//private const float COOLDOWN_TIMER_MAX = 5f;
+	//private float cooldownTimer;
+	//private bool cooldownTimerOn = false;
 	private Collider[] selfColliders;
 
 	private void Start()
 	{
 		alertIndicator.SetActive(false);
 		agent = GetComponent<Targetable>();
-		cooldownTimer = COOLDOWN_TIMER_MAX;
+	//	cooldownTimer = COOLDOWN_TIMER_MAX;
 		player = FindObjectOfType<PlayerHotkeyInput>().gameObject.GetComponent<Targetable>();
 		selfColliders = GetComponentsInChildren<Collider>();
 		AgentStats agentStats = GetComponent<AgentStats>();
@@ -48,13 +48,13 @@ public class Senses_AI : MonoBehaviour
 			Alert(false);
 		}
 
-		if (cooldownTimerOn && cooldownTimer < 0f)
-		{
-			cooldownTimerOn = false;
-			alertStatus = AlertStatus.OnPatrol;
-		}
+		//if (cooldownTimerOn && cooldownTimer < 0f)
+		//{
+		//	cooldownTimerOn = false;
+		//	alertStatus = AlertStatus.OnPatrol;
+		//}
 
-		if (cooldownTimerOn) { cooldownTimer = cooldownTimer - Time.deltaTime; }
+		//if (cooldownTimerOn) { cooldownTimer = cooldownTimer - Time.deltaTime; }
 	}
 
 	private void Alert (bool onAlert)
@@ -63,29 +63,30 @@ public class Senses_AI : MonoBehaviour
 		{
 			alertIndicator.SetActive(true);
 			alertStatus = AlertStatus.OnAlert;
-			cooldownTimerOn = false;
-			cooldownTimer = COOLDOWN_TIMER_MAX;
+		//	cooldownTimerOn = false;
+		//	cooldownTimer = COOLDOWN_TIMER_MAX;
 		}
 		else 
 		{
-			if (cooldownTimer > 0f)
-			{
-				alertIndicator.SetActive(false);
-				cooldownTimerOn = true;
-			}
+		//	if (cooldownTimer > 0f)
+		//	{
+			alertIndicator.SetActive(false);
+			alertStatus = AlertStatus.OnPatrol; //added when cooldowns are commented out
+		//		cooldownTimerOn = true;
+		//	}
 		}
 	}
 
 	private bool RaycastTowardPlayer()
 	{
-		float height = 1f;
-		Vector3 originPoint = agent.TargetPos + (Vector3.up * height);
-		Vector3 destPoint = player.TargetPos + (Vector3.up * height);
+		float height = 1.5f;
+		Vector3 originPoint = agent.gameObject.transform.position + (Vector3.up * height);
+		Vector3 destPoint = player.gameObject.transform.position + (Vector3.up * height);
 		Vector3 dir = (destPoint - originPoint).normalized;
 		float maxDist = Vector3.Distance(originPoint, destPoint);
 		int playerLayer = LayerMask.GetMask("Player");
 		RaycastHit[] objectsHit = Physics.RaycastAll(originPoint, dir, maxDist);
-		List<Collider> collidersHit = new List<Collider>();
+		List<Collider> collidersHit = new List<Collider>();	
 		foreach (RaycastHit hit in objectsHit)
 		{
 			bool valid = true;

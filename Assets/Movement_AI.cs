@@ -86,6 +86,7 @@ public class Movement_AI : MonoBehaviour
 			}
 			LayerMask floorLayer = LayerMask.GetMask("Floor");
 			bool isPathToTargetPointClear = !(Physics.CheckSphere(targetPoint, CHECKSPHERE_SIZE, ~floorLayer));
+
 			if (isPathToTargetPointClear && Vector3.Distance(transform.position, targetPoint) > ARRIVAL_THRESHOLD)
 			{
 				navMesh.SetDestination(targetPoint);
