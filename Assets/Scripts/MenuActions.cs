@@ -27,14 +27,6 @@ public class MenuActions : MonoBehaviour
 
     private void Awake()
     {
-		if (difficultySlider)
-		{
-			difficultySlider.value = PlayerPrefs.GetFloat("Difficulty");
-		}
-		if (difficultyIndicator && difficultySlider) 
-		{ 
-			difficultyIndicator.text = difficultySlider.value.ToString(); 
-		}
 		StartCoroutine(ConfigureAudio());
 	}
 
@@ -47,7 +39,23 @@ public class MenuActions : MonoBehaviour
 		}
 	}
 
-    IEnumerator ConfigureAudio()
+	private void Start()
+	{
+		if (difficultySlider)
+		{
+			difficultySlider.value = PlayerPrefs.GetFloat("Difficulty");
+		}
+		if (difficultyIndicator && difficultySlider)
+		{
+			difficultyIndicator.text = difficultySlider.value.ToString();
+		}
+		if (difficultySlider && difficultyInfo)
+		{
+			DisplayDifficultyText(difficultySlider.value);
+		}
+	}
+
+	IEnumerator ConfigureAudio()
     {
         yield return new WaitForSeconds(1);
 
@@ -157,7 +165,7 @@ public class MenuActions : MonoBehaviour
 		if (diff == 5 || diff == 6) { harderMod = harderMod + "\n Two additional guards in warehouse"; }
 		if (diff == 7) { harderMod = harderMod + "\n Three additional guards in warehouse"; }
 		if (diff == 6 || diff == 7) { harderMod = harderMod + "\n One additional cyberhound in warehouse"; }
-		if (diff == 3) { easierMod = easierMod + "\n (default settings)"; }
+		if (diff == 3) { easierMod = easierMod + "\n\n (Default settings)"; }
 		return easierMod + harderMod;
 	}
 
