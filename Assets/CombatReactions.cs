@@ -69,17 +69,10 @@ public class CombatReactions : MonoBehaviour
         if (givePlayerMissionItemOnDeath&&missionItem!=null)
         {
             Debug.Log("Giving Player mission Item");
-            
-
-            GameObject playerObject=GameObject.FindGameObjectWithTag("Player");
-
+			GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
             Inventory playerInventory=playerObject.GetComponent<Inventory>();
             playerInventory.Add(missionItem);
-
-
             //FindObjectOfType<InventoryUI>().gameObject.SetActive(true);
-
-
         }
 
 

@@ -53,9 +53,7 @@ public class InitialStatManager : MonoBehaviour
 
 	public void SetBaseStat(int baseStat)
 	{
-		Debug.Log("triggered set base stat");
 		initialStats[currentElementID] = baseStat;
-		Debug.Log(initialStats[currentElementID]);
 		SetHelpText(currentElementID);
 	}
 

@@ -58,6 +58,7 @@ public class Shooting_AI : MonoBehaviour
 				bool playerIsInLOS = DetermineIfPlayerIsInLOS();
 				if (!playerIsInLOS) { ActionComplete(); return; }
 				bool playerHasCover = DetermineIfPlayerHasCover();
+				Debug.Log(gameObject.name + " is attempting to shoot at player with " + self.EquippedWeapon.name);
 				float accuracy = DetermineAccuracy(playerHasCover, rangeToPlayer);
                
 				ShootAtPlayer(accuracy);
@@ -148,7 +149,8 @@ public class Shooting_AI : MonoBehaviour
 		float maxDist = Vector3.Distance(firePoint.position, player.TargetPos);
 		float radius = MAX_AIMING_RADIUS;
 		RaycastHit[] hitsArray;
-		hitsArray = Physics.SphereCastAll(origin, radius, direction, maxDist);
+		LayerMask layer = LayerMask.GetMask("Floor");
+		hitsArray = Physics.SphereCastAll(origin, radius, direction, maxDist, ~layer);
 		List<RaycastHit> hitList = new List<RaycastHit>();
 		List<Collider> collidersToIgnore = new List<Collider>();
 		Collider[] playerColliders = player.gameObject.GetComponentsInChildren<Collider>();
@@ -163,7 +165,14 @@ public class Shooting_AI : MonoBehaviour
 			}
 			if (valid) { hitList.Add(hit); }
 		}
-		if (hitList.Count > 0) { return true; }
+		if (hitList.Count > 0) {
+			Debug.Log("Obstacles in way of target: ");
+			foreach (RaycastHit obstacleInWayofTarget in hitList)
+			{
+				Debug.Log($"({ obstacleInWayofTarget.collider.gameObject.name} on layer[{LayerMask.LayerToName(obstacleInWayofTarget.collider.gameObject.layer)}]) is in the way.");
+			}
+			return true; 
+		}
 		else { return false; }
 	}
 
@@ -223,19 +232,30 @@ public class Shooting_AI : MonoBehaviour
 		AgentStats playerStats = player.gameObject.GetComponent<AgentStats>();
 		int shootSkill = Mathf.Clamp(self.Shooting.GetValue(), 0, 6);
 		int baseAcc = self.GetBaseAccuracy();
+		Debug.Log("Base Accuracy: " + baseAcc);
+		Debug.Log(gameObject.name + " shooting skill: " + shootSkill);
+		Debug.Log("Bonus from shooting skill: " + self.accuracyBonus.GetValue());
 		int rangeBonus = 0;
 		if (self.EquippedWeapon.weaponType == ItemType.Rifle) { rangeBonus += 5; }
 		else if (self.EquippedWeapon.weaponType == ItemType.Pistol
 				&& rangeToPlayer == RangeCategory.Optimum) { rangeBonus += 10; }
 		int weaponAccModifier = (int)self.EquippedWeapon.accuracy;
 		int acc = baseAcc + rangeBonus + self.accuracyBonus.GetValue();
+		Debug.Log("Range acc bonus: " + rangeBonus);
+		Debug.Log("Total accuracy: " + acc);
+		Debug.Log("Player has cover: " + hasCover);
 		if (hasCover)
 		{
+			Debug.Log("Player Wits rating: " + playerStats.Intellect.GetValue());
 			int maxCover = 40 + playerStats.coverBonus.GetValue();
-			int coverPenalty = maxCover - (self.coverBypass.GetValue() - weaponAccModifier);
+			int coverPenalty = maxCover - (self.coverBypass.GetValue() + weaponAccModifier);
 			if (playerStats) { coverPenalty = coverPenalty + playerStats.coverBonus.GetValue(); }
+			Debug.Log("Cover Penalty = 40 + " + playerStats.coverBonus.GetValue() + " - " + self.coverBypass.GetValue() + " - " + weaponAccModifier + " = " + coverPenalty);
+			Debug.Log("Max cover penalty: 40 + " + playerStats.coverBonus.GetValue());
 			coverPenalty = Mathf.Clamp(coverPenalty, 0, maxCover);
+			Debug.Log($"Accuracy){acc}%) - Cover({coverPenalty}%) = {acc-coverPenalty}%");
 			acc = acc - coverPenalty;
+			
 		}
 		return acc;
 	}
@@ -264,6 +284,8 @@ public class Shooting_AI : MonoBehaviour
 		object[] objectArray = new object[2];
 		objectArray[0] = projectileFlightTime;
 		objectArray[1] = acc;
+		Debug.Log("Distance to player: " + distanceToTarget);
+		Debug.Log("Chance to hit: " + acc + "    (" + (int)acc + "%)");
 		StartCoroutine("ResolveHitAfterShootingProjectile", objectArray);
 	}
 
@@ -278,15 +300,18 @@ public class Shooting_AI : MonoBehaviour
 		bool attackHit = DetermineHit(acc);
 		if (attackHit) { hitStatus = HitStatus.Hit; }
 		else { hitStatus = HitStatus.Miss; }
+		Debug.Log("Results of attack: " + hitStatus);
 		int damage = (int)self.EquippedWeapon.damage + self.damageBonus.GetValue();
 		int rndDmgSpread = 3;
 		damage = Random.Range(damage - rndDmgSpread, damage + rndDmgSpread + 1);
 		if (react) { react.TakeHit(hitStatus, damage); }
 		if (hitStatus == HitStatus.Hit)
 		{
+			Debug.Log("Damage: " + damage);
 			GameObject explosionEffect = Instantiate(self.EquippedWeapon.projectilePrefab.GetComponent<Projectile>().Explosion, player.TargetPos, Quaternion.identity);
 			Destroy(explosionEffect, 1f);
 		}
+		else { Debug.Log("No damage on miss"); }
 		Shooting_AI shooting_AI = GetComponent<Shooting_AI>();
 		if (shooting_AI && !endTurnReported)
 		{
@@ -300,9 +325,12 @@ public class Shooting_AI : MonoBehaviour
 	private bool DetermineHit(float accuracy)
 	{
 		int rollToHit = Random.Range(1, 100);
+		Debug.Log("D100 shooting result: " + rollToHit);
 		float rollToHitAsFloat = (float)rollToHit;
+		Debug.Log("D100 conversion result: " + rollToHit);
 		bool hit = false;
 		if (accuracy==rollToHitAsFloat || rollToHitAsFloat < accuracy) { hit = true; }
+		Debug.Log("D100 result is less than or equal to chanceToHit: " + hit);
 		return (hit);
 	}
 

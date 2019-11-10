@@ -181,7 +181,6 @@ public class Chatbox : MonoBehaviour
 
 			if (currentScreen.inventory != null)
 			{
-				Debug.Log("Inventory called");
 				if (currentScreen.itemToReceive != null)
 				{
 
@@ -204,7 +203,6 @@ public class Chatbox : MonoBehaviour
                 
                 if (currentScreen.inventory != null)
                 {
-                    Debug.Log("Inventory called");
                     if (currentScreen.itemToReceive != null)
                     {
                         

@@ -17,6 +17,7 @@ public class AgentTurnManager : MonoBehaviour
 	private int turnIndex = 0;
 	private const float ENDTURN_DELAY = 0.35f;
     public static AgentTurnManager instance;
+	int roundCount = 1;
 
 	public AgentStats GetActiveCharacter()
 	{
@@ -49,7 +50,8 @@ public class AgentTurnManager : MonoBehaviour
 		agents = GenerateAgentList();
 		turnUI.RegisterCharacters(agents);
 		turnIndex = 0;
-        //ProcessTurn(agents[turnIndex]);
+		//ProcessTurn(agents[turnIndex]);
+		Debug.Log("BEGINNING ROUND" + roundCount);
         StartCoroutine(DelayedStart());
 	}
 
@@ -71,7 +73,11 @@ public class AgentTurnManager : MonoBehaviour
 		foreach (AgentStats agent in agentArray) { agentList.Add(agent); }
 		agentList.Sort();
 		agentList.Reverse();
-		foreach (AgentStats agent in agentList) { Debug.Log(agent.name + ", Speed: " + agent.initiativeBonus.GetValue()); }
+		//Debug.Log("|  LIST OF AGENTS IN TURN ORDER");
+		//foreach (AgentStats agent in agentList) 
+		//{
+		//	Debug.Log("|  " + agent.name + ", Speed: " + agent.initiativeBonus.GetValue()); 
+		//}
 		return agentList;
 	}
 
@@ -126,7 +132,7 @@ public class AgentTurnManager : MonoBehaviour
 		turnIndex = turnIndex + 1;
 		agents = GenerateAgentList();
 		turnUI.RegisterCharacters(agents);
-		if (turnIndex >= agents.Count) { turnIndex = 0; }
+		if (turnIndex >= agents.Count) { turnIndex = 0; roundCount = roundCount + 1; Debug.Log("BEGINNING ROUND " + roundCount); }
 		ProcessTurn(agents[turnIndex]);
 	}
 

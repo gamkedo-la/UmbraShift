@@ -106,18 +106,12 @@ public class MenuActions : MonoBehaviour
 
     public void UpdateMusicVolume(float value)
     {
-        Debug.Log("Setting Music Volume");
-
         musicBus.setVolume(value);
-
         musicBus.setVolume(value);
-
-
     }
 
 	public void UpdateDifficulty(float diff)
 	{
-		Debug.Log("Setting Game Difficulty to " + diff);
 		diff = Mathf.Clamp(diff, MIN_DIFFICULTY, MAX_DIFFICULTY);
 		if (difficultyIndicator) { difficultyIndicator.text = diff.ToString(); }
 		PlayerPrefs.SetFloat("Difficulty", diff);
@@ -169,8 +163,6 @@ public class MenuActions : MonoBehaviour
 
     public void UpdateSoundFxVolume(float value)
     {
-        Debug.Log("Setting SFX Volume");
-
         sfxBus.setVolume(value);
     }
 
@@ -178,9 +170,6 @@ public class MenuActions : MonoBehaviour
 
     public void UpdateMasterVolume(float value)
     {
-
-        Debug.Log("Setting Master Volume");
-
         masterBus.setVolume(value);
         PlayerPrefs.SetFloat("Master Volume", value);
 
