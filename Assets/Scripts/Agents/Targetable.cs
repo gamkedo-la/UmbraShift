@@ -22,7 +22,7 @@ public class Targetable : MonoBehaviour
 	[HideInInspector] public enum LOS { Null, Clear, Cover, Blocked }
 	[HideInInspector] public LOS lineOfSight = LOS.Clear;
 	[HideInInspector] public bool ValidTarget {get { return validTarget; } }
-	[HideInInspector]public float height = 1f;
+	public float height = 1f;
 	private Vector3 targetPos;
 	public Vector3 TargetPos { get { return targetPos; } }
 	private Vector2 targetPositionInScreenCoord;

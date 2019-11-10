@@ -42,7 +42,11 @@ public class Shooting_AI : MonoBehaviour
 
 	private void ShootUpdate()
 	{
-		float angleTowardPlayer = Vector3.Angle(transform.forward, player.transform.position - transform.position);
+		Vector3 playerPositionAtGroundLevel = player.transform.position;
+		playerPositionAtGroundLevel.y = 0;
+		Vector3 currentPositionAtGroundLevel = transform.position;
+		currentPositionAtGroundLevel.y = 0;
+		float angleTowardPlayer = Vector3.Angle(transform.forward, playerPositionAtGroundLevel - currentPositionAtGroundLevel);
 		if (!rotatingNow) { RotateTowardPlayer(); }
 				
 		if (angleTowardPlayer < WEAPON_DRAW_THRESHOLD)
@@ -64,8 +68,8 @@ public class Shooting_AI : MonoBehaviour
 				ShootAtPlayer(accuracy);
 				projectileHasBeenShot = true;
 			}
+			else if (!rotatingNow && angleTowardPlayer >= FIELD_OF_VIEW) { Debug.Log("Player not in Field of View."); }
 			else { ActionComplete(); }
-			
 		}
 	}
 
@@ -179,35 +183,36 @@ public class Shooting_AI : MonoBehaviour
 	private bool DetermineIfPlayerIsInLOS()
 	{
 		//Vector3 height = (Vector3.up * MAX_AIMING_RADIUS);
-		float height = firePoint.position.y;
-		float allowanceForHighShot = 0.2f;
-		Vector3 origin = selfTarget.TargetPos;
-		origin.y = 0f + height;
-		Vector3 dest = player.TargetPos;
-		dest.y = 0f + height + allowanceForHighShot;
+		float height = 1.5f;
+		//float allowanceForHighShot = 0.2f;
+		Vector3 origin = transform.position;
+		origin.y = origin.y + height;
+		Vector3 dest = player.gameObject.transform.position;
+		dest.y = dest.y + height; //+ allowanceForHighShot;
 		Vector3 direction = (dest - origin).normalized;
-		float maxDist = Vector3.Distance(player.TargetPos, selfTarget.TargetPos); ;
+		float maxDist = Vector3.Distance(origin, dest) * 1.1f;
 		RaycastHit hitInfo;
-		Ray ray = new Ray(origin, direction);
-		bool seeAnything = Physics.Raycast(ray, out hitInfo, maxDist);
+		bool seeAnything = Physics.Raycast(origin, direction, out hitInfo, maxDist);
 		bool LOStoTarget = false;
 		if (seeAnything)
 		{
 			Collider[] playerColliders = player.gameObject.GetComponentsInChildren<Collider>();
 			foreach (Collider playerCollider in playerColliders)
 			{
-					if (hitInfo.collider == playerCollider)
-					{
-						LOStoTarget = true;
-					}
+				if (hitInfo.collider == playerCollider)
+				{
+					LOStoTarget = true;
 				}
 			}
+		}
 
 		if (!LOStoTarget || !seeAnything)
 		{
 			return false;
 		}
-		else { return true; }
+		else { 
+			return true;
+		}
 	}
 
 	private RangeCategory DetermineRangeToPlayer()
