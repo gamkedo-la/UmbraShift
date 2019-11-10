@@ -19,6 +19,7 @@ public class Movement_AI : MonoBehaviour
 	private enum Activity { Patrol, Alert, None }
 	private Activity activity = Activity.None;
     public Animator animator;
+	private const float CHECKSPHERE_SIZE = 0.2f;
 
     private void Start()
     {
@@ -84,7 +85,7 @@ public class Movement_AI : MonoBehaviour
 				targetPoint = transform.position + vecTotargetPoint;
 			}
 			LayerMask floorLayer = LayerMask.GetMask("Floor");
-			bool isPathToTargetPointClear = !(Physics.CheckSphere(targetPoint, 0.05f, ~floorLayer));
+			bool isPathToTargetPointClear = !(Physics.CheckSphere(targetPoint, CHECKSPHERE_SIZE, ~floorLayer));
 			if (isPathToTargetPointClear && Vector3.Distance(transform.position, targetPoint) > ARRIVAL_THRESHOLD)
 			{
 				navMesh.SetDestination(targetPoint);
