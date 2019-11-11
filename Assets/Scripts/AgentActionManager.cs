@@ -169,13 +169,13 @@ public class AgentActionManager : MonoBehaviour
 	{
 		if (sleepDelay > 0)
 		{
-			if (movement_AI) { movement_AI.ActionStarted(); }
-			else { ReportEndOfMoving_AI(); }
+			sleepDelay = sleepDelay - 1;
+			ReportEndOfMoving_AI();
 		}
 		else 
 		{
-			sleepDelay = sleepDelay - 1;
-			ReportEndOfMoving_AI();
+			if (movement_AI) { movement_AI.ActionStarted(); }
+			else { ReportEndOfMoving_AI(); }
 		}
 	}
 
