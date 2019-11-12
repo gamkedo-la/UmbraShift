@@ -52,7 +52,7 @@ public class GetDataOnSceneStart : MonoBehaviour
 	{
 		int difficulty = (int)PlayerPrefs.GetFloat("Difficulty");
 		if (difficulty == 0) { difficulty = 3; }
-		int maxNPCSkill = 3 + (difficulty/2);
+		int maxNPCSkill = 2 + (difficulty/2);
 		int minNPCSkill = 1;
 		if (difficulty == 1) { minNPCSkill = 0; }
 		else if (difficulty == 7) { minNPCSkill = 2; }

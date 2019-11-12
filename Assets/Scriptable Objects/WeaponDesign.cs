@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 public enum Quality { None, Terrible=-20, Average=-10, Effective=10, Superior=20 }
-public enum Damage { None=0, Terrible=4, Average=8, Effective=12, Superior=16}
+public enum Damage { None=0, Terrible=5, Average=8, Effective=10, Superior=12}
 //public enum Hinderance { None, Negligable, Average, Hindering, Severe}
 public enum MaxRange { Adjacent = 3, Short = 12, Medium = 21, Long = 30 }
 public enum AmmoType { Type_IV_Biogel_Rounds, Biohazard_Gas_X3 }
