@@ -23,6 +23,7 @@ public class Shooting_AI : MonoBehaviour
 	bool projectileHasBeenShot = false;
 	private enum Activity { HoldingFire, Shooting, None}
 	private Activity activity = Activity.None;
+	bool weaponDrawn = true;
 
 	private void Start()
 	{
@@ -42,19 +43,22 @@ public class Shooting_AI : MonoBehaviour
 
 	private void ShootUpdate()
 	{
+		bool hasWeaponDrawAnimation = DetermineIfWeaponDrawAnimation();
+		float weaponDrawAnimationTime = 0.75f;
+	
 		Vector3 playerPositionAtGroundLevel = player.transform.position;
 		playerPositionAtGroundLevel.y = 0;
 		Vector3 currentPositionAtGroundLevel = transform.position;
 		currentPositionAtGroundLevel.y = 0;
 		float angleTowardPlayer = Vector3.Angle(transform.forward, playerPositionAtGroundLevel - currentPositionAtGroundLevel);
 		if (!rotatingNow) { RotateTowardPlayer(); }
-				
-		if (angleTowardPlayer < WEAPON_DRAW_THRESHOLD)
-		{
-			//DrawWeapon(true);		Disable while bug fixing. Should try re-enabling when bugs have been fixed.
-		}
 
-		if (angleTowardPlayer < FIELD_OF_VIEW)
+		if (hasWeaponDrawAnimation && angleTowardPlayer < WEAPON_DRAW_THRESHOLD)
+		{
+			DrawWeapon(true, weaponDrawAnimationTime);
+		}
+		if (!hasWeaponDrawAnimation) { weaponDrawn = true; }
+		if (angleTowardPlayer < FIELD_OF_VIEW && weaponDrawn) 
 		{
 			RangeCategory rangeToPlayer = DetermineRangeToPlayer();
 			if (rangeToPlayer == RangeCategory.Optimum || rangeToPlayer == RangeCategory.Long)
@@ -75,6 +79,7 @@ public class Shooting_AI : MonoBehaviour
 
 	public void ActionStarted()
 	{
+		weaponDrawn = false;
 		shootingSystemInUse = true;
 		projectileHasBeenShot = false;
 		if (senses.GetAlertStatus() == AlertStatus.OnAlert) { activity = Activity.Shooting; }
@@ -84,13 +89,29 @@ public class Shooting_AI : MonoBehaviour
 	public void ActionComplete()
 	{
 		activity = Activity.None;
-		DrawWeapon(false);
+		if (DetermineIfWeaponDrawAnimation()) { DrawWeapon(false); }
 		shootingSystemInUse = false;
 		projectileHasBeenShot = false;
 		actionManager.ReportEndOfShooting_AI();
 	}
 
+	private void DrawWeapon(bool toDraw, float animationTime)
+	{
+		animator.SetBool("isPistolDrawn", toDraw);
+		object[] animationTimeObj = new object[1];
+		animationTimeObj[0] = animationTime;
+		StartCoroutine("WaitForWeaponDrawAnimation", animationTimeObj);
+	}
+
 	private void DrawWeapon(bool toDraw)
+	{
+		animator.SetBool("isPistolDrawn", toDraw);
+		object[] animationTimeObj = new object[1];
+		animationTimeObj[0] = 0f;
+		StartCoroutine("WaitForWeaponDrawAnimation", animationTimeObj);
+	}
+
+	private bool DetermineIfWeaponDrawAnimation()
 	{
 		if (self.isHuman && animator)
 		{
@@ -99,11 +120,18 @@ public class Shooting_AI : MonoBehaviour
 			{
 				if (parameter.name == "isPistolDrawn")
 				{
-					animator.SetBool("isPistolDrawn", toDraw);
+					return true;
 				}
 			}
 		}
-		
+		return false;
+	}
+
+	private IEnumerator WaitForWeaponDrawAnimation(object[] obj)
+	{
+		float animationTime = (float)obj[0];
+		yield return new WaitForSeconds(animationTime);
+		weaponDrawn = true;
 	}
 	
 	private void RotateTowardPlayer()
@@ -293,6 +321,8 @@ public class Shooting_AI : MonoBehaviour
 		Debug.Log("Chance to hit: " + acc + "    (" + (int)acc + "%)");
 		StartCoroutine("ResolveHitAfterShootingProjectile", objectArray);
 	}
+
+		
 
 	private IEnumerator ResolveHitAfterShootingProjectile(object[] objects)
 	{
