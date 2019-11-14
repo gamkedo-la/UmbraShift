@@ -82,7 +82,9 @@ public class AgentInteracting : MonoBehaviour
 	public void ActionCancel()
 	{
 		ResetVariables();
-		EndInteraction();
+		if (torus) { Destroy(torus); }
+		interactingSystemInUse = false;
+		turnManager.ActiveCharacter.actionManager.ReportActionCancelled();
 	}
 
 	public void Interact()

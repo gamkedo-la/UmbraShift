@@ -156,6 +156,8 @@ public class AgentActionManager : MonoBehaviour
 	public void ReportActionCancelled()
 	{
 		m_uiActionBarController.ShowEndTurnButton();
+		transactionInProcessAP = 0;
+		m_uiActionBarController.ReadyForNextAction();
 	}
 
 	public void ReportEndOfAction()

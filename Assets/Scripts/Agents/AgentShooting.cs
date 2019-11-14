@@ -94,7 +94,14 @@ public class AgentShooting : MonoBehaviour
 	{
 		animator.SetBool("isPistolDrawn", false);
 		ResetVariables();
-		EndShooting();
+		if (closestTargetNearMouse)
+		{
+			closestTargetNearMouse.SelectionClear();
+			ShowAccuracy(0, closestTargetNearMouse, false);
+		}
+		animator.SetBool("isPistolDrawn", false);
+		shootingSystemInUse = false;
+		turnManager.ActiveCharacter.actionManager.ReportActionCancelled();
 	}
 
 	public void ActionComplete()
