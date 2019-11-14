@@ -23,7 +23,8 @@ public class Shooting_AI : MonoBehaviour
 	bool projectileHasBeenShot = false;
 	private enum Activity { HoldingFire, Shooting, None}
 	private Activity activity = Activity.None;
-	bool weaponDrawn = true;
+	bool weaponDrawn = false;
+	bool readyToFire = false;
 
 	private void Start()
 	{
@@ -45,20 +46,23 @@ public class Shooting_AI : MonoBehaviour
 	{
 		bool hasWeaponDrawAnimation = DetermineIfWeaponDrawAnimation();
 		float weaponDrawAnimationTime = 0.75f;
-	
+
 		Vector3 playerPositionAtGroundLevel = player.transform.position;
 		playerPositionAtGroundLevel.y = 0;
 		Vector3 currentPositionAtGroundLevel = transform.position;
 		currentPositionAtGroundLevel.y = 0;
+		
 		float angleTowardPlayer = Vector3.Angle(transform.forward, playerPositionAtGroundLevel - currentPositionAtGroundLevel);
 		if (!rotatingNow) { RotateTowardPlayer(); }
 
 		if (hasWeaponDrawAnimation && angleTowardPlayer < WEAPON_DRAW_THRESHOLD && weaponDrawn==false)
 		{
+			weaponDrawn = true;
+			readyToFire = false;	
 			DrawWeapon(true, weaponDrawAnimationTime);
 		}
-		if (!hasWeaponDrawAnimation) { weaponDrawn = true; }
-		if (angleTowardPlayer < FIELD_OF_VIEW && weaponDrawn) 
+		if (!hasWeaponDrawAnimation && angleTowardPlayer < WEAPON_DRAW_THRESHOLD) { weaponDrawn = true; readyToFire = true; }
+		if (angleTowardPlayer < FIELD_OF_VIEW && weaponDrawn && readyToFire) 
 		{
 			RangeCategory rangeToPlayer = DetermineRangeToPlayer();
 			if (rangeToPlayer == RangeCategory.Optimum || rangeToPlayer == RangeCategory.Long)
@@ -80,6 +84,7 @@ public class Shooting_AI : MonoBehaviour
 	public void ActionStarted()
 	{
 		weaponDrawn = false;
+		readyToFire = false;
 		shootingSystemInUse = true;
 		projectileHasBeenShot = false;
 		if (senses.GetAlertStatus() == AlertStatus.OnAlert) { activity = Activity.Shooting; }
@@ -92,6 +97,8 @@ public class Shooting_AI : MonoBehaviour
 		if (DetermineIfWeaponDrawAnimation()) { DrawWeapon(false); }
 		shootingSystemInUse = false;
 		projectileHasBeenShot = false;
+		weaponDrawn = false;
+		readyToFire = false;
 		actionManager.ReportEndOfShooting_AI();
 	}
 
@@ -131,7 +138,7 @@ public class Shooting_AI : MonoBehaviour
 	{
 		float animationTime = (float)obj[0];
 		yield return new WaitForSeconds(animationTime);
-		weaponDrawn = true;
+		readyToFire = true;
 	}
 	
 	private void RotateTowardPlayer()
