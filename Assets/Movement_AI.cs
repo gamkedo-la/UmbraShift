@@ -129,11 +129,10 @@ public class Movement_AI : MonoBehaviour
 					isPathToTargetPointClear = !(Physics.CheckSphere(targetPoint, CHECKSPHERE_SIZE, ~floorLayer));
 				}
 			}
-			
-
 			if (isPathToTargetPointClear && Vector3.Distance(transform.position, targetPoint) > ARRIVAL_THRESHOLD)
 			{
 				navMesh.SetDestination(targetPoint);
+				isMoving = true;
 			}
 			else
 			{
