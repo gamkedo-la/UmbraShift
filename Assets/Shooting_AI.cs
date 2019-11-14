@@ -53,7 +53,7 @@ public class Shooting_AI : MonoBehaviour
 		float angleTowardPlayer = Vector3.Angle(transform.forward, playerPositionAtGroundLevel - currentPositionAtGroundLevel);
 		if (!rotatingNow) { RotateTowardPlayer(); }
 
-		if (hasWeaponDrawAnimation && angleTowardPlayer < WEAPON_DRAW_THRESHOLD)
+		if (hasWeaponDrawAnimation && angleTowardPlayer < WEAPON_DRAW_THRESHOLD && weaponDrawn==false)
 		{
 			DrawWeapon(true, weaponDrawAnimationTime);
 		}
