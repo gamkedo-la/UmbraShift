@@ -67,69 +67,46 @@ public class Movement_AI : MonoBehaviour
 			Vector3 targetPoint = transform.position;
 			Vector3 offset = Vector3.zero;
 			FirePoint firePoint = GetComponentInChildren<FirePoint>();
+			
 			if (firePoint) 
 			{ 
-				Vector3 temp = new Vector3 (firePoint.transform.position.x, transform.position.y, firePoint.transform.position.z);
-				offset = (transform.position - temp);
+				Vector3 firePointPosInLocalCoord = new Vector3 (firePoint.transform.position.x, transform.position.y, firePoint.transform.position.z);
+				offset = (transform.position - firePointPosInLocalCoord);
 			}
 			int rangeAsInt = (int)agentStats.EquippedWeapon.range;
 			float rangeAsFloat = (float)rangeAsInt;
-			if (CalcDistanceToPlayer() > (rangeAsFloat / 2f))
+			float idealRange = rangeAsFloat * 0.4f;
+
+			if (CalcDistanceToPlayer() > idealRange)
 			{
-				Vector3 vecFromPlayerToTargetPoint = (transform.position - player.transform.position).normalized * ((rangeAsFloat / 2f) + offset.magnitude);
+				Vector3 vecFromPlayerToTargetPoint = (transform.position - player.transform.position).normalized * (idealRange + offset.magnitude);
 				targetPoint = player.transform.position + vecFromPlayerToTargetPoint;
 			}
-			if (Vector3.Distance(transform.position, targetPoint) > movementLimit)
-			{
-				Vector3 vecTotargetPoint = (targetPoint - transform.position).normalized * movementLimit;
-				targetPoint = transform.position + vecTotargetPoint;
-			}
+
 			LayerMask floorLayer = LayerMask.GetMask("Floor");
 			bool isPathToTargetPointClear = !(Physics.CheckSphere(targetPoint, CHECKSPHERE_SIZE, ~floorLayer));
-
 			float distToPlayer = CalcDistanceToPlayer();
 			float distToTarget = (targetPoint - transform.position).magnitude;
-			if (!isPathToTargetPointClear && distToTarget < distToPlayer)
+			float maxRnd = 0f;
+			int maxLoops = 9;
+
+			do
 			{
-				Vector3 vecPastTargetPoint = (targetPoint - transform.position).normalized * (movementLimit * 1.25f);
-				Vector3 newTarget = transform.position + vecPastTargetPoint;
-				float distanceToPlayerFromTarget = Vector3.Distance(newTarget, player.transform.position);
-				float distanceToTargetFromHere = Vector3.Distance(transform.position, newTarget);
-				float distanceToPlayerFromHere = Vector3.Distance(transform.position, player.transform.position);
-				if (distanceToTargetFromHere < distanceToPlayerFromHere && distanceToPlayerFromTarget < distanceToPlayerFromHere)
-				{
-					targetPoint = transform.position + vecPastTargetPoint;
-					distToTarget = (targetPoint - transform.position).magnitude;
-					isPathToTargetPointClear = !(Physics.CheckSphere(targetPoint, CHECKSPHERE_SIZE, ~floorLayer));
-				}
-			}
-			if (!isPathToTargetPointClear && distToTarget < distToPlayer)
-			{
-				Vector3 altVecToTargetPoint = (targetPoint - transform.position).normalized * (movementLimit * 0.75f);
-				Vector3 newTarget = transform.position + altVecToTargetPoint;
-				float distanceToPlayerFromHere = Vector3.Distance(transform.position, player.transform.position);
-				float distanceToPlayerFromTarget = Vector3.Distance(newTarget, player.transform.position);
-				if (distanceToPlayerFromTarget < distanceToPlayerFromHere) 
-				{
-					targetPoint = transform.position + altVecToTargetPoint;
-					distToTarget = (targetPoint - transform.position).magnitude;
-					isPathToTargetPointClear = !(Physics.CheckSphere(targetPoint, CHECKSPHERE_SIZE, ~floorLayer));
-				}
-			}
-			if (!isPathToTargetPointClear && distToTarget < distToPlayer)
-			{
-				Vector3 nextAltVecToTargetPoint = (targetPoint - transform.position).normalized * (movementLimit * 0.5f);
-				Vector3 newTarget = transform.position + nextAltVecToTargetPoint;
-				float distanceToPlayerFromHere = Vector3.Distance(transform.position, player.transform.position);
-				float distanceToPlayerFromTarget = Vector3.Distance(newTarget, player.transform.position);
-				if (distanceToPlayerFromTarget < distanceToPlayerFromHere)
-				{
-					targetPoint = transform.position + nextAltVecToTargetPoint;
-					distToTarget = (targetPoint - transform.position).magnitude;
-					isPathToTargetPointClear = !(Physics.CheckSphere(targetPoint, CHECKSPHERE_SIZE, ~floorLayer));
-				}
-			}
-			if (isPathToTargetPointClear && Vector3.Distance(transform.position, targetPoint) > ARRIVAL_THRESHOLD)
+				maxLoops -= 1;
+				if (maxLoops < 1) { targetPoint = transform.position; break; }
+				maxRnd += 0.5f;
+				float rndNum = Random.Range(0f, maxRnd);
+				Vector3 vecFromPlayerToTargetPoint = (transform.position - player.transform.position).normalized * (idealRange + offset.magnitude + rndNum);
+				targetPoint = player.transform.position + vecFromPlayerToTargetPoint;
+				isPathToTargetPointClear = !(Physics.CheckSphere(targetPoint, CHECKSPHERE_SIZE, ~floorLayer));
+			} while (!isPathToTargetPointClear);
+
+			float distanceFromTargetToPlayer = Vector3.Distance(targetPoint, player.transform.position);
+			float currentDistanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+			bool targetPointIsMyCurrentPosition = Vector3.Distance(transform.position, targetPoint) <= ARRIVAL_THRESHOLD;
+			bool targetIsCloserToPlayer = distanceFromTargetToPlayer < currentDistanceToPlayer;
+
+			if (isPathToTargetPointClear && targetIsCloserToPlayer && !targetPointIsMyCurrentPosition)
 			{
 				navMesh.SetDestination(targetPoint);
 				isMoving = true;
